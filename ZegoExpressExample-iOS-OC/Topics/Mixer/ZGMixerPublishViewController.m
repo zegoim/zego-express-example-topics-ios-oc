@@ -51,10 +51,8 @@ NSString* const ZGMixerTopicKey_PublishStreamID = @"kPublishStreamID";
     ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
     [self.engine loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
     
-    ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.previewView viewMode:ZegoViewModeAspectFit];
-    
     ZGLogInfo(@" 🔌 Start preview");
-    [self.engine startPreview:previewCanvas];
+    [self.engine startPreview:[ZegoCanvas canvasWithView:self.previewView]];
 }
 
 - (IBAction)startPublishing {

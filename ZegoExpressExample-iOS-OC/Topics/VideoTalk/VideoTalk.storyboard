@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LNh-uk-ocM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="KRn-gV-p9E">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -7,77 +7,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Video Talk Login View Controller-->
-        <scene sceneID="TFB-zD-Kar">
-            <objects>
-                <viewController storyboardIdentifier="ZGVideoTalkLoginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LNh-uk-ocM" customClass="ZGVideoTalkLoginViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="nna-aX-y9U"/>
-                        <viewControllerLayoutGuide type="bottom" id="64f-OB-d4w"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="yzC-k1-n6t">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Room ID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzf-ae-8CJ">
-                                <rect key="frame" x="20" y="74" width="69.5" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Please enter room ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="92f-J0-oCf">
-                                <rect key="frame" x="20" y="105" width="374" height="30"/>
-                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="Vqn-gD-E2F"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7oK-nt-7Zm">
-                                <rect key="frame" x="20" y="160" width="374" height="142.5"/>
-                                <string key="text">Room ID represents the identity of a room, and the globally unique room ID is required to be a printable string of no more than 255 bytes.
-
-Room ID 代表一个房间的标识，需保证房间 ID 的全局唯一，长度不超过 255 bytes 的可打印字符串。</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mYc-Ct-MLA">
-                                <rect key="frame" x="40" y="332.5" width="334" height="35"/>
-                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="Jxm-g3-fTA"/>
-                                </constraints>
-                                <state key="normal" title="Login Room"/>
-                                <connections>
-                                    <action selector="onLoginRoom:" destination="LNh-uk-ocM" eventType="touchUpInside" id="2PK-e0-iJY"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="7oK-nt-7Zm" firstAttribute="top" secondItem="92f-J0-oCf" secondAttribute="bottom" constant="25" id="7zY-lq-0B8"/>
-                            <constraint firstAttribute="trailing" secondItem="mYc-Ct-MLA" secondAttribute="trailing" constant="40" id="9Gq-Nh-w20"/>
-                            <constraint firstItem="hzf-ae-8CJ" firstAttribute="leading" secondItem="yzC-k1-n6t" secondAttribute="leading" constant="20" id="AV6-Gh-1xp"/>
-                            <constraint firstItem="mYc-Ct-MLA" firstAttribute="leading" secondItem="yzC-k1-n6t" secondAttribute="leading" constant="40" id="BTb-OH-pv8"/>
-                            <constraint firstItem="92f-J0-oCf" firstAttribute="leading" secondItem="yzC-k1-n6t" secondAttribute="leading" constant="20" id="E9l-FP-X6C"/>
-                            <constraint firstItem="92f-J0-oCf" firstAttribute="top" secondItem="hzf-ae-8CJ" secondAttribute="bottom" constant="10" id="K3x-Lg-YZx"/>
-                            <constraint firstAttribute="trailing" secondItem="7oK-nt-7Zm" secondAttribute="trailing" constant="20" id="SVq-fE-Dcr"/>
-                            <constraint firstItem="7oK-nt-7Zm" firstAttribute="leading" secondItem="yzC-k1-n6t" secondAttribute="leading" constant="20" id="Ub3-nf-0u8"/>
-                            <constraint firstItem="mYc-Ct-MLA" firstAttribute="top" secondItem="7oK-nt-7Zm" secondAttribute="bottom" constant="30" id="oDK-tu-YYT"/>
-                            <constraint firstAttribute="trailing" secondItem="92f-J0-oCf" secondAttribute="trailing" constant="20" id="qcY-YN-RTO"/>
-                            <constraint firstItem="hzf-ae-8CJ" firstAttribute="top" secondItem="nna-aX-y9U" secondAttribute="bottom" constant="30" id="uWK-p9-iEl"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="roomIDTextField" destination="92f-J0-oCf" id="dOb-1r-EDE"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eh1-rR-edB" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1084" y="-132.26600985221674"/>
-        </scene>
         <!--Video Talk View Controller-->
         <scene sceneID="6o8-fP-uEs">
             <objects>
@@ -115,6 +44,12 @@ Room ID 代表一个房间的标识，需保证房间 ID 的全局唯一，长�
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t3G-MT-J0m">
+                                        <rect key="frame" x="182.5" y="26" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="onToggleMicrophoneSwitch:" destination="KRn-gV-p9E" eventType="valueChanged" id="Dvt-tj-2xW"/>
+                                        </connections>
+                                    </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AudioOutput" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6i6-Xd-8YZ">
                                         <rect key="frame" x="323.5" y="4" width="82" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -125,12 +60,6 @@ Room ID 代表一个房间的标识，需保证房间 ID 的全局唯一，长�
                                         <rect key="frame" x="340" y="26" width="51" height="31"/>
                                         <connections>
                                             <action selector="onToggleEnableAudioOutputSwitch:" destination="KRn-gV-p9E" eventType="valueChanged" id="Txj-fw-0Ga"/>
-                                        </connections>
-                                    </switch>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t3G-MT-J0m">
-                                        <rect key="frame" x="182.5" y="26" width="51" height="31"/>
-                                        <connections>
-                                            <action selector="onToggleMicrophoneSwitch:" destination="KRn-gV-p9E" eventType="valueChanged" id="Dvt-tj-2xW"/>
                                         </connections>
                                     </switch>
                                 </subviews>
@@ -167,8 +96,8 @@ Room ID 代表一个房间的标识，需保证房间 ID 的全局唯一，长�
                     <connections>
                         <outlet property="audioOutputSwitch" destination="ufa-3w-FFi" id="ktv-j7-FRJ"/>
                         <outlet property="cameraSwitch" destination="snm-iL-sdM" id="bXO-42-2tD"/>
+                        <outlet property="containerView" destination="nnu-rB-vxs" id="pQi-Wo-y0J"/>
                         <outlet property="microphoneSwitch" destination="t3G-MT-J0m" id="Q5r-KS-zUO"/>
-                        <outlet property="talkUserContainerView" destination="nnu-rB-vxs" id="pQi-Wo-y0J"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mYU-ql-dxx" userLabel="First Responder" sceneMemberID="firstResponder"/>

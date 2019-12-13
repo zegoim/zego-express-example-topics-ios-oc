@@ -28,6 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)publishTopicConfigManager:(ZGPublishTopicConfigManager *)configManager previewViewModeDidChange:(ZegoViewMode)previewViewMode;
 
+- (void)publishTopicConfigManager:(ZGPublishTopicConfigManager *)configManager streamExtraInfoDidChange:(NSString *)extraInfo;
+
 - (void)publishTopicConfigManager:(ZGPublishTopicConfigManager *)configManager enableHardwareEncodeDidChange:(BOOL)enableHardwareEncode;
 
 - (void)publishTopicConfigManager:(ZGPublishTopicConfigManager *)configManager mirrorModeDidChange:(ZegoVideoMirrorMode)mirrorMode;
@@ -57,6 +59,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setPreviewViewMode:(ZegoViewMode)previewViewMode;
 
 - (ZegoViewMode)previewViewMode;
+
+- (void)setStreamExtraInfo:(NSString *)extraInfo;
+
+- (NSString *)streamExtraInfo;
 
 - (void)setEnableHardwareEncode:(BOOL)enableHardwareEncode;
 

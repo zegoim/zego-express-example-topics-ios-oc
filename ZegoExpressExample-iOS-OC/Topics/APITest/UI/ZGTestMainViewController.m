@@ -18,9 +18,13 @@
 
 // View
 @property (weak, nonatomic) IBOutlet UIView *publishView;
-@property (weak, nonatomic) IBOutlet UIView *playView;
 @property (weak, nonatomic) IBOutlet UILabel *publishQualityLabel;
+@property (weak, nonatomic) IBOutlet UILabel *publishResolutionLabel;
+
+@property (weak, nonatomic) IBOutlet UIView *playView;
 @property (weak, nonatomic) IBOutlet UILabel *playQualityLabel;
+@property (weak, nonatomic) IBOutlet UILabel *playResolutionLabel;
+
 @property (weak, nonatomic) IBOutlet UITextView *logTextView;
 
 @end
@@ -55,8 +59,14 @@
     self.publishQualityLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.3];
     self.publishQualityLabel.textColor = [UIColor whiteColor];
     
+    self.publishResolutionLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.3];
+    self.publishResolutionLabel.textColor = [UIColor whiteColor];
+    
     self.playQualityLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.3];
     self.playQualityLabel.textColor = [UIColor whiteColor];
+    
+    self.playResolutionLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.3];
+    self.playResolutionLabel.textColor = [UIColor whiteColor];
     
     self.logTextView.text = @"";
     self.logTextView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
@@ -121,7 +131,6 @@
     NSMutableString *text = [NSMutableString string];
     [text appendFormat:@"FPS: %d fps\n", (int)quality.videoSendFPS];
     [text appendFormat:@"Bitrate: %.2f kb/s \n", quality.videoKBPS];
-    [text appendFormat:@"Resolution: %dx%d \n", (int)quality.videoResolution.width, (int)quality.videoResolution.height];
     [text appendFormat:@"HardwareEncode: %@ \n", quality.isHardwareEncode ? @"✅" : @"❎"];
     [text appendFormat:@"NetworkQuality: %@", networkQuality];
     self.publishQualityLabel.text = text;
@@ -151,10 +160,17 @@
     NSMutableString *text = [NSMutableString string];
     [text appendFormat:@"FPS: %d fps\n", (int)quality.videoRecvFPS];
     [text appendFormat:@"Bitrate: %.2f kb/s \n", quality.videoKBPS];
-    [text appendFormat:@"Resolution: %dx%d \n", (int)quality.videoResolution.width, (int)quality.videoResolution.height];
     [text appendFormat:@"HardwareDecode: %@ \n", quality.isHardwareDecode ? @"✅" : @"❎"];
     [text appendFormat:@"NetworkQuality: %@", networkQuality];
     self.playQualityLabel.text = text;
+}
+
+- (void)onPublisherVideoSizeChanged:(CGSize)size {
+    self.publishResolutionLabel.text = [NSString stringWithFormat:@"Resolution: %.fx%.f", size.width, size.height];
+}
+
+- (void)onPlayerVideoSizeChanged:(CGSize)size {
+    self.playResolutionLabel.text = [NSString stringWithFormat:@"Resolution: %.fx%.f", size.width, size.height];
 }
 
 - (void)onActionLog:(NSString *)logInfo {

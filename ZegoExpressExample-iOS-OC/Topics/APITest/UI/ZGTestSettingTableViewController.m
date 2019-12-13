@@ -13,10 +13,15 @@
 
 NSString* const ZGTestTopicKey_RoomID = @"kRoomID";
 NSString* const ZGTestTopicKey_UserID = @"kUserID";
+NSString* const ZGTestTopicKey_UserName = @"kUserName";
 NSString* const ZGTestTopicKey_PublishStreamID = @"kPublishStreamID";
+NSString* const ZGTestTopicKey_PreviewBackgroundColor = @"kPreviewBackgroundColor";
+
 NSString* const ZGTestTopicKey_PlayStreamID = @"kPlayStreamID";
+NSString* const ZGTestTopicKey_PlayBackgroundColor = @"kPlayBackgroundColor";
 NSString* const ZGTestTopicKey_AudioBitrate = @"kAudioBitrate";
 NSString* const ZGTestTopicKey_CDNURL = @"kCDNURL";
+NSString* const ZGTestTopicKey_WatermarkFilePath = @"kWatermarkFilePath";
 NSString* const ZGTestTopicKey_CaptureVolume = @"kCaptureVolume";
 NSString* const ZGTestTopicKey_PlayVolume = @"kPlayVolume";
 NSString* const ZGTestTopicKey_BeautifyFeature = @"kBeautifyFeature";
@@ -28,6 +33,8 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 @interface ZGTestSettingTableViewController () <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (nonatomic, weak) id<ZGTestViewDelegate> delegate;
+
+@property (nonatomic, strong) NSDictionary *configDict;
 
 @property (nonatomic, copy) NSArray<NSString *> *latencyModeList;
 @property (nonatomic, assign) ZegoLatencyMode selectedLatencyMode;
@@ -54,6 +61,7 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 // Room
 @property (weak, nonatomic) IBOutlet UITextField *roomIDTextField;
 @property (weak, nonatomic) IBOutlet UITextField *userIDTextField;
+@property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginRoomButton;
 @property (weak, nonatomic) IBOutlet UIButton *logoutRoomButton;
 
@@ -65,6 +73,7 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 @property (weak, nonatomic) IBOutlet UIButton *stopPublishButton;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *setPreviewViewModeSeg;
+@property (weak, nonatomic) IBOutlet UITextField *previewCanvasBackgroundColorTextField;
 @property (weak, nonatomic) IBOutlet UIPickerView *setVideoConfigResolutionPicker;
 @property (weak, nonatomic) IBOutlet UIButton *setVideoConfigButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *setVideoMirrorModeSeg;
@@ -86,12 +95,21 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 @property (weak, nonatomic) IBOutlet UITextField *CDNURLTextField;
 @property (weak, nonatomic) IBOutlet UIButton *addCDNURLButton;
 @property (weak, nonatomic) IBOutlet UIButton *removeCDNURLButton;
+@property (weak, nonatomic) IBOutlet UITextField *watermarkFilePathTextField;
+@property (weak, nonatomic) IBOutlet UISwitch *watermarkIsPreviewVisibleSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *enableWatermarkSwitch;
+@property (weak, nonatomic) IBOutlet UIButton *setWatermarkButton;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *setCapturePipelineScaleModeSeg;
+@property (weak, nonatomic) IBOutlet UIButton *setCaptureScaleModeButton;
+@property (weak, nonatomic) IBOutlet UISwitch *enableCheckPocSwitch;
+@property (weak, nonatomic) IBOutlet UIButton *enableCheckPocButton;
 
 // Play
 @property (weak, nonatomic) IBOutlet UITextField *playStreamIDTextField;
 @property (weak, nonatomic) IBOutlet UIButton *startPlayButton;
 @property (weak, nonatomic) IBOutlet UIButton *stopPlayButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *setPlayViewModeSeg;
+@property (weak, nonatomic) IBOutlet UITextField *playCanvasBackgroundColorTextField;
 @property (weak, nonatomic) IBOutlet UISwitch *mutePlayAudioSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *mutePlayAudioButton;
 @property (weak, nonatomic) IBOutlet UISwitch *mutePlayVideoSwitch;
@@ -124,6 +142,10 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 @property (weak, nonatomic) IBOutlet UIButton *useFrontCamButton;
 @property (weak, nonatomic) IBOutlet UISwitch *enableAudioCaptureDeviceSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *enableAudioCaptureDeviceButton;
+@property (weak, nonatomic) IBOutlet UIButton *startSoundLevelMonitorButton;
+@property (weak, nonatomic) IBOutlet UIButton *stopSoundLevelMonitorButton;
+@property (weak, nonatomic) IBOutlet UIButton *startSpectrumMonitorButton;
+@property (weak, nonatomic) IBOutlet UIButton *stopSpectrumMonitorButton;
 
 // Mixer
 @property (weak, nonatomic) IBOutlet UIPickerView *mixerResolutionPicker;
@@ -133,6 +155,8 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 @property (weak, nonatomic) IBOutlet UITextField *mixerOutputTargetsTextField;
 @property (weak, nonatomic) IBOutlet UIButton *startMixerTaskButton;
 @property (weak, nonatomic) IBOutlet UIButton *stopMixerTaskButton;
+@property (weak, nonatomic) IBOutlet UITextView *mixerJsonConfigTextView;
+@property (weak, nonatomic) IBOutlet UIButton *startMixerTaskWithJsonButton;
 
 // IM
 @property (weak, nonatomic) IBOutlet UITextField *broadcastMessageTextField;
@@ -147,6 +171,9 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"ZegoTestJson" ofType:@"json"];
+    self.configDict = [NSJSONSerialization JSONObjectWithData:[[NSData alloc] initWithContentsOfFile:jsonPath] options:0 error:nil];
+    
     [self setupUI];
 }
 
@@ -179,9 +206,20 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
     
     self.roomIDTextField.text = [self savedValueForKey:ZGTestTopicKey_RoomID];
     self.userIDTextField.text = [self savedValueForKey:ZGTestTopicKey_UserID];
+    self.userNameTextField.text = [self savedValueForKey:ZGTestTopicKey_UserName];
     
     self.publishStreamIDTextField.text = [self savedValueForKey:ZGTestTopicKey_PublishStreamID];
+    
+    NSString *savedPreviewBackgroundColor = [self savedValueForKey:ZGTestTopicKey_PreviewBackgroundColor];
+    self.previewCanvasBackgroundColorTextField.text = savedPreviewBackgroundColor ? savedPreviewBackgroundColor : @"0x000000";
+    
     self.playStreamIDTextField.text = [self savedValueForKey:ZGTestTopicKey_PlayStreamID];
+    
+    NSString *savedPlayBackgroundColor = [self savedValueForKey:ZGTestTopicKey_PlayBackgroundColor];
+    self.playCanvasBackgroundColorTextField.text = savedPlayBackgroundColor ? savedPlayBackgroundColor : @"0x000000";
+    
+    NSString *savedWatermarkFilePath = [self savedValueForKey:ZGTestTopicKey_WatermarkFilePath];
+    self.watermarkFilePathTextField.text = savedWatermarkFilePath ? savedWatermarkFilePath : @"asset:ZegoLogo";
     
     self.setAudioBitrateTextField.text = [self savedValueForKey:ZGTestTopicKey_AudioBitrate];
     self.setAudioBitrateTextField.keyboardType = UIKeyboardTypeNumberPad;
@@ -197,10 +235,13 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
     self.enableBeautifyTextField.text = [self savedValueForKey:ZGTestTopicKey_BeautifyFeature];
     self.enableBeautifyTextField.keyboardType = UIKeyboardTypeNumberPad;
     
+    // Mixer
     self.mixerTaskIDTextField.text = [self savedValueForKey:ZGTestTopicKey_MixerTaskID];
     self.mixerInputFirstStreamIDTextField.text = [self savedValueForKey:ZGTestTopicKey_MixerInputFirstStreamIDs];
     self.mixerInputSecondStreamIDTextField.text = [self savedValueForKey:ZGTestTopicKey_MixerInputSecondStreamIDs];
     self.mixerOutputTargetsTextField.text = [self savedValueForKey:ZGTestTopicKey_MixerOutputTargets];
+    
+    self.mixerJsonConfigTextView.text = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:self.configDict[@"mixer"] options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
 }
 
 - (void)setZGTestViewDelegate:(id<ZGTestViewDelegate>)delegate {
@@ -232,9 +273,10 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 #pragma mark Room
 
 - (IBAction)loginRoomClick:(UIButton *)sender {
-    [self.manager loginRoom:self.roomIDTextField.text userID:self.userIDTextField.text];
+    [self.manager loginRoom:self.roomIDTextField.text userID:self.userIDTextField.text userName:self.userNameTextField.text];
     [self saveValue:self.roomIDTextField.text forKey:ZGTestTopicKey_RoomID];
     [self saveValue:self.userIDTextField.text forKey:ZGTestTopicKey_UserID];
+    [self saveValue:self.userNameTextField.text forKey:ZGTestTopicKey_UserName];
 }
 
 - (IBAction)logoutRoomClick:(UIButton *)sender {
@@ -253,7 +295,11 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 }
 
 - (IBAction)startPreviewClick:(UIButton *)sender {
-    [self.manager startPreview:[ZegoCanvas canvasWithView:[self.delegate getPublishView] viewMode:(ZegoViewMode)self.setPreviewViewModeSeg.selectedSegmentIndex]];
+    ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:[self.delegate getPublishView]];
+    previewCanvas.viewMode = (ZegoViewMode)self.setPreviewViewModeSeg.selectedSegmentIndex;
+    previewCanvas.backgroundColor = [[self.previewCanvasBackgroundColorTextField.text substringFromIndex:2] intValue];
+    [self.manager startPreview:previewCanvas];
+    [self saveValue:self.previewCanvasBackgroundColorTextField.text forKey:ZGTestTopicKey_PreviewBackgroundColor];
 }
 
 - (IBAction)stopPreviewClick:(UIButton *)sender {
@@ -307,12 +353,32 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
     [self.manager removePublishCDNURL:self.CDNURLTextField.text stream:self.publishStreamIDTextField.text callback:nil];
 }
 
+- (IBAction)setWatermarkClick:(UIButton *)sender {
+    ZegoWatermark *watermark = nil;
+    if (self.enableWatermarkSwitch.on) {
+        watermark = [[ZegoWatermark alloc] initWithImageURL:self.watermarkFilePathTextField.text layout:CGRectMake(30, 100, 300, 56.25)];
+    }
+    [self.manager setWatermark:watermark isPreviewVisible:self.watermarkIsPreviewVisibleSwitch.on];
+    [self saveValue:self.watermarkFilePathTextField.text forKey:ZGTestTopicKey_WatermarkFilePath];
+}
+
+- (IBAction)setCapturePipelineScaleModeClick:(UIButton *)sender {
+    [self.manager setCapturePipelineScaleMode:(ZegoCapturePipelineScaleMode)self.setCapturePipelineScaleModeSeg.selectedSegmentIndex];
+}
+
+- (IBAction)enableCheckPocClick:(UIButton *)sender {
+    [self.manager enableCheckPoc:self.enableCheckPocSwitch.on];
+}
 
 #pragma mark Player
 
 - (IBAction)startPlayClick:(UIButton *)sender {
-    [self.manager startPlayingStream:self.playStreamIDTextField.text canvas:[ZegoCanvas canvasWithView:[self.delegate getPlayView] viewMode:(ZegoViewMode)self.setPlayViewModeSeg.selectedSegmentIndex]];
+    ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:[self.delegate getPlayView]];
+    playCanvas.viewMode = (ZegoViewMode)self.setPlayViewModeSeg.selectedSegmentIndex;
+    playCanvas.backgroundColor = [[self.playCanvasBackgroundColorTextField.text substringFromIndex:2] intValue];
+    [self.manager startPlayingStream:self.playStreamIDTextField.text canvas:playCanvas];
     [self saveValue:self.playStreamIDTextField.text forKey:ZGTestTopicKey_PlayStreamID];
+    [self saveValue:self.playCanvasBackgroundColorTextField.text forKey:ZGTestTopicKey_PlayBackgroundColor];
 }
 
 - (IBAction)stopPlayClick:(UIButton *)sender {
@@ -361,8 +427,8 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 
 #pragma mark Device
 
-- (IBAction)enableMicrophoneClick:(UIButton *)sender {
-    [self.manager enableMicrophone:self.enableMicSwitch.on];
+- (IBAction)muteMicrophoneClick:(UIButton *)sender {
+    [self.manager muteMicrophone:self.enableMicSwitch.on];
 }
 
 - (IBAction)muteAudioOutoutClick:(UIButton *)sender {
@@ -381,17 +447,33 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
     [self.manager enableAudioCaptureDevice:self.enableAudioCaptureDeviceSwitch.on];
 }
 
+- (IBAction)startSoundLevelMonitorClick:(UIButton *)sender {
+    [self.manager startSoundLevelMonitor];
+}
+
+- (IBAction)stopSoundLevelMonitorClick:(UIButton *)sender {
+    [self.manager stopSoundLevelMonitor];
+}
+
+- (IBAction)startAudioSpectrumMonitor:(UIButton *)sender {
+    [self.manager startAudioSpectrumMonitor];
+}
+
+- (IBAction)stopAudioSpectrumMonitor:(UIButton *)sender {
+    [self.manager stopAudioSpectrumMonitor];
+}
+
 #pragma mark Mixer
 
 - (IBAction)startMixerTaskClick:(UIButton *)sender {
     ZegoMixerTask *task = [[ZegoMixerTask alloc] initWithTaskID:self.mixerTaskIDTextField.text];
     ZegoMixerVideoConfig *videoConfig = [ZegoMixerVideoConfig configWithResolution:self.selectedMixerResolution];
     
-    ZegoRect *firstRect = [ZegoRect rectWithLeft:0 top:0 right:videoConfig.resolution.width bottom:videoConfig.resolution.height/2];
-    ZegoMixerInput *firstInput = [[ZegoMixerInput alloc] initWithContentType:ZegoMixerInputContentTypeVideo streamID:self.mixerInputFirstStreamIDTextField.text layout:firstRect];
+    CGRect firstRect = CGRectMake(0, 0, videoConfig.resolution.width, videoConfig.resolution.height/2);
+    ZegoMixerInput *firstInput = [[ZegoMixerInput alloc] initWithStreamID:self.mixerInputFirstStreamIDTextField.text contentType:ZegoMixerInputContentTypeVideo layout:firstRect];
     
-    ZegoRect *secondRect = [ZegoRect rectWithLeft:0 top:videoConfig.resolution.height/2 right:videoConfig.resolution.width bottom:videoConfig.resolution.height];
-    ZegoMixerInput *secondInput = [[ZegoMixerInput alloc] initWithContentType:ZegoMixerInputContentTypeVideo streamID:self.mixerInputSecondStreamIDTextField.text layout:secondRect];
+    CGRect secondRect = CGRectMake(0, videoConfig.resolution.height/2, videoConfig.resolution.width, videoConfig.resolution.height/2);
+    ZegoMixerInput *secondInput = [[ZegoMixerInput alloc] initWithStreamID:self.mixerInputSecondStreamIDTextField.text contentType:ZegoMixerInputContentTypeVideo layout:secondRect];
     
     NSArray<ZegoMixerInput *> *inputArray = @[firstInput, secondInput];
     
@@ -418,6 +500,80 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 
 - (IBAction)stopMixerTaskClick:(UIButton *)sender {
     [self.manager stopMixerTask:self.mixerTaskIDTextField.text];
+}
+
+- (IBAction)startMixerTaskWithJsonClick:(UIButton *)sender {
+    NSString *configJsonStr = self.mixerJsonConfigTextView.text;
+    NSDictionary *configDict = [NSJSONSerialization JSONObjectWithData:[configJsonStr dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+    
+    ZegoMixerTask *mixerTask = [[ZegoMixerTask alloc] initWithTaskID:[configDict objectForKey:@"taskID"]];
+    
+    if ([configDict objectForKey:@"inputList"]) {
+        NSArray<NSDictionary *> *inputListObject = [configDict objectForKey:@"inputList"];
+        NSMutableArray<ZegoMixerInput *> *mixerInputList = [NSMutableArray arrayWithCapacity:inputListObject.count];
+        
+        for (NSDictionary *input in inputListObject) {
+            ZegoMixerInput *mixerInput = [[ZegoMixerInput alloc] init];
+            int contentType = [(NSNumber *)input[@"contentType"] intValue];
+            mixerInput.contentType = (ZegoMixerInputContentType)contentType;
+            mixerInput.streamID = (NSString *)input[@"streamID"];
+            NSLog(@"Mixer Input Stream: %@", mixerInput.streamID);
+            mixerInput.layout = CGRectMake([(NSNumber *)input[@"layout"][@"x"] floatValue], [(NSNumber *)input[@"layout"][@"y"] floatValue], [(NSNumber *)input[@"layout"][@"width"] floatValue], [(NSNumber *)input[@"layout"][@"height"] floatValue]);
+            [mixerInputList addObject:mixerInput];
+        }
+        [mixerTask setInputList:mixerInputList];
+    }
+    
+    if ([configDict objectForKey:@"outputList"]) {
+        NSArray<NSDictionary *> *outputListObject = [configDict objectForKey:@"outputList"];
+        NSMutableArray<ZegoMixerOutput *> *mixerOutputList = [NSMutableArray arrayWithCapacity:outputListObject.count];
+        
+        for (NSDictionary *output in outputListObject) {
+            [mixerOutputList addObject:[[ZegoMixerOutput alloc] initWithTarget:(NSString *)output[@"target"]]];
+            NSLog(@"Mixer Output Target: %@", (NSString *)output[@"target"]);
+        }
+        [mixerTask setOutputList:mixerOutputList];
+    }
+    
+    if ([configDict objectForKey:@"videoConfig"]) {
+        NSDictionary *videoConfigObject = [configDict objectForKey:@"videoConfig"];
+        ZegoMixerVideoConfig *mixerVideoConfig = [[ZegoMixerVideoConfig alloc] init];
+        mixerVideoConfig.bitrate = [(NSNumber *)videoConfigObject[@"bitrate"] intValue];
+        NSLog(@"Mixer Video Bitrate: %d", mixerVideoConfig.bitrate);
+        mixerVideoConfig.fps = [(NSNumber *)videoConfigObject[@"fps"] intValue];
+        NSLog(@"Mixer Video FPS: %d", mixerVideoConfig.fps);
+        mixerVideoConfig.resolution = CGSizeMake([(NSNumber *)videoConfigObject[@"width"] floatValue], [(NSNumber *)videoConfigObject[@"height"] floatValue]);
+        NSLog(@"Mixer Video Width: %f, Height: %f", mixerVideoConfig.resolution.width, mixerVideoConfig.resolution.height);
+        
+        [mixerTask setVideoConfig:mixerVideoConfig];
+    }
+    
+    if ([configDict objectForKey:@"audioConfig"]) {
+        NSDictionary *audioConfigObject = [configDict objectForKey:@"audioConfig"];
+        ZegoMixerAudioConfig *mixerAudioConfig = [[ZegoMixerAudioConfig alloc] init];
+        mixerAudioConfig.bitrate = [(NSNumber *)audioConfigObject[@"bitrate"] intValue];
+        NSLog(@"Mixer Audio Bitrate: %d", mixerAudioConfig.bitrate);
+        
+        [mixerTask setAudioConfig:mixerAudioConfig];
+    }
+    
+    if ([configDict objectForKey:@"watermark"]) {
+        NSDictionary *watermarkObject = [configDict objectForKey:@"watermark"];
+        ZegoWatermark *mixerWatermark = [[ZegoWatermark alloc] init];
+        mixerWatermark.imageURL = watermarkObject[@"imageURL"];
+        NSLog(@"Mixer Watermark URL: %@", mixerWatermark.imageURL);
+        mixerWatermark.layout = CGRectMake([(NSNumber *)watermarkObject[@"layout"][@"x"] floatValue], [(NSNumber *)watermarkObject[@"layout"][@"y"] floatValue], [(NSNumber *)watermarkObject[@"layout"][@"width"] floatValue], [(NSNumber *)watermarkObject[@"layout"][@"height"] floatValue]);
+        
+        [mixerTask setWatermark:mixerWatermark];
+    }
+    
+    if ([configDict objectForKey:@"backgroundImageURL"]) {
+        NSString *backgroundImageURL = [configDict objectForKey:@"backgroundImageURL"];
+        NSLog(@"Mixer Background Image URL: %@", backgroundImageURL);
+        [mixerTask setBackgroundImageURL:backgroundImageURL];
+    }
+    
+    [self.manager startMixerTask:mixerTask];
 }
 
 #pragma mark IM

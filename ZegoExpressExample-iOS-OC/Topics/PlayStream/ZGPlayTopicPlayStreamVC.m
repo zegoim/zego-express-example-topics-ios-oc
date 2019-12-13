@@ -23,6 +23,7 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
 @property (weak, nonatomic) IBOutlet UIView *playLiveView;
 @property (weak, nonatomic) IBOutlet UITextView *processTipTextView;
 @property (weak, nonatomic) IBOutlet UILabel *playLiveQualityLabel;
+@property (weak, nonatomic) IBOutlet UILabel *playStreamExtraInfoLabel;
 @property (weak, nonatomic) IBOutlet UIView *startPlayLiveConfigView;
 @property (weak, nonatomic) IBOutlet UITextField *roomIDTextField;
 @property (weak, nonatomic) IBOutlet UITextField *streamIDTextField;
@@ -104,6 +105,10 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
     self.playLiveQualityLabel.text = @"";
     self.playLiveQualityLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
     self.playLiveQualityLabel.textColor = [UIColor whiteColor];
+    
+    self.playStreamExtraInfoLabel.text = @"";
+    self.playStreamExtraInfoLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
+    self.playStreamExtraInfoLabel.textColor = [UIColor whiteColor];
 
     self.stopPlayLiveButn.alpha = 0;
     self.startPlayLiveConfigView.alpha = 1;
@@ -167,7 +172,9 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
     ZGLogInfo(@" 📥 Strat playing stream");
     
     // Strat playing stream
-    [self.engine startPlayingStream:self.streamID canvas:[ZegoCanvas canvasWithView:self.playLiveView viewMode:self.playViewMode]];
+    ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:self.playLiveView];
+    playCanvas.viewMode = self.playViewMode;
+    [self.engine startPlayingStream:self.streamID canvas:playCanvas];
     
     // Volume needs to be set after playing stream
     [self.engine setPlayVolume:self.playStreamVolume stream:self.streamID];
@@ -270,6 +277,25 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
     [self invalidatePlayLiveStateUILayout];
 }
 
+- (void)onRoomStreamUpdate:(ZegoUpdateType)updateType streamList:(NSArray<ZegoStream *> *)streamList room:(NSString *)roomID {
+    for (ZegoStream *stream in streamList) {
+        if ([stream.streamID isEqualToString:self.streamID]) {
+            self.playStreamExtraInfoLabel.text = [NSString stringWithFormat:@"Extra Info: %@", stream.extraInfo];
+            ZGLogInfo(@" 🚩 💬 Stream Extra Info First Recv: %@, StreamID: %@", stream.extraInfo, stream.streamID);
+        }
+    }
+}
+
+- (void)onRoomStreamExtraInfoUpdate:(NSArray<ZegoStream *> *)streamList room:(NSString *)roomID {
+    NSLog(@"extra info update");
+    for (ZegoStream *stream in streamList) {
+        if ([stream.streamID isEqualToString:self.streamID]) {
+            self.playStreamExtraInfoLabel.text = [NSString stringWithFormat:@"Extra Info: %@", stream.extraInfo];
+            ZGLogInfo(@" 🚩 💬 Stream Extra Info Update: %@, StreamID: %@", stream.extraInfo, stream.streamID);
+        }
+    }
+}
+
 
 #pragma mark - ZegoExpress EventHandler Player Event
 
@@ -317,7 +343,6 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
     NSMutableString *text = [NSMutableString string];
     [text appendFormat:@"FPS: %d fps\n", (int)quality.videoRecvFPS];
     [text appendFormat:@"Bitrate: %.2f kb/s \n", quality.videoKBPS];
-    [text appendFormat:@"Resolution: %dx%d \n", (int)quality.videoResolution.width, (int)quality.videoResolution.height];
     [text appendFormat:@"HardwareDecode: %@ \n", quality.isHardwareDecode ? @"✅" : @"❎"];
     [text appendFormat:@"NetworkQuality: %@", networkQuality];
     self.playLiveQualityLabel.text = [text copy];
@@ -332,7 +357,9 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
 - (void)playTopicConfigManager:(ZGPlayTopicConfigManager *)configManager playViewModeDidChange:(ZegoViewMode)playViewMode {
     self.playViewMode = playViewMode;
     
-    [self.engine startPlayingStream:self.streamID canvas:[ZegoCanvas canvasWithView:self.playLiveView viewMode:self.playViewMode]];
+    ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:self.playLiveView];
+    playCanvas.viewMode = self.playViewMode;
+    [self.engine startPlayingStream:self.streamID canvas:playCanvas];
 }
 
 - (void)playTopicConfigManager:(ZGPlayTopicConfigManager *)configManager playStreamVolumeDidChange:(int)playStreamVolume {

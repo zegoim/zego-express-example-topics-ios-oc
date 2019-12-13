@@ -16,6 +16,7 @@ NSString* const ZGPublishTopicConfigResolutionKey = @"ZGPublishTopicConfigResolu
 NSString* const ZGPublishTopicConfigFpsKey = @"ZGPublishTopicConfigFpsKey";
 NSString* const ZGPublishTopicConfigBitrateKey = @"ZGPublishTopicConfigBitrateKey";
 NSString* const ZGPublishTopicConfigPreviewViewModeKey = @"ZGPublishTopicConfigPreviewViewModeKey";
+NSString* const ZGPublishTopicConfigStreamExtraInfoKey = @"ZGPublishTopicConfigStreamExtraInfoKey";
 NSString* const ZGPublishTopicConfigEnableHardwareEncodeKey = @"ZGPublishTopicConfigEnableHardwareEncodeKey";
 NSString* const ZGPublishTopicConfigMirrorModeKey = @"ZGPublishTopicConfigMirrorModeKey";
 
@@ -164,6 +165,28 @@ static ZGPublishTopicConfigManager *instance = nil;
         }
     });
     return mode;
+}
+
+- (void)setStreamExtraInfo:(NSString *)extraInfo {
+    dispatch_async(_configOptQueue, ^{
+        [self.zgUserDefaults setObject:extraInfo forKey:ZGPublishTopicConfigStreamExtraInfoKey];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([self.handler respondsToSelector:@selector(publishTopicConfigManager:streamExtraInfoDidChange:)]) {
+                [self.handler publishTopicConfigManager:self streamExtraInfoDidChange:extraInfo];
+            }
+        });
+    });
+}
+
+- (NSString *)streamExtraInfo {
+    __block NSString *extraInfo = @"";
+    dispatch_sync(_configOptQueue, ^{
+        NSString *s = [self.zgUserDefaults objectForKey:ZGPublishTopicConfigStreamExtraInfoKey];
+        if (s) {
+            extraInfo = s;
+        }
+    });
+    return extraInfo;
 }
 
 - (void)setEnableHardwareEncode:(BOOL)enableHardwareEncode {

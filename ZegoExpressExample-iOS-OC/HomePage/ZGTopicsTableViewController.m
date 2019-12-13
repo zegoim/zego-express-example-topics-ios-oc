@@ -40,9 +40,6 @@
 #ifdef _Module_VideoTalk
     [commonTopicList addObject:_Module_VideoTalk];
 #endif
-#ifdef _Module_JoinLive
-    [commonTopicList addObject:_Module_JoinLive];
-#endif
 #ifdef _Module_RoomMessage
     [commonTopicList addObject:_Module_RoomMessage];
 #endif
@@ -54,6 +51,9 @@
 #endif
 #ifdef _Module_SoundLevel
     [advancedTopicList addObject:_Module_SoundLevel];
+#endif
+#ifdef _Module_Beautify
+    [advancedTopicList addObject:_Module_Beautify];
 #endif
 #ifdef _Module_MediaPlayer
     [advancedTopicList addObject:_Module_MediaPlayer];
@@ -180,44 +180,44 @@
     }
     #endif
     
-#ifdef _Module_JoinLive
-    if ([topicName isEqualToString:_Module_JoinLive]) {
-        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"JoinLive" bundle:nil];
-        vc = [sb instantiateInitialViewController];
-    }
-#endif
-    
-#ifdef _Module_RoomMessage
+    #ifdef _Module_RoomMessage
     if ([topicName isEqualToString:_Module_RoomMessage]) {
         UIStoryboard* sb = [UIStoryboard storyboardWithName:@"RoomMessage" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
-#endif
+    #endif
 
-#ifdef _Module_Mixer
+    #ifdef _Module_Mixer
     if ([topicName isEqualToString:_Module_Mixer]) {
         UIStoryboard* sb = [UIStoryboard storyboardWithName:@"Mixer" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
-#endif
+    #endif
     
-#ifdef _Module_AudioAux
+    #ifdef _Module_AudioAux
     if ([topicName isEqualToString:_Module_AudioAux]) {
         UIStoryboard* sb = [UIStoryboard storyboardWithName:@"AudioAux" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
-#endif
+    #endif
     
-#ifdef _Module_SoundLevel
+    #ifdef _Module_SoundLevel
     if ([topicName isEqualToString:_Module_SoundLevel]) {
         UIStoryboard* sb = [UIStoryboard storyboardWithName:@"SoundLevel" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
-#endif
+    #endif
+    
+    #ifdef _Module_Beautify
+    if ([topicName isEqualToString:_Module_Beautify]) {
+        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"Beautify" bundle:nil];
+        vc = [sb instantiateInitialViewController];
+    }
+    #endif
     
     #ifdef _Module_MediaPlayer
     if ([topicName isEqualToString:_Module_MediaPlayer]) {
-        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"NewMediaPlayer" bundle:nil];
+        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"MediaPlayer" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
     #endif
@@ -263,12 +263,13 @@
         vc = [sb instantiateInitialViewController];
     }
     #endif
-#ifdef _Module_AudioProcessing
+    
+    #ifdef _Module_AudioProcessing
     if ([topicName isEqualToString:_Module_AudioProcessing]) {
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"AudioProcessing" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
-#endif
+    #endif
     
     if (vc) {
         [self.navigationController pushViewController:vc animated:YES];

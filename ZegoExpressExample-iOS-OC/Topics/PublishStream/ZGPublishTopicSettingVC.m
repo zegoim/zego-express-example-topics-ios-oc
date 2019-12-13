@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *fpsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bitrateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *viewModeLabel;
+@property (weak, nonatomic) IBOutlet UITextField *streamExtraInfoTextField;
 @property (weak, nonatomic) IBOutlet UISwitch *hardwareEncodeSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *mirrorLabel;
 
@@ -66,6 +67,11 @@ static NSArray<NSNumber*> *ZGPublishTopicCommonMirrorModeList;
     [self setupUI];
 }
 
+
+- (IBAction)setStreamExtraInfoButtonClick:(UIButton *)sender {
+    [[ZGPublishTopicConfigManager sharedManager] setStreamExtraInfo:self.streamExtraInfoTextField.text];
+}
+
 - (IBAction)enableHardwareEncodeSwitchValueChanged:(id)sender {
     [[ZGPublishTopicConfigManager sharedManager] setEnableHardwareEncode:self.hardwareEncodeSwitch.isOn];
 }
@@ -80,6 +86,7 @@ static NSArray<NSNumber*> *ZGPublishTopicCommonMirrorModeList;
     [self invalidateFpsUI:[ZGPublishTopicConfigManager sharedManager].fps];
     [self invalidateBitrateUI:[ZGPublishTopicConfigManager sharedManager].bitrate];
     [self invalidatePreviewViewModeUI:[ZGPublishTopicConfigManager sharedManager].previewViewMode];
+    [self invalidateStreamExtraInfoUI:[ZGPublishTopicConfigManager sharedManager].streamExtraInfo];
     [self invalidateEnableHardwareEncodeUI:[ZGPublishTopicConfigManager sharedManager].isEnableHardwareEncode];
     [self invalidateMirrorMode:[ZGPublishTopicConfigManager sharedManager].mirrorMode];
 }
@@ -139,10 +146,13 @@ static NSArray<NSNumber*> *ZGPublishTopicCommonMirrorModeList;
     self.hardwareEncodeSwitch.on = enableHardwareEncode;
 }
 
+- (void)invalidateStreamExtraInfoUI:(NSString *)streamExtraInfo {
+    self.streamExtraInfoTextField.text = streamExtraInfo;
+}
+
 - (void)invalidateMirrorMode:(ZegoVideoMirrorMode)mirrorMode {
     self.mirrorLabel.text = [[self class] displayTextForMirrorMode:mirrorMode];
 }
-
 
 - (void)showResolutionListPickSheet {
     NSArray<NSValue*>* resolutionList = ZGPublishTopicCommonResolutionList;

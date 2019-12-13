@@ -337,8 +337,50 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Other Config 其他设置" id="2uw-W3-zxm">
                                 <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="90" id="IqN-F3-tDx">
+                                        <rect key="frame" x="0.0" y="352" width="414" height="90"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IqN-F3-tDx" id="Je6-sf-Wgx">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stream Extra Info 流附加信息" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hIy-Dp-6KD">
+                                                    <rect key="frame" x="20" y="10" width="222.5" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Extra Information" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sOq-zw-ds4">
+                                                    <rect key="frame" x="20" y="40.5" width="304" height="34"/>
+                                                    <color key="backgroundColor" systemColor="systemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZS1-gJ-wqF">
+                                                    <rect key="frame" x="344" y="40" width="50" height="35"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="Qet-Yf-flg"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                    <state key="normal" title="Set"/>
+                                                    <connections>
+                                                        <action selector="setStreamExtraInfoButtonClick:" destination="J7D-o2-Spg" eventType="touchUpInside" id="PpK-gO-Xzm"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ZS1-gJ-wqF" firstAttribute="centerY" secondItem="sOq-zw-ds4" secondAttribute="centerY" id="6eL-ND-247"/>
+                                                <constraint firstItem="ZS1-gJ-wqF" firstAttribute="leading" secondItem="sOq-zw-ds4" secondAttribute="trailing" constant="20" id="I9n-pt-YeQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="ZS1-gJ-wqF" secondAttribute="trailing" constant="20" id="Jq5-3v-RPF"/>
+                                                <constraint firstItem="hIy-Dp-6KD" firstAttribute="top" secondItem="Je6-sf-Wgx" secondAttribute="top" constant="10" id="dnE-Zr-g3n"/>
+                                                <constraint firstItem="sOq-zw-ds4" firstAttribute="leading" secondItem="Je6-sf-Wgx" secondAttribute="leading" constant="20" id="eAx-Lk-ArT"/>
+                                                <constraint firstItem="sOq-zw-ds4" firstAttribute="top" secondItem="hIy-Dp-6KD" secondAttribute="bottom" constant="10" id="kCh-FQ-m4S"/>
+                                                <constraint firstItem="hIy-Dp-6KD" firstAttribute="leading" secondItem="Je6-sf-Wgx" secondAttribute="leading" constant="20" id="qkr-t9-X3z"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="104" id="BaW-l3-SHt">
-                                        <rect key="frame" x="0.0" y="352" width="414" height="104"/>
+                                        <rect key="frame" x="0.0" y="442" width="414" height="104"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BaW-l3-SHt" id="ZlY-gd-onI">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="104"/>
@@ -375,7 +417,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="64" id="ssk-Em-I1q">
-                                        <rect key="frame" x="0.0" y="456" width="414" height="64"/>
+                                        <rect key="frame" x="0.0" y="546" width="414" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ssk-Em-I1q" id="zmw-tA-bjA">
                                             <rect key="frame" x="0.0" y="0.0" width="383" height="64"/>
@@ -416,6 +458,7 @@
                         <outlet property="hardwareEncodeSwitch" destination="e9d-2U-sOq" id="Zf6-Me-Gph"/>
                         <outlet property="mirrorLabel" destination="dee-dy-fK0" id="sNg-J5-S72"/>
                         <outlet property="resolutionLabel" destination="Kf3-QW-B0A" id="5DX-J7-LOu"/>
+                        <outlet property="streamExtraInfoTextField" destination="sOq-zw-ds4" id="mCe-5x-DpS"/>
                         <outlet property="viewModeLabel" destination="fvC-w1-yHb" id="1Xw-YF-ga1"/>
                     </connections>
                 </tableViewController>

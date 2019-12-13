@@ -35,6 +35,7 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
 
 @property (nonatomic) ZegoVideoConfig *avConfig;
 @property (nonatomic) ZegoViewMode previewViewMode;
+@property (nonatomic, copy) NSString *streamExtraInfo;
 @property (nonatomic) BOOL enableHardwareEncode;
 @property (nonatomic) ZegoVideoMirrorMode videoMirrorMode;
 @property (nonatomic) BOOL enableMic;
@@ -109,6 +110,8 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
     
     self.previewViewMode = [ZGPublishTopicConfigManager sharedManager].previewViewMode;
     
+    self.streamExtraInfo = [ZGPublishTopicConfigManager sharedManager].streamExtraInfo;
+    
     self.enableHardwareEncode = [ZGPublishTopicConfigManager sharedManager].isEnableHardwareEncode;
     
     self.videoMirrorMode = [ZGPublishTopicConfigManager sharedManager].mirrorMode;
@@ -165,7 +168,7 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
     [self.engine setVideoMirrorMode:self.videoMirrorMode];
     
     // Set enable microphone
-    [self.engine enableMicrophone:self.enableMic];
+    [self.engine muteMicrophone:!self.enableMic];
     
     // Set enable camera
     [self.engine enableCamera:self.enableCamera];
@@ -174,8 +177,10 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
     [self.engine muteAudioOutput:self.muteAudioOutput];
     
     // Start preview
+    ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.previewView];
+    previewCanvas.viewMode = self.previewViewMode;
     ZGLogInfo(@" 🔌 Start preview");
-    [self.engine startPreview:[ZegoCanvas canvasWithView:self.previewView viewMode:self.previewViewMode]];
+    [self.engine startPreview:previewCanvas];
 }
 
 #pragma mark - Actions
@@ -195,7 +200,7 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
 
 - (IBAction)enableMicValueChanged:(UISwitch*)sender {
     self.enableMic = sender.isOn;
-    [self.engine enableMicrophone:self.enableMic];
+    [self.engine muteMicrophone:!self.enableMic];
 }
 
 - (IBAction)enableCameraValueChanged:(UISwitch*)sender {
@@ -223,6 +228,12 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
     [self.engine loginRoom:self.roomID user:[ZegoUser userWithUserID:userID userName:userName] config:config];
     
     [self appendProcessTipAndMakeVisible:@" 📤 Start publishing stream"];
+    
+    ZGLogInfo(@" 💬 Set stream extra info: %@", self.streamExtraInfo);
+    [self.engine setStreamExtraInfo:self.streamExtraInfo callback:^(int errorCode) {
+        ZGLogInfo(@" 🚩 💬 Set stream extra info result: %d", errorCode);
+    }];
+    
     ZGLogInfo(@" 📤 Start publishing stream");
     
     // Start publishing
@@ -321,7 +332,9 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
             ZGLogInfo(@" 🚩 🚪 Logout room");
             
             // After logout room, the preview will stop. You need to re-start preview.
-            [self.engine startPreview:[ZegoCanvas canvasWithView:self.previewView viewMode:self.previewViewMode]];
+            ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.previewView];
+            previewCanvas.viewMode = self.previewViewMode;
+            [self.engine startPreview:previewCanvas];
         }
     }
     self.roomState = state;
@@ -374,7 +387,6 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
     NSMutableString *text = [NSMutableString string];
     [text appendFormat:@"FPS: %d fps \n", (int)quality.videoSendFPS];
     [text appendFormat:@"Bitrate: %.2f kb/s \n", quality.videoKBPS];
-    [text appendFormat:@"Resolution: %dx%d \n", (int)quality.videoResolution.width, (int)quality.videoResolution.height];
     [text appendFormat:@"HardwareEncode: %@ \n", quality.isHardwareEncode ? @"✅" : @"❎"];
     [text appendFormat:@"NetworkQuality: %@", networkQuality];
     self.publishQualityLabel.text = [text copy];
@@ -414,7 +426,18 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
 
 - (void)publishTopicConfigManager:(ZGPublishTopicConfigManager *)configManager previewViewModeDidChange:(ZegoViewMode)previewViewMode {
     self.previewViewMode = previewViewMode;
-    [self.engine startPreview:[ZegoCanvas canvasWithView:self.previewView viewMode:self.previewViewMode]];
+    ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.previewView];
+    previewCanvas.viewMode = self.previewViewMode;
+    [self.engine startPreview:previewCanvas];
+}
+
+- (void)publishTopicConfigManager:(ZGPublishTopicConfigManager *)configManager streamExtraInfoDidChange:(NSString *)extraInfo {
+    self.streamExtraInfo = extraInfo;
+    ZGLogInfo(@" 💬 Set stream extra info: %@", self.streamExtraInfo);
+    [self.engine setStreamExtraInfo:self.streamExtraInfo callback:^(int errorCode) {
+        ZGLogInfo(@" 🚩 💬 Set stream extra info result: %d", errorCode);
+    }];
+
 }
 
 - (void)publishTopicConfigManager:(ZGPublishTopicConfigManager *)configManager enableHardwareEncodeDidChange:(BOOL)enableHardwareEncode {

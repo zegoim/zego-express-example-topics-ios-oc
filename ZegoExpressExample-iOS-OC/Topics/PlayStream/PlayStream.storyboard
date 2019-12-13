@@ -39,6 +39,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PN3-UG-dPs">
+                                <rect key="frame" x="414" y="148" width="0.0" height="0.0"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eDY-Rv-JEt" userLabel="Config View">
                                 <rect key="frame" x="0.0" y="323" width="414" height="250"/>
                                 <subviews>
@@ -123,6 +130,7 @@
                             <constraint firstAttribute="trailing" secondItem="eDY-Rv-JEt" secondAttribute="trailing" id="EOH-oA-muS"/>
                             <constraint firstItem="eDY-Rv-JEt" firstAttribute="centerY" secondItem="nRi-8a-kkd" secondAttribute="centerY" id="Ey5-Ie-REA"/>
                             <constraint firstItem="0Yl-dz-cc7" firstAttribute="top" secondItem="bRQ-NT-rJ5" secondAttribute="bottom" id="Fhl-VX-BXr"/>
+                            <constraint firstItem="PN3-UG-dPs" firstAttribute="top" secondItem="0Yl-dz-cc7" secondAttribute="bottom" constant="4" id="HPe-cs-Azo"/>
                             <constraint firstAttribute="trailing" secondItem="0Yl-dz-cc7" secondAttribute="trailing" id="MZ0-8A-g0C"/>
                             <constraint firstItem="EfJ-YY-iEK" firstAttribute="centerX" secondItem="nRi-8a-kkd" secondAttribute="centerX" id="Puc-dq-4vL"/>
                             <constraint firstItem="q0O-3w-RV7" firstAttribute="top" secondItem="EfJ-YY-iEK" secondAttribute="bottom" constant="30" id="Q7z-Xx-njh"/>
@@ -132,11 +140,13 @@
                             <constraint firstItem="seD-lB-FbN" firstAttribute="leading" secondItem="nRi-8a-kkd" secondAttribute="leading" id="eB0-Ji-QEQ"/>
                             <constraint firstAttribute="trailing" secondItem="seD-lB-FbN" secondAttribute="trailing" id="eKB-co-5hX"/>
                             <constraint firstItem="y1I-px-mre" firstAttribute="top" secondItem="0Yl-dz-cc7" secondAttribute="bottom" constant="4" id="i5E-Td-UNY"/>
+                            <constraint firstAttribute="trailing" secondItem="PN3-UG-dPs" secondAttribute="trailing" id="lis-SH-U5c"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="playLiveQualityLabel" destination="y1I-px-mre" id="mwJ-rG-aly"/>
                         <outlet property="playLiveView" destination="seD-lB-FbN" id="4jZ-6s-Ieb"/>
+                        <outlet property="playStreamExtraInfoLabel" destination="PN3-UG-dPs" id="Zvv-ll-XUd"/>
                         <outlet property="processTipTextView" destination="0Yl-dz-cc7" id="cBa-a4-Pi1"/>
                         <outlet property="roomIDTextField" destination="OHv-ja-nI2" id="8uB-OA-wGh"/>
                         <outlet property="startPlayLiveButn" destination="F87-46-WDG" id="ycf-lo-B0T"/>
@@ -283,7 +293,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gY2-cc-8GL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="895.6521739130435" y="23.4375"/>
+            <point key="canvasLocation" x="474" y="31"/>
         </scene>
     </scenes>
 </document>

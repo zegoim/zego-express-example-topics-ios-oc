@@ -52,17 +52,21 @@
 		861376302387B78400C30486 /* RoomMessage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8613762F2387B78400C30486 /* RoomMessage.storyboard */; };
 		861376332387B79600C30486 /* ZGRoomMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 861376322387B79600C30486 /* ZGRoomMessageViewController.m */; };
 		861376362387E11900C30486 /* ZGRoomMessageSelectUsersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 861376352387E11900C30486 /* ZGRoomMessageSelectUsersTableViewController.m */; };
+		86294D2623A3992B00D91DD6 /* ZegoTestJson.json in Resources */ = {isa = PBXBuildFile; fileRef = 86294D2523A3992A00D91DD6 /* ZegoTestJson.json */; };
 		867BBD0C2376E018008F7D4F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 867BBD0B2376E018008F7D4F /* SystemConfiguration.framework */; };
 		867BBD0E2376E02B008F7D4F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 867BBD0D2376E023008F7D4F /* libz.tbd */; };
 		867BBD102376E03D008F7D4F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 867BBD0F2376E036008F7D4F /* libc++.tbd */; };
+		867DB307239E712000072B3F /* ZGVideoTalkViewObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 867DB306239E712000072B3F /* ZGVideoTalkViewObject.m */; };
 		86A502722369719900D51012 /* VideoTalk.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86A502712369719900D51012 /* VideoTalk.storyboard */; };
-		86A50275236971E500D51012 /* ZGVideoTalkLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86A50274236971E500D51012 /* ZGVideoTalkLoginViewController.m */; };
 		86A50278236976C200D51012 /* ZGVideoTalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86A50277236976C200D51012 /* ZGVideoTalkViewController.m */; };
-		86A5027B2369B34400D51012 /* ZGVideoTalkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 86A5027A2369B34400D51012 /* ZGVideoTalkManager.m */; };
 		86A50DE7236B11E500D51012 /* ZegoExpressEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 86A50DE4236B11D400D51012 /* ZegoExpressEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		86AA7AB0237BDB7000B2D31E /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 867BBD082376E002008F7D4F /* Bugly.framework */; };
 		86AA7AB1237BDB7300B2D31E /* SSZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8608C3FF2363245900CE367B /* SSZipArchive.framework */; };
 		86AA7AB2237BDB7700B2D31E /* ZegoExpressEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86A50DE4236B11D400D51012 /* ZegoExpressEngine.framework */; };
+		86B6E5552395223600078757 /* SoundLevel.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86B6E54E2395223600078757 /* SoundLevel.storyboard */; };
+		86B6E5562395223600078757 /* ZGSoundLevelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86B6E54F2395223600078757 /* ZGSoundLevelTableViewCell.xib */; };
+		86B6E5582395223600078757 /* ZGSoundLevelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B6E5512395223600078757 /* ZGSoundLevelViewController.m */; };
+		86B6E55A2395223600078757 /* ZGSoundLevelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 86B6E5532395223600078757 /* ZGSoundLevelTableViewCell.m */; };
 		86BB70872363FEC600FF2608 /* ZGPublishTopicPublishStreamVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 86BB70832363FEC500FF2608 /* ZGPublishTopicPublishStreamVC.m */; };
 		86BB70882363FEC600FF2608 /* PublishStream.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86BB70852363FEC600FF2608 /* PublishStream.storyboard */; };
 		86BB70892363FEC600FF2608 /* ZGPublishTopicSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 86BB70862363FEC600FF2608 /* ZGPublishTopicSettingVC.m */; };
@@ -70,6 +74,9 @@
 		86BB7093236457D500FF2608 /* ZGPlayTopicSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 86BB708E236457D500FF2608 /* ZGPlayTopicSettingVC.m */; };
 		86BB7094236457D500FF2608 /* ZGPlayTopicPlayStreamVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 86BB7090236457D500FF2608 /* ZGPlayTopicPlayStreamVC.m */; };
 		86BB7097236457ED00FF2608 /* ZGPlayTopicConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 86BB7096236457ED00FF2608 /* ZGPlayTopicConfigManager.m */; };
+		86BF9808239F47B000319709 /* Beautify.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86BF9807239F47B000319709 /* Beautify.storyboard */; };
+		86BF980B239F47CB00319709 /* ZGBeautifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86BF980A239F47CB00319709 /* ZGBeautifyViewController.m */; };
+		86BF980E239F6E0200319709 /* ZGBeautifyConfigTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86BF980D239F6E0200319709 /* ZGBeautifyConfigTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -174,18 +181,23 @@
 		861376322387B79600C30486 /* ZGRoomMessageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGRoomMessageViewController.m; sourceTree = "<group>"; };
 		861376342387E11900C30486 /* ZGRoomMessageSelectUsersTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGRoomMessageSelectUsersTableViewController.h; sourceTree = "<group>"; };
 		861376352387E11900C30486 /* ZGRoomMessageSelectUsersTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGRoomMessageSelectUsersTableViewController.m; sourceTree = "<group>"; };
+		86294D2523A3992A00D91DD6 /* ZegoTestJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ZegoTestJson.json; sourceTree = "<group>"; };
 		867BBD082376E002008F7D4F /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
 		867BBD0B2376E018008F7D4F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		867BBD0D2376E023008F7D4F /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		867BBD0F2376E036008F7D4F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		867DB305239E712000072B3F /* ZGVideoTalkViewObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGVideoTalkViewObject.h; sourceTree = "<group>"; };
+		867DB306239E712000072B3F /* ZGVideoTalkViewObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGVideoTalkViewObject.m; sourceTree = "<group>"; };
 		86A502712369719900D51012 /* VideoTalk.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = VideoTalk.storyboard; sourceTree = "<group>"; };
-		86A50273236971E500D51012 /* ZGVideoTalkLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGVideoTalkLoginViewController.h; sourceTree = "<group>"; };
-		86A50274236971E500D51012 /* ZGVideoTalkLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGVideoTalkLoginViewController.m; sourceTree = "<group>"; };
 		86A50276236976C200D51012 /* ZGVideoTalkViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGVideoTalkViewController.h; sourceTree = "<group>"; };
 		86A50277236976C200D51012 /* ZGVideoTalkViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGVideoTalkViewController.m; sourceTree = "<group>"; };
-		86A502792369B34400D51012 /* ZGVideoTalkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGVideoTalkManager.h; sourceTree = "<group>"; };
-		86A5027A2369B34400D51012 /* ZGVideoTalkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGVideoTalkManager.m; sourceTree = "<group>"; };
 		86A50DE4236B11D400D51012 /* ZegoExpressEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZegoExpressEngine.framework; sourceTree = "<group>"; };
+		86B6E54B2395223600078757 /* ZGSoundLevelTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGSoundLevelTableViewCell.h; sourceTree = "<group>"; };
+		86B6E54E2395223600078757 /* SoundLevel.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SoundLevel.storyboard; sourceTree = "<group>"; };
+		86B6E54F2395223600078757 /* ZGSoundLevelTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZGSoundLevelTableViewCell.xib; sourceTree = "<group>"; };
+		86B6E5512395223600078757 /* ZGSoundLevelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGSoundLevelViewController.m; sourceTree = "<group>"; };
+		86B6E5532395223600078757 /* ZGSoundLevelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGSoundLevelTableViewCell.m; sourceTree = "<group>"; };
+		86B6E5542395223600078757 /* ZGSoundLevelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGSoundLevelViewController.h; sourceTree = "<group>"; };
 		86BB70822363FEC500FF2608 /* ZGPublishTopicPublishStreamVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGPublishTopicPublishStreamVC.h; sourceTree = "<group>"; };
 		86BB70832363FEC500FF2608 /* ZGPublishTopicPublishStreamVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGPublishTopicPublishStreamVC.m; sourceTree = "<group>"; };
 		86BB70842363FEC600FF2608 /* ZGPublishTopicSettingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGPublishTopicSettingVC.h; sourceTree = "<group>"; };
@@ -199,6 +211,11 @@
 		86BB7091236457D500FF2608 /* ZGPlayTopicSettingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGPlayTopicSettingVC.h; sourceTree = "<group>"; };
 		86BB7095236457EC00FF2608 /* ZGPlayTopicConfigManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGPlayTopicConfigManager.h; sourceTree = "<group>"; };
 		86BB7096236457ED00FF2608 /* ZGPlayTopicConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGPlayTopicConfigManager.m; sourceTree = "<group>"; };
+		86BF9807239F47B000319709 /* Beautify.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Beautify.storyboard; sourceTree = "<group>"; };
+		86BF9809239F47CB00319709 /* ZGBeautifyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGBeautifyViewController.h; sourceTree = "<group>"; };
+		86BF980A239F47CB00319709 /* ZGBeautifyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGBeautifyViewController.m; sourceTree = "<group>"; };
+		86BF980C239F6E0200319709 /* ZGBeautifyConfigTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGBeautifyConfigTableViewController.h; sourceTree = "<group>"; };
+		86BF980D239F6E0200319709 /* ZGBeautifyConfigTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGBeautifyConfigTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -315,6 +332,8 @@
 				8608C3EF2363245100CE367B /* VideoTalk */,
 				861376152384E44500C30486 /* Mixer */,
 				8613762E2387B75F00C30486 /* RoomMessage */,
+				86B6E5362394E90800078757 /* SoundLevel */,
+				86BF9806239F479A00319709 /* Beautify */,
 				8608C3F12363245100CE367B /* APITest */,
 			);
 			path = Topics;
@@ -323,9 +342,11 @@
 		8608C3EF2363245100CE367B /* VideoTalk */ = {
 			isa = PBXGroup;
 			children = (
-				86A502792369B34400D51012 /* ZGVideoTalkManager.h */,
-				86A5027A2369B34400D51012 /* ZGVideoTalkManager.m */,
-				86A5026F2369706D00D51012 /* UI */,
+				86A502712369719900D51012 /* VideoTalk.storyboard */,
+				86A50276236976C200D51012 /* ZGVideoTalkViewController.h */,
+				86A50277236976C200D51012 /* ZGVideoTalkViewController.m */,
+				867DB305239E712000072B3F /* ZGVideoTalkViewObject.h */,
+				867DB306239E712000072B3F /* ZGVideoTalkViewObject.m */,
 			);
 			path = VideoTalk;
 			sourceTree = "<group>";
@@ -349,6 +370,7 @@
 			children = (
 				8608C3F32363245100CE367B /* ZGTestTopicManager.h */,
 				8608C3F22363245100CE367B /* ZGTestTopicManager.m */,
+				86294D2523A3992A00D91DD6 /* ZegoTestJson.json */,
 				8608C3DA2363244A00CE367B /* UI */,
 			);
 			path = APITest;
@@ -362,8 +384,8 @@
 				86BB70852363FEC600FF2608 /* PublishStream.storyboard */,
 				86BB70822363FEC500FF2608 /* ZGPublishTopicPublishStreamVC.h */,
 				86BB70832363FEC500FF2608 /* ZGPublishTopicPublishStreamVC.m */,
-				86BB70842363FEC600FF2608 /* ZGPublishTopicSettingVC.h */,
 				86BB70862363FEC600FF2608 /* ZGPublishTopicSettingVC.m */,
+				86BB70842363FEC600FF2608 /* ZGPublishTopicSettingVC.h */,
 			);
 			path = PublishStream;
 			sourceTree = "<group>";
@@ -500,16 +522,29 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		86A5026F2369706D00D51012 /* UI */ = {
+		86B6E5362394E90800078757 /* SoundLevel */ = {
 			isa = PBXGroup;
 			children = (
-				86A502712369719900D51012 /* VideoTalk.storyboard */,
-				86A50273236971E500D51012 /* ZGVideoTalkLoginViewController.h */,
-				86A50274236971E500D51012 /* ZGVideoTalkLoginViewController.m */,
-				86A50276236976C200D51012 /* ZGVideoTalkViewController.h */,
-				86A50277236976C200D51012 /* ZGVideoTalkViewController.m */,
+				86B6E54E2395223600078757 /* SoundLevel.storyboard */,
+				86B6E5542395223600078757 /* ZGSoundLevelViewController.h */,
+				86B6E5512395223600078757 /* ZGSoundLevelViewController.m */,
+				86B6E54B2395223600078757 /* ZGSoundLevelTableViewCell.h */,
+				86B6E5532395223600078757 /* ZGSoundLevelTableViewCell.m */,
+				86B6E54F2395223600078757 /* ZGSoundLevelTableViewCell.xib */,
 			);
-			path = UI;
+			path = SoundLevel;
+			sourceTree = "<group>";
+		};
+		86BF9806239F479A00319709 /* Beautify */ = {
+			isa = PBXGroup;
+			children = (
+				86BF9807239F47B000319709 /* Beautify.storyboard */,
+				86BF9809239F47CB00319709 /* ZGBeautifyViewController.h */,
+				86BF980A239F47CB00319709 /* ZGBeautifyViewController.m */,
+				86BF980C239F6E0200319709 /* ZGBeautifyConfigTableViewController.h */,
+				86BF980D239F6E0200319709 /* ZGBeautifyConfigTableViewController.m */,
+			);
+			path = Beautify;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -573,14 +608,18 @@
 				86BB70882363FEC600FF2608 /* PublishStream.storyboard in Resources */,
 				8608C3E22363244A00CE367B /* GlobalConfig.storyboard in Resources */,
 				861376302387B78400C30486 /* RoomMessage.storyboard in Resources */,
+				86BF9808239F47B000319709 /* Beautify.storyboard in Resources */,
 				861376192384E65700C30486 /* Mixer.storyboard in Resources */,
 				8608C3ED2363244A00CE367B /* Main.storyboard in Resources */,
+				86B6E5552395223600078757 /* SoundLevel.storyboard in Resources */,
 				8608C3BC23631EDC00CE367B /* LaunchScreen.storyboard in Resources */,
 				8608C3EC2363244A00CE367B /* Test.storyboard in Resources */,
 				8608C3B923631EDC00CE367B /* Assets.xcassets in Resources */,
 				8609F20F237E78B700B29333 /* QuickStart.storyboard in Resources */,
 				86A502722369719900D51012 /* VideoTalk.storyboard in Resources */,
 				86BB7092236457D500FF2608 /* PlayStream.storyboard in Resources */,
+				86294D2623A3992B00D91DD6 /* ZegoTestJson.json in Resources */,
+				86B6E5562395223600078757 /* ZGSoundLevelTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,6 +637,7 @@
 				86BB7097236457ED00FF2608 /* ZGPlayTopicConfigManager.m in Sources */,
 				8608C3E62363244A00CE367B /* ZGShareLogViewController.m in Sources */,
 				8608C3E42363244A00CE367B /* ZGNavigationController.m in Sources */,
+				86BF980E239F6E0200319709 /* ZGBeautifyConfigTableViewController.m in Sources */,
 				8608C4582363246600CE367B /* ZGAppGlobalConfig.m in Sources */,
 				8608C3EB2363244A00CE367B /* ZGTestMainViewController.m in Sources */,
 				8608C4512363246600CE367B /* ZegoDiskLogFormatter.m in Sources */,
@@ -609,6 +649,7 @@
 				8608C4282363245900CE367B /* MBProgressHUD.m in Sources */,
 				8608C44F2363246600CE367B /* ZGJsonHelper.m in Sources */,
 				86A50278236976C200D51012 /* ZGVideoTalkViewController.m in Sources */,
+				867DB307239E712000072B3F /* ZGVideoTalkViewObject.m in Sources */,
 				8608C3E82363244A00CE367B /* UIViewController+TopPresent.m in Sources */,
 				86BB70892363FEC600FF2608 /* ZGPublishTopicSettingVC.m in Sources */,
 				86BB70872363FEC600FF2608 /* ZGPublishTopicPublishStreamVC.m in Sources */,
@@ -619,7 +660,6 @@
 				8608C3E32363244A00CE367B /* ZGAppGlobalConfigViewController.m in Sources */,
 				8608C46923632F3100CE367B /* ZGURLDefine.m in Sources */,
 				8608C4522363246600CE367B /* ZegoTTYLogger.m in Sources */,
-				86A5027B2369B34400D51012 /* ZGVideoTalkManager.m in Sources */,
 				8608C3E92363244A00CE367B /* ZegoHudManager.m in Sources */,
 				8608C44E2363246600CE367B /* ZGKeyCenter.m in Sources */,
 				8608C45B2363246600CE367B /* ZGHashTableHelper.m in Sources */,
@@ -630,10 +670,12 @@
 				8608C3EA2363244A00CE367B /* ZGTestSettingTableViewController.m in Sources */,
 				8608C3BF23631EDC00CE367B /* main.m in Sources */,
 				8608C4542363246600CE367B /* ZegoDefaultLogFormatter.m in Sources */,
+				86BF980B239F47CB00319709 /* ZGBeautifyViewController.m in Sources */,
 				861376332387B79600C30486 /* ZGRoomMessageViewController.m in Sources */,
 				8608C3E52363244A00CE367B /* ZegoLogView.m in Sources */,
-				86A50275236971E500D51012 /* ZGVideoTalkLoginViewController.m in Sources */,
+				86B6E55A2395223600078757 /* ZGSoundLevelTableViewCell.m in Sources */,
 				86BB7094236457D500FF2608 /* ZGPlayTopicPlayStreamVC.m in Sources */,
+				86B6E5582395223600078757 /* ZGSoundLevelViewController.m in Sources */,
 				861376202386A42300C30486 /* ZGMixerLoginViewController.m in Sources */,
 				861376232386C01500C30486 /* ZGMixerPublishViewController.m in Sources */,
 			);

@@ -65,8 +65,8 @@
 
 #pragma mark Room
 
-- (void)loginRoom:(NSString *)roomID userID:(NSString *)userID {
-    [self.engine loginRoom:roomID user:[ZegoUser userWithUserID:userID] config:nil];
+- (void)loginRoom:(NSString *)roomID userID:(NSString *)userID userName:(NSString *)userName {
+    [self.engine loginRoom:roomID user:[ZegoUser userWithUserID:userID userName:userName] config:nil];
     ZGLogInfo(@" 🚪 Login room. roomID: %@", roomID);
     [self.dataSource onActionLog:[NSString stringWithFormat:@" 🚪 Login room"]];
 }
@@ -166,9 +166,9 @@
 
 
 - (void)addPublishCDNURL:(NSString *)targetURL stream:(NSString *)streamID callback:(nullable ZegoPublisherUpdateCDNURLCallback)callback {
-    [self.engine addPublishCDNURL:targetURL stream:streamID callback:^(int errorCode, NSString * _Nonnull streamID) {
+    [self.engine addPublishCDNURL:targetURL stream:streamID callback:^(int errorCode) {
         if (callback) {
-            callback(errorCode, streamID);
+            callback(errorCode);
         }
     }];
     ZGLogInfo(@" 🔗 Add publish cdn url: %@, streamID: %@", targetURL, streamID);
@@ -177,9 +177,9 @@
 
 
 - (void)removePublishCDNURL:(NSString *)targetURL stream:(NSString *)streamID callback:(nullable ZegoPublisherUpdateCDNURLCallback)callback {
-    [self.engine removePublishCDNURL:targetURL stream:streamID callback:^(int errorCode, NSString * _Nonnull streamID) {
+    [self.engine removePublishCDNURL:targetURL stream:streamID callback:^(int errorCode) {
         if (callback) {
-            callback(errorCode, streamID);
+            callback(errorCode);
         }
     }];
     ZGLogInfo(@" 🔗 Remove publish cdn url: %@, streamID: %@", targetURL, streamID);
@@ -192,6 +192,25 @@
     ZGLogInfo(@" 🔧 Enable hardware encoder: %@", enable ? @"YES" : @"NO");
     [self.dataSource onActionLog:[NSString stringWithFormat:@" 🔧 Enable hardware encoder: %@", enable ? @"YES" : @"NO"]];
 }
+
+- (void)setWatermark:(ZegoWatermark *)watermark isPreviewVisible:(BOOL)isPreviewVisible {
+    [self.engine setPublishWatermark:watermark isPreviewVisible:isPreviewVisible];
+    ZGLogInfo(@" 🌅 Set publish watermark, filePath: %@, isPreviewVisible: %@", watermark.imageURL, isPreviewVisible ? @"YES" : @"NO");
+    [self.dataSource onActionLog:[NSString stringWithFormat:@" 🌅 Set publish watermark, filePath: %@, isPreviewVisible: %@", watermark.imageURL, isPreviewVisible ? @"YES" : @"NO"]];
+}
+
+- (void)setCapturePipelineScaleMode:(ZegoCapturePipelineScaleMode)scaleMode {
+    [self.engine setCapturePipelineScaleMode:scaleMode];
+    ZGLogInfo(@" 🔧 Set capture pipeline scale mode: %d", (int)scaleMode);
+    [self.dataSource onActionLog:[NSString stringWithFormat:@" 🔧 Set capture pipeline scale mode: %d", (int)scaleMode]];
+}
+
+- (void)enableCheckPoc:(BOOL)enable {
+    [self.engine enableCheckPoc:enable];
+    ZGLogInfo(@" 🔧 Enable check poc: %@", enable ? @"YES" : @"NO");
+    [self.dataSource onActionLog:[NSString stringWithFormat:@" 🔧 Enable check poc: %@", enable ? @"YES" : @"NO"]];
+}
+
 
 
 #pragma mark Player
@@ -276,17 +295,17 @@
 
 - (void)setBeautifyOption:(ZegoBeautifyOption *)option {
     [self.engine setBeautifyOption:option];
-    ZGLogInfo(@" 🔧 Set eautify option. polishStep: %f, polishFactor: %f, whitenFactor: %f, sharpenFactor: %f", option.polishStep, option.polishFactor, option.whitenFactor, option.sharpenFactor);
-    [self.dataSource onActionLog:[NSString stringWithFormat:@" 🔧 Set eautify option. polishStep: %f, polishFactor: %f, whitenFactor: %f, sharpenFactor: %f", option.polishStep, option.polishFactor, option.whitenFactor, option.sharpenFactor]];
+    ZGLogInfo(@" 🔧 Set eautify option. polishStep: %f, whitenFactor: %f, sharpenFactor: %f", option.polishStep, option.whitenFactor, option.sharpenFactor);
+    [self.dataSource onActionLog:[NSString stringWithFormat:@" 🔧 Set eautify option. polishStep: %f, whitenFactor: %f, sharpenFactor: %f", option.polishStep, option.whitenFactor, option.sharpenFactor]];
 }
 
 
 #pragma mark Device
 
-- (void)enableMicrophone:(BOOL)enable {
-    [self.engine enableMicrophone:enable];
-    ZGLogInfo(@" 🔧 Enable microphone: %@", enable ? @"YES" : @"NO");
-    [self.dataSource onActionLog:[NSString stringWithFormat:@" 🔧 Enable microphone: %@", enable ? @"YES" : @"NO"]];
+- (void)muteMicrophone:(BOOL)mute {
+    [self.engine muteMicrophone:mute];
+    ZGLogInfo(@" 🔧 Mute microphone: %@", mute ? @"YES" : @"NO");
+    [self.dataSource onActionLog:[NSString stringWithFormat:@" 🔧 Mute microphone: %@", mute ? @"YES" : @"NO"]];
 }
 
 
@@ -315,6 +334,30 @@
     [self.engine enableAudioCaptureDevice:enable];
     ZGLogInfo(@" 🔧 Enable audio capture device: %@", enable ? @"YES" : @"NO");
     [self.dataSource onActionLog:[NSString stringWithFormat:@" 🔧 Enable audio capture device: %@", enable ? @"YES" : @"NO"]];
+}
+
+- (void)startSoundLevelMonitor {
+    [self.engine startSoundLevelMonitor];
+    ZGLogInfo(@" 🎼 Start sound level monitor");
+    [self.dataSource onActionLog:@" 🎼 Start sound level monitor"];
+}
+
+- (void)stopSoundLevelMonitor {
+    [self.engine stopSoundLevelMonitor];
+    ZGLogInfo(@" 🎼 Stop sound level monitor");
+    [self.dataSource onActionLog:@" 🎼 Stop sound level monitor"];
+}
+
+- (void)startAudioSpectrumMonitor {
+    [self.engine startAudioSpectrumMonitor];
+    ZGLogInfo(@" 🎼 Start audio spectrum monitor");
+    [self.dataSource onActionLog:@" 🎼 Start audio spectrum monitor"];
+}
+
+- (void)stopAudioSpectrumMonitor {
+    [self.engine stopAudioSpectrumMonitor];
+    ZGLogInfo(@" 🎼 Stop audio spectrum monitor");
+    [self.dataSource onActionLog:@" 🎼 Stop audio spectrum monitor"];
 }
 
 #pragma mark Mixer
@@ -352,6 +395,8 @@
     ZGLogInfo(@" 🚩 ❓ Debug Error Callback: errorCode: %d, FuncName: %@ Info: %@", errorCode, funcName, info);
 }
 
+#pragma mark Room Callback
+
 - (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode room:(NSString *)roomID {
     ZGLogInfo(@" 🚩 🚪 Room State Update Callback: %lu, errorCode: %d, roomID: %@", (unsigned long)state, (int)errorCode, roomID);
 }
@@ -365,12 +410,18 @@
     ZGLogInfo(@" 🚩 🌊 Room Stream Update Callback: %lu, StreamsCount: %lu, roomID: %@", (unsigned long)updateType, (unsigned long)streamList.count, roomID);
 }
 
+- (void)onRoomStreamExtraInfoUpdate:(NSArray<ZegoStream *> *)streamList room:(NSString *)roomID {
+    ZGLogInfo(@" 🚩 🌊 Room Stream Extra Info Update Callback, StreamsCount: %lu, roomID: %@", (unsigned long)streamList.count, roomID);
+}
+
+#pragma mark Publisher Callback
+
 - (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode stream:(NSString *)streamID {
     ZGLogInfo(@" 🚩 📤 Publisher State Update Callback: %lu, errorCode: %d, streamID: %@", (unsigned long)state, (int)errorCode, streamID);
 }
 
 - (void)onPublisherQualityUpdate:(ZegoPublishStreamQuality *)quality stream:(NSString *)streamID {
-    ZGLogInfo(@" 🚩 📈 Publisher Quality Update Callback: FPS:%f, Bitrate:%f, Width: %f, Height: %f, streamID: %@", quality.videoSendFPS, quality.videoKBPS, quality.videoResolution.width, quality.videoResolution.height, streamID);
+    ZGLogInfo(@" 🚩 📈 Publisher Quality Update Callback: FPS:%f, Bitrate:%f, streamID: %@", quality.videoSendFPS, quality.videoKBPS, streamID);
     
     if ([self.dataSource respondsToSelector:@selector(onPublisherQualityUpdate:)]) {
         [self.dataSource onPublisherQualityUpdate:quality];
@@ -383,18 +434,24 @@
 
 - (void)onPublisherVideoSizeChanged:(CGSize)size {
     ZGLogInfo(@" 🚩 📐 Publisher Video Size Changed Callback: Width: %f, Height: %f", size.width, size.height);
+    
+    if ([self.dataSource respondsToSelector:@selector(onPublisherVideoSizeChanged:)]) {
+        [self.dataSource onPublisherVideoSizeChanged:size];
+    }
 }
 
 - (void)onPublisherRelayCDNStateUpdate:(NSArray<ZegoStreamRelayCDNInfo *> *)infoList stream:(NSString *)streamID {
     ZGLogInfo(@" 🚩 📡 Publisher Relay CDN State Update Callback: Relaying CDN Count: %lu, streamID: %@", (unsigned long)infoList.count, streamID);
 }
 
+#pragma mark Player Callback
+
 - (void)onPlayerStateUpdate:(ZegoPlayerState)state errorCode:(int)errorCode stream:(NSString *)streamID {
     ZGLogInfo(@" 🚩 📥 Player State Update Callback: %lu, errorCode: %d, streamID: %@", (unsigned long)state, (int)errorCode, streamID);
 }
 
 - (void)onPlayerQualityUpdate:(ZegoPlayStreamQuality *)quality stream:(NSString *)streamID {
-    ZGLogInfo(@" 🚩 📉 Player Quality Update Callback: FPS:%f, Bitrate:%f, Width: %f, Height: %f, streamID: %@", quality.videoRecvFPS, quality.videoKBPS, quality.videoResolution.width, quality.videoResolution.height, streamID);
+    ZGLogInfo(@" 🚩 📉 Player Quality Update Callback: FPS:%f, Bitrate:%f, streamID: %@", quality.videoRecvFPS, quality.videoKBPS, streamID);
     
     if ([self.dataSource respondsToSelector:@selector(onPlayerQualityUpdate:)]) {
         [self.dataSource onPlayerQualityUpdate:quality];
@@ -411,7 +468,13 @@
 
 - (void)onPlayerVideoSizeChanged:(CGSize)size stream:(NSString *)streamID {
     ZGLogInfo(@" 🚩 📏 Player Video Size Changed Callback: Width: %f, Height: %f, streamID: %@", size.width, size.height, streamID);
+    
+    if ([self.dataSource respondsToSelector:@selector(onPlayerVideoSizeChanged:)]) {
+        [self.dataSource onPlayerVideoSizeChanged:size];
+    }
 }
+
+#pragma mark Device Callback
 
 - (void)onDeviceError:(int)errorCode deviceName:(NSString *)deviceName {
     ZGLogInfo(@" 🚩 💻 Device Error Callback: errorCode: %d, DeviceName: %@", errorCode, deviceName);
@@ -425,6 +488,8 @@
     ZGLogInfo(@" 🚩 🎙 Remote Mic State Update Callback: state: %lu, DeviceName: %@", (unsigned long)state, streamID);
 }
 
+#pragma mark Mixer Callback
+
 - (void)onMixerRelayCDNStateUpdate:(NSArray<ZegoStreamRelayCDNInfo *> *)infoList taskID:(NSString *)taskID {
     ZGLogInfo(@" 🚩 🧬 Mixer Relay CDN State Update Callback: taskID: %@", taskID);
     for (int idx = 0; idx < infoList.count; idx ++) {
@@ -432,6 +497,8 @@
         ZGLogInfo(@" 🚩 🧬 --- %d: state: %lu, URL: %@, reason: %lu", idx, (unsigned long)info.state, info.URL, (unsigned long)info.updateReason);
     }
 }
+
+#pragma mark IM Callback
 
 - (void)onIMRecvBroadcastMessage:(NSArray<ZegoMessageInfo *> *)messageInfoList roomID:(NSString *)roomID {
     ZGLogInfo(@" 🚩 📩 IM Recv Broadcast Message Callback: roomID: %@", roomID);

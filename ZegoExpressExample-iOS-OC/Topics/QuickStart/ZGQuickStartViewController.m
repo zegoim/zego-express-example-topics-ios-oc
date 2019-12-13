@@ -114,7 +114,8 @@
 - (IBAction)startPublishingButtonClick:(UIButton *)sender {
     if (self.engine) {
         // Instantiate a ZegoCanvas for local preview
-        ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.localPreviewView viewMode:ZegoViewModeAspectFill];
+        ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.localPreviewView];
+        previewCanvas.viewMode = ZegoViewModeAspectFill;
         
         // Start preview
         [self.engine startPreview:previewCanvas];
@@ -136,7 +137,8 @@
 - (IBAction)startPlayingButtonClick:(UIButton *)sender {
     if (self.engine) {
         // Instantiate a ZegoCanvas for local preview
-        ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:self.remotePlayView viewMode:ZegoViewModeAspectFill];
+        ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:self.remotePlayView];
+        playCanvas.viewMode = ZegoViewModeAspectFill;
         
         NSString *playStreamID = self.playStreamIDTextField.text;
         

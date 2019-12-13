@@ -131,11 +131,11 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
     
     
     // ④ (Required): Set mixer input
-    ZegoRect *firstRect = [ZegoRect rectWithLeft:0 top:0 right:videoConfig.resolution.width bottom:videoConfig.resolution.height/2];
-    ZegoMixerInput *firstInput = [[ZegoMixerInput alloc] initWithContentType:ZegoMixerInputContentTypeVideo streamID:self.selectFirstStream.streamID layout:firstRect];
+    CGRect firstRect = CGRectMake(0, 0, videoConfig.resolution.width, videoConfig.resolution.height/2);
+    ZegoMixerInput *firstInput = [[ZegoMixerInput alloc] initWithStreamID:self.selectFirstStream.streamID contentType:ZegoMixerInputContentTypeVideo layout:firstRect];
     
-    ZegoRect *secondRect = [ZegoRect rectWithLeft:0 top:videoConfig.resolution.height/2 right:videoConfig.resolution.width bottom:videoConfig.resolution.height];
-    ZegoMixerInput *secondInput = [[ZegoMixerInput alloc] initWithContentType:ZegoMixerInputContentTypeVideo streamID:self.selectSecondStream.streamID layout:secondRect];
+    CGRect secondRect = CGRectMake(0, videoConfig.resolution.height/2, videoConfig.resolution.width, videoConfig.resolution.height/2);
+    ZegoMixerInput *secondInput = [[ZegoMixerInput alloc] initWithStreamID:self.selectSecondStream.streamID contentType:ZegoMixerInputContentTypeVideo layout:secondRect];
     
     NSArray<ZegoMixerInput *> *inputArray = @[firstInput, secondInput];
     [task setInputList:inputArray];
@@ -146,7 +146,7 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
     [task setOutputList:outputArray];
     
     // ⑥ (Optional): Set watermark
-    ZegoWatermark *watermark = [[ZegoWatermark alloc] initWithImageURL:@"preset-id://zegowp.png" layout:[ZegoRect rectWithLeft:0 top:0 right:videoConfig.resolution.width / 2 bottom:videoConfig.resolution.height / 20]];
+    ZegoWatermark *watermark = [[ZegoWatermark alloc] initWithImageURL:@"preset-id://zegowp.png" layout:CGRectMake(0, 0, videoConfig.resolution.width/2, videoConfig.resolution.height/20)];
     [task setWatermark:watermark];
     
     // ⑦ (Optional): Set background image
@@ -197,7 +197,7 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
     if (self.outputTargetTextField.text.length > 0) {
         ZGLogInfo(@" 📥 Start playing stream: %@", self.outputTargetTextField.text);
         
-        [self.engine startPlayingStream:self.outputTargetTextField.text canvas:[ZegoCanvas canvasWithView:self.playView viewMode:ZegoViewModeAspectFit]];
+        [self.engine startPlayingStream:self.outputTargetTextField.text canvas:[ZegoCanvas canvasWithView:self.playView]];
     } else {
         ZGLogWarn(@" ❕ Please enter output target");
         [ZegoHudManager showMessage:@" ❕ Please enter output target"];
@@ -236,6 +236,7 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
             [self.remoteStreamList removeObject:delStream];
         }
     }
+    // Refresh stream picker
     [self.selectStreamsPicker reloadAllComponents];
 }
 

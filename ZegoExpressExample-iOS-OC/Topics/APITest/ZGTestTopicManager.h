@@ -23,6 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onPlayerQualityUpdate:(ZegoPlayStreamQuality *)quality;
 
+- (void)onPublisherVideoSizeChanged:(CGSize)size;
+
+- (void)onPlayerVideoSizeChanged:(CGSize)size;
+
 - (void)onActionLog:(NSString *)logInfo;
 
 @end
@@ -51,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Room
 
-- (void)loginRoom:(NSString *)roomID userID:(NSString *)userID;
+- (void)loginRoom:(NSString *)roomID userID:(NSString *)userID userName:(NSString *)userName;
 
 
 - (void)logoutRoom:(NSString *)roomID;
@@ -104,6 +108,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)enableHardwareEncoder:(BOOL)enable;
 
 
+- (void)setWatermark:(ZegoWatermark *)watermark isPreviewVisible:(BOOL)isPreviewVisible;
+
+
+- (void)setCapturePipelineScaleMode:(ZegoCapturePipelineScaleMode)scaleMode;
+
+
+- (void)enableCheckPoc:(BOOL)enable;
+
+
 #pragma mark - Player
 
 - (void)startPlayingStream:(NSString *)streamID canvas:(ZegoCanvas *)canvas;
@@ -146,7 +159,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Device
 
-- (void)enableMicrophone:(BOOL)enable;
+- (void)muteMicrophone:(BOOL)mute;
 
 
 - (void)muteAudioOutput:(BOOL)mute;
@@ -159,6 +172,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 - (void)enableAudioCaptureDevice:(BOOL)enable;
+
+
+- (void)startSoundLevelMonitor;
+
+
+- (void)stopSoundLevelMonitor;
+
+
+- (void)startAudioSpectrumMonitor;
+
+
+- (void)stopAudioSpectrumMonitor;
 
 
 #pragma mark - Mixer
