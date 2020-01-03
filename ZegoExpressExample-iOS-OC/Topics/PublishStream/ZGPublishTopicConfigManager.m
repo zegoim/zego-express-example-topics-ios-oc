@@ -218,7 +218,7 @@ static ZGPublishTopicConfigManager *instance = nil;
 - (void)setMirrorMode:(ZegoVideoMirrorMode)mirrorMode {
     dispatch_async(_configOptQueue, ^{
         NSNumber *modeObj = @(mirrorMode);
-        [self.zgUserDefaults setObject:modeObj forKey:ZGPublishTopicConfigPreviewViewModeKey];
+        [self.zgUserDefaults setObject:modeObj forKey:ZGPublishTopicConfigMirrorModeKey];
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([self.handler respondsToSelector:@selector(publishTopicConfigManager:mirrorModeDidChange:)]) {
                 [self.handler publishTopicConfigManager:self mirrorModeDidChange:(ZegoVideoMirrorMode)mirrorMode];
@@ -230,7 +230,7 @@ static ZGPublishTopicConfigManager *instance = nil;
 - (ZegoVideoMirrorMode)mirrorMode {
     __block ZegoVideoMirrorMode mode = ZegoVideoMirrorModeOnlyPreviewMirror;
     dispatch_sync(_configOptQueue, ^{
-        NSNumber *n = [self.zgUserDefaults objectForKey:ZGPublishTopicConfigPreviewViewModeKey];
+        NSNumber *n = [self.zgUserDefaults objectForKey:ZGPublishTopicConfigMirrorModeKey];
         if (n) {
             mode = (ZegoVideoMirrorMode)[n integerValue];
         } else {

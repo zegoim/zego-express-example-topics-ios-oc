@@ -19,7 +19,6 @@ NSString* const ZGTestTopicKey_PreviewBackgroundColor = @"kPreviewBackgroundColo
 
 NSString* const ZGTestTopicKey_PlayStreamID = @"kPlayStreamID";
 NSString* const ZGTestTopicKey_PlayBackgroundColor = @"kPlayBackgroundColor";
-NSString* const ZGTestTopicKey_AudioBitrate = @"kAudioBitrate";
 NSString* const ZGTestTopicKey_CDNURL = @"kCDNURL";
 NSString* const ZGTestTopicKey_WatermarkFilePath = @"kWatermarkFilePath";
 NSString* const ZGTestTopicKey_CaptureVolume = @"kCaptureVolume";
@@ -78,12 +77,8 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 @property (weak, nonatomic) IBOutlet UIButton *setVideoConfigButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *setVideoMirrorModeSeg;
 @property (weak, nonatomic) IBOutlet UIButton *setVideoMirrorModeButton;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *setCaptureOrientationSeg;
-@property (weak, nonatomic) IBOutlet UIButton *setCaptureOrientationButton;
-@property (weak, nonatomic) IBOutlet UIPickerView *setLatencyModePicker;
-@property (weak, nonatomic) IBOutlet UIButton *setLatencyButton;
-@property (weak, nonatomic) IBOutlet UITextField *setAudioBitrateTextField;
-@property (weak, nonatomic) IBOutlet UIButton *setAudioBitrateButton;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *setAppOrientationSeg;
+@property (weak, nonatomic) IBOutlet UIButton *setAppOrientationButton;
 @property (weak, nonatomic) IBOutlet UISwitch *mutePublishAudioSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *mutePublishAudioButton;
 @property (weak, nonatomic) IBOutlet UISwitch *mutePublishVideoSwitch;
@@ -101,8 +96,8 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 @property (weak, nonatomic) IBOutlet UIButton *setWatermarkButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *setCapturePipelineScaleModeSeg;
 @property (weak, nonatomic) IBOutlet UIButton *setCaptureScaleModeButton;
-@property (weak, nonatomic) IBOutlet UISwitch *enableCheckPocSwitch;
-@property (weak, nonatomic) IBOutlet UIButton *enableCheckPocButton;
+@property (weak, nonatomic) IBOutlet UITextField *sendSEITextField;
+@property (weak, nonatomic) IBOutlet UIButton *sendSEIButton;
 
 // Play
 @property (weak, nonatomic) IBOutlet UITextField *playStreamIDTextField;
@@ -118,6 +113,8 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 @property (weak, nonatomic) IBOutlet UIButton *enableHardwareDecoderButton;
 @property (weak, nonatomic) IBOutlet UITextField *setPlayVolumeTextField;
 @property (weak, nonatomic) IBOutlet UIButton *setPlayVolumeButton;
+@property (weak, nonatomic) IBOutlet UISwitch *enableCheckPocSwitch;
+@property (weak, nonatomic) IBOutlet UIButton *enableCheckPocButton;
 
 // Preprocess
 @property (weak, nonatomic) IBOutlet UISegmentedControl *setAECModeSeg;
@@ -178,12 +175,6 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 }
 
 - (void)setupUI {
-    self.latencyModeList = @[@"Normal", @"Low", @"Normal2", @"Low2", @"Low3", @"Normal3"];
-    self.setLatencyModePicker.delegate = self;
-    self.setLatencyModePicker.dataSource = self;
-    self.setLatencyModePicker.tag = 1;
-    [self pickerView:self.setLatencyModePicker didSelectRow:0 inComponent:0];
-    
     self.resolutionList = @[@"180p", @"270p", @"360p", @"540p", @"720p", @"1080p"];
     self.setVideoConfigResolutionPicker.delegate = self;
     self.setVideoConfigResolutionPicker.dataSource = self;
@@ -220,9 +211,6 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
     
     NSString *savedWatermarkFilePath = [self savedValueForKey:ZGTestTopicKey_WatermarkFilePath];
     self.watermarkFilePathTextField.text = savedWatermarkFilePath ? savedWatermarkFilePath : @"asset:ZegoLogo";
-    
-    self.setAudioBitrateTextField.text = [self savedValueForKey:ZGTestTopicKey_AudioBitrate];
-    self.setAudioBitrateTextField.keyboardType = UIKeyboardTypeNumberPad;
     
     self.CDNURLTextField.text = [self savedValueForKey:ZGTestTopicKey_CDNURL];
     
@@ -316,16 +304,7 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 }
 
 - (IBAction)setCapOrientationClick:(UIButton *)sender {
-    [self.manager setCaptureOrientation:(UIInterfaceOrientation)self.setCaptureOrientationSeg.selectedSegmentIndex];
-}
-
-- (IBAction)setLatencyClick:(UIButton *)sender {
-    [self.manager setLatencyMode:self.selectedLatencyMode];
-}
-
-- (IBAction)setAudioBitrateClick:(UIButton *)sender {
-    [self.manager setAudioBitrate:[self.setAudioBitrateTextField.text intValue]];
-    [self saveValue:self.setAudioBitrateTextField.text forKey:ZGTestTopicKey_AudioBitrate];
+    [self.manager setAppOrientation:(UIInterfaceOrientation)self.setAppOrientationSeg.selectedSegmentIndex];
 }
 
 - (IBAction)mutePublishAudioClick:(UIButton *)sender {
@@ -366,8 +345,10 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
     [self.manager setCapturePipelineScaleMode:(ZegoCapturePipelineScaleMode)self.setCapturePipelineScaleModeSeg.selectedSegmentIndex];
 }
 
-- (IBAction)enableCheckPocClick:(UIButton *)sender {
-    [self.manager enableCheckPoc:self.enableCheckPocSwitch.on];
+- (IBAction)sendSEIButtonClick:(UIButton *)sender {
+    char *str = "1234567\0";
+//    [self.manager sendSEI:[self.sendSEITextField.text dataUsingEncoding:NSUTF8StringEncoding]];
+    [self.manager sendSEI:[NSData dataWithBytes:str length:7 ]];
 }
 
 #pragma mark Player
@@ -400,6 +381,10 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 - (IBAction)setPlayVolumeClick:(UIButton *)sender {
     [self.manager setPlayVolume:[self.setPlayVolumeTextField.text intValue] stream:self.playStreamIDTextField.text];
     [self saveValue:self.setPlayVolumeTextField.text forKey:ZGTestTopicKey_PlayVolume];
+}
+
+- (IBAction)enableCheckPocClick:(UIButton *)sender {
+    [self.manager enableCheckPoc:self.enableCheckPocSwitch.on];
 }
 
 #pragma mark Preprocess

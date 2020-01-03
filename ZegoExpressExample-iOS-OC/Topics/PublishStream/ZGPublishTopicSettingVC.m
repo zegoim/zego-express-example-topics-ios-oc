@@ -268,7 +268,7 @@ static NSArray<NSNumber*> *ZGPublishTopicCommonMirrorModeList;
             [self showViewModePickSheet];
         }
     } else if (indexPath.section == 2) {
-        if (indexPath.row == 1) {
+        if (indexPath.row == 2) {
             [self showMirrorModePickSheet];
         }
     }

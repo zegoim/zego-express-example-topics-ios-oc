@@ -123,24 +123,10 @@
 }
 
 
-- (void)setCaptureOrientation:(UIInterfaceOrientation)orientation {
-    [self.engine setCaptureOrientation:orientation];
+- (void)setAppOrientation:(UIInterfaceOrientation)orientation {
+    [self.engine setAppOrientation:orientation];
     ZGLogInfo(@" ⚙️ Set capture orientation: %d", (int)orientation);
     [self.dataSource onActionLog:[NSString stringWithFormat:@" ⚙️ Set capture orientation: %d", (int)orientation]];
-}
-
-
-- (void)setLatencyMode:(ZegoLatencyMode)latencyMode {
-    [self.engine setLatencyMode:latencyMode];
-    ZGLogInfo(@" ⚙️ Set latency mode: %d", (int)latencyMode);
-    [self.dataSource onActionLog:[NSString stringWithFormat:@" ⚙️ Set latency mode: %d", (int)latencyMode]];
-}
-
-
-- (void)setAudioBitrate:(int)bitrate {
-    [self.engine setAudioBitrate:bitrate];
-    ZGLogInfo(@" ⚙️ Set audio bitrate: %d", (int)bitrate);
-    [self.dataSource onActionLog:[NSString stringWithFormat:@" ⚙️ Set audio bitrate: %d", (int)bitrate]];
 }
 
 
@@ -205,12 +191,12 @@
     [self.dataSource onActionLog:[NSString stringWithFormat:@" 🔧 Set capture pipeline scale mode: %d", (int)scaleMode]];
 }
 
-- (void)enableCheckPoc:(BOOL)enable {
-    [self.engine enableCheckPoc:enable];
-    ZGLogInfo(@" 🔧 Enable check poc: %@", enable ? @"YES" : @"NO");
-    [self.dataSource onActionLog:[NSString stringWithFormat:@" 🔧 Enable check poc: %@", enable ? @"YES" : @"NO"]];
+- (void)sendSEI:(NSData *)data {
+    [self.engine sendSEI:data];
+    NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    ZGLogInfo(@" ✉️ Send SEI: %@", str);
+    [self.dataSource onActionLog:[NSString stringWithFormat:@" ✉️ Send SEI: %@", str]];
 }
-
 
 
 #pragma mark Player
@@ -253,6 +239,12 @@
     [self.engine enableHardwareDecoder:enable];
     ZGLogInfo(@" 🔧 Enable hardware decoder: %@", enable ? @"YES" : @"NO");
     [self.dataSource onActionLog:[NSString stringWithFormat:@" 🔧 Enable hardware decoder: %@", enable ? @"YES" : @"NO"]];
+}
+
+- (void)enableCheckPoc:(BOOL)enable {
+    [self.engine enableCheckPoc:enable];
+    ZGLogInfo(@" 🔧 Enable check poc: %@", enable ? @"YES" : @"NO");
+    [self.dataSource onActionLog:[NSString stringWithFormat:@" 🔧 Enable check poc: %@", enable ? @"YES" : @"NO"]];
 }
 
 
@@ -472,6 +464,10 @@
     if ([self.dataSource respondsToSelector:@selector(onPlayerVideoSizeChanged:)]) {
         [self.dataSource onPlayerVideoSizeChanged:size];
     }
+}
+
+- (void)onPlayerRecvSEI:(NSData *)data stream:(NSString *)streamID {
+    ZGLogInfo(@" 🚩 ✉️ Player Recv SEI: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
 }
 
 #pragma mark Device Callback

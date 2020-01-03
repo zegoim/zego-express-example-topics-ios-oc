@@ -81,13 +81,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setVideoMirrorMode:(ZegoVideoMirrorMode)mirrorMode;
 
 
-- (void)setCaptureOrientation:(UIInterfaceOrientation)orientation;
-
-
-- (void)setLatencyMode:(ZegoLatencyMode)latencyMode;
-
-
-- (void)setAudioBitrate:(int)bitrate;
+- (void)setAppOrientation:(UIInterfaceOrientation)orientation;
 
 
 - (void)mutePublishStreamAudio:(BOOL)mute;
@@ -114,7 +108,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setCapturePipelineScaleMode:(ZegoCapturePipelineScaleMode)scaleMode;
 
 
-- (void)enableCheckPoc:(BOOL)enable;
+- (void)sendSEI:(NSData *)data;
 
 
 #pragma mark - Player
@@ -135,6 +129,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 - (void)enableHarewareDecoder:(BOOL)enable;
+
+
+- (void)enableCheckPoc:(BOOL)enable;
 
 
 #pragma mark - PreProcess
