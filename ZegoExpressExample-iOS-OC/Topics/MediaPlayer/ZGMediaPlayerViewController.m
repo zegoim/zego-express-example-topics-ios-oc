@@ -17,8 +17,6 @@
 
 @interface ZGMediaPlayerViewController ()<ZegoEventHandler, ZegoMediaPlayerEventHandler, ZegoMediaPlayerVideoHandler, ZegoMediaPlayerAudioHandler>
 
-@property (nonatomic, strong) ZegoExpressEngine *engine;
-
 @property (nonatomic, strong) ZegoMediaPlayer *player;
 
 @property (nonatomic, copy) NSString *roomID;
@@ -48,26 +46,33 @@
     
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
-    self.engine = [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
-    ZGLogInfo(@" 🚀 Initialize the ZegoExpressEngine");
+    if ([ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self]) {
+        ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+    } else {
+        ZGLogError(@" 🚀 ❌ Create ZegoExpressEngine failed");
+    }
     
     NSString *userID = [ZGUserIDHelper userID];
-    [self.engine loginRoom:_roomID user:[ZegoUser userWithUserID:userID] config:nil];
+    
+    [[ZegoExpressEngine sharedEngine] loginRoom:_roomID user:[ZegoUser userWithUserID:userID] config:nil];
+    
     ZGLogInfo(@" 🚪 Login room. roomID: %@", _roomID);
     
     [self startLive];
     
-    [self initializeMediaPlayer];
+    [self createMediaPlayer];
 }
 
-- (void)initializeMediaPlayer {
-    self.player = [self.engine createMediaPlayer];
-    if (!self.player) {
-        ZGLogWarn(@" ❗️ Create Media Player Fail");
+- (void)createMediaPlayer {
+    self.player = [[ZegoExpressEngine sharedEngine] createMediaPlayer];
+    if (self.player) {
+        ZGLogInfo(@" 💽 Create ZegoMediaPlayer");
+    } else {
+        ZGLogWarn(@" 💽 ❌ Create ZegoMediaPlayer failed");
     }
     
     [self.player loadResource:self.mediaItem.fileURL callback:^(int errorCode) {
-        ZGLogInfo(@" 🚩 💽 Media Player Load Resource ErrorCode: %d", errorCode);
+        ZGLogInfo(@" 🚩 💽 Media Player load resource. errorCode: %d", errorCode);
         [self setupMediaPlayerUI];
     }];
     
@@ -78,7 +83,7 @@
     [self.player setAudioHandler:self];
     
     // enable video frame callback
-    [self.player setVideoHandler:self format:ZegoVideoFrameFormatNV12 type:ZegoVideoFrameTypeCVPixerBuffer];
+    [self.player setVideoHandler:self format:ZegoVideoFrameFormatNV12 type:ZegoVideoBufferTypeCVPixelBuffer];
     
     [self.player enableAux:YES];
     
@@ -123,10 +128,10 @@
 - (void)viewDidDisappear:(BOOL)animated {
     if (self.isBeingDismissed || self.isMovingFromParentViewController
         || (self.navigationController && self.navigationController.isBeingDismissed)) {
-        ZGLogInfo(@" 🏳️ Destroy the MediaPlayer");
-        [self.engine destroyMediaPlayer:self.player];
+        ZGLogInfo(@" 🏳️ Destroy ZegoMediaPlayer");
+        [[ZegoExpressEngine sharedEngine] destroyMediaPlayer:self.player];
         
-        ZGLogInfo(@" 🏳️ Destroy the ZegoExpressEngine");
+        ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
         [ZegoExpressEngine destroyEngine];
     }
     [super viewDidDisappear:animated];
@@ -146,19 +151,19 @@
 }
 
 - (void)startLive {
-    [self.engine startPreview:[ZegoCanvas canvasWithView:self.publisherView]];
+    [[ZegoExpressEngine sharedEngine] startPreview:[ZegoCanvas canvasWithView:self.publisherView]];
     ZGLogInfo(@" 🔌 Start preview");
     
     // use userID as streamID
-    [self.engine startPublishing:[ZGUserIDHelper userID]];
+    [[ZegoExpressEngine sharedEngine] startPublishing:[ZGUserIDHelper userID]];
     ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", [ZGUserIDHelper userID]);
 }
 
 - (void)stopLive {
-    [self.engine stopPublishing];
+    [[ZegoExpressEngine sharedEngine] stopPublishing];
     ZGLogInfo(@" 📤 Stop publishing stream");
     
-    [self.engine stopPreview];
+    [[ZegoExpressEngine sharedEngine] stopPreview];
     ZGLogInfo(@" 🔌 Stop preview");
 }
 
@@ -166,51 +171,51 @@
 
 - (IBAction)playButtonClick:(UIButton *)sender {
     [self.player start];
-    ZGLogInfo(@" ▶️ Media Player Start");
+    ZGLogInfo(@" ▶️ Media Player start");
 }
 
 - (IBAction)pauseButtonClick:(UIButton *)sender {
     [self.player pause];
-    ZGLogInfo(@" ⏸ Media Player Pause");
+    ZGLogInfo(@" ⏸ Media Player pause");
 }
 
 - (IBAction)resumeButtonClick:(UIButton *)sender {
     [self.player resume];
-    ZGLogInfo(@" ⏯ Media Player Resume");
+    ZGLogInfo(@" ⏯ Media Player resume");
 }
 
 - (IBAction)stopButtonClick:(UIButton *)sender {
     [self.player stop];
-    ZGLogInfo(@" ⏹ Media Player Start Stop");
+    ZGLogInfo(@" ⏹ Media Player stop");
 }
 
 - (IBAction)enableRepeatSwitchAction:(UISwitch *)sender {
     [self.player enableRepeat:sender.on];
-    ZGLogInfo(@" %@ Media Player Enable Repeat: %@", sender.on ? @"🔂" : @"↩️", sender.on ? @"YES" : @"NO");
+    ZGLogInfo(@" %@ Media Player enable repeat: %@", sender.on ? @"🔂" : @"↩️", sender.on ? @"YES" : @"NO");
 }
 
 - (IBAction)enableAuxSwitchAction:(UISwitch *)sender {
     [self.player enableAux:sender.on];
-    ZGLogInfo(@" ⏺ Media Player Enable Aux: %@", sender.on ? @"YES" : @"NO");
+    ZGLogInfo(@" ⏺ Media Player enable aux: %@", sender.on ? @"YES" : @"NO");
 }
 
 - (IBAction)muteLocalSwitchAction:(UISwitch *)sender {
     [self.player muteLocal:sender.on];
-    ZGLogInfo(@" %@ Media Player Mute Local: %@", sender.on ? @"🔇" : @"🔈", sender.on ? @"YES" : @"NO");
+    ZGLogInfo(@" %@ Media Player mute local: %@", sender.on ? @"🔇" : @"🔈", sender.on ? @"YES" : @"NO");
 }
 
 #pragma mark Media Player Slider Actions
 
 - (IBAction)volumeSliderValueChanged:(UISlider *)sender {
     [self.player setVolume:(int)sender.value];
-    ZGLogInfo(@" 🔊 Media Player Set Volume: %d", (int)sender.value);
+    ZGLogInfo(@" 🔊 Media Player set volume: %d", (int)sender.value);
 }
 
 - (IBAction)processSliderValueChanged:(UISlider *)sender {
     [self.player seekTo:(unsigned long long)sender.value callback:^(int errorCode) {
-        ZGLogInfo(@" 🚩 🔍 Media Player Seek To Time Result: errorCode: %d", errorCode);
+        ZGLogInfo(@" 🚩 🔍 Media Player seek to callback. errorCode: %d", errorCode);
     }];
-    ZGLogInfo(@" 🔍 Media Player Seek To Time: %llu", (unsigned long long)sender.value);
+    ZGLogInfo(@" 🔍 Media Player seek to: %llu", (unsigned long long)sender.value);
 }
 
 - (void)processSliderTouchDown {
@@ -241,15 +246,35 @@
 
 #pragma mark - Media Player Event Handler
 
-- (void)mediaPlayer:(ZegoMediaPlayer *)player stateUpdate:(ZegoMediaPlayerState)state errorCode:(int)errorCode {
+- (void)mediaPlayer:(ZegoMediaPlayer *)mediaPlayer stateUpdate:(ZegoMediaPlayerState)state errorCode:(int)errorCode {
     ZGLogInfo(@" 🚩 📻 Media Player State Update: %d, errorCode: %d", (int)state, errorCode);
+    switch (state) {
+        case ZegoMediaPlayerStateNoPlay:
+            // Stop
+            break;
+        case ZegoMediaPlayerStatePlaying:
+            // Playing
+            break;
+        case ZegoMediaPlayerStatePausing:
+            // Pausing
+            break;
+        case ZegoMediaPlayerStatePlayEnded:
+            // Play ended, developer can play next song, etc.
+            break;
+    }
 }
 
-- (void)mediaPlayer:(ZegoMediaPlayer *)player networkEvent:(ZegoMediaPlayerNetworkEvent)event {
-    ZGLogInfo(@" 🚩 ⏳ Media Player Network Event: %d", (int)event);
+- (void)mediaPlayer:(ZegoMediaPlayer *)mediaPlayer networkEvent:(ZegoMediaPlayerNetworkEvent)networkEvent {
+    ZGLogInfo(@" 🚩 ⏳ Media Player Network Event: %d", (int)networkEvent);
+    if (networkEvent == ZegoMediaPlayerNetworkEventBufferBegin) {
+        // Show loading UI, etc.
+    } else if (networkEvent == ZegoMediaPlayerNetworkEventBufferEnded) {
+        // End loading UI, etc.
+    }
 }
 
-- (void)mediaPlayer:(ZegoMediaPlayer *)player playingProgress:(unsigned long long)millisecond {
+- (void)mediaPlayer:(ZegoMediaPlayer *)mediaPlayer playingProgress:(unsigned long long)millisecond {
+    // Update progress bar, etc.
     self.currentProcessLabel.text = [NSString stringWithFormat:@"%02llu:%02llu", millisecond / 1000 / 60, (millisecond / 1000) % 60];
     [self.processSlider setValue:millisecond animated:YES];
 }
@@ -257,7 +282,7 @@
 #pragma mark - Media Player Audio Handler
 
 /// @note Need to switch threads before processing audio frames
-- (void)mediaPlayer:(ZegoMediaPlayer *)player audioFrameData:(const unsigned char *)data param:(ZegoAudioFrameParam *)param {
+- (void)mediaPlayer:(ZegoMediaPlayer *)mediaPlayer audioFrameData:(const unsigned char *)data dataLength:(unsigned int)dataLength param:(ZegoAudioFrameParam *)param {
 //    NSLog(@"audio frame callback. bufferLength:%d, sampleRate:%d, channels:%d", param.bufferLength, param.sampleRate, param.channels);
 }
 
@@ -265,13 +290,13 @@
 
 /// When video frame type is set to `ZegoVideoFrameTypeCVPixelBuffer`, video frame CVPixelBuffer data will be called back from this function
 /// @note Need to switch threads before processing video frames
-- (void)mediaPlayer:(ZegoMediaPlayer *)player videoFramePixelBuffer:(nonnull CVPixelBufferRef)buffer param:(nonnull ZegoVideoFrameParam *)param {
+- (void)mediaPlayer:(ZegoMediaPlayer *)mediaPlayer videoFramePixelBuffer:(CVPixelBufferRef)buffer param:(ZegoVideoFrameParam *)param {
 //    NSLog(@"pixel buffer video frame callback. format:%d, width:%f, height:%f", (int)param.format, param.size.width, param.size.height);
 }
 
 /// When video frame type is set to `ZegoVideoFrameTypeRawdata`, video frame raw data will be called back from this function
 /// @note Need to switch threads before processing video frames
-- (void)mediaPlayer:(ZegoMediaPlayer *)player videoFrameRawData:(const char * _Nonnull *)data param:(ZegoVideoFrameParam *)param {
+- (void)mediaPlayer:(ZegoMediaPlayer *)mediaPlayer videoFrameRawData:(const unsigned char * _Nonnull *)data dataLength:(unsigned int *)dataLength param:(ZegoVideoFrameParam *)param {
 //    NSLog(@"raw data video frame callback. format:%d, width:%f, height:%f", (int)param.format, param.size.width, param.size.height);
 }
 

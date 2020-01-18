@@ -17,7 +17,6 @@ NSString* const ZGMixerTopicKey_PublishStreamID = @"kPublishStreamID";
 
 @interface ZGMixerPublishViewController () <ZegoEventHandler>
 
-@property (nonatomic, strong) ZegoExpressEngine *engine;
 @property (nonatomic, copy) NSString *roomID;
 @property (weak, nonatomic) IBOutlet UILabel *roomIDLabel;
 @property (weak, nonatomic) IBOutlet UIView *previewView;
@@ -43,23 +42,23 @@ NSString* const ZGMixerTopicKey_PublishStreamID = @"kPublishStreamID";
 - (void)startPreview {
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
-    ZGLogInfo(@" 🚀 Initialize the ZegoExpressEngine");
-    self.engine = [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
+    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+    [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
     
     ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
-    [self.engine loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
+    [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
     
     ZGLogInfo(@" 🔌 Start preview");
-    [self.engine startPreview:[ZegoCanvas canvasWithView:self.previewView]];
+    [[ZegoExpressEngine sharedEngine] startPreview:[ZegoCanvas canvasWithView:self.previewView]];
 }
 
 - (IBAction)startPublishing {
     if (self.streamIDTextField.text.length > 0) {
         [self saveValue:self.streamIDTextField.text forKey:ZGMixerTopicKey_PublishStreamID];
         ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", self.streamIDTextField.text);
-        [self.engine startPublishing:self.streamIDTextField.text];
+        [[ZegoExpressEngine sharedEngine] startPublishing:self.streamIDTextField.text];
     } else {
         ZGLogWarn(@" ❕ Please enter stream ID");
         [ZegoHudManager showMessage:@" ❕ Please enter stream ID"];
@@ -85,10 +84,10 @@ NSString* const ZGMixerTopicKey_PublishStreamID = @"kPublishStreamID";
         || (self.navigationController && self.navigationController.isBeingDismissed)) {
         
         ZGLogInfo(@" 🚪 Exit the room");
-        [self.engine logoutRoom:self.roomID];
+        [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
         
         // Can destroy the engine when you don't need audio and video calls
-        ZGLogInfo(@" 🏳️ Destroy the ZegoExpressEngine");
+        ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
         [ZegoExpressEngine destroyEngine];
     }
     [super viewDidDisappear:animated];

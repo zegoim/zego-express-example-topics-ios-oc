@@ -17,7 +17,6 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
 
 @interface ZGMixerViewController () <ZegoEventHandler, UIPickerViewDataSource, UIPickerViewDelegate>
 
-@property (nonatomic, strong) ZegoExpressEngine *engine;
 @property (nonatomic, copy) NSString *roomID;
 @property (nonatomic, strong) NSMutableArray<ZegoStream *> *remoteStreamList;
 
@@ -52,7 +51,7 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
     
     [self setupUI];
     
-    [self initializeEngineAndLoginRoom];
+    [self createEngineAndLoginRoom];
 }
 
 - (void)setupUI {
@@ -76,16 +75,16 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
     [self pickerView:self.selectStreamsPicker didSelectRow:0 inComponent:1];
 }
 
-- (void)initializeEngineAndLoginRoom {
+- (void)createEngineAndLoginRoom {
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
-    ZGLogInfo(@" 🚀 Initialize the ZegoExpressEngine");
-    self.engine = [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
+    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+    [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
     
     ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
-    [self.engine loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
+    [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
 }
 
 #pragma mark - Start Mixer Task
@@ -156,7 +155,7 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
     // Start Mixer Task
     [ZegoHudManager showNetworkLoading];
     
-    [self.engine startMixerTask:task callback:^(ZegoMixerStartResult * _Nonnull result) {
+    [[ZegoExpressEngine sharedEngine] startMixerTask:task callback:^(ZegoMixerStartResult * _Nonnull result) {
         ZGLogInfo(@" 🚩 🧬 Start mixer task result errorCode: %d", result.errorCode);
         
         [ZegoHudManager hideNetworkLoading];
@@ -178,7 +177,7 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
 
 - (void)stopMixerTask {
     ZGLogInfo(@" 🧬 Stop mixer task");
-    [self.engine stopMixerTask:self.mixerTask.taskID];
+    [[ZegoExpressEngine sharedEngine] stopMixerTask:self.mixerTask.taskID];
     
     self.isMixing = NO;
 }
@@ -197,7 +196,7 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
     if (self.outputTargetTextField.text.length > 0) {
         ZGLogInfo(@" 📥 Start playing stream: %@", self.outputTargetTextField.text);
         
-        [self.engine startPlayingStream:self.outputTargetTextField.text canvas:[ZegoCanvas canvasWithView:self.playView]];
+        [[ZegoExpressEngine sharedEngine] startPlayingStream:self.outputTargetTextField.text canvas:[ZegoCanvas canvasWithView:self.playView]];
     } else {
         ZGLogWarn(@" ❕ Please enter output target");
         [ZegoHudManager showMessage:@" ❕ Please enter output target"];
@@ -207,7 +206,7 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
 - (void)stopPlaying {
     ZGLogInfo(@" 📥 Stop playing stream: %@", self.outputTargetTextField.text);
     
-    [self.engine stopPlayingStream:self.outputTargetTextField.text];
+    [[ZegoExpressEngine sharedEngine] stopPlayingStream:self.outputTargetTextField.text];
 }
 
 #pragma mark - ZegoEventHandler
@@ -312,10 +311,10 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
         || (self.navigationController && self.navigationController.isBeingDismissed)) {
         
         ZGLogInfo(@" 🚪 Exit the room. roomID: %@", self.roomID);
-        [self.engine logoutRoom:self.roomID];
+        [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
         
         // Can destroy the engine when you don't need audio and video calls
-        ZGLogInfo(@" 🏳️ Destroy the ZegoExpressEngine");
+        ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
         [ZegoExpressEngine destroyEngine];
     }
     [super viewDidDisappear:animated];

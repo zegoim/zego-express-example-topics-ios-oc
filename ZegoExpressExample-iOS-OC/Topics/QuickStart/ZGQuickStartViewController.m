@@ -83,7 +83,7 @@
     self.engine = [ZegoExpressEngine createEngineWithAppID:appID appSign:appSign isTestEnv:self.isTestEnv scenario:ZegoScenarioGeneral eventHandler:self];
     
     // Print log
-    [self appendLog:@" 🚀 Initialize the ZegoExpressEngine"];
+    [self appendLog:@" 🚀 Create ZegoExpressEngine"];
     
     // Add a flag to the button for successful operation
     [self.createEngineButton setTitle:@"✅ CreateEngine" forState:UIControlStateNormal];
@@ -105,7 +105,7 @@
         // Print log
         [self appendLog:@" 🚪 Start login room"];
     } else {
-        [self appendLog:@" ‼️ Please initialize the ZegoExpressEngine first"];
+        [self appendLog:@" ‼️ Please create the ZegoExpressEngine first"];
     }
 }
 
@@ -128,7 +128,7 @@
         // Print log
         [self appendLog:@" 📤 Start publishing stream"];
     } else {
-        [self appendLog:@" ‼️ Please initialize the ZegoExpressEngine first"];
+        [self appendLog:@" ‼️ Please create the ZegoExpressEngine first"];
     }
 }
 
@@ -148,7 +148,7 @@
         // Print log
         [self appendLog:@" 📥 Strat playing stream"];
     } else {
-        [self appendLog:@" ‼️ Please initialize the ZegoExpressEngine first"];
+        [self appendLog:@" ‼️ Please create the ZegoExpressEngine first"];
     }
 }
 

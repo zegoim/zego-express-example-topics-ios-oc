@@ -40,7 +40,7 @@
 - (ZegoExpressEngine *)engine {
     if (!_engine) {
         ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
-        ZGLogInfo(@" 🚀 Initialize the ZegoExpressEngine");
+        ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
         _engine = [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     }
     return _engine;
@@ -90,7 +90,7 @@
         [self.engine logoutRoom:self.roomID];
         
         // Can destroy the engine when you don't need audio and video calls
-        ZGLogInfo(@" 🏳️ Destroy the ZegoExpressEngine");
+        ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
         [ZegoExpressEngine destroyEngine];
     }
     [super viewDidDisappear:animated];

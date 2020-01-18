@@ -16,8 +16,6 @@
 
 @interface ZGSoundLevelViewController () <ZegoEventHandler>
 
-@property (nonatomic, strong) ZegoExpressEngine *engine;
-
 @property (nonatomic, copy) NSString *roomID;
 
 @property (nonatomic, copy) NSString *localStreamID;
@@ -47,32 +45,32 @@
 - (void)startLive {
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
-    ZGLogInfo(@" 🚀 Initialize the ZegoExpressEngine");
-    self.engine = [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
+    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+    [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
     
     ZegoRoomConfig *roomConfig = [ZegoRoomConfig defaultConfig];
     
     ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
-    [self.engine loginRoom:self.roomID user:user config:roomConfig];
+    [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:roomConfig];
     
     // Use userID as streamID
     self.localStreamID = [NSString stringWithFormat:@"%@", user.userID];
     
     // Publish audio only
-    [self.engine enableCamera:NO];
+    [[ZegoExpressEngine sharedEngine] enableCamera:NO];
     
     // Start publishing
     ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", self.localStreamID);
-    [self.engine startPublishing:self.localStreamID];
+    [[ZegoExpressEngine sharedEngine] startPublishing:self.localStreamID];
     
     // Start monitoring
     ZGLogInfo(@" 🎼 Start sound level monitor");
-    [self.engine startSoundLevelMonitor];
+    [[ZegoExpressEngine sharedEngine] startSoundLevelMonitor];
     
     ZGLogInfo(@" 🎼 Start audio frequency spectrum monitor");
-    [self.engine startAudioSpectrumMonitor];
+    [[ZegoExpressEngine sharedEngine] startAudioSpectrumMonitor];
 }
 
 #pragma mark Streams Update Callback
@@ -90,7 +88,7 @@
             
             // Play remote stream without rendering
             ZGLogInfo(@" 📥 Start playing stream, streamID: %@", stream.streamID);
-            [self.engine startPlayingStream:stream.streamID canvas:nil];
+            [[ZegoExpressEngine sharedEngine] startPlayingStream:stream.streamID canvas:nil];
         }
     } else if (updateType == ZegoUpdateTypeDelete) {
         for (ZegoStream *stream in streamList) {
@@ -106,7 +104,7 @@
             
             // Stop playing the remote stream
             ZGLogInfo(@" 📥 Stop playing stream, streamID: %@", stream.streamID);
-            [self.engine stopPlayingStream:stream.streamID];
+            [[ZegoExpressEngine sharedEngine] stopPlayingStream:stream.streamID];
         }
     }
     // Refresh tableview
@@ -186,10 +184,10 @@
         || (self.navigationController && self.navigationController.isBeingDismissed)) {
         
         ZGLogInfo(@" 🚪 Exit the room");
-        [self.engine logoutRoom:self.roomID];
+        [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
         
         // Can destroy the engine when you don't need audio and video calls
-        ZGLogInfo(@" 🏳️ Destroy the ZegoExpressEngine");
+        ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
         [ZegoExpressEngine destroyEngine];
     }
     [super viewDidDisappear:animated];

@@ -23,7 +23,7 @@
 @implementation ZGTestTopicManager
 
 - (void)dealloc {
-    ZGLogInfo(@" 🏳️ Destroy the ZegoExpressEngine");
+    ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
     [ZegoExpressEngine destroyEngine];
 }
 
@@ -32,14 +32,14 @@
 }
 
 - (void)createEngineWithAppID:(unsigned int)appID appSign:(NSString *)appSign isTestEnv:(BOOL)isTestEnv scenario:(ZegoScenario)scenario {
-    ZGLogInfo(@" 🚀 Initialize the ZegoExpressEngine");
-    [self.dataSource onActionLog:@" 🚀 Initialize the ZegoExpressEngine"];
+    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+    [self.dataSource onActionLog:@" 🚀 Create ZegoExpressEngine"];
     self.engine = [ZegoExpressEngine createEngineWithAppID:appID appSign:appSign isTestEnv:isTestEnv scenario:scenario eventHandler:self];
 }
 
 - (void)destroyEngine {
-    ZGLogInfo(@" 🏳️ Destroy the ZegoExpressEngine");
-    [self.dataSource onActionLog:@" 🏳️ Destroy the ZegoExpressEngine"];
+    ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+    [self.dataSource onActionLog:@" 🏳️ Destroy ZegoExpressEngine"];
     [ZegoExpressEngine destroyEngine];
 }
 

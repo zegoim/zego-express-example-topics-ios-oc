@@ -8,7 +8,7 @@
 
 #import "ZGURLDefine.h"
 
-NSString *ZGOpenDocURL = @"https://doc.zego.im/CN/302.html";
+NSString *ZGOpenDocURL = @"https://doc-en.zego.im/en/1111.html";
 NSString *ZGOpenSourceCodeURL = @"https://github.com/zegoim/zego-express-example-topics-ios-oc";
 NSString *ZGOpenQuestionURL = @"https://doc.zego.im/CN/496.html";
 NSString *ZGGetAppIDURL = @"https://doc.zego.im/API/HideDoc/GetAppIDGuide/GetAppIDGuideline.html";

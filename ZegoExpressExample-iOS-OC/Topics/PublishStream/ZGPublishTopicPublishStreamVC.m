@@ -63,7 +63,7 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
     
     [self initializeTopicConfigs];
     [self setupUI];
-    [self initializeEngine];
+    [self createEngine];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -86,7 +86,7 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
         }
         
         // Can destroy the engine when you don't need audio and video calls
-        ZGLogInfo(@" 🏳️ Destroy the ZegoExpressEngine");
+        ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
         [ZegoExpressEngine destroyEngine];
     }
     [super viewDidDisappear:animated];
@@ -147,11 +147,11 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)initializeEngine {
+- (void)createEngine {
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
-    [self appendProcessTipAndMakeVisible:@" 🚀 Initialize the ZegoExpressEngine"];
-    ZGLogInfo(@" 🚀 Initialize the ZegoExpressEngine");
+    [self appendProcessTipAndMakeVisible:@" 🚀 Create ZegoExpressEngine"];
+    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
     
     self.engine = [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     

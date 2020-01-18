@@ -16,7 +16,6 @@
 
 @interface ZGRoomMessageViewController () <ZegoEventHandler, UITextFieldDelegate>
 
-@property (nonatomic, strong) ZegoExpressEngine *engine;
 @property (nonatomic, copy) NSString *roomID;
 @property (nonatomic, strong) NSMutableArray<ZegoUser *> *userList;
 @property (nonatomic) ZGRoomMessageSelectUsersTableViewController *selectUsersVC;
@@ -39,14 +38,14 @@
     self.userList = [NSMutableArray array];
     self.title = [NSString stringWithFormat:@"%@  ( %d Users )", self.roomID, (int)self.userList.count + 1];
     
-    [self initializeEngineAndLoginRoom];
+    [self createEngineAndLoginRoom];
 }
 
-- (void)initializeEngineAndLoginRoom {
+- (void)createEngineAndLoginRoom {
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
-    ZGLogInfo(@" 🚀 Initialize the ZegoExpressEngine");
-    self.engine = [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
+    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+    [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
     
@@ -54,7 +53,7 @@
     ZegoRoomConfig *roomConfig = [[ZegoRoomConfig alloc] initWithMaxMemberCount:0 isUserStatusNotify:YES];
     
     ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
-    [self.engine loginRoom:self.roomID user:user config:roomConfig];
+    [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:roomConfig];
 }
 
 #pragma mark - Actions
@@ -73,7 +72,7 @@
 
 - (void)sendBroadcastMessage {
     NSString *message = self.broadcastMessageTextField.text;
-    [self.engine sendBroadcastMessage:message roomID:self.roomID callback:^(int errorCode) {
+    [[ZegoExpressEngine sharedEngine] sendBroadcastMessage:message roomID:self.roomID callback:^(int errorCode) {
         ZGLogInfo(@" 🚩 💬 Send broadcast message result errorCode: %d", errorCode);
         [self appendMessage:[NSString stringWithFormat:@" 💬 📤 Sent: %@", message]];
     }];
@@ -82,7 +81,7 @@
 - (void)sendCustomCommand {
     NSString *command = self.customCommandTextField.text;
     NSArray<ZegoUser *> *toUserList = self.selectUsersVC.selectedUsers;
-    [self.engine sendCustomCommand:command toUserList:toUserList roomID:self.roomID callback:^(int errorCode) {
+    [[ZegoExpressEngine sharedEngine] sendCustomCommand:command toUserList:toUserList roomID:self.roomID callback:^(int errorCode) {
         ZGLogInfo(@" 🚩 💭 Send custom command to %d users result errorCode: %d", (int)toUserList.count, errorCode);
         [self appendMessage:[NSString stringWithFormat:@" 💭 📤 Sent to %d users: %@", (int)toUserList.count, command]];
     }];
@@ -181,10 +180,10 @@
         || (self.navigationController && self.navigationController.isBeingDismissed)) {
         
         ZGLogInfo(@" 🚪 Exit the room");
-        [self.engine logoutRoom:self.roomID];
+        [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
         
         // Can destroy the engine when you don't need audio and video calls
-        ZGLogInfo(@" 🏳️ Destroy the ZegoExpressEngine");
+        ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
         [ZegoExpressEngine destroyEngine];
     }
     [super viewDidDisappear:animated];

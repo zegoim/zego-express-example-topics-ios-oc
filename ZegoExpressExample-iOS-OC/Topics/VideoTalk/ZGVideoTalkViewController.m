@@ -75,7 +75,7 @@ CGFloat const ZGVideoTalkStreamViewSpacing = 8.f;
     
     [self setupUI];
     
-    [self initializeEngine];
+    [self createEngine];
     
     [self joinTalkRoom];
 }
@@ -93,10 +93,10 @@ CGFloat const ZGVideoTalkStreamViewSpacing = 8.f;
 
 #pragma mark - Actions
 
-- (void)initializeEngine {
+- (void)createEngine {
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
-    ZGLogInfo(@" 🚀 Initialize the ZegoExpressEngine");
+    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
     self.engine = [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
 }
 
@@ -124,7 +124,7 @@ CGFloat const ZGVideoTalkStreamViewSpacing = 8.f;
 - (void)exitRoom {
     ZGLogInfo(@" 🚪 Logout room, roomID: %@", _roomID);
     [self.engine logoutRoom:_roomID];
-    ZGLogInfo(@" 🏳️ Destroy the ZegoExpressEngine");
+    ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
     [ZegoExpressEngine destroyEngine];
 }
 

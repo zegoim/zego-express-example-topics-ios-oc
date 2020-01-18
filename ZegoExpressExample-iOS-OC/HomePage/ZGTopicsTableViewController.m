@@ -245,14 +245,14 @@
     
     #ifdef _Module_ExternalVideoCapture
     if ([topicName isEqualToString:_Module_ExternalVideoCapture]) {
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"VideoExternalCapture" bundle:nil];
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"ExternalVideoCapture" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
     #endif
     
     #ifdef _Module_ExternalVideoRender
     if ([topicName isEqualToString:_Module_ExternalVideoRender]) {
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"NewExternalVideoRender" bundle:nil];
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"ExternalVideoRender" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
     #endif
