@@ -1,5 +1,5 @@
 //
-//  Version: 1.3.5.313_unknown
+//  Version: 1.4.0.374_unknown
 //
 //  ZegoExpressEngine.h
 //  ZegoExpressEngine
@@ -31,6 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// @discussion If the engine has not been created or has been destroyed, returns nil
 /// @return Engine singleton instance
 + (nullable ZegoExpressEngine *)sharedEngine;
+
+/// Set the advanced engine configuration, which will only take effect before create engine
+/// @param config Advanced engine configuration
++ (void)setEngineConfig:(ZegoEngineConfig *)config;
 
 /// Add event notification callback, up to 16 are supported
 /// @param eventHandler Event notification delegate, can be null
@@ -64,6 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
 NS_ASSUME_NONNULL_END
 
 #import "ZegoExpressEngine+Device.h"
+#import "ZegoExpressEngine+CustomVideoIO.h"
 #import "ZegoExpressEngine+IM.h"
 #import "ZegoExpressEngine+MediaPlayer.h"
 #import "ZegoExpressEngine+Mixer.h"

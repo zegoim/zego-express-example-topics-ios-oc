@@ -1,18 +1,18 @@
 //
-//  ZGExternalVideoCapturePublishStreamViewController.h
+//  ZGCustomVideoCapturePublishStreamViewController.h
 //  ZegoExpressExample-iOS-OC
 //
 //  Created by Patrick Fu on 2020/1/12.
 //  Copyright © 2020 Zego. All rights reserved.
 //
 
-#ifdef _Module_ExternalVideoCapture
+#ifdef _Module_CustomVideoCapture
 
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZGExternalVideoCapturePublishStreamViewController : UIViewController
+@interface ZGCustomVideoCapturePublishStreamViewController : UIViewController
 
 @property (nonatomic, copy) NSString *roomID;
 

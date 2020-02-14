@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--External Video Render Login View Controller-->
+        <!--Custom Video Render Login View Controller-->
         <scene sceneID="mYq-m3-qFC">
             <objects>
-                <viewController id="JPK-wQ-SzN" customClass="ZGExternalVideoRenderLoginViewController" sceneMemberID="viewController">
+                <viewController id="JPK-wQ-SzN" customClass="ZGCustomVideoRenderLoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Qfp-CN-c3X"/>
                         <viewControllerLayoutGuide type="bottom" id="jgE-Wh-URX"/>
@@ -85,8 +85,8 @@
                                     <constraint firstAttribute="height" constant="80" id="35F-PF-kCJ"/>
                                 </constraints>
                             </pickerView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Internal Render:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e1f-AH-BGY">
-                                <rect key="frame" x="20" y="316" width="178" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Engine Render:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e1f-AH-BGY">
+                                <rect key="frame" x="20" y="316" width="172" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -131,7 +131,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="internalRenderSwitch" destination="y8E-5b-XB4" id="H8U-tg-wz2"/>
+                        <outlet property="engineRenderSwitch" destination="y8E-5b-XB4" id="H8U-tg-wz2"/>
                         <outlet property="renderTypeFormatPicker" destination="reo-Mb-5nn" id="7pa-RT-XQ3"/>
                         <outlet property="roomIDTextField" destination="RlE-O0-g73" id="VBA-4n-wDI"/>
                         <outlet property="streamIDTextField" destination="G9Q-3p-eFu" id="chg-QW-uJb"/>
@@ -141,10 +141,10 @@
             </objects>
             <point key="canvasLocation" x="-110" y="163"/>
         </scene>
-        <!--External Video Render Publish Stream View Controller-->
+        <!--Custom Video Render Publish Stream View Controller-->
         <scene sceneID="Edg-3t-yaG">
             <objects>
-                <viewController storyboardIdentifier="ZGExternalVideoRenderPublishStreamViewController" id="XBd-nW-tY5" customClass="ZGExternalVideoRenderPublishStreamViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ZGCustomVideoRenderPublishStreamViewController" id="XBd-nW-tY5" customClass="ZGCustomVideoRenderPublishStreamViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3Cc-mA-KsT"/>
                         <viewControllerLayoutGuide type="bottom" id="qha-g0-9fb"/>
@@ -156,8 +156,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Wc-ma-HWs" customClass="UIImageView">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="External Render" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0S-da-iXG">
-                                        <rect key="frame" x="146" y="10" width="122" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Custom Render" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0S-da-iXG">
+                                        <rect key="frame" x="147.5" y="10" width="119" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -172,8 +172,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rfe-9h-vja">
                                 <rect key="frame" x="214" y="532" width="180" height="320"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Internal Render" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KHW-bx-q5Q">
-                                        <rect key="frame" x="31.5" y="10" width="117" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Engine Render" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KHW-bx-q5Q">
+                                        <rect key="frame" x="34.5" y="10" width="111.5" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -199,18 +199,18 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="externalPreviewView" destination="6Wc-ma-HWs" id="m1j-Iy-5AH"/>
-                        <outlet property="internalPreviewView" destination="rfe-9h-vja" id="ab5-uw-rbD"/>
+                        <outlet property="customRenderPreviewView" destination="6Wc-ma-HWs" id="m1j-Iy-5AH"/>
+                        <outlet property="engineRenderPreviewView" destination="rfe-9h-vja" id="YA2-OT-7Wa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DoZ-CX-p0O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="610" y="163"/>
         </scene>
-        <!--External Video Render Play Stream View Controller-->
+        <!--Custom Video Render Play Stream View Controller-->
         <scene sceneID="6t6-hZ-pQq">
             <objects>
-                <viewController storyboardIdentifier="ZGExternalVideoRenderPlayStreamViewController" id="few-Jx-9aA" customClass="ZGExternalVideoRenderPlayStreamViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ZGCustomVideoRenderPlayStreamViewController" id="few-Jx-9aA" customClass="ZGCustomVideoRenderPlayStreamViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="duu-rz-4RR"/>
                         <viewControllerLayoutGuide type="bottom" id="2lL-Vo-JYp"/>
@@ -222,8 +222,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JRX-Ud-RE6" customClass="UIImageView">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="External Render" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mSX-uz-vB8">
-                                        <rect key="frame" x="146" y="10" width="122" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Custom Render" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mSX-uz-vB8">
+                                        <rect key="frame" x="147.5" y="10" width="119" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -238,8 +238,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kaT-UQ-zoe">
                                 <rect key="frame" x="214" y="532" width="180" height="320"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Internal Render" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7M9-D6-B88">
-                                        <rect key="frame" x="31.5" y="10" width="117" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Engine Render" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7M9-D6-B88">
+                                        <rect key="frame" x="34.5" y="10" width="111.5" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -265,8 +265,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="externalPlayView" destination="JRX-Ud-RE6" id="X2V-lu-Qhq"/>
-                        <outlet property="internalPlayView" destination="kaT-UQ-zoe" id="bp0-nz-mmu"/>
+                        <outlet property="customRenderPlayView" destination="JRX-Ud-RE6" id="X2V-lu-Qhq"/>
+                        <outlet property="engineRenderPlayView" destination="kaT-UQ-zoe" id="bp0-nz-mmu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i9f-Hf-vJk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

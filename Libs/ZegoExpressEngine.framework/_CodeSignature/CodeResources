@@ -6,7 +6,11 @@
 	<dict>
 		<key>Headers/ZegoExpressDefines.h</key>
 		<data>
-		0AKJocXTBqYpwBagQzpSYrHz+24=
+		y7xXX9hXL69wfL2KATHy5XFhwM8=
+		</data>
+		<key>Headers/ZegoExpressEngine+CustomVideoIO.h</key>
+		<data>
+		adWifRVppdr8ZUH6akmtxUU482U=
 		</data>
 		<key>Headers/ZegoExpressEngine+Device.h</key>
 		<data>
@@ -42,11 +46,11 @@
 		</data>
 		<key>Headers/ZegoExpressEngine.h</key>
 		<data>
-		Js+BbBc0wxIcUO89it7Zcj5OYQI=
+		7TVlhotLPsdCVEQQdPMSimic0+I=
 		</data>
 		<key>Headers/ZegoExpressEventHandler.h</key>
 		<data>
-		CAEF+joUBfLlDroQW9KZFCH13Gw=
+		EeVHt1u80Iuj9RuEeukspznaHJo=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -59,11 +63,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			0AKJocXTBqYpwBagQzpSYrHz+24=
+			y7xXX9hXL69wfL2KATHy5XFhwM8=
 			</data>
 			<key>hash2</key>
 			<data>
-			9vB+6gE4KTSm6aBJI2UXUhRbioU1BTmxIG3j4C0Lw6U=
+			onnHFmM6IpBseuyjKwoyTNwqKCncj5VUX6IQWCR3jbg=
+			</data>
+		</dict>
+		<key>Headers/ZegoExpressEngine+CustomVideoIO.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			adWifRVppdr8ZUH6akmtxUU482U=
+			</data>
+			<key>hash2</key>
+			<data>
+			ECB28irc/SU49uX4bBEaIdmlXG6LuUAqPej/Yt4uOYc=
 			</data>
 		</dict>
 		<key>Headers/ZegoExpressEngine+Device.h</key>
@@ -158,22 +173,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Js+BbBc0wxIcUO89it7Zcj5OYQI=
+			7TVlhotLPsdCVEQQdPMSimic0+I=
 			</data>
 			<key>hash2</key>
 			<data>
-			Eu9jZcDnjAxVRKRwGWIU2gKahMSuqgRhFpfPTrbBLrk=
+			04hbvysIubN+andX332D+GcsI9WshFm1AoSLP1eGj3M=
 			</data>
 		</dict>
 		<key>Headers/ZegoExpressEventHandler.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			CAEF+joUBfLlDroQW9KZFCH13Gw=
+			EeVHt1u80Iuj9RuEeukspznaHJo=
 			</data>
 			<key>hash2</key>
 			<data>
-			o6ESNYgwgDUCtzZF9FR2HlNKGUhy4j79ZpD8DXXO1gU=
+			JNBRanV5/lvzkTwYZrmnbAAlpH7HyyvzcFOquPCSBnU=
 			</data>
 		</dict>
 	</dict>

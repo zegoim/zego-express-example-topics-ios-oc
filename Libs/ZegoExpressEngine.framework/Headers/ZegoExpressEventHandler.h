@@ -130,18 +130,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Device Callback
 
+#if TARGET_OS_OSX
 /// Audio device status change
 /// @discussion only for macOS; This callback is triggered when an audio device is added or removed from the system. By listening to this callback, users can update the sound collection or output using a specific device when necessary.
 /// @param deviceInfo Audio device information
 /// @param updateType Update type (add/delete)
 /// @param deviceType Audio device type
 - (void)onAudioDeviceStateChanged:(ZegoDeviceInfo *)deviceInfo updateType:(ZegoUpdateType)updateType deviceType:(ZegoAudioDeviceType)deviceType;
+#endif
 
+#if TARGET_OS_OSX
 /// Video device status change
 /// @discussion only for macOS; This callback is triggered when a video device is added or removed from the system. By listening to this callback, users can update the video capture using a specific device when necessary.
 /// @param deviceInfo Audio device information
 /// @param updateType Update type (add/delete)
 - (void)onVideoDeviceStateChanged:(ZegoDeviceInfo *)deviceInfo updateType:(ZegoUpdateType)updateType;
+#endif
 
 /// Captured sound level update callback
 /// @param soundLevel Locally captured sound level value, ranging from 0.0 to 100.0
@@ -229,9 +233,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param param Video frame parameters
 - (void)mediaPlayer:(ZegoMediaPlayer *)mediaPlayer videoFrameRawData:(const unsigned char * _Nonnull * _Nonnull)data dataLength:(unsigned int *)dataLength param:(ZegoVideoFrameParam *)param;
 
-/// Player video frame CVPixerBuffer data callback
+/// Player video frame CVPixelBuffer data callback
 /// @param mediaPlayer Callback player instance
-/// @param buffer Video frame data packaged as CVPixerBuffer
+/// @param buffer Video frame data packaged as CVPixelBuffer
 /// @param param Video frame parameters
 - (void)mediaPlayer:(ZegoMediaPlayer *)mediaPlayer videoFramePixelBuffer:(CVPixelBufferRef)buffer param:(ZegoVideoFrameParam *)param;
 
@@ -248,6 +252,54 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param dataLength Data length
 /// @param param Audio frame parameters
 - (void)mediaPlayer:(ZegoMediaPlayer *)mediaPlayer audioFrameData:(const unsigned char *)data dataLength:(unsigned int)dataLength param:(ZegoAudioFrameParam *)param;
+
+@end
+
+
+#pragma mark - Custom Video IO
+
+@protocol ZegoCustomVideoCaptureHandler <NSObject>
+
+@optional
+
+/// SDK notifies that video frames will be collected, and the video frame data sent to the SDK is only valid after receiving this callback
+- (void)onStart;
+
+/// SDK notifies to stop capturing video frames
+- (void)onStop;
+
+@end
+
+
+@protocol ZegoCustomVideoRenderHandler <NSObject>
+
+@optional
+
+/// Local preview video frame raw data callback
+/// @param data Raw data of video frames (eg: RGBA only needs to consider data[0], I420 needs to consider data[0,1,2])
+/// @param dataLength Data length (eg: RGBA only needs to consider dataLength[0], I420 needs to consider dataLength[0,1,2])
+/// @param param Video frame parameters
+/// @param flipMode Video frame flip mode
+- (void)onCapturedVideoFrameRawData:(unsigned char * _Nonnull * _Nonnull)data dataLength:(unsigned int *)dataLength param:(ZegoVideoFrameParam *)param flipMode:(ZegoVideoFlipMode)flipMode;
+
+/// Remote stream custom video render video frame raw data callback, different streams are distinguished by streamID
+/// @param data Raw data of video frames (eg: RGBA only needs to consider data[0], I420 needs to consider data[0,1,2])
+/// @param dataLength Data length (eg: RGBA only needs to consider dataLength[0], I420 needs to consider dataLength[0,1,2])
+/// @param param Video frame parameters
+/// @param streamID Remote stream ID
+- (void)onRemoteVideoFrameRawData:(unsigned char * _Nonnull * _Nonnull)data dataLength:(unsigned int *)dataLength param:(ZegoVideoFrameParam *)param stream:(NSString *)streamID;
+
+/// Local preview video frame CVPixelBuffer data callback
+/// @param buffer Video frame data packaged as CVPixelBuffer
+/// @param param Video frame parameters
+/// @param flipMode Video frame flip mode
+- (void)onCapturedVideoFrameCVPixelBuffer:(CVPixelBufferRef)buffer param:(ZegoVideoFrameParam *)param flipMode:(ZegoVideoFlipMode)flipMode;
+
+/// Remote stream video frame CVPixelBuffer data callback, different streams are distinguished by streamID
+/// @param buffer Video frame data packaged as CVPixelBuffer
+/// @param param Video frame parameters
+/// @param streamID Remote stream ID
+- (void)onRemoteVideoFrameCVPixelBuffer:(CVPixelBufferRef)buffer param:(ZegoVideoFrameParam *)param stream:(NSString *)streamID;
 
 @end
 

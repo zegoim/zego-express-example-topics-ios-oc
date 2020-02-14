@@ -67,11 +67,11 @@
 #ifdef _Module_MediaRecord
     [advancedTopicList addObject:_Module_MediaRecord];
 #endif
-#ifdef _Module_ExternalVideoCapture
-    [advancedTopicList addObject:_Module_ExternalVideoCapture];
+#ifdef _Module_CustomVideoCapture
+    [advancedTopicList addObject:_Module_CustomVideoCapture];
 #endif
-#ifdef _Module_ExternalVideoRender
-    [advancedTopicList addObject:_Module_ExternalVideoRender];
+#ifdef _Module_CustomVideoRender
+    [advancedTopicList addObject:_Module_CustomVideoRender];
 #endif
 #ifdef _Module_ExternalVideoFilter
     [advancedTopicList addObject:_Module_ExternalVideoFilter];
@@ -243,16 +243,16 @@
     }
     #endif
     
-    #ifdef _Module_ExternalVideoCapture
-    if ([topicName isEqualToString:_Module_ExternalVideoCapture]) {
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"ExternalVideoCapture" bundle:nil];
+    #ifdef _Module_CustomVideoCapture
+    if ([topicName isEqualToString:_Module_CustomVideoCapture]) {
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"CustomVideoCapture" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
     #endif
     
-    #ifdef _Module_ExternalVideoRender
-    if ([topicName isEqualToString:_Module_ExternalVideoRender]) {
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"ExternalVideoRender" bundle:nil];
+    #ifdef _Module_CustomVideoRender
+    if ([topicName isEqualToString:_Module_CustomVideoRender]) {
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"CustomVideoRender" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
     #endif

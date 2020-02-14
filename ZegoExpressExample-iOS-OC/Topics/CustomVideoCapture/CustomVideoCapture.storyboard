@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--External Video Capture Login View Controller-->
+        <!--Custom Video Capture Login View Controller-->
         <scene sceneID="jvj-57-d0M">
             <objects>
-                <viewController storyboardIdentifier="ZGExternalVideoCaptureLoginViewController" id="78r-4x-2xL" customClass="ZGExternalVideoCaptureLoginViewController" sceneMemberID="viewController">
+                <viewController id="78r-4x-2xL" customClass="ZGCustomVideoCaptureLoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="VjR-DW-Mrv"/>
                         <viewControllerLayoutGuide type="bottom" id="ILd-A6-ehM"/>
@@ -134,10 +134,10 @@
             </objects>
             <point key="canvasLocation" x="-110" y="163"/>
         </scene>
-        <!--External Video Capture Publish Stream View Controller-->
+        <!--Custom Video Capture Publish Stream View Controller-->
         <scene sceneID="2l4-Bu-vhe">
             <objects>
-                <viewController storyboardIdentifier="ZGExternalVideoCapturePublishStreamViewController" id="oqb-Rs-3wc" customClass="ZGExternalVideoCapturePublishStreamViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ZGCustomVideoCapturePublishStreamViewController" id="oqb-Rs-3wc" customClass="ZGCustomVideoCapturePublishStreamViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Wcs-Ak-rsq"/>
                         <viewControllerLayoutGuide type="bottom" id="YQU-WS-TTf"/>

@@ -1,6 +1,6 @@
 //
 //  ZegoExpressDefines.h
-//  ZegoExpressSDK
+//  ZegoExpressEngine
 //
 //  Copyright © 2019 Zego. All rights reserved.
 //
@@ -377,7 +377,7 @@ typedef NS_ENUM(NSUInteger, ZegoVideoBufferType) {
 };
 
 
-/// External render series
+/// Video frame format series
 typedef NS_ENUM(NSUInteger, ZegoVideoFrameFormatSeries) {
     /// RGB series
     ZegoVideoFrameFormatSeriesRGB = 0,
@@ -452,8 +452,8 @@ typedef NS_ENUM(NSUInteger, ZegoMediaPlayerNetworkEvent) {
 @end
 
 
-/// External video capture config
-@interface ZegoExternalVideoCaptureConfig : NSObject
+/// Custom video capture config
+@interface ZegoCustomVideoCaptureConfig : NSObject
 
 /// External capture video buffer type
 @property (nonatomic, assign) ZegoVideoBufferType bufferType;
@@ -461,8 +461,8 @@ typedef NS_ENUM(NSUInteger, ZegoMediaPlayerNetworkEvent) {
 @end
 
 
-/// External video render config
-@interface ZegoExternalVideoRenderConfig : NSObject
+/// Custom video render config
+@interface ZegoCustomVideoRenderConfig : NSObject
 
 /// External render video buffer type
 @property (nonatomic, assign) ZegoVideoBufferType bufferType;
@@ -470,8 +470,8 @@ typedef NS_ENUM(NSUInteger, ZegoMediaPlayerNetworkEvent) {
 /// External render video frame format series
 @property (nonatomic, assign) ZegoVideoFrameFormatSeries frameFormatSeries;
 
-/// Whether enable internal render while external render
-@property (nonatomic, assign) BOOL enableInternalRender;
+/// Whether enable internal render while custom video render
+@property (nonatomic, assign) BOOL enableEngineRender;
 
 @end
 
@@ -482,11 +482,11 @@ typedef NS_ENUM(NSUInteger, ZegoMediaPlayerNetworkEvent) {
 /// Set the log file path and the maximum log file size (Bytes). The default path is [NSCachesDirectory]/ZegoLogs/, default maximum size is 5MB
 @property (nonatomic, strong, nullable) ZegoLogConfig *logConfig;
 
-/// External capture video config, if not set, external capture config is not enabled by default
-@property (nonatomic, strong, nullable) ZegoExternalVideoCaptureConfig *externalVideoCaptureConfig;
+/// Custom video capture config, if not set, custom video capture config is not enabled by default
+@property (nonatomic, strong, nullable) ZegoCustomVideoCaptureConfig *customVideoCaptureConfig;
 
-/// External render video config, if not set, external render config is not enabled by default
-@property (nonatomic, strong, nullable) ZegoExternalVideoRenderConfig *externalVideoRenderConfig;
+/// Custom video render config, if not set, custom video render config is not enabled by default
+@property (nonatomic, strong, nullable) ZegoCustomVideoRenderConfig *customVideoRenderConfig;
 
 /// Advanced config, if not set, advanced config is not enabled by default
 @property (nonatomic, copy, nullable) NSDictionary<NSString *, NSString *> *advancedConfig;
@@ -725,6 +725,9 @@ typedef NS_ENUM(NSUInteger, ZegoMediaPlayerNetworkEvent) {
 /// Beauty sharpening parameter, value range [0,1], the larger the value, the stronger the sharpening. Default 0.1
 @property (nonatomic, assign) double sharpenFactor;
 
+/// Create a default beautify option configuration
++ (instancetype)defaultConfig;
+
 @end
 
 
@@ -890,14 +893,11 @@ typedef NS_ENUM(NSUInteger, ZegoMediaPlayerNetworkEvent) {
 /// Video frame format
 @property (nonatomic, assign) ZegoVideoFrameFormat format;
 
-/// Number of bytes per line (for example: RGBA only needs to consider strides [0], I420 needs to consider strides [0,1,2])
+/// Number of bytes per line (this parameter is an int array, the array length is 4,  RGBA only needs to consider strides [0], I420 needs to consider strides [0,1,2])
 @property (nonatomic, assign) int *strides;
 
 /// Video frame size
 @property (nonatomic, assign) CGSize size;
-
-/// Video frame rotation
-@property (nonatomic, assign) int rotation;
 
 @end
 

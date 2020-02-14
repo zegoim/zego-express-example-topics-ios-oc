@@ -1,16 +1,16 @@
 //
-//  ZGExternalVideoCaptureImageDevice.m
+//  ZGCaptureDeviceImage.m
 //  ZegoExpressExample-iOS-OC
 //
 //  Created by Patrick Fu on 2020/1/12.
 //  Copyright © 2020 Zego. All rights reserved.
 //
 
-#ifdef _Module_ExternalVideoCapture
+#ifdef _Module_CustomVideoCapture
 
-#import "ZGExternalVideoCaptureImageDevice.h"
+#import "ZGCaptureDeviceImage.h"
 
-@interface ZGExternalVideoCaptureImageDevice ()
+@interface ZGCaptureDeviceImage ()
 
 @property (nonatomic, strong) UIImage *motionImage;
 @property (nonatomic, assign) CGImageRef bgraImage;
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation ZGExternalVideoCaptureImageDevice
+@implementation ZGCaptureDeviceImage
 
 - (instancetype)initWithMotionImage:(UIImage *)image {
     self = [super init];
@@ -65,7 +65,7 @@
         
         CMTime time = CMTimeMakeWithSeconds([[NSDate date] timeIntervalSince1970], 1000);
         
-        id<ZGExternalVideoCapturePixelBufferDelegate> delegate = self.delegate;
+        id<ZGCaptureDeviceDataOutputPixelBufferDelegate> delegate = self.delegate;
         if (delegate &&
             [delegate respondsToSelector:@selector(captureDevice:didCapturedData:presentationTimeStamp:)]) {
             [delegate captureDevice:self didCapturedData:pixelBuffer presentationTimeStamp:time];

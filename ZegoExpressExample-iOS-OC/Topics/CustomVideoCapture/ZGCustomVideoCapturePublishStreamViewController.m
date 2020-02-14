@@ -1,52 +1,48 @@
 //
-//  ZGExternalVideoCapturePublishStreamViewController.m
+//  ZGCustomVideoCapturePublishStreamViewController.m
 //  ZegoExpressExample-iOS-OC
 //
 //  Created by Patrick Fu on 2020/1/12.
 //  Copyright © 2020 Zego. All rights reserved.
 //
 
-#ifdef _Module_ExternalVideoCapture
+#ifdef _Module_CustomVideoCapture
 
-#import "ZGExternalVideoCapturePublishStreamViewController.h"
+#import "ZGCustomVideoCapturePublishStreamViewController.h"
 #import "ZGAppGlobalConfigManager.h"
 #import "ZGUserIDHelper.h"
 
-#import "ZGExternalVideoCaptureCameraDevice.h"
-#import "ZGExternalVideoCaptureImageDevice.h"
+#import "ZGCaptureDeviceCamera.h"
+#import "ZGCaptureDeviceImage.h"
 
 #import <ZegoExpressEngine/ZegoExpressEngine.h>
 
-@interface ZGExternalVideoCapturePublishStreamViewController () <ZegoEventHandler, ZegoExternalVideoCapturer,  ZGExternalVideoCapturePixelBufferDelegate>
+@interface ZGCustomVideoCapturePublishStreamViewController () <ZegoEventHandler, ZegoCustomVideoCaptureHandler,  ZGCaptureDeviceDataOutputPixelBufferDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *previewView;
 @property (weak, nonatomic) IBOutlet UIButton *startLiveButton;
 @property (nonatomic, assign) ZegoPublisherState publisherState;
 
-@property (nonatomic, strong) ZegoExpressEngine *engine;
-
-@property (nonatomic, strong) id<ZegoVideoFrameSender> videoFrameSender;
-
-@property (nonatomic, strong) id<ZGExternalVideoCaptureDevice> captureDevice;
+@property (nonatomic, strong) id<ZGCaptureDevice> captureDevice;
 
 @end
 
-@implementation ZGExternalVideoCapturePublishStreamViewController
+@implementation ZGCustomVideoCapturePublishStreamViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"External Video Capture";
+    self.title = @"Publish";
     [self createEngineAndLoginRoom];
     [self startLive];
 }
 
 - (void)createEngineAndLoginRoom {
-    // Set Capture Config
-    ZegoExternalVideoCaptureConfig *captureConfig = [[ZegoExternalVideoCaptureConfig alloc] init];
+    // Set capture config
+    ZegoCustomVideoCaptureConfig *captureConfig = [[ZegoCustomVideoCaptureConfig alloc] init];
     captureConfig.bufferType = ZegoVideoBufferTypeCVPixelBuffer;
     
     ZegoEngineConfig *engineConfig = [[ZegoEngineConfig alloc] init];
-    [engineConfig setExternalVideoCaptureConfig:captureConfig];
+    [engineConfig setCustomVideoCaptureConfig:captureConfig];
     
     // Set engine config, must be called before create engine
     [ZegoExpressEngine setEngineConfig:engineConfig];
@@ -54,17 +50,18 @@
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
     ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+    [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     
-    self.engine = [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
+    // Set custom video capture handler
+    [[ZegoExpressEngine sharedEngine] setCustomVideoCaptureHandler:self];
     
-    [self.engine setExternalVideoCapturer:self];
-    
-    // Login Room
+    // Login room
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
     ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
-    [self.engine loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
+    [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
     
-    [self.engine setVideoConfig:[ZegoVideoConfig configWithResolution:ZegoResolution1080x1920]];
+    // Set video config
+    [[ZegoExpressEngine sharedEngine] setVideoConfig:[ZegoVideoConfig configWithResolution:ZegoResolution1080x1920]];
 }
 
 - (IBAction)startLiveButtonClick:(UIButton *)sender {
@@ -81,16 +78,16 @@
 }
 
 - (void)startLive {
-    // When external video capture is enabled, developers need to render the preview by themselves
-//     [self.engine startPreview:[ZegoCanvas canvasWithView:self.previewView]];
+    // When custom video capture is enabled, developers need to render the preview by themselves
+//    [self.engine startPreview:[ZegoCanvas canvasWithView:self.previewView]];
     
     // Start publishing
     ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", self.streamID);
-    [self.engine startPublishing:self.streamID];
+    [[ZegoExpressEngine sharedEngine] startPublishing:self.streamID];
 }
 
 - (void)stopLive {
-    [self.engine stopPublishing];
+    [[ZegoExpressEngine sharedEngine] stopPublishing];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -104,15 +101,15 @@
 
 #pragma mark - Getter
 
-- (id<ZGExternalVideoCaptureDevice>)captureDevice {
+- (id<ZGCaptureDevice>)captureDevice {
     if (!_captureDevice) {
         if (self.captureSourceType == 0) {
             // BGRA32 or NV12
             OSType pixelFormat = self.captureDataFormat == 0 ? kCVPixelFormatType_32BGRA : kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange;
-            _captureDevice = [[ZGExternalVideoCaptureCameraDevice alloc] initWithPixelFormatType:pixelFormat];
+            _captureDevice = [[ZGCaptureDeviceCamera alloc] initWithPixelFormatType:pixelFormat];
             _captureDevice.delegate = self;
         } else if (self.captureSourceType == 1) {
-            _captureDevice = [[ZGExternalVideoCaptureImageDevice alloc] initWithMotionImage:[UIImage imageNamed:@"ZegoLogo"]];
+            _captureDevice = [[ZGCaptureDeviceImage alloc] initWithMotionImage:[UIImage imageNamed:@"ZegoLogo"]];
             _captureDevice.delegate = self;
         }
     }
@@ -120,30 +117,29 @@
 }
 
 
-#pragma mark - ZegoExternalVideoCapturer
+#pragma mark - ZegoCustomVideoCaptureHandler
 
-- (void)willStart:(nonnull id<ZegoVideoFrameSender>)sender {
-    ZGLogInfo(@" 🚩 🟢 ZegoExternalVideoCapturer Will Start");
-    // Save the sender
-    self.videoFrameSender = sender;
+// Note: This callback is not in the main thread. If you have UI operations, please switch to the main thread yourself.
+- (void)onStart {
+    ZGLogInfo(@" 🚩 🟢 ZegoCustomVideoCaptureHandler onStart");
     [self.captureDevice startCapture];
 }
 
-- (void)willStop {
-    ZGLogInfo(@" 🚩 🔴 ZegoExternalVideoCapturer Will Stop");
-    self.videoFrameSender = nil;
+// Note: This callback is not in the main thread. If you have UI operations, please switch to the main thread yourself.
+- (void)onStop {
+    ZGLogInfo(@" 🚩 🔴 ZegoCustomVideoCaptureHandler onStop");
     [self.captureDevice stopCapture];
 }
 
 
-#pragma mark - ZGExternalVideoCapturePixelBufferDelegate
+#pragma mark - ZGCustomVideoCapturePixelBufferDelegate
 
-- (void)captureDevice:(nonnull id<ZGExternalVideoCaptureDevice>)device didCapturedData:(nonnull CVPixelBufferRef)data presentationTimeStamp:(CMTime)timeStamp {
+- (void)captureDevice:(nonnull id<ZGCaptureDevice>)device didCapturedData:(nonnull CVPixelBufferRef)data presentationTimeStamp:(CMTime)timeStamp {
     
     // Send pixel buffer to ZEGO SDK
-    [self.videoFrameSender sendPixelBuffer:data timeStamp:timeStamp];
+    [[ZegoExpressEngine sharedEngine] sendCustomVideoCapturePixelBuffer:data timeStamp:timeStamp];
     
-    // When external video capture is enabled, developers need to render the preview by themselves
+    // When custom video capture is enabled, developers need to render the preview by themselves
     [self renderWithCVPixelBuffer:data];
 }
 

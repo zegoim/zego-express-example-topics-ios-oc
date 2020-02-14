@@ -1,19 +1,19 @@
 //
-//  ZGExternalVideoRenderPublishStreamViewController.h
+//  ZGCustomVideoRenderPublishStreamViewController.h
 //  ZegoExpressExample-iOS-OC
 //
 //  Created by Patrick Fu on 2020/1/1.
 //  Copyright © 2020 Zego. All rights reserved.
 //
 
-#ifdef _Module_ExternalVideoRender
+#ifdef _Module_CustomVideoRender
 
 #import <UIKit/UIKit.h>
 #import <ZegoExpressEngine/ZegoExpressEngine.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZGExternalVideoRenderPublishStreamViewController : UIViewController
+@interface ZGCustomVideoRenderPublishStreamViewController : UIViewController
 
 @property (nonatomic, copy) NSString *roomID;
 
@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) ZegoVideoFrameFormatSeries frameFormatSeries;
 
-@property (nonatomic, assign) BOOL enableInternalRender;
+@property (nonatomic, assign) BOOL enableEngineRender;
 
 @end
 

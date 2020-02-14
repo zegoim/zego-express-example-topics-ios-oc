@@ -1,20 +1,20 @@
 //
-//  ZGExternalVideoCaptureLoginViewController.m
+//  ZGCustomVideoCaptureLoginViewController.m
 //  ZegoExpressExample-iOS-OC
 //
 //  Created by Patrick Fu on 2020/1/12.
 //  Copyright © 2020 Zego. All rights reserved.
 //
 
-#ifdef _Module_ExternalVideoCapture
+#ifdef _Module_CustomVideoCapture
 
-#import "ZGExternalVideoCaptureLoginViewController.h"
-#import "ZGExternalVideoCapturePublishStreamViewController.h"
+#import "ZGCustomVideoCaptureLoginViewController.h"
+#import "ZGCustomVideoCapturePublishStreamViewController.h"
 
-NSString* const ZGExternalVideoCaptureLoginVCKey_roomID = @"kRoomID";
-NSString* const ZGExternalVideoCaptureLoginVCKey_streamID = @"kStreamID";
+NSString* const ZGCustomVideoCaptureLoginVCKey_roomID = @"kRoomID";
+NSString* const ZGCustomVideoCaptureLoginVCKey_streamID = @"kStreamID";
 
-@interface ZGExternalVideoCaptureLoginViewController ()
+@interface ZGCustomVideoCaptureLoginViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *roomIDTextField;
 @property (weak, nonatomic) IBOutlet UITextField *streamIDTextField;
@@ -24,16 +24,18 @@ NSString* const ZGExternalVideoCaptureLoginVCKey_streamID = @"kStreamID";
 
 @end
 
-@implementation ZGExternalVideoCaptureLoginViewController
+@implementation ZGCustomVideoCaptureLoginViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"Custom Video Capture";
+    
     [self setupUI];
 }
 
 - (void)setupUI {
-    self.roomIDTextField.text = [self savedValueForKey:ZGExternalVideoCaptureLoginVCKey_roomID];
-    self.streamIDTextField.text = [self savedValueForKey:ZGExternalVideoCaptureLoginVCKey_streamID];
+    self.roomIDTextField.text = [self savedValueForKey:ZGCustomVideoCaptureLoginVCKey_roomID];
+    self.streamIDTextField.text = [self savedValueForKey:ZGCustomVideoCaptureLoginVCKey_streamID];
 }
 
 - (IBAction)publishStream:(UIButton *)sender {
@@ -47,11 +49,11 @@ NSString* const ZGExternalVideoCaptureLoginVCKey_streamID = @"kStreamID";
         return;
     }
     
-    [self saveValue:self.roomIDTextField.text forKey:ZGExternalVideoCaptureLoginVCKey_roomID];
-    [self saveValue:self.streamIDTextField.text forKey:ZGExternalVideoCaptureLoginVCKey_streamID];
+    [self saveValue:self.roomIDTextField.text forKey:ZGCustomVideoCaptureLoginVCKey_roomID];
+    [self saveValue:self.streamIDTextField.text forKey:ZGCustomVideoCaptureLoginVCKey_streamID];
     
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"ExternalVideoCapture" bundle:nil];
-    ZGExternalVideoCapturePublishStreamViewController *publisherVC = [sb instantiateViewControllerWithIdentifier:NSStringFromClass([ZGExternalVideoCapturePublishStreamViewController class])];
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"CustomVideoCapture" bundle:nil];
+    ZGCustomVideoCapturePublishStreamViewController *publisherVC = [sb instantiateViewControllerWithIdentifier:NSStringFromClass([ZGCustomVideoCapturePublishStreamViewController class])];
     
     publisherVC.roomID = self.roomIDTextField.text;
     publisherVC.streamID = self.streamIDTextField.text;

@@ -1,16 +1,16 @@
 //
-//  ZGExternalVideoCaptureCameraDevice.m
+//  ZGCaptureDeviceCamera.m
 //  ZegoExpressExample-iOS-OC
 //
 //  Created by Patrick Fu on 2020/1/12.
 //  Copyright © 2020 Zego. All rights reserved.
 //
 
-#ifdef _Module_ExternalVideoCapture
+#ifdef _Module_CustomVideoCapture
 
-#import "ZGExternalVideoCaptureCameraDevice.h"
+#import "ZGCaptureDeviceCamera.h"
 
-@interface ZGExternalVideoCaptureCameraDevice () <AVCaptureVideoDataOutputSampleBufferDelegate> {
+@interface ZGCaptureDeviceCamera () <AVCaptureVideoDataOutputSampleBufferDelegate> {
     dispatch_queue_t _sampleBufferCallbackQueue;
 }
 
@@ -23,13 +23,13 @@
 
 @end
 
-@implementation ZGExternalVideoCaptureCameraDevice
+@implementation ZGCaptureDeviceCamera
 
 - (instancetype)initWithPixelFormatType:(OSType)pixelFormatType {
     self = [super init];
     if (self) {
         self.pixelFormatType = pixelFormatType;
-        _sampleBufferCallbackQueue = dispatch_queue_create("im.zego.ZGExternalVideoCaptureCameraDevice.outputCallbackQueue", DISPATCH_QUEUE_SERIAL);
+        _sampleBufferCallbackQueue = dispatch_queue_create("im.zego.ZGCustomVideoCaptureCameraDevice.outputCallbackQueue", DISPATCH_QUEUE_SERIAL);
     }
     return self;
 }
@@ -155,8 +155,7 @@
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
     CVPixelBufferRef buffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     CMTime timeStamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
-    
-    id<ZGExternalVideoCapturePixelBufferDelegate> delegate = self.delegate;
+    id<ZGCaptureDeviceDataOutputPixelBufferDelegate> delegate = self.delegate;
     if (delegate && [delegate respondsToSelector:@selector(captureDevice:didCapturedData:presentationTimeStamp:)]) {
         [delegate captureDevice:self didCapturedData:buffer presentationTimeStamp:timeStamp];
     }

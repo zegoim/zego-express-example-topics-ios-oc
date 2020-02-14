@@ -1,32 +1,31 @@
 //
-//  ZGExternalVideoRenderPublishStreamViewController.m
+//  ZGCustomVideoRenderPublishStreamViewController.m
 //  ZegoExpressExample-iOS-OC
 //
 //  Created by Patrick Fu on 2020/1/1.
 //  Copyright © 2020 Zego. All rights reserved.
 //
 
-#ifdef _Module_ExternalVideoRender
+#ifdef _Module_CustomVideoRender
 
-#import "ZGExternalVideoRenderPublishStreamViewController.h"
+#import "ZGCustomVideoRenderPublishStreamViewController.h"
 #import "ZGAppGlobalConfigManager.h"
 #import "ZGUserIDHelper.h"
 
-@interface ZGExternalVideoRenderPublishStreamViewController () <ZegoEventHandler, ZegoExternalVideoRenderer>
+@interface ZGCustomVideoRenderPublishStreamViewController () <ZegoEventHandler, ZegoCustomVideoRenderHandler>
 
 @property (nonatomic, strong) ZegoExpressEngine *engine;
 
-@property (weak, nonatomic) IBOutlet UIImageView *externalPreviewView;
+@property (weak, nonatomic) IBOutlet UIImageView *customRenderPreviewView;
 
-@property (weak, nonatomic) IBOutlet UIView *internalPreviewView;
+@property (weak, nonatomic) IBOutlet UIView *engineRenderPreviewView;
 
 @end
 
-@implementation ZGExternalVideoRenderPublishStreamViewController
+@implementation ZGCustomVideoRenderPublishStreamViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.title = @"Publish";
     
     [self createEngine];
@@ -34,16 +33,16 @@
 }
 
 - (void)createEngine {
-    // Set Render Config
-    ZegoExternalVideoRenderConfig *renderConfig = [[ZegoExternalVideoRenderConfig alloc] init];
+    // Set render config
+    ZegoCustomVideoRenderConfig *renderConfig = [[ZegoCustomVideoRenderConfig alloc] init];
     renderConfig.bufferType = self.bufferType;
     renderConfig.frameFormatSeries = self.frameFormatSeries;
-    renderConfig.enableInternalRender = self.enableInternalRender;
+    renderConfig.enableEngineRender = self.enableEngineRender;
     
     ZegoEngineConfig *engineConfig = [[ZegoEngineConfig alloc] init];
-    [engineConfig setExternalVideoRenderConfig:renderConfig];
+    [engineConfig setCustomVideoRenderConfig:renderConfig];
     
-    // Set init config, must be called before create engine
+    // Set engine config, must be called before create engine
     [ZegoExpressEngine setEngineConfig:engineConfig];
     
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
@@ -52,7 +51,8 @@
     
     self.engine = [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     
-    [self.engine setExternalVideoRenderer:self];
+    // Set custom video render handler
+    [self.engine setCustomVideoRenderHandler:self];
 }
 
 - (void)startLive {
@@ -64,9 +64,9 @@
     [self.engine setVideoConfig:[ZegoVideoConfig configWithResolution:ZegoResolution1080x1920]];
     
     // Start preview
-    ZegoCanvas *internalPreviewCanvas = [ZegoCanvas canvasWithView:self.internalPreviewView];
+    ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.engineRenderPreviewView];
     ZGLogInfo(@" 🔌 Start preview");
-    [self.engine startPreview:internalPreviewCanvas];
+    [self.engine startPreview:previewCanvas];
     
     // Start publishing
     ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", self.streamID);
@@ -82,9 +82,9 @@
     [super viewDidDisappear:animated];
 }
 
-#pragma mark - ZegoExternalVideoRenderer
+#pragma mark - ZegoCustomVideoRenderHandler
 
-/// When `ZegoExternalVideoRenderConfig.bufferType` is set to `ZegoVideoBufferTypeRawData`, the video frame raw data will be called back from this function
+/// When `ZegoCustomVideoRenderConfig.bufferType` is set to `ZegoVideoBufferTypeRawData`, the video frame raw data will be called back from this function
 - (void)onCapturedVideoFrameRawData:(unsigned char * _Nonnull *)data dataLength:(unsigned int *)dataLength param:(ZegoVideoFrameParam *)param flipMode:(ZegoVideoFlipMode)flipMode {
     NSLog(@"raw data video frame callback. format:%d, width:%f, height:%f, isNeedFlip:%d", (int)param.format, param.size.width, param.size.height, (int)flipMode);
     
@@ -108,18 +108,18 @@
     }
 }
 
-/// When `ZegoExternalVideoRenderConfig.bufferType` is set to `ZegoVideoBufferTypeCVPixelBuffer`, the video frame CVPixelBuffer will be called back from this function
+/// When `ZegoCustomVideoRenderConfig.bufferType` is set to `ZegoVideoBufferTypeCVPixelBuffer`, the video frame CVPixelBuffer will be called back from this function
 - (void)onCapturedVideoFrameCVPixelBuffer:(CVPixelBufferRef)buffer param:(ZegoVideoFrameParam *)param flipMode:(ZegoVideoFlipMode)flipMode {
     NSLog(@"pixel buffer video frame callback. format:%d, width:%f, height:%f, isNeedFlip:%d", (int)param.format, param.size.width, param.size.height, (int)flipMode);
     [self renderWithCVPixelBuffer:buffer];
 }
 
-#pragma mark - External Render Method
+#pragma mark - Custom Render Method
 
 - (void)renderWithCVPixelBuffer:(CVPixelBufferRef)buffer {
     CIImage *image = [CIImage imageWithCVPixelBuffer:buffer];
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.externalPreviewView.image = [UIImage imageWithCIImage:image];
+        self.customRenderPreviewView.image = [UIImage imageWithCIImage:image];
     });
 }
 
