@@ -18,10 +18,11 @@
 NSString* const ZGPlayTopicPlayStreamVCKey_roomID = @"kRoomID";
 NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
 
-@interface ZGPlayTopicPlayStreamVC () <ZGPlayTopicConfigChangedHandler, ZegoEventHandler>
+@interface ZGPlayTopicPlayStreamVC () <ZGPlayTopicConfigChangedHandler, ZegoEventHandler, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *playLiveView;
 @property (weak, nonatomic) IBOutlet UITextView *processTipTextView;
+@property (weak, nonatomic) IBOutlet UILabel *playLiveResolutionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *playLiveQualityLabel;
 @property (weak, nonatomic) IBOutlet UILabel *playStreamExtraInfoLabel;
 @property (weak, nonatomic) IBOutlet UIView *startPlayLiveConfigView;
@@ -106,6 +107,10 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
     self.playLiveQualityLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
     self.playLiveQualityLabel.textColor = [UIColor whiteColor];
     
+    self.playLiveResolutionLabel.text = @"";
+    self.playLiveResolutionLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
+    self.playLiveResolutionLabel.textColor = [UIColor whiteColor];
+    
     self.playStreamExtraInfoLabel.text = @"";
     self.playStreamExtraInfoLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
     self.playStreamExtraInfoLabel.textColor = [UIColor whiteColor];
@@ -115,8 +120,11 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
 
     self.roomID = [self savedValueForKey:ZGPlayTopicPlayStreamVCKey_roomID];
     self.roomIDTextField.text = self.roomID;
+    self.roomIDTextField.delegate = self;
+    
     self.streamID = [self savedValueForKey:ZGPlayTopicPlayStreamVCKey_streamID];
     self.streamIDTextField.text = self.streamID;
+    self.streamIDTextField.delegate = self;
 }
 
 - (void)goConfigPage:(id)sender {
@@ -250,8 +258,16 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
     }
 }
 
-- (void)clearProcessTips {
-    self.processTipTextView.text = @"";
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    if (textField == self.roomIDTextField) {
+        [self.streamIDTextField becomeFirstResponder];
+    } else if (textField == self.streamIDTextField) {
+        [self startPlayLive];
+    }
+    
+    return YES;
 }
 
 
@@ -280,7 +296,7 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
 - (void)onRoomStreamUpdate:(ZegoUpdateType)updateType streamList:(NSArray<ZegoStream *> *)streamList room:(NSString *)roomID {
     for (ZegoStream *stream in streamList) {
         if ([stream.streamID isEqualToString:self.streamID]) {
-            self.playStreamExtraInfoLabel.text = [NSString stringWithFormat:@"Extra Info: %@", stream.extraInfo];
+            self.playStreamExtraInfoLabel.text = [NSString stringWithFormat:@"Stream Extra Info: %@  ", stream.extraInfo];
             ZGLogInfo(@" 🚩 💬 Stream Extra Info First Recv: %@, StreamID: %@", stream.extraInfo, stream.streamID);
         }
     }
@@ -290,7 +306,7 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
     NSLog(@"extra info update");
     for (ZegoStream *stream in streamList) {
         if ([stream.streamID isEqualToString:self.streamID]) {
-            self.playStreamExtraInfoLabel.text = [NSString stringWithFormat:@"Extra Info: %@", stream.extraInfo];
+            self.playStreamExtraInfoLabel.text = [NSString stringWithFormat:@"Stream Extra Info: %@  ", stream.extraInfo];
             ZGLogInfo(@" 🚩 💬 Stream Extra Info Update: %@, StreamID: %@", stream.extraInfo, stream.streamID);
         }
     }
@@ -346,6 +362,10 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
     [text appendFormat:@"HardwareDecode: %@ \n", quality.isHardwareDecode ? @"✅" : @"❎"];
     [text appendFormat:@"NetworkQuality: %@", networkQuality];
     self.playLiveQualityLabel.text = [text copy];
+}
+
+- (void)onPlayerVideoSizeChanged:(CGSize)size stream:(NSString *)streamID {
+    self.playLiveResolutionLabel.text = [NSString stringWithFormat:@"Resolution: %.fx%.f  ", size.width, size.height];
 }
 
 - (void)onDebugError:(int)errorCode funcName:(NSString *)funcName info:(NSString *)info {

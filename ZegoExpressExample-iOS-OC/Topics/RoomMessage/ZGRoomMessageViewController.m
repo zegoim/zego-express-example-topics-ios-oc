@@ -20,6 +20,9 @@
 @property (nonatomic, strong) NSMutableArray<ZegoUser *> *userList;
 @property (nonatomic) ZGRoomMessageSelectUsersTableViewController *selectUsersVC;
 
+@property (weak, nonatomic) IBOutlet UILabel *roomIDLabel;
+@property (weak, nonatomic) IBOutlet UILabel *roomStateLabel;
+
 @property (weak, nonatomic) IBOutlet UITextView *receivedMessageTextView;
 @property (weak, nonatomic) IBOutlet UITextField *broadcastMessageTextField;
 @property (weak, nonatomic) IBOutlet UIButton *sendBroadcastMessageButton;
@@ -36,7 +39,10 @@
     self.roomID = @"ChatRoom-1";
     self.receivedMessageTextView.text = @"";
     self.userList = [NSMutableArray array];
-    self.title = [NSString stringWithFormat:@"%@  ( %d Users )", self.roomID, (int)self.userList.count + 1];
+    self.title = [NSString stringWithFormat:@"ChatRoom  ( %d Users )", (int)self.userList.count + 1];
+    
+    self.roomIDLabel.text = [NSString stringWithFormat:@"RoomID: %@", self.roomID];
+    self.roomStateLabel.text = @"Not Connected 🔴";
     
     [self createEngineAndLoginRoom];
 }
@@ -126,6 +132,24 @@
 }
 
 #pragma mark - ZegoEventHandler
+
+- (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode room:(NSString *)roomID {
+    if (errorCode != 0) {
+        ZGLogError(@" 🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode);
+    } else {
+        if (state == ZegoRoomStateConnected) {
+            ZGLogInfo(@" 🚩 🚪 Login room success");
+            self.roomStateLabel.text = @"Connected 🟢";
+        } else if (state == ZegoRoomStateConnecting) {
+            ZGLogInfo(@" 🚩 🚪 Requesting login room");
+            self.roomStateLabel.text = @"Connecting 🟡";
+        } else if (state == ZegoRoomStateDisconnected) {
+            ZGLogInfo(@" 🚩 🚪 Logout room");
+            self.roomStateLabel.text = @"Not Connected 🔴";
+        }
+    }
+}
+
 
 - (void)onRoomUserUpdate:(ZegoUpdateType)updateType userList:(NSArray<ZegoUser *> *)userList room:(NSString *)roomID {
     ZGLogInfo(@" 🚩 🕺 Room User Update Callback: %lu, UsersCount: %lu, roomID: %@", (unsigned long)updateType, (unsigned long)userList.count, roomID);

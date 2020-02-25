@@ -39,6 +39,10 @@ CGFloat const ZGVideoTalkStreamViewSpacing = 8.f;
 /// Local stream ID
 @property (nonatomic, copy) NSString *localStreamID;
 
+/// Label
+@property (weak, nonatomic) IBOutlet UILabel *roomIDLabel;
+@property (weak, nonatomic) IBOutlet UILabel *roomStateLabel;
+
 /// Container
 @property (nonatomic, weak) IBOutlet UIView *containerView;
 
@@ -84,7 +88,10 @@ CGFloat const ZGVideoTalkStreamViewSpacing = 8.f;
     self.cameraSwitch.on = _enableCamera;
     self.microphoneSwitch.on = !_muteMicrophone;
     self.audioOutputSwitch.on = _muteAudioOutput;
-    self.title = _roomID;
+    self.title = @"VideoTalk";
+    
+    self.roomIDLabel.text = [NSString stringWithFormat:@"RoomID: %@", _roomID];
+    self.roomStateLabel.text = @"Not Connected 🔴";
     
     // Add local user video view object
     [self.allUserViewObjectList addObject:self.localUserViewObject];
@@ -230,7 +237,20 @@ CGFloat const ZGVideoTalkStreamViewSpacing = 8.f;
 #pragma mark - ZegoEventHandler
 
 - (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode room:(NSString *)roomID {
-    ZGLogInfo(@" 🚩 🚪 Room State Update Callback: %lu, errorCode: %d, roomID: %@", (unsigned long)state, (int)errorCode, roomID);
+    if (errorCode != 0) {
+        ZGLogError(@" 🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode);
+    } else {
+        if (state == ZegoRoomStateConnected) {
+            ZGLogInfo(@" 🚩 🚪 Login room success");
+            self.roomStateLabel.text = @"Connected 🟢";
+        } else if (state == ZegoRoomStateConnecting) {
+            ZGLogInfo(@" 🚩 🚪 Requesting login room");
+            self.roomStateLabel.text = @"Connecting 🟡";
+        } else if (state == ZegoRoomStateDisconnected) {
+            ZGLogInfo(@" 🚩 🚪 Logout room");
+            self.roomStateLabel.text = @"Not Connected 🔴";
+        }
+    }
 }
 
 /// Refresh the remote streams list

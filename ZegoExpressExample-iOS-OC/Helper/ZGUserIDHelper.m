@@ -7,12 +7,13 @@
 
 #import "ZGUserIDHelper.h"
 #import "ZGUserDefaults.h"
-#import <sys/utsname.h>
 
 #if TARGET_OS_OSX
 #import <IOKit/IOKitLib.h>
+#import <sys/sysctl.h>
 #elif TARGET_OS_IOS
 #import <UIKit/UIKit.h>
+#import <sys/utsname.h>
 #endif
 
 NSString* kZGUserIDKey = @"user_id";
@@ -82,17 +83,29 @@ static NSString *_userName = nil;
     
     return @"hello";
 }
+
++ (NSString *)getDeviceModel {
+    NSString *result=@"Mac";
+    size_t len=0;
+    sysctlbyname("hw.model", NULL, &len, NULL, 0);
+    if (len) {
+        NSMutableData *data=[NSMutableData dataWithLength:len];
+        sysctlbyname("hw.model", [data mutableBytes], &len, NULL, 0);
+        result=[NSString stringWithUTF8String:[data bytes]];
+    }
+    return result;
+}
+
 #elif TARGET_OS_IOS
 + (NSString *)getDeviceUUID {
     return [[[UIDevice currentDevice] identifierForVendor] UUIDString];
 }
-#endif
 
 + (NSString *)getDeviceModel {
     struct utsname systemInfo;
     uname(&systemInfo);
     return [NSString stringWithCString:systemInfo.machine encoding:NSASCIIStringEncoding];
 }
-
+#endif
 
 @end

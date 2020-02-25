@@ -6,7 +6,7 @@
 //  Copyright © 2019 Zego. All rights reserved.
 //
 
-#ifdef _Module_Mixer
+#ifdef _Module_VideoTalk
 
 #import "ZGVideoTalkViewObject.h"
 

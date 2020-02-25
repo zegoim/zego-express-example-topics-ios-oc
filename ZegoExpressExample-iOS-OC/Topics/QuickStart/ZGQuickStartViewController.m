@@ -15,8 +15,6 @@
 
 @interface ZGQuickStartViewController () <ZegoEventHandler>
 
-@property (nonatomic, strong) ZegoExpressEngine *engine;
-
 // Log View
 @property (weak, nonatomic) IBOutlet UITextView *logTextView;
 
@@ -76,11 +74,12 @@
 #pragma mark - Step 1: CreateEngine
 
 - (IBAction)createEngineButtonClick:(UIButton *)sender {
+    
     unsigned int appID = [ZGKeyCenter appID];
     NSString *appSign = [ZGKeyCenter appSign];
     
-    // Create an ZegoExpressEngine and add self as a delegate (ZegoEventHandler)
-    self.engine = [ZegoExpressEngine createEngineWithAppID:appID appSign:appSign isTestEnv:self.isTestEnv scenario:ZegoScenarioGeneral eventHandler:self];
+    // Create ZegoExpressEngine and add self as a delegate (ZegoEventHandler)
+    [ZegoExpressEngine createEngineWithAppID:appID appSign:appSign isTestEnv:self.isTestEnv scenario:ZegoScenarioGeneral eventHandler:self];
     
     // Print log
     [self appendLog:@" 🚀 Create ZegoExpressEngine"];
@@ -92,74 +91,78 @@
 #pragma mark - Step 2: LoginRoom
 
 - (IBAction)loginRoomButtonClick:(UIButton *)sender {
-    if (self.engine) {
-        // Instantiate a ZegoUser object
-        ZegoUser *user = [ZegoUser userWithUserID:self.userID];
-        
-        // Instantiate a ZegoRoomConfig object with the default configuration
-        ZegoRoomConfig *roomConfig = [ZegoRoomConfig defaultConfig];
-        
-        // Login room
-        [self.engine loginRoom:self.roomID user:user config:roomConfig];
-        
-        // Print log
-        [self appendLog:@" 🚪 Start login room"];
-    } else {
-        [self appendLog:@" ‼️ Please create the ZegoExpressEngine first"];
-    }
+    // Instantiate a ZegoUser object
+    ZegoUser *user = [ZegoUser userWithUserID:self.userID];
+    
+    // Instantiate a ZegoRoomConfig object with the default configuration
+    ZegoRoomConfig *roomConfig = [ZegoRoomConfig defaultConfig];
+    
+    // Login room
+    [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:roomConfig];
+    
+    // Print log
+    [self appendLog:@" 🚪 Start login room"];
 }
 
 #pragma mark - Step 3: StartPublishing
 
 - (IBAction)startPublishingButtonClick:(UIButton *)sender {
-    if (self.engine) {
-        // Instantiate a ZegoCanvas for local preview
-        ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.localPreviewView];
-        previewCanvas.viewMode = ZegoViewModeAspectFill;
-        
-        // Start preview
-        [self.engine startPreview:previewCanvas];
-        
-        NSString *publishStreamID = self.publishStreamIDTextField.text;
-        
-        // If streamID is empty @"", SDK will pop up an UIAlertController if "isTestEnv" is set to YES
-        [self.engine startPublishing:publishStreamID];
-        
-        // Print log
-        [self appendLog:@" 📤 Start publishing stream"];
-    } else {
-        [self appendLog:@" ‼️ Please create the ZegoExpressEngine first"];
-    }
+    // Instantiate a ZegoCanvas for local preview
+    ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.localPreviewView];
+    previewCanvas.viewMode = ZegoViewModeAspectFill;
+    
+    // Start preview
+    [[ZegoExpressEngine sharedEngine] startPreview:previewCanvas];
+    
+    NSString *publishStreamID = self.publishStreamIDTextField.text;
+    
+    // If streamID is empty @"", SDK will pop up an UIAlertController if "isTestEnv" is set to YES
+    [[ZegoExpressEngine sharedEngine] startPublishing:publishStreamID];
+    
+    // Print log
+    [self appendLog:@" 📤 Start publishing stream"];
 }
 
 #pragma mark - Step 4: StartPlaying
 
 - (IBAction)startPlayingButtonClick:(UIButton *)sender {
-    if (self.engine) {
-        // Instantiate a ZegoCanvas for local preview
-        ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:self.remotePlayView];
-        playCanvas.viewMode = ZegoViewModeAspectFill;
-        
-        NSString *playStreamID = self.playStreamIDTextField.text;
-        
-        // If streamID is empty @"", SDK will pop up an UIAlertController if "isTestEnv" is set to YES
-        [self.engine startPlayingStream:playStreamID canvas:playCanvas];
-        
-        // Print log
-        [self appendLog:@" 📥 Strat playing stream"];
-    } else {
-        [self appendLog:@" ‼️ Please create the ZegoExpressEngine first"];
-    }
+    // Instantiate a ZegoCanvas for local preview
+    ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:self.remotePlayView];
+    playCanvas.viewMode = ZegoViewModeAspectFill;
+    
+    NSString *playStreamID = self.playStreamIDTextField.text;
+    
+    // If streamID is empty @"", SDK will pop up an UIAlertController if "isTestEnv" is set to YES
+    [[ZegoExpressEngine sharedEngine] startPlayingStream:playStreamID canvas:playCanvas];
+    
+    // Print log
+    [self appendLog:@" 📥 Strat playing stream"];
 }
 
 #pragma mark - Exit
+
+- (IBAction)destroyEngineButtonClick:(UIButton *)sender {
+    [self.createEngineButton setTitle:@"CreateEngine" forState:UIControlStateNormal];
+    [self.loginRoomButton setTitle:@"LoginRoom" forState:UIControlStateNormal];
+    [self.startPublishingButton setTitle:@"StartPublishing" forState:UIControlStateNormal];
+    [self.startPlayingButton setTitle:@"StartPlaying" forState:UIControlStateNormal];
+    
+    // Logout room before exiting
+    [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
+    
+    // Can destroy the engine when you don't need audio and video calls
+    [ZegoExpressEngine destroyEngine];
+    
+    // Print log
+    [self appendLog:@" 🏳️ Destroy ZegoExpressEngine"];
+}
 
 - (void)viewDidDisappear:(BOOL)animated {
     if (self.isBeingDismissed || self.isMovingFromParentViewController
         || (self.navigationController && self.navigationController.isBeingDismissed)) {
         
         // Logout room before exiting
-        [self.engine logoutRoom:self.roomID];
+        [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
         
         // Can destroy the engine when you don't need audio and video calls
         [ZegoExpressEngine destroyEngine];
@@ -217,8 +220,6 @@
     }
 }
 
-
-
 #pragma mark - Helper Methods
 
 /// Append Log to Top View
@@ -226,6 +227,8 @@
     if (!tipText || tipText.length == 0) {
         return;
     }
+    
+    ZGLogInfo(@"%@", tipText);
     
     NSString *oldText = self.logTextView.text;
     NSString *newLine = oldText.length == 0 ? @"" : @"\n";
@@ -247,7 +250,6 @@
     [self.view endEditing:YES];
 }
 
-
 @end
 
-#endif
+#endif // _Module_QuickStart

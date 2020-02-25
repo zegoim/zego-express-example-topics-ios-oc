@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ES0-h3-e7r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ES0-h3-e7r">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -31,15 +31,22 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iNq-Ke-KbI">
+                                <rect key="frame" x="0.0" y="149" width="0.0" height="0.0"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WGF-84-n8K">
-                                <rect key="frame" x="0.0" y="148" width="0.0" height="0.0"/>
+                                <rect key="frame" x="0.0" y="149" width="0.0" height="0.0"/>
                                 <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SIa-K1-os8" userLabel="Config View">
-                                <rect key="frame" x="0.0" y="323" width="414" height="250"/>
+                                <rect key="frame" x="0.0" y="174" width="414" height="250"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Room ID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WwF-p8-6Q3">
                                         <rect key="frame" x="20" y="37.5" width="374" height="20"/>
@@ -51,7 +58,7 @@
                                         <rect key="frame" x="20" y="62.5" width="374" height="34"/>
                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stream ID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OES-2z-T9t">
                                         <rect key="frame" x="20" y="116.5" width="374" height="20.5"/>
@@ -63,7 +70,7 @@
                                         <rect key="frame" x="20" y="142" width="374" height="34"/>
                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="go"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gdZ-HJ-uz8">
                                         <rect key="frame" x="137" y="196" width="140" height="34"/>
@@ -165,7 +172,6 @@
                             <constraint firstItem="WGF-84-n8K" firstAttribute="leading" secondItem="2AE-EM-hT8" secondAttribute="leading" id="JqG-tQ-VC1"/>
                             <constraint firstAttribute="trailing" secondItem="bXZ-DK-tNJ" secondAttribute="trailing" constant="10" id="K2c-2L-4V1"/>
                             <constraint firstItem="PKU-7Y-Bf8" firstAttribute="top" secondItem="Zd2-Lv-mE8" secondAttribute="bottom" constant="2" id="LiP-Q3-3xn"/>
-                            <constraint firstItem="WGF-84-n8K" firstAttribute="top" secondItem="x4E-tZ-i0S" secondAttribute="bottom" constant="4" id="Lxo-jv-VzM"/>
                             <constraint firstItem="qLj-hV-iUT" firstAttribute="top" secondItem="IDT-W5-E6J" secondAttribute="bottom" constant="30" id="MMs-9z-Oee"/>
                             <constraint firstAttribute="trailing" secondItem="PKU-7Y-Bf8" secondAttribute="trailing" constant="10" id="MS2-Qb-6ob"/>
                             <constraint firstItem="PKU-7Y-Bf8" firstAttribute="top" secondItem="Zd2-Lv-mE8" secondAttribute="bottom" constant="2" id="MbZ-Yq-N3h"/>
@@ -173,12 +179,15 @@
                             <constraint firstAttribute="trailing" secondItem="x4E-tZ-i0S" secondAttribute="trailing" id="RDj-xy-LLO"/>
                             <constraint firstAttribute="trailing" secondItem="SIa-K1-os8" secondAttribute="trailing" id="Z5P-c3-bq3"/>
                             <constraint firstAttribute="trailing" secondItem="Icn-44-Ron" secondAttribute="trailing" id="dOl-uL-tE8"/>
+                            <constraint firstItem="iNq-Ke-KbI" firstAttribute="leading" secondItem="2AE-EM-hT8" secondAttribute="leading" id="f3Q-LD-p14"/>
                             <constraint firstItem="bXZ-DK-tNJ" firstAttribute="top" secondItem="PKU-7Y-Bf8" secondAttribute="bottom" constant="10" id="fWR-tn-mdi"/>
-                            <constraint firstItem="SIa-K1-os8" firstAttribute="centerY" secondItem="2AE-EM-hT8" secondAttribute="centerY" id="iJN-c4-zRi"/>
+                            <constraint firstItem="WGF-84-n8K" firstAttribute="top" secondItem="iNq-Ke-KbI" secondAttribute="bottom" id="gtV-Sp-L43"/>
                             <constraint firstItem="x4E-tZ-i0S" firstAttribute="top" secondItem="gCB-qz-gvm" secondAttribute="bottom" id="mIa-dE-RTV"/>
                             <constraint firstAttribute="trailing" secondItem="Bc1-x0-JrM" secondAttribute="trailing" constant="10" id="nkL-Z8-1qI"/>
+                            <constraint firstItem="iNq-Ke-KbI" firstAttribute="top" secondItem="x4E-tZ-i0S" secondAttribute="bottom" constant="5" id="uWo-TY-efI"/>
                             <constraint firstItem="x4E-tZ-i0S" firstAttribute="leading" secondItem="2AE-EM-hT8" secondAttribute="leading" id="wV4-94-Dur"/>
                             <constraint firstItem="qLj-hV-iUT" firstAttribute="top" secondItem="Icn-44-Ron" secondAttribute="bottom" id="xdK-pr-YSU"/>
+                            <constraint firstItem="SIa-K1-os8" firstAttribute="top" secondItem="x4E-tZ-i0S" secondAttribute="bottom" constant="30" id="z5i-tx-8Vb"/>
                             <constraint firstAttribute="trailing" secondItem="g8i-JS-Ta1" secondAttribute="trailing" constant="10" id="z61-9z-FM5"/>
                         </constraints>
                     </view>
@@ -186,6 +195,7 @@
                         <outlet property="previewView" destination="Icn-44-Ron" id="NBw-B3-XF2"/>
                         <outlet property="processTipTextView" destination="x4E-tZ-i0S" id="hrl-mg-keV"/>
                         <outlet property="publishQualityLabel" destination="WGF-84-n8K" id="dfS-Uf-X3d"/>
+                        <outlet property="publishResolutionLabel" destination="iNq-Ke-KbI" id="cIR-WV-UVS"/>
                         <outlet property="roomIDTextField" destination="Plu-vT-cIr" id="aKG-tZ-11r"/>
                         <outlet property="startLiveButn" destination="gdZ-HJ-uz8" id="C9h-wo-beG"/>
                         <outlet property="startPublishConfigView" destination="SIa-K1-os8" id="7TS-fT-vvd"/>

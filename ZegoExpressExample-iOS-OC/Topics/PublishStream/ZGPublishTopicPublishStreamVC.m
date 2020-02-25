@@ -19,10 +19,11 @@
 NSString* const ZGPublishTopicPublishStreamVCKey_roomID = @"kRoomID";
 NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
 
-@interface ZGPublishTopicPublishStreamVC () <ZGPublishTopicConfigChangedHandler, ZegoEventHandler>
+@interface ZGPublishTopicPublishStreamVC () <ZGPublishTopicConfigChangedHandler, ZegoEventHandler, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *previewView;
 @property (weak, nonatomic) IBOutlet UITextView *processTipTextView;
+@property (weak, nonatomic) IBOutlet UILabel *publishResolutionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *publishQualityLabel;
 @property (weak, nonatomic) IBOutlet UIView *startPublishConfigView;
 @property (weak, nonatomic) IBOutlet UITextField *roomIDTextField;
@@ -132,14 +133,20 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
     self.publishQualityLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
     self.publishQualityLabel.textColor = [UIColor whiteColor];
     
+    self.publishResolutionLabel.text = @"";
+    self.publishResolutionLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
+    self.publishResolutionLabel.textColor = [UIColor whiteColor];
+    
     self.stopLiveButn.alpha = 0;
     self.startPublishConfigView.alpha = 1;
     
     self.roomID = [self savedValueForKey:ZGPublishTopicPublishStreamVCKey_roomID];
     self.roomIDTextField.text = self.roomID;
+    self.roomIDTextField.delegate = self;
     
     self.streamID = [self savedValueForKey:ZGPublishTopicPublishStreamVCKey_streamID];
     self.streamIDTextField.text = self.streamID;
+    self.streamIDTextField.delegate = self;
 }
 
 - (void)goConfigPage:(id)sender {
@@ -313,6 +320,18 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
     }
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    if (textField == self.roomIDTextField) {
+        [self.streamIDTextField becomeFirstResponder];
+    } else if (textField == self.streamIDTextField) {
+        [self startLive];
+    }
+    
+    return YES;
+}
+
 
 #pragma mark - ZegoExpress EventHandler Room Event
 
@@ -390,6 +409,10 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
     [text appendFormat:@"HardwareEncode: %@ \n", quality.isHardwareEncode ? @"✅" : @"❎"];
     [text appendFormat:@"NetworkQuality: %@", networkQuality];
     self.publishQualityLabel.text = [text copy];
+}
+
+- (void)onPublisherVideoSizeChanged:(CGSize)size {
+    self.publishResolutionLabel.text = [NSString stringWithFormat:@"Resolution: %.fx%.f  ", size.width, size.height];
 }
 
 #pragma mark - ZGPublishTopicConfigChangedHandler

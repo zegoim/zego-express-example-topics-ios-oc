@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="KRn-gV-p9E">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="KRn-gV-p9E">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,8 +19,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X9y-tJ-Lob">
+                                <rect key="frame" x="0.0" y="44" width="414" height="20"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RoomID: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HX2-EW-oFA">
+                                        <rect key="frame" x="10" y="2" width="55" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RoomState" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sof-4W-5Z7">
+                                        <rect key="frame" x="337" y="2" width="67" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="2CR-xt-N3U"/>
+                                    <constraint firstAttribute="trailing" secondItem="Sof-4W-5Z7" secondAttribute="trailing" constant="10" id="7yF-As-ghp"/>
+                                    <constraint firstItem="HX2-EW-oFA" firstAttribute="centerY" secondItem="X9y-tJ-Lob" secondAttribute="centerY" id="EtT-u8-ynP"/>
+                                    <constraint firstItem="Sof-4W-5Z7" firstAttribute="centerY" secondItem="X9y-tJ-Lob" secondAttribute="centerY" id="KDV-dr-jM9"/>
+                                    <constraint firstItem="HX2-EW-oFA" firstAttribute="leading" secondItem="X9y-tJ-Lob" secondAttribute="leading" constant="10" id="dh2-N2-7ec"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nnu-rB-vxs">
-                                <rect key="frame" x="0.0" y="44" width="414" height="753"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="733"/>
                                 <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oI9-8S-mkH">
@@ -83,10 +108,13 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="nnu-rB-vxs" firstAttribute="top" secondItem="JdV-Q7-dhi" secondAttribute="bottom" id="2NQ-HM-k4h"/>
                             <constraint firstAttribute="trailing" secondItem="oI9-8S-mkH" secondAttribute="trailing" id="IdI-DK-YFW"/>
+                            <constraint firstItem="X9y-tJ-Lob" firstAttribute="top" secondItem="JdV-Q7-dhi" secondAttribute="bottom" id="J1F-f0-bo4"/>
                             <constraint firstItem="oI9-8S-mkH" firstAttribute="leading" secondItem="j7H-WY-oFC" secondAttribute="leading" id="M5r-Wd-K3l"/>
                             <constraint firstItem="oI9-8S-mkH" firstAttribute="top" secondItem="nnu-rB-vxs" secondAttribute="bottom" id="cWr-1t-hoj"/>
+                            <constraint firstAttribute="trailing" secondItem="X9y-tJ-Lob" secondAttribute="trailing" id="jW0-Yd-jTo"/>
+                            <constraint firstItem="X9y-tJ-Lob" firstAttribute="leading" secondItem="j7H-WY-oFC" secondAttribute="leading" id="lF9-AY-L3L"/>
+                            <constraint firstItem="nnu-rB-vxs" firstAttribute="top" secondItem="X9y-tJ-Lob" secondAttribute="bottom" id="mVW-CZ-SlA"/>
                             <constraint firstItem="nnu-rB-vxs" firstAttribute="trailing" secondItem="j7H-WY-oFC" secondAttribute="trailing" id="mfQ-Iy-Cmm"/>
                             <constraint firstItem="WxZ-FU-Yl6" firstAttribute="top" secondItem="oI9-8S-mkH" secondAttribute="bottom" id="rx4-Wk-Fhf"/>
                             <constraint firstItem="nnu-rB-vxs" firstAttribute="leading" secondItem="j7H-WY-oFC" secondAttribute="leading" id="uSA-UE-QYK"/>
@@ -98,11 +126,13 @@
                         <outlet property="cameraSwitch" destination="snm-iL-sdM" id="bXO-42-2tD"/>
                         <outlet property="containerView" destination="nnu-rB-vxs" id="pQi-Wo-y0J"/>
                         <outlet property="microphoneSwitch" destination="t3G-MT-J0m" id="Q5r-KS-zUO"/>
+                        <outlet property="roomIDLabel" destination="HX2-EW-oFA" id="v8V-sO-QaY"/>
+                        <outlet property="roomStateLabel" destination="Sof-4W-5Z7" id="WIk-ei-ehz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mYU-ql-dxx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-409" y="-133"/>
+            <point key="canvasLocation" x="-410.14492753623193" y="-133.25892857142856"/>
         </scene>
     </scenes>
 </document>
