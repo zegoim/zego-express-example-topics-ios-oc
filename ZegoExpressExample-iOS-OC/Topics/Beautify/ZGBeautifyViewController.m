@@ -82,18 +82,13 @@
 
 #pragma mark - Exit
 
-- (void)viewDidDisappear:(BOOL)animated {
-    if (self.isBeingDismissed || self.isMovingFromParentViewController
-        || (self.navigationController && self.navigationController.isBeingDismissed)) {
-        
-        ZGLogInfo(@" 🚪 Exit the room");
-        [self.engine logoutRoom:self.roomID];
-        
-        // Can destroy the engine when you don't need audio and video calls
-        ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
-        [ZegoExpressEngine destroyEngine];
-    }
-    [super viewDidDisappear:animated];
+- (void)dealloc {
+    ZGLogInfo(@" 🚪 Exit the room");
+    [self.engine logoutRoom:self.roomID];
+    
+    // Can destroy the engine when you don't need audio and video calls
+    ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+    [ZegoExpressEngine destroyEngine:nil];
 }
 
 @end

@@ -11,6 +11,7 @@
 #define _Module_SoundLevel @"SoundLevel&AudioSpectrum 声浪&音频频谱"
 #define _Module_Beautify @"Beautify&Watermark 美颜&水印"
 #define _Module_MediaPlayer @"MediaPlayer 媒体播放器"
+#define _Module_AuxPublisher @"AuxPublisher 辅助推流"
 //#define _Module_MediaSideInfo @"MediaSideInfo 媒体次要信息"
 //#define _Module_ScalableVideoCoding @"SVC 分层编码"
 //#define _Module_MediaRecord @"MediaRecode 本地媒体录制"
@@ -18,6 +19,6 @@
 #define _Module_CustomVideoRender @"CustomVideoRender 自定义视频渲染"
 //#define _Module_ExternalVideoFilter @"ExternalVideoFilter 自定义前处理(FaceUnity)"
 //#define _Module_AudioProcessing @"AudioProcessing 变声、混响、立体声"
-#define _Module_Test @"API Test 接口测试"
+//#define _Module_Test @"API Test 接口测试"
 
 #endif

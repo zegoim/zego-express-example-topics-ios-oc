@@ -13,7 +13,6 @@
 #import "ZGUserIDHelper.h"
 
 #import <ZegoExpressEngine/ZegoExpressEngine.h>
-#import <ZegoExpressEngine/ZegoExpressEngine+MediaPlayer.h>
 
 @interface ZGMediaPlayerViewController ()<ZegoEventHandler, ZegoMediaPlayerEventHandler, ZegoMediaPlayerVideoHandler, ZegoMediaPlayerAudioHandler>
 
@@ -46,15 +45,10 @@
     
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
-    if ([ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self]) {
-        ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
-    } else {
-        ZGLogError(@" 🚀 ❌ Create ZegoExpressEngine failed");
-    }
+    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+    [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     
-    NSString *userID = [ZGUserIDHelper userID];
-    
-    [[ZegoExpressEngine sharedEngine] loginRoom:_roomID user:[ZegoUser userWithUserID:userID] config:nil];
+    [[ZegoExpressEngine sharedEngine] loginRoom:_roomID user:[ZegoUser userWithUserID:[ZGUserIDHelper userID]]];
     
     ZGLogInfo(@" 🚪 Login room. roomID: %@", _roomID);
     
@@ -64,7 +58,7 @@
 }
 
 - (void)createMediaPlayer {
-    self.player = [[ZegoExpressEngine sharedEngine] createMediaPlayer];
+    self.player = [ZegoMediaPlayer createMediaPlayer];
     if (self.player) {
         ZGLogInfo(@" 💽 Create ZegoMediaPlayer");
     } else {
@@ -129,10 +123,10 @@
     if (self.isBeingDismissed || self.isMovingFromParentViewController
         || (self.navigationController && self.navigationController.isBeingDismissed)) {
         ZGLogInfo(@" 🏳️ Destroy ZegoMediaPlayer");
-        [[ZegoExpressEngine sharedEngine] destroyMediaPlayer:self.player];
+        self.player = nil;
         
         ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
-        [ZegoExpressEngine destroyEngine];
+        [ZegoExpressEngine destroyEngine:nil];
     }
     [super viewDidDisappear:animated];
 }
@@ -228,7 +222,7 @@
 
 #pragma mark Publisher Event
 
-- (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode stream:(NSString *)streamID {
+- (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
     ZGLogInfo(@" 🚩 📤 Publisher State Update Callback: %lu, errorCode: %d, streamID: %@", (unsigned long)state, (int)errorCode, streamID);
     
     _publisherState = state;

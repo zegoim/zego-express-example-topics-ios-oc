@@ -20,6 +20,7 @@ Zego Express iOS (Objective-C) 示例专题 Demo
 .
 ├── Libs
 │   └── ZegoExpressEngine.framework
+├── README.CN.md
 ├── README.md
 ├── ZegoExpressExample-iOS-OC
 └── ZegoExpressExample-iOS-OC.xcodeproj

@@ -25,7 +25,6 @@
 // CreateEngine
 @property (nonatomic, assign) BOOL isTestEnv;
 @property (weak, nonatomic) IBOutlet UILabel *appIDLabel;
-@property (weak, nonatomic) IBOutlet UILabel *appSignLabel;
 @property (weak, nonatomic) IBOutlet UILabel *isTestEnvLabel;
 @property (weak, nonatomic) IBOutlet UIButton *createEngineButton;
 
@@ -64,11 +63,10 @@
     self.navigationItem.title = @"Quick Start";
     
     self.appIDLabel.text = [NSString stringWithFormat:@"AppID: %u", [ZGKeyCenter appID]];
-    self.appSignLabel.text = [NSString stringWithFormat:@"AppSign: %@", [ZGKeyCenter appSign]];
+    self.isTestEnvLabel.text = [NSString stringWithFormat:@"isTestEnv: %@", self.isTestEnv ? @"YES" : @"NO"];
     
     self.roomIDLabel.text = [NSString stringWithFormat:@"RoomID: %@", self.roomID];
     self.userIDLabel.text = [NSString stringWithFormat:@"UserID: %@", self.userID];
-    self.isTestEnvLabel.text = [NSString stringWithFormat:@"isTestEnv: %@", self.isTestEnv ? @"YES" : @"NO"];
 }
 
 #pragma mark - Step 1: CreateEngine
@@ -94,11 +92,8 @@
     // Instantiate a ZegoUser object
     ZegoUser *user = [ZegoUser userWithUserID:self.userID];
     
-    // Instantiate a ZegoRoomConfig object with the default configuration
-    ZegoRoomConfig *roomConfig = [ZegoRoomConfig defaultConfig];
-    
     // Login room
-    [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:roomConfig];
+    [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user];
     
     // Print log
     [self appendLog:@" 🚪 Start login room"];
@@ -147,33 +142,32 @@
     [self.startPublishingButton setTitle:@"StartPublishing" forState:UIControlStateNormal];
     [self.startPlayingButton setTitle:@"StartPlaying" forState:UIControlStateNormal];
     
-    // Logout room before exiting
-    [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
+    // Logout room will automatically stop publishing/playing stream.
+//    [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
     
     // Can destroy the engine when you don't need audio and video calls
-    [ZegoExpressEngine destroyEngine];
+    //
+    // Destroy engine will automatically logout room and stop publishing/playing stream.
+    [ZegoExpressEngine destroyEngine:nil];
     
     // Print log
     [self appendLog:@" 🏳️ Destroy ZegoExpressEngine"];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    if (self.isBeingDismissed || self.isMovingFromParentViewController
-        || (self.navigationController && self.navigationController.isBeingDismissed)) {
-        
-        // Logout room before exiting
-        [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
-        
-        // Can destroy the engine when you don't need audio and video calls
-        [ZegoExpressEngine destroyEngine];
-    }
-    [super viewDidDisappear:animated];
+- (void)dealloc {
+    // Logout room will automatically stop publishing/playing stream.
+//    [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
+            
+    // Can destroy the engine when you don't need audio and video calls
+    //
+    // Destroy engine will automatically logout room and stop publishing/playing stream.
+    [ZegoExpressEngine destroyEngine:nil];
 }
 
 #pragma mark - ZegoEventHandler Delegate
 
 /// Room status change notification
-- (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode room:(NSString *)roomID {
+- (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData roomID:(NSString *)roomID {
     if (state == ZegoRoomStateConnected && errorCode == 0) {
         [self appendLog:@" 🚩 🚪 Login room success"];
         
@@ -189,7 +183,7 @@
 }
 
 /// Publish stream state callback
-- (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode stream:(NSString *)streamID {
+- (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
     if (state == ZegoPublisherStatePublishing && errorCode == 0) {
         [self appendLog:@" 🚩 📤 Publishing stream success"];
         
@@ -205,7 +199,7 @@
 }
 
 /// Play stream state callback
-- (void)onPlayerStateUpdate:(ZegoPlayerState)state errorCode:(int)errorCode stream:(NSString *)streamID {
+- (void)onPlayerStateUpdate:(ZegoPlayerState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
     if (state == ZegoPlayerStatePlaying && errorCode == 0) {
         [self appendLog:@" 🚩 📥 Playing stream success"];
         

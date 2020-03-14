@@ -61,7 +61,7 @@
     ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
     [self.engine loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
     
-    [self.engine setVideoConfig:[ZegoVideoConfig configWithResolution:ZegoResolution1080x1920]];
+    [self.engine setVideoConfig:[ZegoVideoConfig configWithPreset:ZegoVideoConfigPreset1080P]];
     
     // Start preview
     ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.engineRenderPreviewView];
@@ -77,7 +77,13 @@
     if (self.isBeingDismissed || self.isMovingFromParentViewController
         || (self.navigationController && self.navigationController.isBeingDismissed)) {
         ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
-        [ZegoExpressEngine destroyEngine];
+        [ZegoExpressEngine destroyEngine:^{
+            // This callback is only used to notify the completion of the release of internal resources of the engine.
+            // Developers cannot release resources related to the engine within this callback.
+            //
+            // In general, developers do not need to listen to this callback.
+            ZGLogInfo(@" 🚩 🏳️ Destroy ZegoExpressEngine complete");
+        }];
     }
     [super viewDidDisappear:animated];
 }
@@ -85,7 +91,7 @@
 #pragma mark - ZegoCustomVideoRenderHandler
 
 /// When `ZegoCustomVideoRenderConfig.bufferType` is set to `ZegoVideoBufferTypeRawData`, the video frame raw data will be called back from this function
-- (void)onCapturedVideoFrameRawData:(unsigned char * _Nonnull *)data dataLength:(unsigned int *)dataLength param:(ZegoVideoFrameParam *)param flipMode:(ZegoVideoFlipMode)flipMode {
+- (void)onCapturedVideoFrameRawData:(unsigned char * _Nonnull *)data dataLength:(unsigned int *)dataLength param:(ZegoVideoFrameParam *)param flipMode:(ZegoVideoFlipMode)flipMode channel:(ZegoPublishChannel)channel {
     NSLog(@"raw data video frame callback. format:%d, width:%f, height:%f, isNeedFlip:%d", (int)param.format, param.size.width, param.size.height, (int)flipMode);
     
     if (param.format == ZegoVideoFrameFormatBGRA32) {
@@ -109,7 +115,7 @@
 }
 
 /// When `ZegoCustomVideoRenderConfig.bufferType` is set to `ZegoVideoBufferTypeCVPixelBuffer`, the video frame CVPixelBuffer will be called back from this function
-- (void)onCapturedVideoFrameCVPixelBuffer:(CVPixelBufferRef)buffer param:(ZegoVideoFrameParam *)param flipMode:(ZegoVideoFlipMode)flipMode {
+- (void)onCapturedVideoFrameCVPixelBuffer:(CVPixelBufferRef)buffer param:(ZegoVideoFrameParam *)param flipMode:(ZegoVideoFlipMode)flipMode channel:(ZegoPublishChannel)channel {
     NSLog(@"pixel buffer video frame callback. format:%d, width:%f, height:%f, isNeedFlip:%d", (int)param.format, param.size.width, param.size.height, (int)flipMode);
     [self renderWithCVPixelBuffer:buffer];
 }

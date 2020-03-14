@@ -121,7 +121,7 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
     
     
     // ② (Optional): Set video config
-    ZegoMixerVideoConfig *videoConfig = [ZegoMixerVideoConfig defaultConfig];
+    ZegoMixerVideoConfig *videoConfig = [[ZegoMixerVideoConfig alloc] initWithResolution:CGSizeMake(720, 1280) fps:15 bitrate:1500];
     [task setVideoConfig:videoConfig];
     
     
@@ -155,16 +155,16 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
     // Start Mixer Task
     [ZegoHudManager showNetworkLoading];
     
-    [[ZegoExpressEngine sharedEngine] startMixerTask:task callback:^(ZegoMixerStartResult * _Nonnull result) {
-        ZGLogInfo(@" 🚩 🧬 Start mixer task result errorCode: %d", result.errorCode);
+    [[ZegoExpressEngine sharedEngine] startMixerTask:task callback:^(int errorCode, NSDictionary * _Nullable extendedData) {
+        ZGLogInfo(@" 🚩 🧬 Start mixer task result errorCode: %d", errorCode);
         
         [ZegoHudManager hideNetworkLoading];
         
-        if (result.errorCode == 0) {
+        if (errorCode == 0) {
             self.isMixing = YES;
             
         } else {
-            [ZegoHudManager showMessage:[NSString stringWithFormat:@" 🚩 🧬 Start mixer errorCode: %d", result.errorCode]];
+            [ZegoHudManager showMessage:[NSString stringWithFormat:@" 🚩 🧬 Start mixer errorCode: %d", errorCode]];
         }
     }];
     
@@ -177,7 +177,9 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
 
 - (void)stopMixerTask {
     ZGLogInfo(@" 🧬 Stop mixer task");
-    [[ZegoExpressEngine sharedEngine] stopMixerTask:self.mixerTask.taskID];
+    [[ZegoExpressEngine sharedEngine] stopMixerTask:self.mixerTask callback:^(int errorCode) {
+        ZGLogInfo(@" 🚩 🧬 Stop mixer task result errorCode: %d", errorCode);
+    }];
     
     self.isMixing = NO;
 }
@@ -212,7 +214,7 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
 #pragma mark - ZegoEventHandler
 
 // Refresh the remote streams list
-- (void)onRoomStreamUpdate:(ZegoUpdateType)updateType streamList:(NSArray<ZegoStream *> *)streamList room:(NSString *)roomID {
+- (void)onRoomStreamUpdate:(ZegoUpdateType)updateType streamList:(NSArray<ZegoStream *> *)streamList roomID:(NSString *)roomID {
     ZGLogInfo(@" 🚩 🌊 Room Stream Update Callback: %lu, StreamsCount: %lu, roomID: %@", (unsigned long)updateType, (unsigned long)streamList.count, roomID);
     
     if (updateType == ZegoUpdateTypeAdd) {
@@ -239,12 +241,12 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
     [self.selectStreamsPicker reloadAllComponents];
 }
 
-- (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode room:(NSString *)roomID {
+- (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData roomID:(NSString *)roomID {
     ZGLogInfo(@" 🚩 🚪 Room State Update Callback: %lu, errorCode: %d, roomID: %@", (unsigned long)state, (int)errorCode, roomID);
 }
 
 // Refresh the player state
-- (void)onPlayerStateUpdate:(ZegoPlayerState)state errorCode:(int)errorCode stream:(NSString *)streamID {
+- (void)onPlayerStateUpdate:(ZegoPlayerState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
     ZGLogInfo(@" 🚩 📥 Player State Update Callback: %lu, errorCode: %d, streamID: %@", (unsigned long)state, (int)errorCode, streamID);
     self.playerState = state;
 }
@@ -306,19 +308,15 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
 
 #pragma mark - Exit
 
-- (void)viewDidDisappear:(BOOL)animated {
-    if (self.isBeingDismissed || self.isMovingFromParentViewController
-        || (self.navigationController && self.navigationController.isBeingDismissed)) {
-        
-        ZGLogInfo(@" 🚪 Exit the room. roomID: %@", self.roomID);
-        [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
-        
-        // Can destroy the engine when you don't need audio and video calls
-        ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
-        [ZegoExpressEngine destroyEngine];
-    }
-    [super viewDidDisappear:animated];
+- (void)dealloc {
+    ZGLogInfo(@" 🚪 Exit the room. roomID: %@", self.roomID);
+    [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
+    
+    // Can destroy the engine when you don't need audio and video calls
+    ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+    [ZegoExpressEngine destroyEngine:nil];
 }
+
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];

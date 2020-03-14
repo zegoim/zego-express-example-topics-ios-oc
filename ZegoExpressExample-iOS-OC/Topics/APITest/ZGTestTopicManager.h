@@ -93,10 +93,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setCaptureVolume:(int)volume;
 
 
-- (void)addPublishCDNURL:(NSString *)targetURL stream:(NSString *)streamID callback:(nullable ZegoPublisherUpdateCDNURLCallback)callback;
+- (void)addPublishCDNURL:(NSString *)targetURL streamID:(NSString *)streamID callback:(nullable ZegoPublisherUpdateCDNURLCallback)callback;
 
 
-- (void)removePublishCDNURL:(NSString *)targetURL stream:(NSString *)streamID callback:(nullable ZegoPublisherUpdateCDNURLCallback)callback;
+- (void)removePublishCDNURL:(NSString *)targetURL streamID:(NSString *)streamID callback:(nullable ZegoPublisherUpdateCDNURLCallback)callback;
 
 
 - (void)enableHardwareEncoder:(BOOL)enable;
@@ -122,10 +122,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setPlayVolume:(int)volume stream:(NSString *)streamID;
 
 
-- (void)mutePlayStreamAudio:(BOOL)mute stream:(NSString *)streamID;
+- (void)mutePlayStreamAudio:(BOOL)mute streamID:(NSString *)streamID;
 
 
-- (void)mutePlayStreamVideo:(BOOL)mute stream:(NSString *)streamID;
+- (void)mutePlayStreamVideo:(BOOL)mute streamID:(NSString *)streamID;
 
 
 - (void)enableHarewareDecoder:(BOOL)enable;

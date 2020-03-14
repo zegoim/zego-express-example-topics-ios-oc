@@ -45,6 +45,10 @@
 		8608C46923632F3100CE367B /* ZGURLDefine.m in Sources */ = {isa = PBXBuildFile; fileRef = 8608C46723632F3100CE367B /* ZGURLDefine.m */; };
 		8609F20F237E78B700B29333 /* QuickStart.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8609F20E237E78B700B29333 /* QuickStart.storyboard */; };
 		8609F212237E78E000B29333 /* ZGQuickStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8609F211237E78E000B29333 /* ZGQuickStartViewController.m */; };
+		860B6391240673E500D0E9C8 /* AuxPublisher.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 860B6390240673E500D0E9C8 /* AuxPublisher.storyboard */; };
+		860B63942406740400D0E9C8 /* ZGAuxPublisherLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 860B63932406740400D0E9C8 /* ZGAuxPublisherLoginViewController.m */; };
+		860B639724075F2A00D0E9C8 /* ZGAuxPublisherPublishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 860B639624075F2A00D0E9C8 /* ZGAuxPublisherPublishViewController.m */; };
+		860B639A2407B9FF00D0E9C8 /* ZGAuxPublisherPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 860B63992407B9FF00D0E9C8 /* ZGAuxPublisherPlayViewController.m */; };
 		861376192384E65700C30486 /* Mixer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 861376182384E65700C30486 /* Mixer.storyboard */; };
 		861376202386A42300C30486 /* ZGMixerLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8613761F2386A42300C30486 /* ZGMixerLoginViewController.m */; };
 		861376232386C01500C30486 /* ZGMixerPublishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 861376222386C01500C30486 /* ZGMixerPublishViewController.m */; };
@@ -185,6 +189,13 @@
 		8609F20E237E78B700B29333 /* QuickStart.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QuickStart.storyboard; sourceTree = "<group>"; };
 		8609F210237E78E000B29333 /* ZGQuickStartViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGQuickStartViewController.h; sourceTree = "<group>"; };
 		8609F211237E78E000B29333 /* ZGQuickStartViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGQuickStartViewController.m; sourceTree = "<group>"; };
+		860B6390240673E500D0E9C8 /* AuxPublisher.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AuxPublisher.storyboard; sourceTree = "<group>"; };
+		860B63922406740400D0E9C8 /* ZGAuxPublisherLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGAuxPublisherLoginViewController.h; sourceTree = "<group>"; };
+		860B63932406740400D0E9C8 /* ZGAuxPublisherLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGAuxPublisherLoginViewController.m; sourceTree = "<group>"; };
+		860B639524075F2A00D0E9C8 /* ZGAuxPublisherPublishViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGAuxPublisherPublishViewController.h; sourceTree = "<group>"; };
+		860B639624075F2A00D0E9C8 /* ZGAuxPublisherPublishViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGAuxPublisherPublishViewController.m; sourceTree = "<group>"; };
+		860B63982407B9FF00D0E9C8 /* ZGAuxPublisherPlayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGAuxPublisherPlayViewController.h; sourceTree = "<group>"; };
+		860B63992407B9FF00D0E9C8 /* ZGAuxPublisherPlayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGAuxPublisherPlayViewController.m; sourceTree = "<group>"; };
 		861376182384E65700C30486 /* Mixer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Mixer.storyboard; sourceTree = "<group>"; };
 		8613761E2386A42300C30486 /* ZGMixerLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGMixerLoginViewController.h; sourceTree = "<group>"; };
 		8613761F2386A42300C30486 /* ZGMixerLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGMixerLoginViewController.m; sourceTree = "<group>"; };
@@ -381,6 +392,7 @@
 				865A5F3223B3013D001BB0F4 /* MediaPlayer */,
 				86EDFE6F23CABBFF00A1A3AC /* CustomVideoCapture */,
 				8684965823BC97B900AE7A58 /* CustomVideoRender */,
+				860B638F24066D0B00D0E9C8 /* AuxPublisher */,
 				8608C3F12363245100CE367B /* APITest */,
 			);
 			path = Topics;
@@ -509,6 +521,20 @@
 				86A50DE4236B11D400D51012 /* ZegoExpressEngine.framework */,
 			);
 			path = Libs;
+			sourceTree = "<group>";
+		};
+		860B638F24066D0B00D0E9C8 /* AuxPublisher */ = {
+			isa = PBXGroup;
+			children = (
+				860B6390240673E500D0E9C8 /* AuxPublisher.storyboard */,
+				860B63922406740400D0E9C8 /* ZGAuxPublisherLoginViewController.h */,
+				860B63932406740400D0E9C8 /* ZGAuxPublisherLoginViewController.m */,
+				860B639524075F2A00D0E9C8 /* ZGAuxPublisherPublishViewController.h */,
+				860B639624075F2A00D0E9C8 /* ZGAuxPublisherPublishViewController.m */,
+				860B63982407B9FF00D0E9C8 /* ZGAuxPublisherPlayViewController.h */,
+				860B63992407B9FF00D0E9C8 /* ZGAuxPublisherPlayViewController.m */,
+			);
+			path = AuxPublisher;
 			sourceTree = "<group>";
 		};
 		861376152384E44500C30486 /* Mixer */ = {
@@ -707,6 +733,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				860B6391240673E500D0E9C8 /* AuxPublisher.storyboard in Resources */,
 				86BB70882363FEC600FF2608 /* PublishStream.storyboard in Resources */,
 				8608C3E22363244A00CE367B /* GlobalConfig.storyboard in Resources */,
 				861376302387B78400C30486 /* RoomMessage.storyboard in Resources */,
@@ -743,6 +770,7 @@
 				8608C44C2363246600CE367B /* NSObject+Persistence.m in Sources */,
 				8609F212237E78E000B29333 /* ZGQuickStartViewController.m in Sources */,
 				86EDFE7E23CB0D2100A1A3AC /* ZGCaptureDeviceImage.m in Sources */,
+				860B639A2407B9FF00D0E9C8 /* ZGAuxPublisherPlayViewController.m in Sources */,
 				8608C4532363246600CE367B /* ZegoRAMStoreLogger.m in Sources */,
 				86BB7097236457ED00FF2608 /* ZGPlayTopicConfigManager.m in Sources */,
 				8608C3E62363244A00CE367B /* ZGShareLogViewController.m in Sources */,
@@ -753,6 +781,7 @@
 				8608C4512363246600CE367B /* ZegoDiskLogFormatter.m in Sources */,
 				8608C44D2363246600CE367B /* ZGUserDefaults.m in Sources */,
 				8608C4562363246600CE367B /* ZegoDiskLogger.m in Sources */,
+				860B639724075F2A00D0E9C8 /* ZGAuxPublisherPublishViewController.m in Sources */,
 				8608C3E72363244A00CE367B /* ZGTopicsTableViewController.m in Sources */,
 				8608C4572363246600CE367B /* ZegoTTYLogFormatter.m in Sources */,
 				8608C3AE23631EDB00CE367B /* AppDelegate.m in Sources */,
@@ -795,6 +824,7 @@
 				86B6E5582395223600078757 /* ZGSoundLevelViewController.m in Sources */,
 				861376202386A42300C30486 /* ZGMixerLoginViewController.m in Sources */,
 				861376232386C01500C30486 /* ZGMixerPublishViewController.m in Sources */,
+				860B63942406740400D0E9C8 /* ZGAuxPublisherLoginViewController.m in Sources */,
 				86EDFE7723CABF9C00A1A3AC /* ZGCustomVideoCapturePublishStreamViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -937,7 +967,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 200206;
+				CURRENT_PROJECT_VERSION = 200314;
 				DEVELOPMENT_TEAM = Y98YBP7T6D;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -952,7 +982,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-OC";
 				PRODUCT_NAME = "ZegoExpressExample-iOS-OC";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -966,7 +996,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 200206;
+				CURRENT_PROJECT_VERSION = 200314;
 				DEVELOPMENT_TEAM = Y98YBP7T6D;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -981,7 +1011,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-OC";
 				PRODUCT_NAME = "ZegoExpressExample-iOS-OC";
 				PROVISIONING_PROFILE_SPECIFIER = "";

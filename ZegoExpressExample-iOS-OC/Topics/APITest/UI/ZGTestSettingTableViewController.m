@@ -35,13 +35,10 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 
 @property (nonatomic, strong) NSDictionary *configDict;
 
-@property (nonatomic, copy) NSArray<NSString *> *latencyModeList;
-@property (nonatomic, assign) ZegoLatencyMode selectedLatencyMode;
-
 @property (nonatomic, copy) NSArray<NSString *> *resolutionList;
-@property (nonatomic, assign) ZegoResolution selectedResolution;
+@property (nonatomic, assign) ZegoVideoConfigPreset selectedVideoConfigPreset;
 
-@property (nonatomic, assign) ZegoResolution selectedMixerResolution;
+@property (nonatomic, assign) ZegoVideoConfigPreset selectedMixerVideoConfigPreset;
 
 // Engine
 @property (weak, nonatomic) IBOutlet UITextField *appIDTextField;
@@ -295,7 +292,7 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 }
 
 - (IBAction)setVideoConfigClick:(UIButton *)sender {
-    ZegoVideoConfig *config = [ZegoVideoConfig configWithResolution:self.selectedResolution];
+    ZegoVideoConfig *config = [ZegoVideoConfig configWithPreset:self.selectedVideoConfigPreset];
     [self.manager setVideoConfig:config];
 }
 
@@ -324,12 +321,12 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
     [self saveValue:self.setCaptureVolumeTextField.text forKey:ZGTestTopicKey_CaptureVolume];
 }
 - (IBAction)addCDNURLClick:(UIButton *)sender {
-    [self.manager addPublishCDNURL:self.CDNURLTextField.text stream:self.publishStreamIDTextField.text callback:nil];
+    [self.manager addPublishCDNURL:self.CDNURLTextField.text streamID:self.publishStreamIDTextField.text callback:nil];
     [self saveValue:self.CDNURLTextField.text forKey:ZGTestTopicKey_CDNURL];
 }
 
 - (IBAction)removeCDNURLClick:(UIButton *)sender {
-    [self.manager removePublishCDNURL:self.CDNURLTextField.text stream:self.publishStreamIDTextField.text callback:nil];
+    [self.manager removePublishCDNURL:self.CDNURLTextField.text streamID:self.publishStreamIDTextField.text callback:nil];
 }
 
 - (IBAction)setWatermarkClick:(UIButton *)sender {
@@ -367,11 +364,11 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 }
 
 - (IBAction)mutePlayAudioClick:(UIButton *)sender {
-    [self.manager mutePlayStreamAudio:self.mutePlayAudioSwitch.on stream:self.playStreamIDTextField.text];
+    [self.manager mutePlayStreamAudio:self.mutePlayAudioSwitch.on streamID:self.playStreamIDTextField.text];
 }
 
 - (IBAction)mutePlayVideoClick:(UIButton *)sender {
-    [self.manager mutePlayStreamVideo:self.mutePlayVideoSwitch.on stream:self.playStreamIDTextField.text];
+    [self.manager mutePlayStreamVideo:self.mutePlayVideoSwitch.on streamID:self.playStreamIDTextField.text];
 }
 
 - (IBAction)enableHardwareDecoderClick:(UIButton *)sender {
@@ -452,7 +449,8 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 
 - (IBAction)startMixerTaskClick:(UIButton *)sender {
     ZegoMixerTask *task = [[ZegoMixerTask alloc] initWithTaskID:self.mixerTaskIDTextField.text];
-    ZegoMixerVideoConfig *videoConfig = [ZegoMixerVideoConfig configWithResolution:self.selectedMixerResolution];
+    // TODO: FIXME
+    ZegoMixerVideoConfig *videoConfig = [[ZegoMixerVideoConfig alloc] initWithResolution:CGSizeMake(1080, 1920) fps:15 bitrate:3000];
     
     CGRect firstRect = CGRectMake(0, 0, videoConfig.resolution.width, videoConfig.resolution.height/2);
     ZegoMixerInput *firstInput = [[ZegoMixerInput alloc] initWithStreamID:self.mixerInputFirstStreamIDTextField.text contentType:ZegoMixerInputContentTypeVideo layout:firstRect];
@@ -579,63 +577,47 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    if (pickerView.tag == 1) {
-        return self.latencyModeList.count;
-    } else {
+    if (pickerView.tag == 2 || pickerView.tag == 3) {
         return self.resolutionList.count;
     }
+    return 0;
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    if (pickerView.tag == 1) {
-        return self.latencyModeList[row];
-    } else {
+    if (pickerView.tag == 2 || pickerView.tag == 3) {
         return self.resolutionList[row];
     }
+    return 0;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    if (pickerView.tag == 1) {
+    if (pickerView.tag == 2) {
         if (row == 0) {
-            self.selectedLatencyMode = ZegoLatencyModeNormal;
+            self.selectedVideoConfigPreset = ZegoVideoConfigPreset180P;
         } else if (row == 1) {
-            self.selectedLatencyMode = ZegoLatencyModeLow;
+            self.selectedVideoConfigPreset = ZegoVideoConfigPreset270P;
         } else if (row == 2) {
-            self.selectedLatencyMode = ZegoLatencyModeNormal2;
+            self.selectedVideoConfigPreset = ZegoVideoConfigPreset360P;
         } else if (row == 3) {
-            self.selectedLatencyMode = ZegoLatencyModeLow2;
+            self.selectedVideoConfigPreset = ZegoVideoConfigPreset540P;
         } else if (row == 4) {
-            self.selectedLatencyMode = ZegoLatencyModeLow3;
+            self.selectedVideoConfigPreset = ZegoVideoConfigPreset720P;
         } else {
-            self.selectedLatencyMode = ZegoLatencyModeNormal3;
+            self.selectedVideoConfigPreset = ZegoVideoConfigPreset1080P;
         }
-    } else if (pickerView.tag == 2) {
+    } else if (pickerView.tag == 3) {
         if (row == 0) {
-            self.selectedResolution = ZegoResolution180x320;
+            self.selectedMixerVideoConfigPreset = ZegoVideoConfigPreset180P;
         } else if (row == 1) {
-            self.selectedResolution = ZegoResolution270x480;
+            self.selectedMixerVideoConfigPreset = ZegoVideoConfigPreset270P;
         } else if (row == 2) {
-            self.selectedResolution = ZegoResolution360x640;
+            self.selectedMixerVideoConfigPreset = ZegoVideoConfigPreset360P;
         } else if (row == 3) {
-            self.selectedResolution = ZegoResolution540x960;
+            self.selectedMixerVideoConfigPreset = ZegoVideoConfigPreset540P;
         } else if (row == 4) {
-            self.selectedResolution = ZegoResolution720x1280;
+            self.selectedMixerVideoConfigPreset = ZegoVideoConfigPreset720P;
         } else {
-            self.selectedResolution = ZegoResolution1080x1920;
-        }
-    } else {
-        if (row == 0) {
-            self.selectedMixerResolution = ZegoResolution180x320;
-        } else if (row == 1) {
-            self.selectedMixerResolution = ZegoResolution270x480;
-        } else if (row == 2) {
-            self.selectedMixerResolution = ZegoResolution360x640;
-        } else if (row == 3) {
-            self.selectedMixerResolution = ZegoResolution540x960;
-        } else if (row == 4) {
-            self.selectedMixerResolution = ZegoResolution720x1280;
-        } else {
-            self.selectedMixerResolution = ZegoResolution1080x1920;
+            self.selectedMixerVideoConfigPreset = ZegoVideoConfigPreset1080P;
         }
     }
 }

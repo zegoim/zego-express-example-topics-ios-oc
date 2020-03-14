@@ -79,7 +79,7 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
         
         // Can destroy the engine when you don't need audio and video calls
         ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
-        [ZegoExpressEngine destroyEngine];
+        [ZegoExpressEngine destroyEngine:nil];
     }
     [super viewDidDisappear:animated];
 }
@@ -185,7 +185,7 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
     [self.engine startPlayingStream:self.streamID canvas:playCanvas];
     
     // Volume needs to be set after playing stream
-    [self.engine setPlayVolume:self.playStreamVolume stream:self.streamID];
+    [self.engine setPlayVolume:self.playStreamVolume streamID:self.streamID];
     
 }
 
@@ -273,7 +273,7 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
 
 #pragma mark - ZegoExpress EventHandler Room Event
 
-- (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode room:(NSString *)roomID {
+- (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData roomID:(NSString *)roomID {
     if (errorCode != 0) {
         [self appendProcessTipAndMakeVisible:[NSString stringWithFormat:@" 🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode]];
         ZGLogWarn(@" 🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode);
@@ -293,7 +293,7 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
     [self invalidatePlayLiveStateUILayout];
 }
 
-- (void)onRoomStreamUpdate:(ZegoUpdateType)updateType streamList:(NSArray<ZegoStream *> *)streamList room:(NSString *)roomID {
+- (void)onRoomStreamUpdate:(ZegoUpdateType)updateType streamList:(NSArray<ZegoStream *> *)streamList roomID:(NSString *)roomID {
     for (ZegoStream *stream in streamList) {
         if ([stream.streamID isEqualToString:self.streamID]) {
             self.playStreamExtraInfoLabel.text = [NSString stringWithFormat:@"Stream Extra Info: %@  ", stream.extraInfo];
@@ -302,7 +302,7 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
     }
 }
 
-- (void)onRoomStreamExtraInfoUpdate:(NSArray<ZegoStream *> *)streamList room:(NSString *)roomID {
+- (void)onRoomStreamExtraInfoUpdate:(NSArray<ZegoStream *> *)streamList roomID:(NSString *)roomID {
     NSLog(@"extra info update");
     for (ZegoStream *stream in streamList) {
         if ([stream.streamID isEqualToString:self.streamID]) {
@@ -315,7 +315,7 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
 
 #pragma mark - ZegoExpress EventHandler Player Event
 
-- (void)onPlayerStateUpdate:(ZegoPlayerState)state errorCode:(int)errorCode stream:(NSString *)streamID {
+- (void)onPlayerStateUpdate:(ZegoPlayerState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
     if (errorCode != 0) {
         [self appendProcessTipAndMakeVisible:[NSString stringWithFormat:@" 🚩 ❌ 📥 Playing stream error of streamID: %@, errorCode:%d", streamID, errorCode]];
         ZGLogWarn(@" 🚩 ❌ 📥 Playing stream error of streamID: %@, errorCode:%d", streamID, errorCode);
@@ -335,7 +335,7 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
     [self invalidatePlayLiveStateUILayout];
 }
 
-- (void)onPlayerQualityUpdate:(ZegoPlayStreamQuality *)quality stream:(NSString *)streamID {
+- (void)onPlayerQualityUpdate:(ZegoPlayStreamQuality *)quality streamID:(NSString *)streamID {
     NSString *networkQuality = @"";
     switch (quality.level) {
         case 0:
@@ -364,7 +364,7 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
     self.playLiveQualityLabel.text = [text copy];
 }
 
-- (void)onPlayerVideoSizeChanged:(CGSize)size stream:(NSString *)streamID {
+- (void)onPlayerVideoSizeChanged:(CGSize)size streamID:(NSString *)streamID {
     self.playLiveResolutionLabel.text = [NSString stringWithFormat:@"Resolution: %.fx%.f  ", size.width, size.height];
 }
 
@@ -385,7 +385,7 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
 - (void)playTopicConfigManager:(ZGPlayTopicConfigManager *)configManager playStreamVolumeDidChange:(int)playStreamVolume {
     self.playStreamVolume = playStreamVolume;
     
-    [self.engine setPlayVolume:playStreamVolume stream:self.streamID];
+    [self.engine setPlayVolume:playStreamVolume streamID:self.streamID];
 }
 
 - (void)playTopicConfigManager:(ZGPlayTopicConfigManager *)configManager enableHardwareDecodeDidChange:(BOOL)enableHardwareDecode {

@@ -88,7 +88,7 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
         
         // Can destroy the engine when you don't need audio and video calls
         ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
-        [ZegoExpressEngine destroyEngine];
+        [ZegoExpressEngine destroyEngine:nil];
     }
     [super viewDidDisappear:animated];
 }
@@ -335,7 +335,7 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
 
 #pragma mark - ZegoExpress EventHandler Room Event
 
-- (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode room:(NSString *)roomID {
+- (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData roomID:(NSString *)roomID {
     if (errorCode != 0) {
         [self appendProcessTipAndMakeVisible:[NSString stringWithFormat:@" 🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode]];
         ZGLogWarn(@" 🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode);
@@ -362,7 +362,7 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
 
 #pragma mark - ZegoExpress EventHandler Publish Event
 
-- (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode stream:(NSString *)streamID {
+- (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
     if (errorCode != 0) {
         [self appendProcessTipAndMakeVisible:[NSString stringWithFormat:@" 🚩 ❌ 📤 Publishing stream error of streamID: %@, errorCode:%d", streamID, errorCode]];
         ZGLogWarn(@" 🚩 ❌ 📤 Publishing stream error of streamID: %@, errorCode:%d", streamID, errorCode);
@@ -382,7 +382,7 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
     [self invalidateLiveStateUILayout];
 }
 
-- (void)onPublisherQualityUpdate:(ZegoPublishStreamQuality *)quality stream:(NSString *)streamID {
+- (void)onPublisherQualityUpdate:(ZegoPublishStreamQuality *)quality streamID:(NSString *)streamID {
     NSString *networkQuality = @"";
     switch (quality.level) {
         case 0:
@@ -411,7 +411,10 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
     self.publishQualityLabel.text = [text copy];
 }
 
-- (void)onPublisherVideoSizeChanged:(CGSize)size {
+- (void)onPublisherVideoSizeChanged:(CGSize)size channel:(ZegoPublishChannel)channel {
+    if (channel == ZegoPublishChannelAux) {
+        return;
+    }
     self.publishResolutionLabel.text = [NSString stringWithFormat:@"Resolution: %.fx%.f  ", size.width, size.height];
 }
 

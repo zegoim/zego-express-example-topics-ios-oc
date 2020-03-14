@@ -68,7 +68,7 @@ NSString* const ZGMixerTopicKey_PublishStreamID = @"kPublishStreamID";
 
 #pragma mark - ZegoEventHandler
 
-- (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode stream:(NSString *)streamID {
+- (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
     if (state == ZegoPublisherStatePublishing) {
         self.title = @"🔵 Publishing";
         [self.startPublishingButton setTitle:@"🎉 Start Publishing Success" forState:UIControlStateNormal];
@@ -79,18 +79,13 @@ NSString* const ZGMixerTopicKey_PublishStreamID = @"kPublishStreamID";
 
 #pragma mark - Exit
 
-- (void)viewDidDisappear:(BOOL)animated {
-    if (self.isBeingDismissed || self.isMovingFromParentViewController
-        || (self.navigationController && self.navigationController.isBeingDismissed)) {
-        
-        ZGLogInfo(@" 🚪 Exit the room");
-        [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
-        
-        // Can destroy the engine when you don't need audio and video calls
-        ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
-        [ZegoExpressEngine destroyEngine];
-    }
-    [super viewDidDisappear:animated];
+- (void)dealloc {
+    ZGLogInfo(@" 🚪 Exit the room");
+    [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
+    
+    // Can destroy the engine when you don't need audio and video calls
+    ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+    [ZegoExpressEngine destroyEngine:nil];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

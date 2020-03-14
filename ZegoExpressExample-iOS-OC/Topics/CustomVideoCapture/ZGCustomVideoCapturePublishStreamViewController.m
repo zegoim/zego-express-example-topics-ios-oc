@@ -19,7 +19,7 @@
 
 @interface ZGCustomVideoCapturePublishStreamViewController () <ZegoEventHandler, ZegoCustomVideoCaptureHandler,  ZGCaptureDeviceDataOutputPixelBufferDelegate>
 
-@property (weak, nonatomic) IBOutlet UIImageView *previewView;
+@property (weak, nonatomic) IBOutlet UIView *previewView;
 @property (weak, nonatomic) IBOutlet UIButton *startLiveButton;
 @property (nonatomic, assign) ZegoPublisherState publisherState;
 
@@ -42,7 +42,7 @@
     captureConfig.bufferType = ZegoVideoBufferTypeCVPixelBuffer;
     
     ZegoEngineConfig *engineConfig = [[ZegoEngineConfig alloc] init];
-    [engineConfig setCustomVideoCaptureConfig:captureConfig];
+    engineConfig.customVideoCaptureMainConfig = captureConfig;
     
     // Set engine config, must be called before create engine
     [ZegoExpressEngine setEngineConfig:engineConfig];
@@ -61,7 +61,7 @@
     [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
     
     // Set video config
-    [[ZegoExpressEngine sharedEngine] setVideoConfig:[ZegoVideoConfig configWithResolution:ZegoResolution1080x1920]];
+    [[ZegoExpressEngine sharedEngine] setVideoConfig:[ZegoVideoConfig configWithPreset:ZegoVideoConfigPreset1080P]];
 }
 
 - (IBAction)startLiveButtonClick:(UIButton *)sender {
@@ -78,25 +78,33 @@
 }
 
 - (void)startLive {
-    // When custom video capture is enabled, developers need to render the preview by themselves
-//    [self.engine startPreview:[ZegoCanvas canvasWithView:self.previewView]];
+    ZGLogInfo(@" 🔌 Start preview");
+    [[ZegoExpressEngine sharedEngine] startPreview:[ZegoCanvas canvasWithView:self.previewView]];
     
-    // Start publishing
     ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", self.streamID);
     [[ZegoExpressEngine sharedEngine] startPublishing:self.streamID];
 }
 
 - (void)stopLive {
+    ZGLogInfo(@" 🔌 Stop preview");
+    [[ZegoExpressEngine sharedEngine] stopPreview];
+    
+    ZGLogInfo(@" 📤 Stop publishing stream");
     [[ZegoExpressEngine sharedEngine] stopPublishing];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    if (self.isBeingDismissed || self.isMovingFromParentViewController
-        || (self.navigationController && self.navigationController.isBeingDismissed)) {
-        ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
-        [ZegoExpressEngine destroyEngine];
-    }
-    [super viewDidDisappear:animated];
+- (void)dealloc {
+    ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+    [ZegoExpressEngine destroyEngine:^{
+        // This callback is only used to notify the completion of the release of internal resources of the engine.
+        // Developers cannot release resources related to the engine within this callback.
+        //
+        // In general, developers do not need to listen to this callback.
+        ZGLogInfo(@" 🚩 🏳️ Destroy ZegoExpressEngine complete");
+    }];
+    
+    // After destroying the engine, you will not receive the `-onStop:` callback, you need to stop the custom video caputre manually.
+    [self.captureDevice stopCapture];
 }
 
 #pragma mark - Getter
@@ -120,14 +128,14 @@
 #pragma mark - ZegoCustomVideoCaptureHandler
 
 // Note: This callback is not in the main thread. If you have UI operations, please switch to the main thread yourself.
-- (void)onStart {
-    ZGLogInfo(@" 🚩 🟢 ZegoCustomVideoCaptureHandler onStart");
+- (void)onStart:(ZegoPublishChannel)channel {
+    ZGLogInfo(@" 🚩 🟢 ZegoCustomVideoCaptureHandler onStart, channel: %d", (int)channel);
     [self.captureDevice startCapture];
 }
 
 // Note: This callback is not in the main thread. If you have UI operations, please switch to the main thread yourself.
-- (void)onStop {
-    ZGLogInfo(@" 🚩 🔴 ZegoCustomVideoCaptureHandler onStop");
+- (void)onStop:(ZegoPublishChannel)channel {
+    ZGLogInfo(@" 🚩 🔴 ZegoCustomVideoCaptureHandler onStop, channel: %d", (int)channel);
     [self.captureDevice stopCapture];
 }
 
@@ -138,15 +146,12 @@
     
     // Send pixel buffer to ZEGO SDK
     [[ZegoExpressEngine sharedEngine] sendCustomVideoCapturePixelBuffer:data timeStamp:timeStamp];
-    
-    // When custom video capture is enabled, developers need to render the preview by themselves
-    [self renderWithCVPixelBuffer:data];
 }
 
 
 #pragma mark - ZegoEventHandler
 
-- (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode stream:(NSString *)streamID {
+- (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
     ZGLogInfo(@" 🚩 📤 Publisher State Update Callback: %lu, errorCode: %d, streamID: %@", (unsigned long)state, (int)errorCode, streamID);
     
     self.publisherState = state;
@@ -163,16 +168,6 @@
             break;
     }
 }
-
-#pragma mark - Render Preview
-
-- (void)renderWithCVPixelBuffer:(CVPixelBufferRef)buffer {
-    CIImage *image = [CIImage imageWithCVPixelBuffer:buffer];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.previewView.image = [UIImage imageWithCIImage:image];
-    });
-}
-
 
 @end
 

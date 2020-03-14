@@ -135,7 +135,7 @@ static ZGPublishTopicConfigManager *instance = nil;
             bitrate = [n integerValue];
         } else {
             // Set the default
-            bitrate = 600000;
+            bitrate = 600;
         }
     });
     return bitrate;

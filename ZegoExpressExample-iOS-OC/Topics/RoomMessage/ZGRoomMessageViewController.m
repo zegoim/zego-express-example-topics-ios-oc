@@ -56,7 +56,8 @@
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
     
     // To receive the onRoomUserUpdate:userList:room: callback, you need to set the isUserStatusNotify parameter to YES.
-    ZegoRoomConfig *roomConfig = [[ZegoRoomConfig alloc] initWithMaxMemberCount:0 isUserStatusNotify:YES];
+    ZegoRoomConfig *roomConfig = [[ZegoRoomConfig alloc] init];
+    roomConfig.isUserStatusNotify = YES;
     
     ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
     [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:roomConfig];
@@ -78,8 +79,8 @@
 
 - (void)sendBroadcastMessage {
     NSString *message = self.broadcastMessageTextField.text;
-    [[ZegoExpressEngine sharedEngine] sendBroadcastMessage:message roomID:self.roomID callback:^(int errorCode) {
-        ZGLogInfo(@" 🚩 💬 Send broadcast message result errorCode: %d", errorCode);
+    [[ZegoExpressEngine sharedEngine] sendBroadcastMessage:message roomID:self.roomID callback:^(int errorCode, unsigned long long messageID) {
+        ZGLogInfo(@" 🚩 💬 Send broadcast message result errorCode: %d, messageID: %llu", errorCode, messageID);
         [self appendMessage:[NSString stringWithFormat:@" 💬 📤 Sent: %@", message]];
     }];
 }
@@ -133,7 +134,7 @@
 
 #pragma mark - ZegoEventHandler
 
-- (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode room:(NSString *)roomID {
+- (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData roomID:(NSString *)roomID {
     if (errorCode != 0) {
         ZGLogError(@" 🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode);
     } else {
@@ -151,7 +152,7 @@
 }
 
 
-- (void)onRoomUserUpdate:(ZegoUpdateType)updateType userList:(NSArray<ZegoUser *> *)userList room:(NSString *)roomID {
+- (void)onRoomUserUpdate:(ZegoUpdateType)updateType userList:(NSArray<ZegoUser *> *)userList roomID:(NSString *)roomID {
     ZGLogInfo(@" 🚩 🕺 Room User Update Callback: %lu, UsersCount: %lu, roomID: %@", (unsigned long)updateType, (unsigned long)userList.count, roomID);
     
     if (updateType == ZegoUpdateTypeAdd) {
@@ -179,11 +180,11 @@
     self.title = [NSString stringWithFormat:@"%@  ( %d Users )", self.roomID, (int)self.userList.count + 1];
 }
 
-- (void)onIMRecvBroadcastMessage:(NSArray<ZegoMessageInfo *> *)messageInfoList roomID:(NSString *)roomID {
+- (void)onIMRecvBroadcastMessage:(NSArray<ZegoBroadcastMessageInfo *> *)messageInfoList roomID:(NSString *)roomID {
     ZGLogInfo(@" 🚩 💬 IM Recv Broadcast Message Callback: roomID: %@", roomID);
     
     for (int idx = 0; idx < messageInfoList.count; idx ++) {
-        ZegoMessageInfo *info = messageInfoList[idx];
+        ZegoBroadcastMessageInfo *info = messageInfoList[idx];
         ZGLogInfo(@" 🚩 💬 --- message: %@, fromUserID: %@, sendTime: %llu", info.message, info.fromUser.userID, info.sendTime);
         
         [self appendMessage:[NSString stringWithFormat:@" 💬 %@ [FromUserID: %@]", info.message, info.fromUser.userID]];
@@ -208,7 +209,7 @@
         
         // Can destroy the engine when you don't need audio and video calls
         ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
-        [ZegoExpressEngine destroyEngine];
+        [ZegoExpressEngine destroyEngine:nil];
     }
     [super viewDidDisappear:animated];
 }

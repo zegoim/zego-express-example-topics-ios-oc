@@ -73,6 +73,11 @@ NSString* const ZGCustomVideoCaptureLoginVCKey_streamID = @"kStreamID";
     }
 }
 
+/// Click on other areas outside the keyboard to retract the keyboard
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
+}
+
 @end
 
 #endif

@@ -41,14 +41,14 @@ static NSArray<NSNumber*> *ZGPublishTopicCommonMirrorModeList;
           @(CGSizeMake(180, 320))];
     
     ZGPublishTopicCommonBitrateList =
-        @[@(3000000),
-          @(1500000),
-          @(1200000),
-          @(600000),
-          @(400000),
-          @(300000)];
+        @[@(3000),
+          @(1500),
+          @(1200),
+          @(600),
+          @(400),
+          @(300)];
     
-    ZGPublishTopicCommonFpsList = @[@(10),@(15),@(20),@(25),@(30)];
+    ZGPublishTopicCommonFpsList = @[@(5),@(10),@(15),@(20),@(25),@(30)];
     
     ZGPublishTopicCommonVideoViewModeList = @[@(ZegoViewModeAspectFit),
           @(ZegoViewModeAspectFill),
@@ -176,7 +176,7 @@ static NSArray<NSNumber*> *ZGPublishTopicCommonMirrorModeList;
 - (void)showBitratePickSheet {
     NSArray<NSNumber*> *bitrateList = ZGPublishTopicCommonBitrateList;
     
-    UIAlertController *sheet = [UIAlertController alertControllerWithTitle:@"Select Video Bitrate" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *sheet = [UIAlertController alertControllerWithTitle:@"Select Video Bitrate(kbps)" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     for (NSNumber *bitrateObj in bitrateList) {
         [sheet addAction:[UIAlertAction actionWithTitle:[bitrateObj stringValue] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             NSInteger bitrate = [bitrateObj integerValue];

@@ -76,7 +76,7 @@
 #pragma mark Streams Update Callback
 
 // Refresh the remote streams list
-- (void)onRoomStreamUpdate:(ZegoUpdateType)updateType streamList:(NSArray<ZegoStream *> *)streamList room:(NSString *)roomID {
+- (void)onRoomStreamUpdate:(ZegoUpdateType)updateType streamList:(NSArray<ZegoStream *> *)streamList roomID:(NSString *)roomID {
     ZGLogInfo(@" 🚩 🌊 Room Stream Update Callback: %lu, StreamsCount: %lu, roomID: %@", (unsigned long)updateType, (unsigned long)streamList.count, roomID);
     
     if (updateType == ZegoUpdateTypeAdd) {
@@ -179,18 +179,13 @@
 
 #pragma mark - Exit
 
-- (void)viewDidDisappear:(BOOL)animated {
-    if (self.isBeingDismissed || self.isMovingFromParentViewController
-        || (self.navigationController && self.navigationController.isBeingDismissed)) {
-        
-        ZGLogInfo(@" 🚪 Exit the room");
-        [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
-        
-        // Can destroy the engine when you don't need audio and video calls
-        ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
-        [ZegoExpressEngine destroyEngine];
-    }
-    [super viewDidDisappear:animated];
+- (void)dealloc {
+    ZGLogInfo(@" 🚪 Exit the room");
+    [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
+    
+    // Can destroy the engine when you don't need audio and video calls
+    ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+    [ZegoExpressEngine destroyEngine:nil];
 }
 
 @end

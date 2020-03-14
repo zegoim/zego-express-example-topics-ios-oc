@@ -69,7 +69,9 @@
     if (self.isBeingDismissed || self.isMovingFromParentViewController
         || (self.navigationController && self.navigationController.isBeingDismissed)) {
         ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
-        [ZegoExpressEngine destroyEngine];
+        [ZegoExpressEngine destroyEngine:^{
+            ZGLogInfo(@" 🚩 🏳️ Destroy ZegoExpressEngine complete");
+        }];
     }
     [super viewDidDisappear:animated];
 }
@@ -77,7 +79,7 @@
 #pragma mark - ZegoCustomVideoRenderHandler
 
 /// When `ZegoCustomVideoRenderConfig.bufferType` is set to `ZegoVideoBufferTypeRawData`, the video frame raw data will be called back from this function
-- (void)onRemoteVideoFrameRawData:(unsigned char * _Nonnull * _Nonnull)data dataLength:(unsigned int *)dataLength param:(ZegoVideoFrameParam *)param stream:(NSString *)streamID {
+- (void)onRemoteVideoFrameRawData:(unsigned char * _Nonnull *)data dataLength:(unsigned int *)dataLength param:(ZegoVideoFrameParam *)param streamID:(NSString *)streamID {
 //    if (streamID != self.streamID) return;
     NSLog(@"raw data video frame callback. format:%d, width:%f, height:%f", (int)param.format, param.size.width, param.size.height);
     
@@ -102,7 +104,7 @@
 }
 
 /// When `ZegoCustomVideoRenderConfig.bufferType` is set to `ZegoVideoBufferTypeCVPixelBuffer`, the video frame CVPixelBuffer will be called back from this function
-- (void)onRemoteVideoFrameCVPixelBuffer:(CVPixelBufferRef)buffer param:(ZegoVideoFrameParam *)param stream:(NSString *)streamID {
+- (void)onRemoteVideoFrameCVPixelBuffer:(CVPixelBufferRef)buffer param:(ZegoVideoFrameParam *)param streamID:(NSString *)streamID {
 //    if (streamID != self.streamID) return;
     NSLog(@"pixel buffer video frame callback. format:%d, width:%f, height:%f", (int)param.format, param.size.width, param.size.height);
     [self renderWithCVPixelBuffer:buffer];

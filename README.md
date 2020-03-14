@@ -20,6 +20,7 @@ The SDK `ZegoExpressEngine.framework` required to run the Demo project is missin
 .
 ├── Libs
 │   └── ZegoExpressEngine.framework
+├── README.CN.md
 ├── README.md
 ├── ZegoExpressExample-iOS-OC
 └── ZegoExpressExample-iOS-OC.xcodeproj

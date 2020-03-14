@@ -17,8 +17,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIBarButtonItem *goGlobalConfigItem = [[UIBarButtonItem alloc] initWithTitle:@"Setting" style:UIBarButtonItemStylePlain target:self action:@selector(goGlobalConfigPage:)];
-    self.navigationItem.rightBarButtonItem = goGlobalConfigItem;
+//    UIBarButtonItem *goGlobalConfigItem = [[UIBarButtonItem alloc] initWithTitle:@"Setting" style:UIBarButtonItemStylePlain target:self action:@selector(goGlobalConfigPage:)];
+//    self.navigationItem.rightBarButtonItem = goGlobalConfigItem;
     
     NSMutableArray *basicTopicList = [NSMutableArray array];
     NSMutableArray *commonTopicList = [NSMutableArray array];
@@ -72,6 +72,9 @@
 #endif
 #ifdef _Module_CustomVideoRender
     [advancedTopicList addObject:_Module_CustomVideoRender];
+#endif
+#ifdef _Module_AuxPublisher
+    [advancedTopicList addObject:_Module_AuxPublisher];
 #endif
 #ifdef _Module_ExternalVideoFilter
     [advancedTopicList addObject:_Module_ExternalVideoFilter];
@@ -253,6 +256,13 @@
     #ifdef _Module_CustomVideoRender
     if ([topicName isEqualToString:_Module_CustomVideoRender]) {
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"CustomVideoRender" bundle:nil];
+        vc = [sb instantiateInitialViewController];
+    }
+    #endif
+    
+    #ifdef _Module_AuxPublisher
+    if ([topicName isEqualToString:_Module_AuxPublisher]) {
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"AuxPublisher" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
     #endif
