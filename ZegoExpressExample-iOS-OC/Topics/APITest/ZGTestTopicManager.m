@@ -87,15 +87,15 @@
 
 #pragma mark Publish
 
-- (void)startPublishing:(NSString *)streamID {
-    [self.engine startPublishing:streamID];
+- (void)startPublishingStream:(NSString *)streamID {
+    [self.engine startPublishingStream:streamID];
     ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", streamID);
     [self.dataSource onActionLog:[NSString stringWithFormat:@" 📤 Start publishing stream. streamID: %@", streamID]];
 }
 
 
-- (void)stopPublishing {
-    [self.engine stopPublishing];
+- (void)stopPublishingStream {
+    [self.engine stopPublishingStream];
     ZGLogInfo(@" 📤 Stop publishing stream");
     [self.dataSource onActionLog:@" 📤 Stop publishing stream"];
 }

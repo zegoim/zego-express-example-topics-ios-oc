@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="UrT-Dq-UdB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="UrT-Dq-UdB">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -45,7 +45,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B2S-aV-Nat" userLabel="Message View">
-                                <rect key="frame" x="0.0" y="64" width="414" height="160"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="240"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4hl-l5-DwD" userLabel="BroadCastMessageView">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
@@ -102,8 +102,63 @@
                                             <constraint firstItem="33W-zr-T01" firstAttribute="top" secondItem="Bz2-Tl-jGv" secondAttribute="bottom" constant="5" id="yt0-hW-JQV"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z6h-FG-ceZ" userLabel="CustomCommandView">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DKm-1l-UHq" userLabel="BroadCastMessageView">
                                         <rect key="frame" x="0.0" y="80" width="414" height="80"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rLY-8Q-hHy" userLabel="SplitLine">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="0.5"/>
+                                                <color key="backgroundColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="0.5" id="2TH-fO-Dof"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🗯 Barrage Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IYV-rz-1Nx">
+                                                <rect key="frame" x="10" y="5.5" width="180" height="21"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="180" id="bEa-jU-5Cn"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Send to all users" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HWo-lO-YQX">
+                                                <rect key="frame" x="10" y="31.5" width="284" height="38.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5kr-Om-RxT">
+                                                <rect key="frame" x="314" y="33.5" width="90" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="90" id="g1i-Ah-pm1"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                <state key="normal" title="Send!"/>
+                                                <connections>
+                                                    <action selector="sendBarrageMessageButtonClick:" destination="UrT-Dq-UdB" eventType="touchUpInside" id="meC-Wp-63P"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="HWo-lO-YQX" secondAttribute="bottom" constant="10" id="3uQ-dX-NlU"/>
+                                            <constraint firstItem="IYV-rz-1Nx" firstAttribute="leading" secondItem="DKm-1l-UHq" secondAttribute="leading" constant="10" id="79M-XI-SWk"/>
+                                            <constraint firstItem="rLY-8Q-hHy" firstAttribute="top" secondItem="DKm-1l-UHq" secondAttribute="top" id="E3W-wv-a3D"/>
+                                            <constraint firstItem="HWo-lO-YQX" firstAttribute="leading" secondItem="DKm-1l-UHq" secondAttribute="leading" constant="10" id="Gew-FG-51b"/>
+                                            <constraint firstItem="rLY-8Q-hHy" firstAttribute="leading" secondItem="DKm-1l-UHq" secondAttribute="leading" id="Kz0-d6-aJl"/>
+                                            <constraint firstAttribute="trailing" secondItem="rLY-8Q-hHy" secondAttribute="trailing" id="UGM-8V-2Kl"/>
+                                            <constraint firstItem="5kr-Om-RxT" firstAttribute="leading" secondItem="HWo-lO-YQX" secondAttribute="trailing" constant="20" id="VtW-rE-UcJ"/>
+                                            <constraint firstAttribute="trailing" secondItem="5kr-Om-RxT" secondAttribute="trailing" constant="10" id="WuI-l1-Ryg"/>
+                                            <constraint firstItem="HWo-lO-YQX" firstAttribute="top" secondItem="IYV-rz-1Nx" secondAttribute="bottom" constant="5" id="qoP-aQ-mHb"/>
+                                            <constraint firstItem="IYV-rz-1Nx" firstAttribute="top" secondItem="rLY-8Q-hHy" secondAttribute="bottom" constant="5" id="u84-fQ-SgI"/>
+                                            <constraint firstItem="5kr-Om-RxT" firstAttribute="centerY" secondItem="HWo-lO-YQX" secondAttribute="centerY" id="wrY-IU-Pvd"/>
+                                            <constraint firstAttribute="height" constant="80" id="y7o-um-W0C"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z6h-FG-ceZ" userLabel="CustomCommandView">
+                                        <rect key="frame" x="0.0" y="160" width="414" height="80"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="THF-aA-SEG" userLabel="SplitLine">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="0.5"/>
@@ -174,17 +229,19 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="z6h-FG-ceZ" secondAttribute="trailing" id="5Oa-ZE-BRr"/>
-                                    <constraint firstAttribute="height" constant="160" id="Hmx-1Z-oI1"/>
+                                    <constraint firstAttribute="trailing" secondItem="DKm-1l-UHq" secondAttribute="trailing" id="EVz-Wc-ysx"/>
+                                    <constraint firstAttribute="height" constant="240" id="Hmx-1Z-oI1"/>
                                     <constraint firstAttribute="bottom" secondItem="z6h-FG-ceZ" secondAttribute="bottom" id="QnV-hK-1J2"/>
                                     <constraint firstItem="4hl-l5-DwD" firstAttribute="leading" secondItem="B2S-aV-Nat" secondAttribute="leading" id="Tn1-BI-LyC"/>
-                                    <constraint firstItem="z6h-FG-ceZ" firstAttribute="top" secondItem="4hl-l5-DwD" secondAttribute="bottom" id="cor-Kh-W9b"/>
                                     <constraint firstItem="4hl-l5-DwD" firstAttribute="top" secondItem="B2S-aV-Nat" secondAttribute="top" id="fYS-SL-6B7"/>
+                                    <constraint firstItem="DKm-1l-UHq" firstAttribute="leading" secondItem="B2S-aV-Nat" secondAttribute="leading" id="ixs-R2-ZWX"/>
+                                    <constraint firstItem="DKm-1l-UHq" firstAttribute="top" secondItem="4hl-l5-DwD" secondAttribute="bottom" id="n8q-PC-aDo"/>
                                     <constraint firstAttribute="trailing" secondItem="4hl-l5-DwD" secondAttribute="trailing" id="t6Q-31-OQk"/>
                                     <constraint firstItem="z6h-FG-ceZ" firstAttribute="leading" secondItem="B2S-aV-Nat" secondAttribute="leading" id="w4w-Ch-ylD"/>
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="dtg-Bm-kv9">
-                                <rect key="frame" x="0.0" y="224" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="304" width="414" height="592"/>
                                 <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -216,14 +273,12 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="barrageMessageTextField" destination="HWo-lO-YQX" id="ldv-WS-YNA"/>
                         <outlet property="broadcastMessageTextField" destination="eh3-G5-kmm" id="P4Z-2k-W66"/>
-                        <outlet property="customCommandSelectUsersButton" destination="YnA-6f-Ayc" id="bOd-cS-GTx"/>
                         <outlet property="customCommandTextField" destination="Rqx-Rq-pDT" id="Ub3-Ky-wbV"/>
                         <outlet property="receivedMessageTextView" destination="dtg-Bm-kv9" id="2p3-cX-DBe"/>
                         <outlet property="roomIDLabel" destination="jls-F5-N21" id="7Bz-81-z2n"/>
                         <outlet property="roomStateLabel" destination="dOj-Ry-vOW" id="hpM-U2-WGL"/>
-                        <outlet property="sendBroadcastMessageButton" destination="Jku-Wh-Jkp" id="czk-u1-vYk"/>
-                        <outlet property="sendCustomCommandButton" destination="lJX-hh-wcF" id="POa-Jj-crA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YCe-gR-6bY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

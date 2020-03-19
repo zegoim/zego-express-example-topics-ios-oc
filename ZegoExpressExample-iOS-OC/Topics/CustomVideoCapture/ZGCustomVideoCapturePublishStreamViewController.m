@@ -82,7 +82,7 @@
     [[ZegoExpressEngine sharedEngine] startPreview:[ZegoCanvas canvasWithView:self.previewView]];
     
     ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", self.streamID);
-    [[ZegoExpressEngine sharedEngine] startPublishing:self.streamID];
+    [[ZegoExpressEngine sharedEngine] startPublishingStream:self.streamID];
 }
 
 - (void)stopLive {
@@ -90,7 +90,7 @@
     [[ZegoExpressEngine sharedEngine] stopPreview];
     
     ZGLogInfo(@" 📤 Stop publishing stream");
-    [[ZegoExpressEngine sharedEngine] stopPublishing];
+    [[ZegoExpressEngine sharedEngine] stopPublishingStream];
 }
 
 - (void)dealloc {
@@ -105,6 +105,9 @@
     
     // After destroying the engine, you will not receive the `-onStop:` callback, you need to stop the custom video caputre manually.
     [self.captureDevice stopCapture];
+    
+    // In order not to affect other example topics, restore the default engine configuration.
+    [ZegoExpressEngine setEngineConfig:[[ZegoEngineConfig alloc] init]];
 }
 
 #pragma mark - Getter

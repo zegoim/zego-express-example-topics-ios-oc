@@ -63,7 +63,7 @@
     
     // Start publishing
     ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", self.localStreamID);
-    [[ZegoExpressEngine sharedEngine] startPublishing:self.localStreamID];
+    [[ZegoExpressEngine sharedEngine] startPublishingStream:self.localStreamID];
     
     // Start monitoring
     ZGLogInfo(@" 🎼 Start sound level monitor");

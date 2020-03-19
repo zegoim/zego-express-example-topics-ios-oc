@@ -123,7 +123,7 @@ CGFloat const ZGVideoTalkStreamViewSpacing = 8.f;
     
     // Local user start publishing
     ZGLogInfo(@" 📤 Start publishing stream, streamID: %@", _localStreamID);
-    [self.engine startPublishing:_localStreamID];
+    [self.engine startPublishingStream:_localStreamID];
 }
 
 // It is recommended to logout room when stopping the video call.

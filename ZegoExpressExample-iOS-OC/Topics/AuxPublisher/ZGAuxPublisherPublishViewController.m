@@ -169,12 +169,12 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
     [self.engine startPreview:mainPreviewCanvas];
     
     ZGLogInfo(@" 📤 Start publishing stream main channel. streamID: %@", self.mainStreamID);
-    [self.engine startPublishing:self.mainStreamID channel:ZegoPublishChannelMain];
+    [self.engine startPublishingStream:self.mainStreamID channel:ZegoPublishChannelMain];
 }
 
 - (void)stopPublishMainChannel {
     ZGLogInfo(@" 📤 Stop publishing stream main channel");
-    [self.engine stopPublishing:ZegoPublishChannelMain];
+    [self.engine stopPublishingStream:ZegoPublishChannelMain];
 }
 
 #pragma mark - Start/Stop Publishing Aux Channel
@@ -197,12 +197,12 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
     [self saveValue:self.auxStreamID forKey:ZGAuxPublisherPublishVCKey_auxStreamID];
     
     ZGLogInfo(@" 📤 Start publishing stream aux channel. streamID: %@", self.auxStreamID);
-    [self.engine startPublishing:self.auxStreamID channel:ZegoPublishChannelAux];
+    [self.engine startPublishingStream:self.auxStreamID channel:ZegoPublishChannelAux];
 }
 
 - (void)stopPublishAuxChannel {
     ZGLogInfo(@" 📤 Stop publishing stream aux channel");
-    [self.engine stopPublishing:ZegoPublishChannelAux];
+    [self.engine stopPublishingStream:ZegoPublishChannelAux];
 }
 
 #pragma mark - Exit
@@ -214,6 +214,9 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
     // Can destroy the engine when you don't need audio and video calls
     ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
     [ZegoExpressEngine destroyEngine:nil];
+    
+    // In order not to affect other example topics, restore the default engine configuration.
+    [ZegoExpressEngine setEngineConfig:[[ZegoEngineConfig alloc] init]];
 }
 
 #pragma mark - Capture device for aux channel

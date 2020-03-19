@@ -63,10 +63,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Publish
 
-- (void)startPublishing:(NSString *)streamID;
+- (void)startPublishingStream:(NSString *)streamID;
 
 
-- (void)stopPublishing;
+- (void)stopPublishingStream;
 
 
 - (void)startPreview:(ZegoCanvas *)canvas;

@@ -70,7 +70,7 @@
     
     // Start publishing
     ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", self.streamID);
-    [self.engine startPublishing:self.streamID];
+    [self.engine startPublishingStream:self.streamID];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -84,6 +84,9 @@
             // In general, developers do not need to listen to this callback.
             ZGLogInfo(@" 🚩 🏳️ Destroy ZegoExpressEngine complete");
         }];
+        
+        // In order not to affect other example topics, restore the default engine configuration.
+        [ZegoExpressEngine setEngineConfig:[[ZegoEngineConfig alloc] init]];
     }
     [super viewDidDisappear:animated];
 }

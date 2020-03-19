@@ -145,9 +145,8 @@
                                                     <rect key="frame" x="5" y="37" width="404" height="32"/>
                                                     <segments>
                                                         <segment title="General"/>
+                                                        <segment title="Communication"/>
                                                         <segment title="Live"/>
-                                                        <segment title="Room"/>
-                                                        <segment title="Education"/>
                                                     </segments>
                                                 </segmentedControl>
                                             </subviews>

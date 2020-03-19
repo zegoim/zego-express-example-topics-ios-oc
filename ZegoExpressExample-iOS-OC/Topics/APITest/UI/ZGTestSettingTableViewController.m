@@ -271,12 +271,12 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 #pragma mark Publisher
 
 - (IBAction)startPublishClick:(UIButton *)sender {
-    [self.manager startPublishing:self.publishStreamIDTextField.text];
+    [self.manager startPublishingStream:self.publishStreamIDTextField.text];
     [self saveValue:self.publishStreamIDTextField.text forKey:ZGTestTopicKey_PublishStreamID];
 }
 
 - (IBAction)stopPublishClick:(UIButton *)sender {
-    [self.manager stopPublishing];
+    [self.manager stopPublishingStream];
 }
 
 - (IBAction)startPreviewClick:(UIButton *)sender {

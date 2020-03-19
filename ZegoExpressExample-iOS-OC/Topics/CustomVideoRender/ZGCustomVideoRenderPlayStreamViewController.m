@@ -70,8 +70,15 @@
         || (self.navigationController && self.navigationController.isBeingDismissed)) {
         ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
         [ZegoExpressEngine destroyEngine:^{
+            // This callback is only used to notify the completion of the release of internal resources of the engine.
+            // Developers cannot release resources related to the engine within this callback.
+            //
+            // In general, developers do not need to listen to this callback.
             ZGLogInfo(@" 🚩 🏳️ Destroy ZegoExpressEngine complete");
         }];
+        
+        // In order not to affect other example topics, restore the default engine configuration.
+        [ZegoExpressEngine setEngineConfig:[[ZegoEngineConfig alloc] init]];
     }
     [super viewDidDisappear:animated];
 }

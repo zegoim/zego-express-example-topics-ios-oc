@@ -58,7 +58,7 @@ NSString* const ZGMixerTopicKey_PublishStreamID = @"kPublishStreamID";
     if (self.streamIDTextField.text.length > 0) {
         [self saveValue:self.streamIDTextField.text forKey:ZGMixerTopicKey_PublishStreamID];
         ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", self.streamIDTextField.text);
-        [[ZegoExpressEngine sharedEngine] startPublishing:self.streamIDTextField.text];
+        [[ZegoExpressEngine sharedEngine] startPublishingStream:self.streamIDTextField.text];
     } else {
         ZGLogWarn(@" ❕ Please enter stream ID");
         [ZegoHudManager showMessage:@" ❕ Please enter stream ID"];
@@ -68,7 +68,12 @@ NSString* const ZGMixerTopicKey_PublishStreamID = @"kPublishStreamID";
 
 #pragma mark - ZegoEventHandler
 
+- (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData roomID:(NSString *)roomID {
+    ZGLogInfo(@" 🚩 🚪 Room State Update Callback: %lu, errorCode: %d, roomID: %@", (unsigned long)state, (int)errorCode, roomID);
+}
+
 - (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
+    ZGLogInfo(@" 🚩 📤 Publisher State Update Callback: %lu, errorCode: %d, streamID: %@", (unsigned long)state, (int)errorCode, streamID);
     if (state == ZegoPublisherStatePublishing) {
         self.title = @"🔵 Publishing";
         [self.startPublishingButton setTitle:@"🎉 Start Publishing Success" forState:UIControlStateNormal];

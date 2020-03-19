@@ -56,6 +56,9 @@
     self.roomID = @"QuickStartRoom-1";
     self.userID = [ZGUserIDHelper userID];
     
+    // Print SDK version
+    [self appendLog:[NSString stringWithFormat:@" 🌞 SDK Version: %@", [ZegoExpressEngine getVersion]]];
+    
     [self setupUI];
 }
 
@@ -112,7 +115,7 @@
     NSString *publishStreamID = self.publishStreamIDTextField.text;
     
     // If streamID is empty @"", SDK will pop up an UIAlertController if "isTestEnv" is set to YES
-    [[ZegoExpressEngine sharedEngine] startPublishing:publishStreamID];
+    [[ZegoExpressEngine sharedEngine] startPublishingStream:publishStreamID];
     
     // Print log
     [self appendLog:@" 📤 Start publishing stream"];

@@ -50,7 +50,7 @@
     // Login Room
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
     ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
-    [self.engine loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
+    [self.engine loginRoom:self.roomID user:user];
     
     // Start preview
     ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.previewView];
@@ -61,7 +61,7 @@
     // Use userID as streamID
     NSString *streamID = [NSString stringWithFormat:@"%@", user.userID];
     ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", streamID);
-    [self.engine startPublishing:streamID];
+    [self.engine startPublishingStream:streamID];
     
     // Start playing
     ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:self.playView];

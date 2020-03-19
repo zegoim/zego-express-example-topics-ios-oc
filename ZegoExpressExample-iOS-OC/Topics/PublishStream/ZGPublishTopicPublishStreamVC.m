@@ -77,7 +77,7 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
         // Stop publishing before exiting
         if (self.publisherState != ZegoPublisherStateNoPublish) {
             ZGLogInfo(@" 📤 Stop publishing stream");
-            [self.engine stopPublishing];
+            [self.engine stopPublishingStream];
         }
         
         // Logout room before exiting
@@ -244,12 +244,12 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
     ZGLogInfo(@" 📤 Start publishing stream");
     
     // Start publishing
-    [self.engine startPublishing:self.streamID];
+    [self.engine startPublishingStream:self.streamID];
 }
 
 - (void)stopLive {
     // Stop publishing
-    [self.engine stopPublishing];
+    [self.engine stopPublishingStream];
     [self appendProcessTipAndMakeVisible:@" 📤 Stop publishing stream"];
     ZGLogInfo(@" 📤 Stop publishing stream");
     // Logout room

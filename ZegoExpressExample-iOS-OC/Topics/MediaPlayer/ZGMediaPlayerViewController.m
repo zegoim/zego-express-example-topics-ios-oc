@@ -149,12 +149,12 @@
     ZGLogInfo(@" 🔌 Start preview");
     
     // use userID as streamID
-    [[ZegoExpressEngine sharedEngine] startPublishing:[ZGUserIDHelper userID]];
+    [[ZegoExpressEngine sharedEngine] startPublishingStream:[ZGUserIDHelper userID]];
     ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", [ZGUserIDHelper userID]);
 }
 
 - (void)stopLive {
-    [[ZegoExpressEngine sharedEngine] stopPublishing];
+    [[ZegoExpressEngine sharedEngine] stopPublishingStream];
     ZGLogInfo(@" 📤 Stop publishing stream");
     
     [[ZegoExpressEngine sharedEngine] stopPreview];
