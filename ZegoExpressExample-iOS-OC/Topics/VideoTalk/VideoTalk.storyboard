@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="KRn-gV-p9E">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="KRn-gV-p9E">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -75,8 +75,8 @@
                                             <action selector="onToggleMicrophoneSwitch:" destination="KRn-gV-p9E" eventType="valueChanged" id="Dvt-tj-2xW"/>
                                         </connections>
                                     </switch>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AudioOutput" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6i6-Xd-8YZ">
-                                        <rect key="frame" x="323.5" y="4" width="82" height="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Speaker" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6i6-Xd-8YZ">
+                                        <rect key="frame" x="338" y="4" width="53" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -84,7 +84,7 @@
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ufa-3w-FFi">
                                         <rect key="frame" x="340" y="26" width="51" height="31"/>
                                         <connections>
-                                            <action selector="onToggleEnableAudioOutputSwitch:" destination="KRn-gV-p9E" eventType="valueChanged" id="Txj-fw-0Ga"/>
+                                            <action selector="onToggleEnableSpeakerSwitch:" destination="KRn-gV-p9E" eventType="valueChanged" id="Txj-fw-0Ga"/>
                                         </connections>
                                     </switch>
                                 </subviews>
@@ -122,12 +122,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="ily-gt-FHM"/>
                     <connections>
-                        <outlet property="audioOutputSwitch" destination="ufa-3w-FFi" id="ktv-j7-FRJ"/>
                         <outlet property="cameraSwitch" destination="snm-iL-sdM" id="bXO-42-2tD"/>
                         <outlet property="containerView" destination="nnu-rB-vxs" id="pQi-Wo-y0J"/>
                         <outlet property="microphoneSwitch" destination="t3G-MT-J0m" id="Q5r-KS-zUO"/>
                         <outlet property="roomIDLabel" destination="HX2-EW-oFA" id="v8V-sO-QaY"/>
                         <outlet property="roomStateLabel" destination="Sof-4W-5Z7" id="WIk-ei-ehz"/>
+                        <outlet property="speakerSwitch" destination="ufa-3w-FFi" id="ktv-j7-FRJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mYU-ql-dxx" userLabel="First Responder" sceneMemberID="firstResponder"/>

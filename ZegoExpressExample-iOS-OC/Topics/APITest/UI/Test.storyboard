@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VSk-AM-Q9Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VSk-AM-Q9Q">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -1036,23 +1036,23 @@ NetworkQuality:</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dhT-7P-sq9">
-                                                    <rect key="frame" x="240" y="8.5" width="125" height="33"/>
+                                                    <rect key="frame" x="255" y="8.5" width="110" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <state key="normal" title="removeCDNURL">
+                                                    <state key="normal" title="removeCdnUrl">
                                                         <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="removeCDNURLClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="0Cv-co-dKH"/>
+                                                        <action selector="removeCdnUrlClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="0Cv-co-dKH"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ROD-ye-3SW">
-                                                    <rect key="frame" x="10" y="8.5" width="98" height="33"/>
+                                                    <rect key="frame" x="10" y="8.5" width="83" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <state key="normal" title="addCDNURL">
+                                                    <state key="normal" title="addCdnUrl">
                                                         <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="addCDNURLClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="8AB-FK-ZxV"/>
+                                                        <action selector="addCdnUrlClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="8AB-FK-ZxV"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -1766,11 +1766,11 @@ NetworkQuality:</string>
                                                         <constraint firstAttribute="width" constant="150" id="JUq-7p-Uwi"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <state key="normal" title="muteAudioOutput">
+                                                    <state key="normal" title="muteSpeaker">
                                                         <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="muteAudioOutoutClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="P6R-ZS-T5v"/>
+                                                        <action selector="muteSpeakerClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="P6R-ZS-T5v"/>
                                                     </connections>
                                                 </button>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GDA-JX-LGG">
@@ -2364,8 +2364,8 @@ NetworkQuality:</string>
                     </tableView>
                     <size key="freeformSize" width="375" height="4000"/>
                     <connections>
-                        <outlet property="CDNURLTextField" destination="coc-OK-arq" id="8sy-3S-RVG"/>
-                        <outlet property="addCDNURLButton" destination="ROD-ye-3SW" id="abo-Hi-wfq"/>
+                        <outlet property="CdnUrlTextField" destination="coc-OK-arq" id="8sy-3S-RVG"/>
+                        <outlet property="addCdnUrlButton" destination="ROD-ye-3SW" id="abo-Hi-wfq"/>
                         <outlet property="appIDTextField" destination="iOc-82-pPx" id="HiZ-4T-uhf"/>
                         <outlet property="appSignTextField" destination="vxa-dV-Piz" id="yKJ-Fn-LHJ"/>
                         <outlet property="broadcastMessageTextField" destination="oke-KA-SBf" id="6Fs-js-DkD"/>
@@ -2402,8 +2402,6 @@ NetworkQuality:</string>
                         <outlet property="mixerOutputTargetsTextField" destination="H26-ZU-Lqi" id="7fb-n2-nob"/>
                         <outlet property="mixerResolutionPicker" destination="bSr-ne-Cdf" id="7Vm-7L-q7k"/>
                         <outlet property="mixerTaskIDTextField" destination="a8N-8n-RkS" id="sWW-GS-CUh"/>
-                        <outlet property="muteAudioOutputButton" destination="8KV-Ou-qyr" id="7us-Av-fpF"/>
-                        <outlet property="muteAudioOutputSwitch" destination="GDA-JX-LGG" id="wJg-LS-mLD"/>
                         <outlet property="mutePlayAudioButton" destination="54M-Hx-ucT" id="W7q-wa-Oi1"/>
                         <outlet property="mutePlayAudioSwitch" destination="RkU-fs-WAR" id="fGN-or-Fs9"/>
                         <outlet property="mutePlayVideoButton" destination="Hxa-dF-SYS" id="GSl-6F-M9f"/>
@@ -2412,11 +2410,13 @@ NetworkQuality:</string>
                         <outlet property="mutePublishAudioSwitch" destination="Gyd-e7-W5M" id="k7G-Rl-Sh4"/>
                         <outlet property="mutePublishVideoButton" destination="bGd-XG-NC2" id="UR2-Zi-sAX"/>
                         <outlet property="mutePublishVideoSwitch" destination="A8G-Xz-r4M" id="GNX-57-eWD"/>
+                        <outlet property="muteSpeakerButton" destination="8KV-Ou-qyr" id="MHy-qe-5UG"/>
+                        <outlet property="muteSpeakerSwitch" destination="GDA-JX-LGG" id="aU8-er-76D"/>
                         <outlet property="playCanvasBackgroundColorTextField" destination="TAy-Ir-eUy" id="0WN-zg-990"/>
                         <outlet property="playStreamIDTextField" destination="RsK-rQ-NBK" id="mbC-v5-ePh"/>
                         <outlet property="previewCanvasBackgroundColorTextField" destination="neG-FR-Tzp" id="kHy-Ia-QSg"/>
                         <outlet property="publishStreamIDTextField" destination="qYf-7m-izJ" id="xYK-1z-nm0"/>
-                        <outlet property="removeCDNURLButton" destination="dhT-7P-sq9" id="rkh-SG-S9L"/>
+                        <outlet property="removeCdnUrlButton" destination="dhT-7P-sq9" id="rkh-SG-S9L"/>
                         <outlet property="roomIDTextField" destination="o06-Ue-ba3" id="NlG-h6-N4R"/>
                         <outlet property="scenarioSeg" destination="l6C-e2-JXw" id="leG-Ay-6Ob"/>
                         <outlet property="sendBroadcastMessageButton" destination="qrw-lE-Wt0" id="SXB-FU-pxE"/>

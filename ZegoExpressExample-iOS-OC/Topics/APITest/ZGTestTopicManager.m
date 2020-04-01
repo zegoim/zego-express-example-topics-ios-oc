@@ -157,8 +157,8 @@
 }
 
 
-- (void)addPublishCDNURL:(NSString *)targetURL streamID:(NSString *)streamID callback:(nullable ZegoPublisherUpdateCDNURLCallback)callback {
-    [self.engine addPublishCDNURL:targetURL streamID:streamID callback:^(int errorCode) {
+- (void)addPublishCdnUrl:(NSString *)targetURL streamID:(NSString *)streamID callback:(nullable ZegoPublisherUpdateCdnUrlCallback)callback {
+    [self.engine addPublishCdnUrl:targetURL streamID:streamID callback:^(int errorCode) {
         if (callback) {
             callback(errorCode);
         }
@@ -168,8 +168,8 @@
 }
 
 
-- (void)removePublishCDNURL:(NSString *)targetURL streamID:(NSString *)streamID callback:(nullable ZegoPublisherUpdateCDNURLCallback)callback {
-    [self.engine removePublishCDNURL:targetURL streamID:streamID callback:^(int errorCode) {
+- (void)removePublishCdnUrl:(NSString *)targetURL streamID:(NSString *)streamID callback:(nullable ZegoPublisherUpdateCdnUrlCallback)callback {
+    [self.engine removePublishCdnUrl:targetURL streamID:streamID callback:^(int errorCode) {
         if (callback) {
             callback(errorCode);
         }
@@ -307,8 +307,8 @@
 }
 
 
-- (void)muteAudioOutput:(BOOL)mute {
-    [self.engine muteAudioOutput:mute];
+- (void)muteSpeaker:(BOOL)mute {
+    [self.engine muteSpeaker:mute];
     ZGLogInfo(@" 🔧 Mute audio output: %@", mute ? @"YES" : @"NO");
     [self.dataSource onActionLog:[NSString stringWithFormat:@" 🔧 Mute audio output: %@", mute ? @"YES" : @"NO"]];
 }
@@ -510,7 +510,7 @@
     ZGLogInfo(@" 🚩 🧬 Mixer Relay CDN State Update Callback: taskID: %@", taskID);
     for (int idx = 0; idx < infoList.count; idx ++) {
         ZegoStreamRelayCDNInfo *info = infoList[idx];
-        ZGLogInfo(@" 🚩 🧬 --- %d: state: %lu, URL: %@, reason: %lu", idx, (unsigned long)info.state, info.URL, (unsigned long)info.updateReason);
+        ZGLogInfo(@" 🚩 🧬 --- %d: state: %lu, URL: %@, reason: %lu", idx, (unsigned long)info.state, info.url, (unsigned long)info.updateReason);
     }
 }
 

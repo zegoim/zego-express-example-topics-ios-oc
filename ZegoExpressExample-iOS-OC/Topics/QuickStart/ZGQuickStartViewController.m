@@ -124,7 +124,7 @@
 #pragma mark - Step 4: StartPlaying
 
 - (IBAction)startPlayingButtonClick:(UIButton *)sender {
-    // Instantiate a ZegoCanvas for local preview
+    // Instantiate a ZegoCanvas for play view
     ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:self.remotePlayView];
     playCanvas.viewMode = ZegoViewModeAspectFill;
     

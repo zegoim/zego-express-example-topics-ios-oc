@@ -25,18 +25,18 @@
     ],
     "outputList":[
       {
-        "target":"mixer-output"
+        "target":"mixer-output",
+        "videoConfig":{
+          "fps":15,
+          "bitrate":600,
+          "width":360,
+          "height":640
+        },
+        "audioConfig":{
+          "bitrate":48
+        }
       }
     ],
-    "videoConfig":{
-      "fps":15,
-      "bitrate":600,
-      "width":360,
-      "height":640
-    },
-    "audioConfig":{
-      "bitrate":48
-    },
     "watermark":{
       "imageURL":"preset-id://zegowp.png",
       "layout":{

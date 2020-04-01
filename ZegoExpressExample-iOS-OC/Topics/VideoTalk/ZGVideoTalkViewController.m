@@ -55,8 +55,8 @@ CGFloat const ZGVideoTalkStreamViewSpacing = 8.f;
 @property (weak, nonatomic) IBOutlet UISwitch *microphoneSwitch;
 
 /// Whether to enable audio output
-@property (nonatomic, assign) BOOL muteAudioOutput;
-@property (weak, nonatomic) IBOutlet UISwitch *audioOutputSwitch;
+@property (nonatomic, assign) BOOL muteSpeaker;
+@property (weak, nonatomic) IBOutlet UISwitch *speakerSwitch;
 
 @end
 
@@ -75,7 +75,7 @@ CGFloat const ZGVideoTalkStreamViewSpacing = 8.f;
     
     self.enableCamera = YES;
     self.muteMicrophone = NO;
-    self.muteAudioOutput = YES;
+    self.muteSpeaker = YES;
     
     [self setupUI];
     
@@ -87,7 +87,7 @@ CGFloat const ZGVideoTalkStreamViewSpacing = 8.f;
 - (void)setupUI {
     self.cameraSwitch.on = _enableCamera;
     self.microphoneSwitch.on = !_muteMicrophone;
-    self.audioOutputSwitch.on = _muteAudioOutput;
+    self.speakerSwitch.on = _muteSpeaker;
     self.title = @"VideoTalk";
     
     self.roomIDLabel.text = [NSString stringWithFormat:@"RoomID: %@", _roomID];
@@ -150,9 +150,9 @@ CGFloat const ZGVideoTalkStreamViewSpacing = 8.f;
     [self.engine muteMicrophone:_muteMicrophone];
 }
 
-- (IBAction)onToggleEnableAudioOutputSwitch:(UISwitch *)sender {
-    _muteAudioOutput = !sender.on;
-    [self.engine muteAudioOutput:_muteAudioOutput];
+- (IBAction)onToggleEnableSpeakerSwitch:(UISwitch *)sender {
+    _muteSpeaker = !sender.on;
+    [self.engine muteSpeaker:_muteSpeaker];
 }
 
 #pragma mark - ViewObject Methods

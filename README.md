@@ -1,6 +1,6 @@
 # Zego Express Example Topics iOS (Objective-C)
 
-zego express example topics for ios developer.
+Zego Express Example Topics iOS Demo (Objective-C)
 
 ## Download SDK
 
@@ -20,7 +20,7 @@ The SDK `ZegoExpressEngine.framework` required to run the Demo project is missin
 .
 ├── Libs
 │   └── ZegoExpressEngine.framework
-├── README.CN.md
+├── README_zh.md
 ├── README.md
 ├── ZegoExpressExample-iOS-OC
 └── ZegoExpressExample-iOS-OC.xcodeproj

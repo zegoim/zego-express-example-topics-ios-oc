@@ -19,7 +19,7 @@ NSString* const ZGTestTopicKey_PreviewBackgroundColor = @"kPreviewBackgroundColo
 
 NSString* const ZGTestTopicKey_PlayStreamID = @"kPlayStreamID";
 NSString* const ZGTestTopicKey_PlayBackgroundColor = @"kPlayBackgroundColor";
-NSString* const ZGTestTopicKey_CDNURL = @"kCDNURL";
+NSString* const ZGTestTopicKey_CdnUrl = @"kCdnUrl";
 NSString* const ZGTestTopicKey_WatermarkFilePath = @"kWatermarkFilePath";
 NSString* const ZGTestTopicKey_CaptureVolume = @"kCaptureVolume";
 NSString* const ZGTestTopicKey_PlayVolume = @"kPlayVolume";
@@ -84,9 +84,9 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 @property (weak, nonatomic) IBOutlet UIButton *enableHardwareEncoderButton;
 @property (weak, nonatomic) IBOutlet UITextField *setCaptureVolumeTextField;
 @property (weak, nonatomic) IBOutlet UIButton *setCaptureVolumeButton;
-@property (weak, nonatomic) IBOutlet UITextField *CDNURLTextField;
-@property (weak, nonatomic) IBOutlet UIButton *addCDNURLButton;
-@property (weak, nonatomic) IBOutlet UIButton *removeCDNURLButton;
+@property (weak, nonatomic) IBOutlet UITextField *CdnUrlTextField;
+@property (weak, nonatomic) IBOutlet UIButton *addCdnUrlButton;
+@property (weak, nonatomic) IBOutlet UIButton *removeCdnUrlButton;
 @property (weak, nonatomic) IBOutlet UITextField *watermarkFilePathTextField;
 @property (weak, nonatomic) IBOutlet UISwitch *watermarkIsPreviewVisibleSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *enableWatermarkSwitch;
@@ -128,8 +128,8 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 // Device
 @property (weak, nonatomic) IBOutlet UISwitch *enableMicSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *enableMicButton;
-@property (weak, nonatomic) IBOutlet UISwitch *muteAudioOutputSwitch;
-@property (weak, nonatomic) IBOutlet UIButton *muteAudioOutputButton;
+@property (weak, nonatomic) IBOutlet UISwitch *muteSpeakerSwitch;
+@property (weak, nonatomic) IBOutlet UIButton *muteSpeakerButton;
 @property (weak, nonatomic) IBOutlet UISwitch *enableCamSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *enableCamButton;
 @property (weak, nonatomic) IBOutlet UISwitch *useFrontCamSwitch;
@@ -209,7 +209,7 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
     NSString *savedWatermarkFilePath = [self savedValueForKey:ZGTestTopicKey_WatermarkFilePath];
     self.watermarkFilePathTextField.text = savedWatermarkFilePath ? savedWatermarkFilePath : @"asset:ZegoLogo";
     
-    self.CDNURLTextField.text = [self savedValueForKey:ZGTestTopicKey_CDNURL];
+    self.CdnUrlTextField.text = [self savedValueForKey:ZGTestTopicKey_CdnUrl];
     
     self.setCaptureVolumeTextField.text = [self savedValueForKey:ZGTestTopicKey_CaptureVolume];
     self.setCaptureVolumeTextField.keyboardType = UIKeyboardTypeNumberPad;
@@ -320,13 +320,13 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
     [self.manager setCaptureVolume:[self.setCaptureVolumeTextField.text intValue]];
     [self saveValue:self.setCaptureVolumeTextField.text forKey:ZGTestTopicKey_CaptureVolume];
 }
-- (IBAction)addCDNURLClick:(UIButton *)sender {
-    [self.manager addPublishCDNURL:self.CDNURLTextField.text streamID:self.publishStreamIDTextField.text callback:nil];
-    [self saveValue:self.CDNURLTextField.text forKey:ZGTestTopicKey_CDNURL];
+- (IBAction)addCdnUrlClick:(UIButton *)sender {
+    [self.manager addPublishCdnUrl:self.CdnUrlTextField.text streamID:self.publishStreamIDTextField.text callback:nil];
+    [self saveValue:self.CdnUrlTextField.text forKey:ZGTestTopicKey_CdnUrl];
 }
 
-- (IBAction)removeCDNURLClick:(UIButton *)sender {
-    [self.manager removePublishCDNURL:self.CDNURLTextField.text streamID:self.publishStreamIDTextField.text callback:nil];
+- (IBAction)removeCdnUrlClick:(UIButton *)sender {
+    [self.manager removePublishCdnUrl:self.CdnUrlTextField.text streamID:self.publishStreamIDTextField.text callback:nil];
 }
 
 - (IBAction)setWatermarkClick:(UIButton *)sender {
@@ -413,8 +413,8 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
     [self.manager muteMicrophone:self.enableMicSwitch.on];
 }
 
-- (IBAction)muteAudioOutoutClick:(UIButton *)sender {
-    [self.manager muteAudioOutput:self.muteAudioOutputSwitch.on];
+- (IBAction)muteSpeakerClick:(UIButton *)sender {
+    [self.manager muteSpeaker:self.muteSpeakerSwitch.on];
 }
 
 - (IBAction)enableCameraClick:(UIButton *)sender {
@@ -465,11 +465,12 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
     NSMutableArray<ZegoMixerOutput *> *outputArray = [[NSMutableArray alloc] initWithCapacity:outputStringArray.count];
     
     for (NSString *outputTargetString in outputStringArray) {
-        [outputArray addObject:[[ZegoMixerOutput alloc] initWithTarget:outputTargetString]];
+        ZegoMixerOutput *output = [[ZegoMixerOutput alloc] initWithTarget:outputTargetString];
+        output.videoConfig = videoConfig;
+        output.audioConfig = [ZegoMixerAudioConfig defaultConfig];
+        [outputArray addObject:output];
     }
     
-    [task setAudioConfig:[ZegoMixerAudioConfig defaultConfig]];
-    [task setVideoConfig:videoConfig];
     [task setInputList:inputArray];
     [task setOutputList:outputArray];
     
@@ -512,32 +513,34 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
         NSMutableArray<ZegoMixerOutput *> *mixerOutputList = [NSMutableArray arrayWithCapacity:outputListObject.count];
         
         for (NSDictionary *output in outputListObject) {
-            [mixerOutputList addObject:[[ZegoMixerOutput alloc] initWithTarget:(NSString *)output[@"target"]]];
+            ZegoMixerOutput *mixerOutput = [[ZegoMixerOutput alloc] initWithTarget:(NSString *)output[@"target"]];
+            
+            if ([configDict objectForKey:@"videoConfig"]) {
+                NSDictionary *videoConfigObject = [configDict objectForKey:@"videoConfig"];
+                ZegoMixerVideoConfig *mixerVideoConfig = [[ZegoMixerVideoConfig alloc] init];
+                mixerVideoConfig.bitrate = [(NSNumber *)videoConfigObject[@"bitrate"] intValue];
+                NSLog(@"Mixer Video Bitrate: %d", mixerVideoConfig.bitrate);
+                mixerVideoConfig.fps = [(NSNumber *)videoConfigObject[@"fps"] intValue];
+                NSLog(@"Mixer Video FPS: %d", mixerVideoConfig.fps);
+                mixerVideoConfig.resolution = CGSizeMake([(NSNumber *)videoConfigObject[@"width"] floatValue], [(NSNumber *)videoConfigObject[@"height"] floatValue]);
+                NSLog(@"Mixer Video Width: %f, Height: %f", mixerVideoConfig.resolution.width, mixerVideoConfig.resolution.height);
+                
+                mixerOutput.videoConfig = mixerVideoConfig;
+            }
+            
+            if ([configDict objectForKey:@"audioConfig"]) {
+                NSDictionary *audioConfigObject = [configDict objectForKey:@"audioConfig"];
+                ZegoMixerAudioConfig *mixerAudioConfig = [[ZegoMixerAudioConfig alloc] init];
+                mixerAudioConfig.bitrate = [(NSNumber *)audioConfigObject[@"bitrate"] intValue];
+                NSLog(@"Mixer Audio Bitrate: %d", mixerAudioConfig.bitrate);
+                
+                mixerOutput.audioConfig = mixerAudioConfig;
+            }
+            
+            [mixerOutputList addObject:mixerOutput];
             NSLog(@"Mixer Output Target: %@", (NSString *)output[@"target"]);
         }
         [mixerTask setOutputList:mixerOutputList];
-    }
-    
-    if ([configDict objectForKey:@"videoConfig"]) {
-        NSDictionary *videoConfigObject = [configDict objectForKey:@"videoConfig"];
-        ZegoMixerVideoConfig *mixerVideoConfig = [[ZegoMixerVideoConfig alloc] init];
-        mixerVideoConfig.bitrate = [(NSNumber *)videoConfigObject[@"bitrate"] intValue];
-        NSLog(@"Mixer Video Bitrate: %d", mixerVideoConfig.bitrate);
-        mixerVideoConfig.fps = [(NSNumber *)videoConfigObject[@"fps"] intValue];
-        NSLog(@"Mixer Video FPS: %d", mixerVideoConfig.fps);
-        mixerVideoConfig.resolution = CGSizeMake([(NSNumber *)videoConfigObject[@"width"] floatValue], [(NSNumber *)videoConfigObject[@"height"] floatValue]);
-        NSLog(@"Mixer Video Width: %f, Height: %f", mixerVideoConfig.resolution.width, mixerVideoConfig.resolution.height);
-        
-        [mixerTask setVideoConfig:mixerVideoConfig];
-    }
-    
-    if ([configDict objectForKey:@"audioConfig"]) {
-        NSDictionary *audioConfigObject = [configDict objectForKey:@"audioConfig"];
-        ZegoMixerAudioConfig *mixerAudioConfig = [[ZegoMixerAudioConfig alloc] init];
-        mixerAudioConfig.bitrate = [(NSNumber *)audioConfigObject[@"bitrate"] intValue];
-        NSLog(@"Mixer Audio Bitrate: %d", mixerAudioConfig.bitrate);
-        
-        [mixerTask setAudioConfig:mixerAudioConfig];
     }
     
     if ([configDict objectForKey:@"watermark"]) {

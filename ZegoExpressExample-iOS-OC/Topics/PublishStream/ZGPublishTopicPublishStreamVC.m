@@ -41,7 +41,7 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
 @property (nonatomic) ZegoVideoMirrorMode videoMirrorMode;
 @property (nonatomic) BOOL enableMic;
 @property (nonatomic) BOOL enableCamera;
-@property (nonatomic) BOOL muteAudioOutput;
+@property (nonatomic) BOOL muteSpeaker;
 
 @property (nonatomic) ZegoRoomState roomState;
 @property (nonatomic) ZegoPublisherState publisherState;
@@ -119,7 +119,7 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
     
     self.enableMic = YES;
     self.enableCamera = YES;
-    self.muteAudioOutput = YES;
+    self.muteSpeaker = YES;
 }
 
 - (void)setupUI {
@@ -181,7 +181,7 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
     [self.engine enableCamera:self.enableCamera];
     
     // Set enable audio output
-    [self.engine muteAudioOutput:self.muteAudioOutput];
+    [self.engine muteSpeaker:self.muteSpeaker];
     
     // Start preview
     ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.previewView];
@@ -200,9 +200,9 @@ NSString* const ZGPublishTopicPublishStreamVCKey_streamID = @"kStreamID";
     [self stopLive];
 }
 
-- (IBAction)muteAudioOutput:(UISwitch*)sender {
-    self.muteAudioOutput = sender.isOn;
-    [self.engine muteAudioOutput:self.muteAudioOutput];
+- (IBAction)muteSpeaker:(UISwitch*)sender {
+    self.muteSpeaker = sender.isOn;
+    [self.engine muteSpeaker:self.muteSpeaker];
 }
 
 - (IBAction)enableMicValueChanged:(UISwitch*)sender {

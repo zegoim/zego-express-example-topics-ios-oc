@@ -24,10 +24,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *roomStateLabel;
 
 @property (weak, nonatomic) IBOutlet UITextView *receivedMessageTextView;
-
 @property (weak, nonatomic) IBOutlet UITextField *broadcastMessageTextField;
-@property (weak, nonatomic) IBOutlet UITextField *barrageMessageTextField;
+@property (weak, nonatomic) IBOutlet UIButton *sendBroadcastMessageButton;
 @property (weak, nonatomic) IBOutlet UITextField *customCommandTextField;
+@property (weak, nonatomic) IBOutlet UIButton *sendCustomCommandButton;
+@property (weak, nonatomic) IBOutlet UIButton *customCommandSelectUsersButton;
 
 @end
 
@@ -72,11 +73,6 @@
     [self sendBroadcastMessage];
 }
 
-
-- (IBAction)sendBarrageMessageButtonClick:(UIButton *)sender {
-    [self sendBarrageMessage];
-}
-
 - (IBAction)sendCustomCommandButtonClick:(UIButton *)sender {
     [self sendCustomCommand];
 }
@@ -86,14 +82,6 @@
     [[ZegoExpressEngine sharedEngine] sendBroadcastMessage:message roomID:self.roomID callback:^(int errorCode, unsigned long long messageID) {
         ZGLogInfo(@" 🚩 💬 Send broadcast message result errorCode: %d, messageID: %llu", errorCode, messageID);
         [self appendMessage:[NSString stringWithFormat:@" 💬 📤 Sent: %@", message]];
-    }];
-}
-
-- (void)sendBarrageMessage {
-    NSString *message = self.barrageMessageTextField.text;
-    [[ZegoExpressEngine sharedEngine] sendBarrageMessage:message roomID:self.roomID callback:^(int errorCode, NSString * _Nonnull messageID) {
-        ZGLogInfo(@" 🚩 🗯 Send broadcast message result errorCode: %d, messageID: %@", errorCode, messageID);
-        [self appendMessage:[NSString stringWithFormat:@" 🗯 📤 Sent: %@", message]];
     }];
 }
 
@@ -192,25 +180,14 @@
     self.title = [NSString stringWithFormat:@"%@  ( %d Users )", self.roomID, (int)self.userList.count + 1];
 }
 
-- (void)onIMRecvBroadcastMessage:(NSArray<ZegoBroadcastMessageInfo *> *)messageList roomID:(NSString *)roomID {
+- (void)onIMRecvBroadcastMessage:(NSArray<ZegoBroadcastMessageInfo *> *)messageInfoList roomID:(NSString *)roomID {
     ZGLogInfo(@" 🚩 💬 IM Recv Broadcast Message Callback: roomID: %@", roomID);
     
-    for (int idx = 0; idx < messageList.count; idx ++) {
-        ZegoBroadcastMessageInfo *info = messageList[idx];
+    for (int idx = 0; idx < messageInfoList.count; idx ++) {
+        ZegoBroadcastMessageInfo *info = messageInfoList[idx];
         ZGLogInfo(@" 🚩 💬 --- message: %@, fromUserID: %@, sendTime: %llu", info.message, info.fromUser.userID, info.sendTime);
         
         [self appendMessage:[NSString stringWithFormat:@" 💬 %@ [FromUserID: %@]", info.message, info.fromUser.userID]];
-    }
-}
-
-- (void)onIMRecvBarrageMessage:(NSArray<ZegoBarrageMessageInfo *> *)messageList roomID:(NSString *)roomID {
-    ZGLogInfo(@" 🚩 🗯 IM Recv Barrage Message Callback: roomID: %@", roomID);
-    
-    for (int idx = 0; idx < messageList.count; idx ++) {
-        ZegoBarrageMessageInfo *info = messageList[idx];
-        ZGLogInfo(@" 🚩 🗯 --- message: %@, fromUserID: %@, sendTime: %llu", info.message, info.fromUser.userID, info.sendTime);
-        
-        [self appendMessage:[NSString stringWithFormat:@" 🗯 %@ [FromUserID: %@]", info.message, info.fromUser.userID]];
     }
 }
 
