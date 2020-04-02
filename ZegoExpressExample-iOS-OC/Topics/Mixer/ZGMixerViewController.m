@@ -116,55 +116,45 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
     
     NSString *taskID = [NSString stringWithFormat:@"%@%@", self.selectFirstStream.streamID, self.selectSecondStream.streamID];
     
-    CGSize resolution = CGSizeMake(1080, 1920);
-    
-    
     // ① (Required): Create a ZegoMixerTask object
     ZegoMixerTask *task = [[ZegoMixerTask alloc] initWithTaskID:taskID];
     
     
+    // ② (Optional): Set video config
+    ZegoMixerVideoConfig *videoConfig = [[ZegoMixerVideoConfig alloc] initWithResolution:CGSizeMake(720, 1280) fps:15 bitrate:1500];
+    [task setVideoConfig:videoConfig];
     
-    // ② (Required): Set mixer input
-    CGRect firstRect = CGRectMake(0, 0, resolution.width, resolution.height/2);
+    
+    // ③ (Optional): Set audio config
+    [task setAudioConfig:[ZegoMixerAudioConfig defaultConfig]];
+    
+    
+    // ④ (Required): Set mixer input
+    CGRect firstRect = CGRectMake(0, 0, videoConfig.resolution.width, videoConfig.resolution.height/2);
     ZegoMixerInput *firstInput = [[ZegoMixerInput alloc] initWithStreamID:self.selectFirstStream.streamID contentType:ZegoMixerInputContentTypeVideo layout:firstRect];
     
-    CGRect secondRect = CGRectMake(0, resolution.height/2, resolution.width, resolution.height/2);
+    CGRect secondRect = CGRectMake(0, videoConfig.resolution.height/2, videoConfig.resolution.width, videoConfig.resolution.height/2);
     ZegoMixerInput *secondInput = [[ZegoMixerInput alloc] initWithStreamID:self.selectSecondStream.streamID contentType:ZegoMixerInputContentTypeVideo layout:secondRect];
     
     NSArray<ZegoMixerInput *> *inputArray = @[firstInput, secondInput];
     [task setInputList:inputArray];
     
     
-    
-    // ③ (Required): Set mixer output
-    ZegoMixerOutput *output = [[ZegoMixerOutput alloc] initWithTarget:self.outputTargetTextField.text];
-    
-    // ③-1 (Optional): Set video config for the output
-    ZegoMixerVideoConfig *videoConfig = [[ZegoMixerVideoConfig alloc] initWithResolution:resolution fps:15 bitrate:3000];
-    output.videoConfig = videoConfig;
-    
-    // ③-2 (Optional): Set audio config for the output
-    output.audioConfig = [ZegoMixerAudioConfig defaultConfig];
-    
-    NSArray<ZegoMixerOutput *> *outputArray = @[output];
+    // ⑤ (Required): Set mixer output
+    NSArray<ZegoMixerOutput *> *outputArray = @[[[ZegoMixerOutput alloc] initWithTarget:self.outputTargetTextField.text]];
     [task setOutputList:outputArray];
     
-
-    
-    // ④ (Optional): Set watermark
-    ZegoWatermark *watermark = [[ZegoWatermark alloc] initWithImageURL:@"preset-id://zegowp.png" layout:CGRectMake(0, 0, resolution.width/2, resolution.height/20)];
+    // ⑥ (Optional): Set watermark
+    ZegoWatermark *watermark = [[ZegoWatermark alloc] initWithImageURL:@"preset-id://zegowp.png" layout:CGRectMake(0, 0, videoConfig.resolution.width/2, videoConfig.resolution.height/20)];
     [task setWatermark:watermark];
     
-
-    
-    // ⑤ (Optional): Set background image
+    // ⑦ (Optional): Set background image
     [task setBackgroundImageURL:@"preset-id://zegobg.png"];
     
     
-    
-    // ⑥ Start Mixer Task
+    // Start Mixer Task
     [ZegoHudManager showNetworkLoading];
-
+    
     [[ZegoExpressEngine sharedEngine] startMixerTask:task callback:^(int errorCode, NSDictionary * _Nullable extendedData) {
         ZGLogInfo(@" 🚩 🧬 Start mixer task result errorCode: %d", errorCode);
         

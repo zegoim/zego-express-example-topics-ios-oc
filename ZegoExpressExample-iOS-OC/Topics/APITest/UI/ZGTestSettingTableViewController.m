@@ -449,7 +449,7 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 
 - (IBAction)startMixerTaskClick:(UIButton *)sender {
     ZegoMixerTask *task = [[ZegoMixerTask alloc] initWithTaskID:self.mixerTaskIDTextField.text];
-    // TODO: FIXME
+    
     ZegoMixerVideoConfig *videoConfig = [[ZegoMixerVideoConfig alloc] initWithResolution:CGSizeMake(1080, 1920) fps:15 bitrate:3000];
     
     CGRect firstRect = CGRectMake(0, 0, videoConfig.resolution.width, videoConfig.resolution.height/2);
@@ -465,12 +465,11 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
     NSMutableArray<ZegoMixerOutput *> *outputArray = [[NSMutableArray alloc] initWithCapacity:outputStringArray.count];
     
     for (NSString *outputTargetString in outputStringArray) {
-        ZegoMixerOutput *output = [[ZegoMixerOutput alloc] initWithTarget:outputTargetString];
-        output.videoConfig = videoConfig;
-        output.audioConfig = [ZegoMixerAudioConfig defaultConfig];
-        [outputArray addObject:output];
+        [outputArray addObject:[[ZegoMixerOutput alloc] initWithTarget:outputTargetString]];
     }
     
+    [task setAudioConfig:[ZegoMixerAudioConfig defaultConfig]];
+    [task setVideoConfig:videoConfig];
     [task setInputList:inputArray];
     [task setOutputList:outputArray];
     
@@ -513,34 +512,32 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
         NSMutableArray<ZegoMixerOutput *> *mixerOutputList = [NSMutableArray arrayWithCapacity:outputListObject.count];
         
         for (NSDictionary *output in outputListObject) {
-            ZegoMixerOutput *mixerOutput = [[ZegoMixerOutput alloc] initWithTarget:(NSString *)output[@"target"]];
-            
-            if ([configDict objectForKey:@"videoConfig"]) {
-                NSDictionary *videoConfigObject = [configDict objectForKey:@"videoConfig"];
-                ZegoMixerVideoConfig *mixerVideoConfig = [[ZegoMixerVideoConfig alloc] init];
-                mixerVideoConfig.bitrate = [(NSNumber *)videoConfigObject[@"bitrate"] intValue];
-                NSLog(@"Mixer Video Bitrate: %d", mixerVideoConfig.bitrate);
-                mixerVideoConfig.fps = [(NSNumber *)videoConfigObject[@"fps"] intValue];
-                NSLog(@"Mixer Video FPS: %d", mixerVideoConfig.fps);
-                mixerVideoConfig.resolution = CGSizeMake([(NSNumber *)videoConfigObject[@"width"] floatValue], [(NSNumber *)videoConfigObject[@"height"] floatValue]);
-                NSLog(@"Mixer Video Width: %f, Height: %f", mixerVideoConfig.resolution.width, mixerVideoConfig.resolution.height);
-                
-                mixerOutput.videoConfig = mixerVideoConfig;
-            }
-            
-            if ([configDict objectForKey:@"audioConfig"]) {
-                NSDictionary *audioConfigObject = [configDict objectForKey:@"audioConfig"];
-                ZegoMixerAudioConfig *mixerAudioConfig = [[ZegoMixerAudioConfig alloc] init];
-                mixerAudioConfig.bitrate = [(NSNumber *)audioConfigObject[@"bitrate"] intValue];
-                NSLog(@"Mixer Audio Bitrate: %d", mixerAudioConfig.bitrate);
-                
-                mixerOutput.audioConfig = mixerAudioConfig;
-            }
-            
-            [mixerOutputList addObject:mixerOutput];
+            [mixerOutputList addObject:[[ZegoMixerOutput alloc] initWithTarget:(NSString *)output[@"target"]]];
             NSLog(@"Mixer Output Target: %@", (NSString *)output[@"target"]);
         }
         [mixerTask setOutputList:mixerOutputList];
+    }
+    
+    if ([configDict objectForKey:@"videoConfig"]) {
+        NSDictionary *videoConfigObject = [configDict objectForKey:@"videoConfig"];
+        ZegoMixerVideoConfig *mixerVideoConfig = [[ZegoMixerVideoConfig alloc] init];
+        mixerVideoConfig.bitrate = [(NSNumber *)videoConfigObject[@"bitrate"] intValue];
+        NSLog(@"Mixer Video Bitrate: %d", mixerVideoConfig.bitrate);
+        mixerVideoConfig.fps = [(NSNumber *)videoConfigObject[@"fps"] intValue];
+        NSLog(@"Mixer Video FPS: %d", mixerVideoConfig.fps);
+        mixerVideoConfig.resolution = CGSizeMake([(NSNumber *)videoConfigObject[@"width"] floatValue], [(NSNumber *)videoConfigObject[@"height"] floatValue]);
+        NSLog(@"Mixer Video Width: %f, Height: %f", mixerVideoConfig.resolution.width, mixerVideoConfig.resolution.height);
+        
+        [mixerTask setVideoConfig:mixerVideoConfig];
+    }
+    
+    if ([configDict objectForKey:@"audioConfig"]) {
+        NSDictionary *audioConfigObject = [configDict objectForKey:@"audioConfig"];
+        ZegoMixerAudioConfig *mixerAudioConfig = [[ZegoMixerAudioConfig alloc] init];
+        mixerAudioConfig.bitrate = [(NSNumber *)audioConfigObject[@"bitrate"] intValue];
+        NSLog(@"Mixer Audio Bitrate: %d", mixerAudioConfig.bitrate);
+        
+        [mixerTask setAudioConfig:mixerAudioConfig];
     }
     
     if ([configDict objectForKey:@"watermark"]) {
