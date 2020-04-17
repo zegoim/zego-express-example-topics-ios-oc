@@ -59,11 +59,11 @@
 		861C51AF2432E7D80088D7AF /* ZegoExpressEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86A50DE4236B11D400D51012 /* ZegoExpressEngine.framework */; };
 		861C51B02432E7D80088D7AF /* ZegoExpressEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 86A50DE4236B11D400D51012 /* ZegoExpressEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		86294D2623A3992B00D91DD6 /* ZegoTestJson.json in Resources */ = {isa = PBXBuildFile; fileRef = 86294D2523A3992A00D91DD6 /* ZegoTestJson.json */; };
+		8656819B24476DF100BEE4C8 /* sample.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8656819924476DF100BEE4C8 /* sample.mp3 */; };
+		8656819C24476DF100BEE4C8 /* test.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8656819A24476DF100BEE4C8 /* test.wav */; };
 		865A5F3423B30626001BB0F4 /* MediaPlayer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 865A5F3323B30626001BB0F4 /* MediaPlayer.storyboard */; };
 		865A5F3723B3068E001BB0F4 /* ZGMediaPlayerChooseFileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 865A5F3623B3068E001BB0F4 /* ZGMediaPlayerChooseFileVC.m */; };
 		865A5F3A23B306E4001BB0F4 /* ZGMediaPlayerMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 865A5F3923B306E4001BB0F4 /* ZGMediaPlayerMediaItem.m */; };
-		865A5F3F23B308BB001BB0F4 /* sample_-50_tempo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 865A5F3C23B308BB001BB0F4 /* sample_-50_tempo.mp3 */; };
-		865A5F4023B308BB001BB0F4 /* sample.wav in Resources */ = {isa = PBXBuildFile; fileRef = 865A5F3D23B308BB001BB0F4 /* sample.wav */; };
 		865A5F4123B308BB001BB0F4 /* ad.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 865A5F3E23B308BB001BB0F4 /* ad.mp4 */; };
 		865A5F4723B370DC001BB0F4 /* ZGMediaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 865A5F4623B370DC001BB0F4 /* ZGMediaPlayerViewController.m */; };
 		867BBD0C2376E018008F7D4F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 867BBD0B2376E018008F7D4F /* SystemConfiguration.framework */; };
@@ -209,13 +209,13 @@
 		861376342387E11900C30486 /* ZGRoomMessageSelectUsersTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGRoomMessageSelectUsersTableViewController.h; sourceTree = "<group>"; };
 		861376352387E11900C30486 /* ZGRoomMessageSelectUsersTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGRoomMessageSelectUsersTableViewController.m; sourceTree = "<group>"; };
 		86294D2523A3992A00D91DD6 /* ZegoTestJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ZegoTestJson.json; sourceTree = "<group>"; };
+		8656819924476DF100BEE4C8 /* sample.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sample.mp3; sourceTree = "<group>"; };
+		8656819A24476DF100BEE4C8 /* test.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = test.wav; sourceTree = "<group>"; };
 		865A5F3323B30626001BB0F4 /* MediaPlayer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MediaPlayer.storyboard; sourceTree = "<group>"; };
 		865A5F3523B3068E001BB0F4 /* ZGMediaPlayerChooseFileVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGMediaPlayerChooseFileVC.h; sourceTree = "<group>"; };
 		865A5F3623B3068E001BB0F4 /* ZGMediaPlayerChooseFileVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGMediaPlayerChooseFileVC.m; sourceTree = "<group>"; };
 		865A5F3823B306E4001BB0F4 /* ZGMediaPlayerMediaItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGMediaPlayerMediaItem.h; sourceTree = "<group>"; };
 		865A5F3923B306E4001BB0F4 /* ZGMediaPlayerMediaItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGMediaPlayerMediaItem.m; sourceTree = "<group>"; };
-		865A5F3C23B308BB001BB0F4 /* sample_-50_tempo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "sample_-50_tempo.mp3"; sourceTree = "<group>"; };
-		865A5F3D23B308BB001BB0F4 /* sample.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sample.wav; sourceTree = "<group>"; };
 		865A5F3E23B308BB001BB0F4 /* ad.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = ad.mp4; sourceTree = "<group>"; };
 		865A5F4523B370DC001BB0F4 /* ZGMediaPlayerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGMediaPlayerViewController.h; sourceTree = "<group>"; };
 		865A5F4623B370DC001BB0F4 /* ZGMediaPlayerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGMediaPlayerViewController.m; sourceTree = "<group>"; };
@@ -591,8 +591,8 @@
 			isa = PBXGroup;
 			children = (
 				865A5F3E23B308BB001BB0F4 /* ad.mp4 */,
-				865A5F3C23B308BB001BB0F4 /* sample_-50_tempo.mp3 */,
-				865A5F3D23B308BB001BB0F4 /* sample.wav */,
+				8656819924476DF100BEE4C8 /* sample.mp3 */,
+				8656819A24476DF100BEE4C8 /* test.wav */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -735,20 +735,20 @@
 			files = (
 				860B6391240673E500D0E9C8 /* AuxPublisher.storyboard in Resources */,
 				86BB70882363FEC600FF2608 /* PublishStream.storyboard in Resources */,
+				8656819C24476DF100BEE4C8 /* test.wav in Resources */,
 				8608C3E22363244A00CE367B /* GlobalConfig.storyboard in Resources */,
 				861376302387B78400C30486 /* RoomMessage.storyboard in Resources */,
 				86BF9808239F47B000319709 /* Beautify.storyboard in Resources */,
-				865A5F3F23B308BB001BB0F4 /* sample_-50_tempo.mp3 in Resources */,
 				861376192384E65700C30486 /* Mixer.storyboard in Resources */,
 				8608C3ED2363244A00CE367B /* Main.storyboard in Resources */,
 				86EDFE7123CABC6900A1A3AC /* CustomVideoCapture.storyboard in Resources */,
 				86B6E5552395223600078757 /* SoundLevel.storyboard in Resources */,
 				8608C3BC23631EDC00CE367B /* LaunchScreen.storyboard in Resources */,
 				8608C3EC2363244A00CE367B /* Test.storyboard in Resources */,
+				8656819B24476DF100BEE4C8 /* sample.mp3 in Resources */,
 				865A5F4123B308BB001BB0F4 /* ad.mp4 in Resources */,
 				8608C3B923631EDC00CE367B /* Assets.xcassets in Resources */,
 				865A5F3423B30626001BB0F4 /* MediaPlayer.storyboard in Resources */,
-				865A5F4023B308BB001BB0F4 /* sample.wav in Resources */,
 				8609F20F237E78B700B29333 /* QuickStart.storyboard in Resources */,
 				8684965A23BC97F100AE7A58 /* CustomVideoRender.storyboard in Resources */,
 				86A502722369719900D51012 /* VideoTalk.storyboard in Resources */,
@@ -967,7 +967,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 200402;
+				CURRENT_PROJECT_VERSION = 200415;
 				DEVELOPMENT_TEAM = Y98YBP7T6D;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -982,7 +982,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.5;
+				MARKETING_VERSION = 1.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-OC";
 				PRODUCT_NAME = "ZegoExpressExample-iOS-OC";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -996,7 +996,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 200402;
+				CURRENT_PROJECT_VERSION = 200415;
 				DEVELOPMENT_TEAM = Y98YBP7T6D;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1011,7 +1011,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.5;
+				MARKETING_VERSION = 1.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-OC";
 				PRODUCT_NAME = "ZegoExpressExample-iOS-OC";
 				PROVISIONING_PROFILE_SPECIFIER = "";

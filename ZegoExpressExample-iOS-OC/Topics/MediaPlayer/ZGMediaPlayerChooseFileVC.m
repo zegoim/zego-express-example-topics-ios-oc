@@ -34,19 +34,19 @@
 
 - (void)loadNetworkMediaItems {
     self.networkItems = @[
-        [ZGMediaPlayerMediaItem itemWithFileURL:@"https://storage.zego.im/demo/sample_orig.mp3" mediaName:@"sample.mp3" isVideo:NO],
+        [ZGMediaPlayerMediaItem itemWithFileURL:@"https://storage.zego.im/demo/sample_astrix.mp3" mediaName:@"sample_bgm.mp3" isVideo:NO],
         [ZGMediaPlayerMediaItem itemWithFileURL:@"https://storage.zego.im/demo/201808270915.mp4" mediaName:@"sample.mp4" isVideo:YES]
     ];
     [self.tableView reloadData];
 }
 
 - (void)loadLocalPackageItems {
-    NSString *wavResPath = [[NSBundle mainBundle] pathForResource:@"sample" ofType:@"wav"];
-    NSString *mp3ResPath = [[NSBundle mainBundle] pathForResource:@"sample_-50_tempo" ofType:@"mp3"];
+    NSString *wavResPath = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"wav"];
+    NSString *mp3ResPath = [[NSBundle mainBundle] pathForResource:@"sample" ofType:@"mp3"];
     NSString *mp4ResPath = [[NSBundle mainBundle] pathForResource:@"ad" ofType:@"mp4"];
     self.localPackageItems = @[
-        [ZGMediaPlayerMediaItem itemWithFileURL:wavResPath mediaName:@"sample.wav" isVideo:NO],
-        [ZGMediaPlayerMediaItem itemWithFileURL:mp3ResPath mediaName:@"sample_-50_tempo.mp3" isVideo:NO],
+        [ZGMediaPlayerMediaItem itemWithFileURL:wavResPath mediaName:@"test.wav" isVideo:NO],
+        [ZGMediaPlayerMediaItem itemWithFileURL:mp3ResPath mediaName:@"sample.mp3" isVideo:NO],
         [ZGMediaPlayerMediaItem itemWithFileURL:mp4ResPath mediaName:@"ad.mp4" isVideo:YES]
     ];
     [self.tableView reloadData];
