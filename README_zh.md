@@ -16,7 +16,7 @@ Zego Express iOS (Objective-C) 示例专题 Demo
 
 此 Repository 中缺少运行 Demo 工程所需的 SDK `ZegoExpressEngine.framework`，需要下载并放入 Demo 工程的 `Libs` 文件夹中
 
-[https://storage.zego.im/express/video/ios/zh/zego-express-video-ios-zh-1.6.0.zip](https://storage.zego.im/express/video/ios/zh/zego-express-video-ios-zh-1.6.0.zip)
+[https://storage.zego.im/express/video/ios/zh/zego-express-video-ios-zh.zip](https://storage.zego.im/express/video/ios/zh/zego-express-video-ios-zh.zip)
 
 > 请注意，压缩包中有两个文件夹：`iphoneos` 和 `iphoneos_simulator`，区别在于：
 
@@ -76,7 +76,7 @@ Zego Express iOS (Objective-C) 示例专题 Demo
 
     <img src="https://storage.zego.im/sdk-doc/Pics/iOS/ZegoExpressEngine/Common/team-signing.png" width=90% height=90%>
 
-5. 下载的示例代码中缺少 SDK 初始化必须的 AppID 和 AppSign，请参考 [获取 AppID 和 AppSign 指引 \|_blank](https://doc.zego.im/API/HideDoc/GetExpressAppIDGuide/GetAppIDGuideline.html) 获取 AppID 和 AppSign。如果没有填写正确的 AppID 和 AppSign，源码无法正常跑起来，所以需要修改 `ZegoExpressExample-iOS-OC/Helper` 目录下的 `ZGKeyCenter.m`，填写正确的 AppID 和 AppSign。
+5. 下载的示例代码中缺少 SDK 初始化必须的 AppID 和 AppSign，请参考 [获取 AppID 和 AppSign 指引](https://doc.zego.im/API/HideDoc/GetExpressAppIDGuide/GetAppIDGuideline.html) 获取 AppID 和 AppSign。如果没有填写正确的 AppID 和 AppSign，源码无法正常跑起来，所以需要修改 `ZegoExpressExample-iOS-OC/Helper` 目录下的 `ZGKeyCenter.m`，填写正确的 AppID 和 AppSign。
 
     <img src="https://storage.zego.im/sdk-doc/Pics/iOS/ZegoExpressEngine/Common/appid-appsign.png" width=80% height=80%>
 

@@ -16,7 +16,7 @@ Please ensure that the development environment meets the following technical req
 
 The SDK `ZegoExpressEngine.framework` required to run the Demo project is missing from this Repository, and needs to be downloaded and placed in the `Libs` folder of the Demo project
 
-[https://storage.zego.im/downloads/ZegoExpress-iOS.zip](https://storage.zego.im/downloads/ZegoExpress-iOS.zip)
+[https://storage.zego.im/express/video/ios/en/zego-express-video-ios-en.zip](https://storage.zego.im/express/video/ios/en/zego-express-video-ios-en.zip)
 
 > Note that there are two folders in the zip file: `iphoneos` and `iphoneos_simulator`, differences:
 
@@ -76,7 +76,7 @@ The SDK `ZegoExpressEngine.framework` required to run the Demo project is missin
 
     <img src="https://storage.zego.im/sdk-doc/Pics/iOS/ZegoExpressEngine/Common/team-signing.png" width=90% height=90%>
 
-5. The AppID and AppSign required for SDK initialization are missing from the downloaded Demo source. Please refer to [Instructions for getting AppID and AppSign \|_blank](https://doc.zego.im/API/HideDoc/GetExpressAppIDGuide/GetAppIDGuideline.html) to get AppID and AppSign. If you don't fill in the correct AppID and AppSign, the source code will not run properly, so you need to modify `ZGKeyCenter.m` under the directory `ZegoExpressExample-iOS-OC/Helper` to fill in the correct AppID and AppSign.
+5. The AppID and AppSign required for SDK initialization are missing from the downloaded Demo source. Please refer to [Instructions for getting AppID and AppSign](https://doc.zego.im/API/HideDoc/GetExpressAppIDGuide/GetAppIDGuideline.html) to get AppID and AppSign. If you don't fill in the correct AppID and AppSign, the source code will not run properly, so you need to modify `ZGKeyCenter.m` under the directory `ZegoExpressExample-iOS-OC/Helper` to fill in the correct AppID and AppSign.
 
     <img src="https://storage.zego.im/sdk-doc/Pics/iOS/ZegoExpressEngine/Common/appid-appsign-en.png" width=80% height=80%>
 
