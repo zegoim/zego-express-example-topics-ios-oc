@@ -19,11 +19,15 @@
 @property (nonatomic, strong) ZegoMediaPlayer *player;
 
 @property (nonatomic, copy) NSString *roomID;
+@property (nonatomic, copy) NSString *streamID;
 
 @property (nonatomic, assign) ZegoPublisherState publisherState;
 
 @property (weak, nonatomic) IBOutlet UIView *publisherView;
 @property (weak, nonatomic) IBOutlet UIButton *publishButton;
+
+@property (weak, nonatomic) IBOutlet UILabel *roomIDLabel;
+@property (weak, nonatomic) IBOutlet UILabel *streamIDLabel;
 
 @property (weak, nonatomic) IBOutlet UIView *playerView;
 @property (weak, nonatomic) IBOutlet UILabel *currentProcessLabel;
@@ -40,8 +44,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"MediaPlayer";
+
     self.roomID = @"MediaPlayerRoom-1";
-    self.title = _roomID;
     
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
@@ -51,6 +56,9 @@
     [[ZegoExpressEngine sharedEngine] loginRoom:_roomID user:[ZegoUser userWithUserID:[ZGUserIDHelper userID]]];
     
     ZGLogInfo(@" 🚪 Login room. roomID: %@", _roomID);
+
+    // use userID as streamID
+    self.streamID = [NSString stringWithFormat:@"s-%@", [ZGUserIDHelper userID]];
     
     [self startLive];
     
@@ -58,7 +66,7 @@
 }
 
 - (void)createMediaPlayer {
-    self.player = [ZegoMediaPlayer createMediaPlayer];
+    self.player = [[ZegoExpressEngine sharedEngine] createMediaPlayer];
     if (self.player) {
         ZGLogInfo(@" 💽 Create ZegoMediaPlayer");
     } else {
@@ -87,6 +95,11 @@
 }
 
 - (void)setupMediaPlayerUI {
+    self.roomIDLabel.text = [NSString stringWithFormat:@"RoomID: %@", self.roomID];
+    self.roomIDLabel.textColor = [UIColor whiteColor];
+    self.streamIDLabel.text = [NSString stringWithFormat:@"StreamID: %@", self.streamID];
+    self.streamIDLabel.textColor = [UIColor whiteColor];
+
     self.totalDurationLabel.text = [NSString stringWithFormat:@"%02llu:%02llu", self.player.totalDuration / 1000 / 60, (self.player.totalDuration / 1000) % 60];
     
     self.processSlider.maximumValue = self.player.totalDuration;
@@ -123,7 +136,7 @@
     if (self.isBeingDismissed || self.isMovingFromParentViewController
         || (self.navigationController && self.navigationController.isBeingDismissed)) {
         ZGLogInfo(@" 🏳️ Destroy ZegoMediaPlayer");
-        self.player = nil;
+        [[ZegoExpressEngine sharedEngine] destroyMediaPlayer:self.player];
         
         ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
         [ZegoExpressEngine destroyEngine:nil];
@@ -147,9 +160,8 @@
 - (void)startLive {
     [[ZegoExpressEngine sharedEngine] startPreview:[ZegoCanvas canvasWithView:self.publisherView]];
     ZGLogInfo(@" 🔌 Start preview");
-    
-    // use userID as streamID
-    [[ZegoExpressEngine sharedEngine] startPublishingStream:[ZGUserIDHelper userID]];
+
+    [[ZegoExpressEngine sharedEngine] startPublishingStream:_streamID];
     ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", [ZGUserIDHelper userID]);
 }
 

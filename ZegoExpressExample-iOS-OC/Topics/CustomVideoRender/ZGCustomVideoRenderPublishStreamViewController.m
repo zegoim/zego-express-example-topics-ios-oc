@@ -14,8 +14,6 @@
 
 @interface ZGCustomVideoRenderPublishStreamViewController () <ZegoEventHandler, ZegoCustomVideoRenderHandler>
 
-@property (nonatomic, strong) ZegoExpressEngine *engine;
-
 @property (weak, nonatomic) IBOutlet UIImageView *customRenderPreviewView;
 
 @property (weak, nonatomic) IBOutlet UIView *engineRenderPreviewView;
@@ -49,28 +47,28 @@
     
     ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
     
-    self.engine = [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
+    [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     
     // Set custom video render handler
-    [self.engine setCustomVideoRenderHandler:self];
+    [[ZegoExpressEngine sharedEngine] setCustomVideoRenderHandler:self];
 }
 
 - (void)startLive {
     // Login Room
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
     ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
-    [self.engine loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
+    [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
     
-    [self.engine setVideoConfig:[ZegoVideoConfig configWithPreset:ZegoVideoConfigPreset1080P]];
+    [[ZegoExpressEngine sharedEngine] setVideoConfig:[ZegoVideoConfig configWithPreset:ZegoVideoConfigPreset1080P]];
     
     // Start preview
     ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.engineRenderPreviewView];
     ZGLogInfo(@" 🔌 Start preview");
-    [self.engine startPreview:previewCanvas];
+    [[ZegoExpressEngine sharedEngine] startPreview:previewCanvas];
     
     // Start publishing
     ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", self.streamID);
-    [self.engine startPublishingStream:self.streamID];
+    [[ZegoExpressEngine sharedEngine] startPublishingStream:self.streamID];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

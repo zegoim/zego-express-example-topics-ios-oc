@@ -18,8 +18,6 @@ NSString* const ZGAuxPublisherPlayVCKey_secondStreamID = @"kSecondStreamID";
 
 @interface ZGAuxPublisherPlayViewController () <ZegoEventHandler>
 
-@property (nonatomic, strong) ZegoExpressEngine *engine;
-
 @property (nonatomic, copy) NSString *roomID;
 @property (nonatomic, copy) NSString *firstStreamID;
 @property (nonatomic, copy) NSString *secondStreamID;
@@ -96,7 +94,7 @@ NSString* const ZGAuxPublisherPlayVCKey_secondStreamID = @"kSecondStreamID";
     
     ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
     
-    self.engine = [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
+    [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
 }
 
 #pragma mark - Login/Logout Room
@@ -117,12 +115,12 @@ NSString* const ZGAuxPublisherPlayVCKey_secondStreamID = @"kSecondStreamID";
 - (void)loginRoom {
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
     ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
-    [self.engine loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
+    [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
 }
 
 - (void)logoutRoom {
     ZGLogInfo(@" 🚪 Logout room. roomID: %@", self.roomID);
-    [self.engine logoutRoom:self.roomID];
+    [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
 }
 
 #pragma mark - Start/Stop Playing First Stream
@@ -146,12 +144,12 @@ NSString* const ZGAuxPublisherPlayVCKey_secondStreamID = @"kSecondStreamID";
     
     ZGLogInfo(@" 📥 Start playing stream. streamID: %@", self.firstStreamID);
     ZegoCanvas *firstPlayCanvas = [ZegoCanvas canvasWithView:self.firstStreamPlayView];
-    [self.engine startPlayingStream:self.firstStreamID canvas:firstPlayCanvas];
+    [[ZegoExpressEngine sharedEngine] startPlayingStream:self.firstStreamID canvas:firstPlayCanvas];
 }
 
 - (void)stopPlayingFirstSream {
     ZGLogInfo(@" 📥 Stop playing stream");
-    [self.engine stopPlayingStream:self.firstStreamID];
+    [[ZegoExpressEngine sharedEngine] stopPlayingStream:self.firstStreamID];
 }
 
 #pragma mark - Start/Stop Playing Second Stream
@@ -175,19 +173,19 @@ NSString* const ZGAuxPublisherPlayVCKey_secondStreamID = @"kSecondStreamID";
     
     ZGLogInfo(@" 📥 Start playing stream. streamID: %@", self.secondStreamID);
     ZegoCanvas *secondPlayCanvas = [ZegoCanvas canvasWithView:self.secondStreamPlayView];
-    [self.engine startPlayingStream:self.secondStreamID canvas:secondPlayCanvas];
+    [[ZegoExpressEngine sharedEngine] startPlayingStream:self.secondStreamID canvas:secondPlayCanvas];
 }
 
 - (void)stopPlayingSecondStream {
     ZGLogInfo(@" 📥 Stop playing stream");
-    [self.engine stopPlayingStream:self.secondStreamID];
+    [[ZegoExpressEngine sharedEngine] stopPlayingStream:self.secondStreamID];
 }
 
 #pragma mark - Exit
 
 - (void)dealloc {
     ZGLogInfo(@" 🚪 Exit the room");
-    [self.engine logoutRoom:self.roomID];
+    [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
     
     // Can destroy the engine when you don't need audio and video calls
     ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");

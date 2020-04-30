@@ -19,7 +19,6 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
 
 @interface ZGAuxPublisherPublishViewController () <ZegoEventHandler, ZegoCustomVideoCaptureHandler, ZGCaptureDeviceDataOutputPixelBufferDelegate>
 
-@property (nonatomic, strong) ZegoExpressEngine *engine;
 @property (nonatomic, strong) id<ZGCaptureDevice> captureDevice;
 
 @property (nonatomic, copy) NSString *roomID;
@@ -110,12 +109,12 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
     
     ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
     
-    self.engine = [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
+    [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     
-    [self.engine setCustomVideoCaptureHandler:self];
+    [[ZegoExpressEngine sharedEngine] setCustomVideoCaptureHandler:self];
     
-    [self.engine setVideoConfig:[ZegoVideoConfig configWithPreset:ZegoVideoConfigPreset1080P] channel:ZegoPublishChannelMain];
-    [self.engine setVideoConfig:[ZegoVideoConfig configWithPreset:ZegoVideoConfigPreset1080P] channel:ZegoPublishChannelAux];
+    [[ZegoExpressEngine sharedEngine] setVideoConfig:[ZegoVideoConfig configWithPreset:ZegoVideoConfigPreset1080P] channel:ZegoPublishChannelMain];
+    [[ZegoExpressEngine sharedEngine] setVideoConfig:[ZegoVideoConfig configWithPreset:ZegoVideoConfigPreset1080P] channel:ZegoPublishChannelAux];
 }
 
 #pragma mark - Login/Logout Room
@@ -136,12 +135,12 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
 - (void)loginRoom {
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
     ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
-    [self.engine loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
+    [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
 }
 
 - (void)logoutRoom {
     ZGLogInfo(@" 🚪 Logout room. roomID: %@", self.roomID);
-    [self.engine logoutRoom:self.roomID];
+    [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
 }
 
 #pragma mark - Start/Stop Publishing Main Channel
@@ -166,15 +165,15 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
     // Start preview for main channel
     ZGLogInfo(@" 🔌 Start preview main channel");
     ZegoCanvas *mainPreviewCanvas = [ZegoCanvas canvasWithView:self.mainPreviewView];
-    [self.engine startPreview:mainPreviewCanvas];
+    [[ZegoExpressEngine sharedEngine] startPreview:mainPreviewCanvas];
     
     ZGLogInfo(@" 📤 Start publishing stream main channel. streamID: %@", self.mainStreamID);
-    [self.engine startPublishingStream:self.mainStreamID channel:ZegoPublishChannelMain];
+    [[ZegoExpressEngine sharedEngine] startPublishingStream:self.mainStreamID channel:ZegoPublishChannelMain];
 }
 
 - (void)stopPublishMainChannel {
     ZGLogInfo(@" 📤 Stop publishing stream main channel");
-    [self.engine stopPublishingStream:ZegoPublishChannelMain];
+    [[ZegoExpressEngine sharedEngine] stopPublishingStream:ZegoPublishChannelMain];
 }
 
 #pragma mark - Start/Stop Publishing Aux Channel
@@ -197,19 +196,19 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
     [self saveValue:self.auxStreamID forKey:ZGAuxPublisherPublishVCKey_auxStreamID];
     
     ZGLogInfo(@" 📤 Start publishing stream aux channel. streamID: %@", self.auxStreamID);
-    [self.engine startPublishingStream:self.auxStreamID channel:ZegoPublishChannelAux];
+    [[ZegoExpressEngine sharedEngine] startPublishingStream:self.auxStreamID channel:ZegoPublishChannelAux];
 }
 
 - (void)stopPublishAuxChannel {
     ZGLogInfo(@" 📤 Stop publishing stream aux channel");
-    [self.engine stopPublishingStream:ZegoPublishChannelAux];
+    [[ZegoExpressEngine sharedEngine] stopPublishingStream:ZegoPublishChannelAux];
 }
 
 #pragma mark - Exit
 
 - (void)dealloc {
     ZGLogInfo(@" 🚪 Exit the room");
-    [self.engine logoutRoom:self.roomID];
+    [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
     
     // Can destroy the engine when you don't need audio and video calls
     ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
@@ -249,7 +248,7 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
 - (void)captureDevice:(nonnull id<ZGCaptureDevice>)device didCapturedData:(nonnull CVPixelBufferRef)data presentationTimeStamp:(CMTime)timeStamp {
     
     // Send pixel buffer to ZEGO SDK for aux channel
-    [self.engine sendCustomVideoCapturePixelBuffer:data timeStamp:timeStamp channel:ZegoPublishChannelAux];
+    [[ZegoExpressEngine sharedEngine] sendCustomVideoCapturePixelBuffer:data timeStamp:timeStamp channel:ZegoPublishChannelAux];
     
     // When custom video capture is enabled, developers need to render the preview by themselves
     [self renderWithCVPixelBuffer:data];

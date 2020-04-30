@@ -41,8 +41,6 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
 @property (nonatomic) ZegoRoomState roomState;
 @property (nonatomic) ZegoPlayerState playerState;
 
-@property (nonatomic) ZegoExpressEngine *engine;
-
 @end
 
 @implementation ZGPlayTopicPlayStreamVC
@@ -68,13 +66,13 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
         // Stop playing before exiting
         if (self.playerState != ZegoPlayerStateNoPlay) {
             ZGLogInfo(@" 📥 Stop playing stream");
-            [self.engine stopPlayingStream:self.streamID];
+            [[ZegoExpressEngine sharedEngine] stopPlayingStream:self.streamID];
         }
         
         // Logout room before exiting
         if (self.roomState != ZegoRoomStateDisconnected) {
             ZGLogInfo(@" 🚪 Logout room");
-            [self.engine logoutRoom:self.roomID];
+            [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
         }
         
         // Can destroy the engine when you don't need audio and video calls
@@ -138,13 +136,13 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
     [self appendProcessTipAndMakeVisible:@" 🚀 Create ZegoExpressEngine"];
     ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
     
-    self.engine = [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
+    [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
 
     // Set debug verbose on
-//    [self.engine setDebugVerbose:YES language:ZegoLanguageEnglish];
+//    [[ZegoExpressEngine sharedEngine] setDebugVerbose:YES language:ZegoLanguageEnglish];
     
     // Set hardware decoder before playing stream
-    [self.engine enableHardwareDecoder:self.enableHardwareDecode];
+    [[ZegoExpressEngine sharedEngine] enableHardwareDecoder:self.enableHardwareDecode];
 }
 
 #pragma mark - Actions
@@ -174,7 +172,7 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
     ZegoRoomConfig *config = [ZegoRoomConfig defaultConfig];
     
     // Start login room
-    [self.engine loginRoom:self.roomID user:[ZegoUser userWithUserID:userID userName:userName] config:config];
+    [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:[ZegoUser userWithUserID:userID userName:userName] config:config];
     
     [self appendProcessTipAndMakeVisible:@" 📥 Strat playing stream"];
     ZGLogInfo(@" 📥 Strat playing stream");
@@ -182,20 +180,20 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
     // Strat playing stream
     ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:self.playLiveView];
     playCanvas.viewMode = self.playViewMode;
-    [self.engine startPlayingStream:self.streamID canvas:playCanvas];
+    [[ZegoExpressEngine sharedEngine] startPlayingStream:self.streamID canvas:playCanvas];
     
     // Volume needs to be set after playing stream
-    [self.engine setPlayVolume:self.playStreamVolume streamID:self.streamID];
+    [[ZegoExpressEngine sharedEngine] setPlayVolume:self.playStreamVolume streamID:self.streamID];
     
 }
 
 - (void)stopPlayLive {
     // Stop playing stream
-    [self.engine stopPlayingStream:self.streamID];
+    [[ZegoExpressEngine sharedEngine] stopPlayingStream:self.streamID];
     [self appendProcessTipAndMakeVisible:@" 📥 Stop playing stream"];
     ZGLogInfo(@" 📥 Stop playing stream");
     // Logout room
-    [self.engine logoutRoom:self.roomID];
+    [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
     [self appendProcessTipAndMakeVisible:@" 🚪 Logout room"];
     ZGLogInfo(@" 🚪 Logout room");
     
@@ -379,18 +377,18 @@ NSString* const ZGPlayTopicPlayStreamVCKey_streamID = @"kStreamID";
     
     ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:self.playLiveView];
     playCanvas.viewMode = self.playViewMode;
-    [self.engine startPlayingStream:self.streamID canvas:playCanvas];
+    [[ZegoExpressEngine sharedEngine] startPlayingStream:self.streamID canvas:playCanvas];
 }
 
 - (void)playTopicConfigManager:(ZGPlayTopicConfigManager *)configManager playStreamVolumeDidChange:(int)playStreamVolume {
     self.playStreamVolume = playStreamVolume;
     
-    [self.engine setPlayVolume:playStreamVolume streamID:self.streamID];
+    [[ZegoExpressEngine sharedEngine] setPlayVolume:playStreamVolume streamID:self.streamID];
 }
 
 - (void)playTopicConfigManager:(ZGPlayTopicConfigManager *)configManager enableHardwareDecodeDidChange:(BOOL)enableHardwareDecode {
     self.enableHardwareDecode = enableHardwareDecode;
-    [self.engine enableHardwareDecoder:enableHardwareDecode];
+    [[ZegoExpressEngine sharedEngine] enableHardwareDecoder:enableHardwareDecode];
     ZGLogInfo(@" ❕ Tips: The hardware decoding needs to be set before playing stream. If it is set in playing stream, it needs to be play again to take effect.");
 }
 

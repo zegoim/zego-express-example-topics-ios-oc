@@ -22,8 +22,6 @@ CGFloat const ZGVideoTalkStreamViewSpacing = 8.f;
 
 @interface ZGVideoTalkViewController () <ZegoEventHandler>
 
-@property (nonatomic, strong) ZegoExpressEngine *engine;
-
 /// Login room ID
 @property (nonatomic, copy) NSString *roomID;
 
@@ -104,33 +102,33 @@ CGFloat const ZGVideoTalkStreamViewSpacing = 8.f;
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
     ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
-    self.engine = [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
+    [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
 }
 
 - (void)joinTalkRoom {
     // Login room
     ZGLogInfo(@" 🚪 Login room, roomID: %@", _roomID);
-    [self.engine loginRoom:_roomID user:[ZegoUser userWithUserID:_localUserID]];
+    [[ZegoExpressEngine sharedEngine] loginRoom:_roomID user:[ZegoUser userWithUserID:_localUserID]];
     
     // Set the publish video configuration
-    [self.engine setVideoConfig:[ZegoVideoConfig configWithPreset:ZegoVideoConfigPreset720P]];
+    [[ZegoExpressEngine sharedEngine] setVideoConfig:[ZegoVideoConfig configWithPreset:ZegoVideoConfigPreset720P]];
     
     // Get the local user's preview view and start preview
     ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.localUserViewObject.view];
     previewCanvas.viewMode = ZegoViewModeAspectFill;
     ZGLogInfo(@" 🔌 Start preview");
-    [self.engine startPreview:previewCanvas];
+    [[ZegoExpressEngine sharedEngine] startPreview:previewCanvas];
     
     // Local user start publishing
     ZGLogInfo(@" 📤 Start publishing stream, streamID: %@", _localStreamID);
-    [self.engine startPublishingStream:_localStreamID];
+    [[ZegoExpressEngine sharedEngine] startPublishingStream:_localStreamID];
 }
 
 // It is recommended to logout room when stopping the video call.
 // And you can destroy the engine when there is no need to call.
 - (void)exitRoom {
     ZGLogInfo(@" 🚪 Logout room, roomID: %@", _roomID);
-    [self.engine logoutRoom:_roomID];
+    [[ZegoExpressEngine sharedEngine] logoutRoom:_roomID];
     ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
     [ZegoExpressEngine destroyEngine:nil];
 }
@@ -142,17 +140,17 @@ CGFloat const ZGVideoTalkStreamViewSpacing = 8.f;
 
 - (IBAction)onToggleCameraSwitch:(UISwitch *)sender {
     _enableCamera = sender.on;
-    [self.engine enableCamera:_enableCamera];
+    [[ZegoExpressEngine sharedEngine] enableCamera:_enableCamera];
 }
 
 - (IBAction)onToggleMicrophoneSwitch:(UISwitch *)sender {
     _muteMicrophone = !sender.on;
-    [self.engine muteMicrophone:_muteMicrophone];
+    [[ZegoExpressEngine sharedEngine] muteMicrophone:_muteMicrophone];
 }
 
 - (IBAction)onToggleEnableSpeakerSwitch:(UISwitch *)sender {
     _muteSpeaker = !sender.on;
-    [self.engine muteSpeaker:_muteSpeaker];
+    [[ZegoExpressEngine sharedEngine] muteSpeaker:_muteSpeaker];
 }
 
 #pragma mark - ViewObject Methods
@@ -214,7 +212,7 @@ CGFloat const ZGVideoTalkStreamViewSpacing = 8.f;
     ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:viewObject.view];
     playCanvas.viewMode = ZegoViewModeAspectFill;
     
-    [self.engine startPlayingStream:streamID canvas:playCanvas];
+    [[ZegoExpressEngine sharedEngine] startPlayingStream:streamID canvas:playCanvas];
     ZGLogInfo(@" 📥 Start playing stream, streamID: %@", streamID);
 }
 
@@ -226,7 +224,7 @@ CGFloat const ZGVideoTalkStreamViewSpacing = 8.f;
         [obj.view removeFromSuperview];
     }
     
-    [self.engine stopPlayingStream:streamID];
+    [[ZegoExpressEngine sharedEngine] stopPlayingStream:streamID];
     ZGLogInfo(@" 📥 Stop playing stream, streamID: %@", streamID);
 }
 
@@ -251,7 +249,7 @@ CGFloat const ZGVideoTalkStreamViewSpacing = 8.f;
 
 /// Refresh the remote streams list
 - (void)onRoomStreamUpdate:(ZegoUpdateType)updateType streamList:(NSArray<ZegoStream *> *)streamList roomID:(NSString *)roomID {
-    ZGLogInfo(@" 🚩 🌊 Room Stream Update Callback: %lu, StreamsCount: %lu, roomID: %@", (unsigned long)updateType, (unsigned long)streamList.count, roomID);
+    ZGLogInfo(@" 🚩 🌊 Room stream update, updateType:%lu, streamsCount: %lu, roomID: %@", (unsigned long)updateType, (unsigned long)streamList.count, roomID);
     NSArray<NSString *> *allStreamIDList = [_allUserViewObjectList valueForKeyPath:@"streamID"];
     
     if (updateType == ZegoUpdateTypeAdd) {
@@ -269,6 +267,11 @@ CGFloat const ZGVideoTalkStreamViewSpacing = 8.f;
     }
     
     [self rearrangeVideoTalkViewObjects];
+}
+
+/// This method is called back every 30 seconds, can be used to show the current number of online user in the room
+- (void)onRoomOnlineUserCountUpdate:(int)count roomID:(NSString *)roomID {
+    ZGLogInfo(@" 🚩 👥 Room online user count update, count: %d, roomID: %@", count, roomID);
 }
 
 #pragma mark - Getter

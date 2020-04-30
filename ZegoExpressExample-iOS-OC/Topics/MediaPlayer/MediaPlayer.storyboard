@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="XxT-Wb-UXX">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="XxT-Wb-UXX">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -71,7 +71,27 @@
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9yN-bV-Yai">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RoomID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3h-7O-1rK">
+                                                            <rect key="frame" x="5" y="5" width="44.5" height="13.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="StreamID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="flp-80-cQD">
+                                                            <rect key="frame" x="5" y="23.5" width="52" height="13.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <constraints>
+                                                        <constraint firstItem="Q3h-7O-1rK" firstAttribute="leading" secondItem="9yN-bV-Yai" secondAttribute="leading" constant="5" id="Ka5-OG-Z98"/>
+                                                        <constraint firstItem="Q3h-7O-1rK" firstAttribute="top" secondItem="9yN-bV-Yai" secondAttribute="top" constant="5" id="Lzk-VF-2Ol"/>
+                                                        <constraint firstItem="flp-80-cQD" firstAttribute="leading" secondItem="9yN-bV-Yai" secondAttribute="leading" constant="5" id="eh9-02-FZd"/>
+                                                        <constraint firstItem="flp-80-cQD" firstAttribute="top" secondItem="Q3h-7O-1rK" secondAttribute="bottom" constant="5" id="iRD-C3-QQ4"/>
+                                                    </constraints>
                                                 </view>
                                             </subviews>
                                             <constraints>
@@ -391,6 +411,8 @@
                         <outlet property="processSlider" destination="BKM-H3-7hh" id="9r8-R4-0dZ"/>
                         <outlet property="publishButton" destination="LP0-fT-ApT" id="fOW-Q1-w1G"/>
                         <outlet property="publisherView" destination="9yN-bV-Yai" id="gsc-GL-DQz"/>
+                        <outlet property="roomIDLabel" destination="Q3h-7O-1rK" id="vCY-Pq-2yT"/>
+                        <outlet property="streamIDLabel" destination="flp-80-cQD" id="E2w-lp-MAn"/>
                         <outlet property="totalDurationLabel" destination="Euf-J4-idu" id="LZt-Nq-70r"/>
                         <outlet property="volumeSlider" destination="yc9-Qa-Ze2" id="yhx-Ym-T9s"/>
                     </connections>

@@ -16,13 +16,15 @@ Please ensure that the development environment meets the following technical req
 
 The SDK `ZegoExpressEngine.framework` required to run the Demo project is missing from this Repository, and needs to be downloaded and placed in the `Libs` folder of the Demo project
 
+> Run Demo directly, if the pre-compilation script detects that there is no SDK Framework under `Libs`, it will automatically download the **English version** SDK. You can also download it yourself and put it in the `Libs` folder.
+
 [https://storage.zego.im/express/video/ios/en/zego-express-video-ios-en.zip](https://storage.zego.im/express/video/ios/en/zego-express-video-ios-en.zip)
 
-> Note that there are two folders in the zip file: `iphoneos` and `iphoneos_simulator`, differences:
+> Note that there are two folders in the zip file: `armv7-arm64` and `armv7-arm64-x86_64`, differences:
 
-1. The dynamic framework in `iphoneos` contains only the architecture of the real machine (armv7, arm64). Developers need to use `ZegoExpressEngine.framework` in this folder when distributing the app, otherwise it may be rejected by App Store.
+1. The dynamic framework in `armv7-arm64` contains only the architecture of the real machine (armv7, arm64). Developers need to use `ZegoExpressEngine.framework` in this folder when distributing the app, otherwise it may be rejected by App Store.
 
-2. The dynamic framework in `iphonos_simulator` contains the real machine and simulator architecture (armv7, arm64, x86_64). If developers need to use the simulator to develop and debug, they need to use `ZegoExpressEngine.framework` in this folder. But when the app is finally distributed, you need to switch back to the Framework under the `iphoneos` folder.
+2. The dynamic framework in `armv7-arm64-x86_64` contains the real machine and simulator architecture (armv7, arm64, x86_64). If developers need to use the simulator to develop and debug, they need to use `ZegoExpressEngine.framework` in this folder. But when the app is finally distributed, you need to switch back to the Framework under the `armv7-arm64` folder. (Note: If you use CocoaPods to integrate, you do n’t need to worry about the framework architecture. CocoaPods will automatically cut the simulator architecture when Archive)
 
 > Please unzip and put the `ZegoExpressEngine.framework` under `Libs`
 
@@ -90,10 +92,12 @@ The SDK `ZegoExpressEngine.framework` required to run the Demo project is missin
 
     <img src="https://storage.zego.im/sdk-doc/Pics/iOS/ZegoExpressEngine/Common/build-and-run.png" width=50% height=50%>
 
-## Precautions
+## FAQ
 
-Developers should change to the own development certificate in `Target` -> `Signing & Capabilities`. Direct build may cause the following error:
+1. `The app ID "im.zego.ZegoExpressExample-iOS-OC" cannot be registered to your development team. Change your bundle identifier to a unique string to try again.`
 
-> The app ID "im.zego.ZegoExpressExample-iOS-OC" cannot be registered to your development team. Change your bundle identifier to a unique string to try again.
+    Refer to **Modify Bundle Identifier and Apple Developer Certificate** above, switch to your own development certificate in `Targets` -> `Signing & Capabilities` and modify `Bundle Identifier` before running.
 
-Please modify the Bundle Identifier before running.
+2. `dyld: Library not loaded`
+
+    This is [bug](https://forums.developer.apple.com/thread/128435) of iOS 13.3.1, please upgrade to iOS 13.4 or above.

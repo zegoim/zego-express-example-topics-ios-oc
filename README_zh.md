@@ -16,13 +16,15 @@ Zego Express iOS (Objective-C) 示例专题 Demo
 
 此 Repository 中缺少运行 Demo 工程所需的 SDK `ZegoExpressEngine.framework`，需要下载并放入 Demo 工程的 `Libs` 文件夹中
 
+> 直接运行 Demo，编译前脚本若检测到 `Libs` 文件夹下不存在 SDK Framework 时会自动下载 **英文版** SDK。如需 **中文版** SDK 请自行下载并放入 `Libs` 文件夹中。
+
 [https://storage.zego.im/express/video/ios/zh/zego-express-video-ios-zh.zip](https://storage.zego.im/express/video/ios/zh/zego-express-video-ios-zh.zip)
 
-> 请注意，压缩包中有两个文件夹：`iphoneos` 和 `iphoneos_simulator`，区别在于：
+> 请注意，压缩包中有两个文件夹：`armv7-arm64` 和 `armv7-arm64-x86_64`，区别在于：
 
-1. `iphoneos` 内的动态库仅包含真机的架构（armv7, arm64）。开发者在最终上架 App 时，需要使用此文件夹下的 `ZegoExpressEngine.framework`，否则可能被 App Store 拒绝。
+1. `armv7-arm64` 内的动态库仅包含真机的架构（armv7, arm64）。开发者在最终上架 App 时，需要使用此文件夹下的 `ZegoExpressEngine.framework`，否则可能被 App Store 拒绝。
 
-2. `iphonos_simulator` 内的动态库包含了真机与模拟器架构（armv7, arm64, x86_64）。如果开发者需要使用到模拟器来开发调试，需要使用此文件夹下的 `ZegoExpressEngine.framework`。但是最终上架 App 时，要切换回 `iphoneos` 文件夹下的 Framework。
+2. `armv7-arm64-x86_64` 内的动态库包含了真机与模拟器架构（armv7, arm64, x86_64）。如果开发者需要使用到模拟器来开发调试，需要使用此文件夹下的 `ZegoExpressEngine.framework`。但是最终上架 App 时，要切换回 `armv7-arm64` 文件夹下的 Framework。（注：如果使用 CocoaPods 集成则无需担心包架构问题，CocoaPods 在 Archive 时会自动裁掉模拟器架构）
 
 > 请解压缩 `ZegoExpressEngine.framework` 并将其放在 `Libs` 目录下
 
@@ -90,10 +92,12 @@ Zego Express iOS (Objective-C) 示例专题 Demo
 
     <img src="https://storage.zego.im/sdk-doc/Pics/iOS/ZegoExpressEngine/Common/build-and-run.png" width=50% height=50%>
 
-## 注意事项
+## 常见问题
 
-开发者请注意在 `Targets` -> `Signing & Capabilities` 中切换为自己的开发证书，但直接运行可能导致如下报错：
+1. `The app ID "im.zego.ZegoExpressExample-iOS-OC" cannot be registered to your development team. Change your bundle identifier to a unique string to try again.`
 
-> The app ID "im.zego.ZegoExpressExample-iOS-OC" cannot be registered to your development team. Change your bundle identifier to a unique string to try again.
+    参考上面的 **修改开发者证书和 Bundle Identifier**，在 `Targets` -> `Signing & Capabilities` 中切换为自己的开发证书并修改 `Bundle Identifier` 后再运行。
 
-请自行修改 `Bundle Identifier` 后再运行。
+2. `dyld: Library not loaded`
+
+    此为 iOS 13.3.1 的 [bug](https://forums.developer.apple.com/thread/128435)，请升级至 iOS 13.4 或以上版本即可解决。
