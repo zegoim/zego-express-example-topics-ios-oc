@@ -248,7 +248,7 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
 - (void)captureDevice:(nonnull id<ZGCaptureDevice>)device didCapturedData:(nonnull CVPixelBufferRef)data presentationTimeStamp:(CMTime)timeStamp {
     
     // Send pixel buffer to ZEGO SDK for aux channel
-    [[ZegoExpressEngine sharedEngine] sendCustomVideoCapturePixelBuffer:data timeStamp:timeStamp channel:ZegoPublishChannelAux];
+    [[ZegoExpressEngine sharedEngine] sendCustomVideoCapturePixelBuffer:data timestamp:timeStamp channel:ZegoPublishChannelAux];
     
     // When custom video capture is enabled, developers need to render the preview by themselves
     [self renderWithCVPixelBuffer:data];
