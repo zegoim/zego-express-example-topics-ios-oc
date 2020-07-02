@@ -20,6 +20,7 @@ NSString* const ZGCustomVideoCaptureLoginVCKey_streamID = @"kStreamID";
 @property (weak, nonatomic) IBOutlet UITextField *streamIDTextField;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *captureSourceTypeSeg;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *captureDataFormatSeg;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *captureBufferTypeSeg;
 
 
 @end
@@ -43,23 +44,25 @@ NSString* const ZGCustomVideoCaptureLoginVCKey_streamID = @"kStreamID";
         ZGLogError(@" ❗️ Please fill in roomID.");
         return;
     }
-    
+
     if (!self.streamIDTextField.text || [self.streamIDTextField.text isEqualToString:@""]) {
         ZGLogError(@" ❗️ Please fill in streamID.");
         return;
     }
-    
+
     [self saveValue:self.roomIDTextField.text forKey:ZGCustomVideoCaptureLoginVCKey_roomID];
     [self saveValue:self.streamIDTextField.text forKey:ZGCustomVideoCaptureLoginVCKey_streamID];
-    
+
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"CustomVideoCapture" bundle:nil];
     ZGCustomVideoCapturePublishStreamViewController *publisherVC = [sb instantiateViewControllerWithIdentifier:NSStringFromClass([ZGCustomVideoCapturePublishStreamViewController class])];
-    
+
     publisherVC.roomID = self.roomIDTextField.text;
     publisherVC.streamID = self.streamIDTextField.text;
+
     publisherVC.captureSourceType = self.captureSourceTypeSeg.selectedSegmentIndex;
     publisherVC.captureDataFormat = self.captureDataFormatSeg.selectedSegmentIndex;
-    
+    publisherVC.captureBufferType = self.captureBufferTypeSeg.selectedSegmentIndex;
+
     [self.navigationController pushViewController:publisherVC animated:YES];
 }
 

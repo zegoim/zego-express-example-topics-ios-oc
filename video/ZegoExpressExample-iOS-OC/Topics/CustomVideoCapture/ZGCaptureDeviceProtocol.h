@@ -13,11 +13,26 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, ZGCustomVideoCaptureSourceType) {
+    ZGCustomVideoCaptureSourceTypeCamera,
+    ZGCustomVideoCaptureSourceTypeImage
+};
+
+typedef NS_ENUM(NSUInteger, ZGCustomVideoCaptureDataFormat) {
+    ZGCustomVideoCaptureDataFormatBGRA32,
+    ZGCustomVideoCaptureDataFormatNV12
+};
+
+typedef NS_ENUM(NSUInteger, ZGCustomVideoCaptureBufferType) {
+    ZGCustomVideoCaptureBufferTypeCVPixelBuffer,
+    ZGCustomVideoCaptureBufferTypeEncodedFrame
+};
+
 @protocol ZGCaptureDevice;
 
 @protocol ZGCaptureDeviceDataOutputPixelBufferDelegate <NSObject>
 
-- (void)captureDevice:(id<ZGCaptureDevice>)device didCapturedData:(CVPixelBufferRef)data presentationTimeStamp:(CMTime)timeStamp;
+- (void)captureDevice:(id<ZGCaptureDevice>)device didCapturedData:(CMSampleBufferRef)data;
 
 @end
 
@@ -29,6 +44,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)startCapture;
 
 - (void)stopCapture;
+
+@optional
+
+// Only for camera
+- (void)switchCameraPosition;
 
 @end
 

@@ -31,24 +31,22 @@
 }
 
 - (void)createEngine {
-    // Set render config
+
+    ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
+
+    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+
+    [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
+
+    // Init render config
     ZegoCustomVideoRenderConfig *renderConfig = [[ZegoCustomVideoRenderConfig alloc] init];
     renderConfig.bufferType = self.bufferType;
     renderConfig.frameFormatSeries = self.frameFormatSeries;
     renderConfig.enableEngineRender = self.enableEngineRender;
-    
-    ZegoEngineConfig *engineConfig = [[ZegoEngineConfig alloc] init];
-    [engineConfig setCustomVideoRenderConfig:renderConfig];
-    
-    // Set engine config, must be called before create engine
-    [ZegoExpressEngine setEngineConfig:engineConfig];
-    
-    ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
-    
-    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
-    
-    [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
-    
+
+    // Enable custom video render
+    [[ZegoExpressEngine sharedEngine] enableCustomVideoRender:YES config:renderConfig];
+
     // Set custom video render handler
     [[ZegoExpressEngine sharedEngine] setCustomVideoRenderHandler:self];
 }
@@ -82,9 +80,6 @@
             // In general, developers do not need to listen to this callback.
             ZGLogInfo(@" 🚩 🏳️ Destroy ZegoExpressEngine complete");
         }];
-        
-        // In order not to affect other example topics, restore the default engine configuration.
-        [ZegoExpressEngine setEngineConfig:[[ZegoEngineConfig alloc] init]];
     }
     [super viewDidDisappear:animated];
 }
@@ -109,9 +104,9 @@
     } else if (param.format == ZegoVideoFrameFormatI420) {
         // Grayscale
         unsigned char *uPlanar = data[1];
-        unsigned char *vPlanar = data[1];
-        memset(uPlanar, 0x80, sizeof(char) * dataLength[1]);
-        memset(vPlanar, 0x80, sizeof(char) * dataLength[2]);
+        unsigned char *vPlanar = data[2];
+        memset(uPlanar, 0x80, sizeof(unsigned char) * dataLength[1]);
+        memset(vPlanar, 0x80, sizeof(unsigned char) * dataLength[2]);
     }
 }
 
@@ -119,6 +114,22 @@
 - (void)onCapturedVideoFrameCVPixelBuffer:(CVPixelBufferRef)buffer param:(ZegoVideoFrameParam *)param flipMode:(ZegoVideoFlipMode)flipMode channel:(ZegoPublishChannel)channel {
     NSLog(@"pixel buffer video frame callback. format:%d, width:%f, height:%f, isNeedFlip:%d", (int)param.format, param.size.width, param.size.height, (int)flipMode);
     [self renderWithCVPixelBuffer:buffer];
+}
+
+- (void)onCapturedVideoFrameEncodedData:(unsigned char *)data dataLength:(unsigned int)dataLength param:(ZegoVideoEncodedFrameParam *)param referenceTimeMillisecond:(unsigned long long)referenceTimeMillisecond channel:(ZegoPublishChannel)channel {
+    
+}
+
+- (void)onRemoteVideoFrameRawData:(unsigned char * _Nonnull *)data dataLength:(unsigned int *)dataLength param:(ZegoVideoFrameParam *)param streamID:(NSString *)streamID {
+    
+}
+
+- (void)onRemoteVideoFrameCVPixelBuffer:(CVPixelBufferRef)buffer param:(ZegoVideoFrameParam *)param streamID:(NSString *)streamID {
+    
+}
+
+- (void)onRemoteVideoFrameEncodedData:(unsigned char *)data dataLength:(unsigned int)dataLength param:(ZegoVideoEncodedFrameParam *)param referenceTimeMillisecond:(unsigned long long)referenceTimeMillisecond streamID:(NSString *)streamID {
+    
 }
 
 #pragma mark - Custom Render Method

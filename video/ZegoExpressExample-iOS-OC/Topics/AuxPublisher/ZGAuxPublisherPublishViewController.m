@@ -93,28 +93,25 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
 }
 
 - (void)createEngineAndLoginRoom {
-    // Set capture config for aux publish channel
-    ZegoCustomVideoCaptureConfig *captureConfig = [[ZegoCustomVideoCaptureConfig alloc] init];
-    captureConfig.bufferType = ZegoVideoBufferTypeCVPixelBuffer;
-    
-    ZegoEngineConfig *engineConfig = [[ZegoEngineConfig alloc] init];
-    
-    // Only the aux channel use custom video capture, and the main channel uses the SDK's own capture
-    engineConfig.customVideoCaptureAuxConfig = captureConfig;
-    
-    // Set engine config, must be called before create engine
-    [ZegoExpressEngine setEngineConfig:engineConfig];
     
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
     ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
     
     [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
+
+    // Set capture config for aux publish channel
+    ZegoCustomVideoCaptureConfig *captureConfig = [[ZegoCustomVideoCaptureConfig alloc] init];
+    captureConfig.bufferType = ZegoVideoBufferTypeCVPixelBuffer;
+
+    // Enable custom video capture for aux channel
+    // Only the aux channel use custom video capture, and the main channel uses the SDK's own capture
+    [[ZegoExpressEngine sharedEngine] enableCustomVideoCapture:YES config:captureConfig channel:ZegoPublishChannelAux];
     
     [[ZegoExpressEngine sharedEngine] setCustomVideoCaptureHandler:self];
     
-    [[ZegoExpressEngine sharedEngine] setVideoConfig:[ZegoVideoConfig configWithPreset:ZegoVideoConfigPreset1080P] channel:ZegoPublishChannelMain];
-    [[ZegoExpressEngine sharedEngine] setVideoConfig:[ZegoVideoConfig configWithPreset:ZegoVideoConfigPreset1080P] channel:ZegoPublishChannelAux];
+    [[ZegoExpressEngine sharedEngine] setVideoConfig:[ZegoVideoConfig configWithPreset:ZegoVideoConfigPreset720P] channel:ZegoPublishChannelMain];
+    [[ZegoExpressEngine sharedEngine] setVideoConfig:[ZegoVideoConfig configWithPreset:ZegoVideoConfigPreset720P] channel:ZegoPublishChannelAux];
 }
 
 #pragma mark - Login/Logout Room
@@ -213,16 +210,13 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
     // Can destroy the engine when you don't need audio and video calls
     ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
     [ZegoExpressEngine destroyEngine:nil];
-    
-    // In order not to affect other example topics, restore the default engine configuration.
-    [ZegoExpressEngine setEngineConfig:[[ZegoEngineConfig alloc] init]];
 }
 
 #pragma mark - Capture device for aux channel
 
 - (id<ZGCaptureDevice>)captureDevice {
     if (!_captureDevice) {
-        _captureDevice = [[ZGCaptureDeviceImage alloc] initWithMotionImage:[UIImage imageNamed:@"ZegoLogo"]];
+        _captureDevice = [[ZGCaptureDeviceImage alloc] initWithMotionImage:[UIImage imageNamed:@"ZegoLogo"].CGImage contentSize:CGSizeMake(720, 1280)];
         _captureDevice.delegate = self;
     }
     return _captureDevice;
@@ -252,6 +246,19 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
     
     // When custom video capture is enabled, developers need to render the preview by themselves
     [self renderWithCVPixelBuffer:data];
+}
+
+- (void)captureDevice:(id<ZGCaptureDevice>)device didCapturedData:(CMSampleBufferRef)data {
+
+    CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(data);
+    CMTime timestamp = CMSampleBufferGetPresentationTimeStamp(data);
+
+
+    // Send pixel buffer to ZEGO SDK for aux channel
+    [[ZegoExpressEngine sharedEngine] sendCustomVideoCapturePixelBuffer:pixelBuffer timestamp:timestamp channel:ZegoPublishChannelAux];
+
+    // When custom video capture is enabled, developers need to render the preview by themselves
+    [self renderWithCVPixelBuffer:pixelBuffer];
 }
 
 

@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ZGPublishStreamViewController : UIViewController
 
 @property (nonatomic, assign) BOOL enableCamera;
+@property (nonatomic, assign) BOOL enableHardwareEncoder;
 @property (nonatomic, assign) int captureVolume;
 @property (nonatomic, copy) NSString *streamExtraInfo;
 

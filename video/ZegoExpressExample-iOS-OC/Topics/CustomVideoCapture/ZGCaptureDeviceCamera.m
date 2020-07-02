@@ -15,6 +15,7 @@
 }
 
 @property (nonatomic, assign) OSType pixelFormatType;
+@property (nonatomic, assign) AVCaptureDevicePosition cameraPosition;
 @property (nonatomic, strong) AVCaptureDeviceInput *input;
 @property (nonatomic, strong) AVCaptureVideoDataOutput *output;
 @property (nonatomic, strong) AVCaptureSession *session;
@@ -28,7 +29,11 @@
 - (instancetype)initWithPixelFormatType:(OSType)pixelFormatType {
     self = [super init];
     if (self) {
-        self.pixelFormatType = pixelFormatType;
+        _pixelFormatType = pixelFormatType;
+
+        // Use front camera as default
+        _cameraPosition = AVCaptureDevicePositionFront;
+
         _sampleBufferCallbackQueue = dispatch_queue_create("im.zego.ZGCustomVideoCaptureCameraDevice.outputCallbackQueue", DISPATCH_QUEUE_SERIAL);
     }
     return self;
@@ -47,8 +52,8 @@
     
     [self.session beginConfiguration];
     
-    if ([self.session canSetSessionPreset:AVCaptureSessionPresetHigh]) {
-        [self.session setSessionPreset:AVCaptureSessionPresetHigh];
+    if ([self.session canSetSessionPreset:AVCaptureSessionPreset1280x720]) {
+        [self.session setSessionPreset:AVCaptureSessionPreset1280x720];
     }
     
     AVCaptureDeviceInput *input = self.input;
@@ -65,7 +70,8 @@
     }
     
     AVCaptureConnection *captureConnection = [output connectionWithMediaType:AVMediaTypeVideo];
-    
+
+    // Mirror the video when using the front camera
     if (input.device.position == AVCaptureDevicePositionFront) {
         captureConnection.videoMirrored = YES;
     }
@@ -92,10 +98,36 @@
     
     if (self.session.isRunning) {
         [self.session stopRunning];
+        [self.session removeInput:_input];
     }
     
     self.isRunning = NO;
     ZGLogInfo(@" ⏹ Camera has stopped capturing");
+}
+
+- (void)switchCameraPosition {
+
+    if (self.cameraPosition == AVCaptureDevicePositionFront) {
+        self.cameraPosition = AVCaptureDevicePositionBack;
+    } else {
+        self.cameraPosition = AVCaptureDevicePositionFront;
+    }
+
+#if TARGET_OS_OSX
+
+    ZGLogInfo(@" 📷 🔄 macOS does not support switching front/back camera");
+
+#elif TARGET_OS_IOS
+
+    ZGLogInfo(@" 📷 🔄 Switch to the %@ camera", self.cameraPosition == AVCaptureDevicePositionFront ? @"front" : @"back");
+
+    // Restart capture
+    if (self.isRunning) {
+        [self stopCapture];
+        [self startCapture];
+    }
+
+#endif
 }
 
 
@@ -108,36 +140,41 @@
     return _session;
 }
 
+// Reacquire the camera every time it is called
 - (AVCaptureDeviceInput *)input {
-    if (!_input) {
-            NSArray *cameras= [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
-            
-    #if TARGET_OS_OSX
-            // Note: This demonstration selects the last camera. Developers should choose the appropriate camera device by themselves.
-            AVCaptureDevice *camera = cameras.lastObject;
-            if (!camera) {
-                NSLog(@"Failed to get camera");
-                return nil;
-            }
-    #elif TARGET_OS_IOS
-            // Note: This demonstration selects the front camera. Developers should choose the appropriate camera device by themselves.
-            NSArray *captureDeviceArray = [cameras filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"position == %d", AVCaptureDevicePositionFront]];
-            if (captureDeviceArray.count == 0) {
-                NSLog(@"Failed to get camera");
-                return nil;
-            }
-            AVCaptureDevice *camera = captureDeviceArray.firstObject;
-    #endif
-            
-            NSError *error = nil;
-            AVCaptureDeviceInput *captureDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:camera error:&error];
-            if (error) {
-                NSLog(@"Conversion of AVCaptureDevice to AVCaptureDeviceInput failed");
-                return nil;
-            }
-            _input = captureDeviceInput;
-        }
-        return _input;
+
+    NSArray *cameras= [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+
+#if TARGET_OS_OSX
+
+    // Note: This demonstration selects the last camera on Mac. Developers should choose the appropriate camera device by themselves.
+    AVCaptureDevice *camera = cameras.lastObject;
+    if (!camera) {
+        NSLog(@"Failed to get camera");
+        return nil;
+    }
+
+#elif TARGET_OS_IOS
+
+    // Get the specified position camera
+    NSArray *captureDeviceArray = [cameras filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"position == %d", _cameraPosition]];
+    if (captureDeviceArray.count == 0) {
+        NSLog(@"Failed to get camera");
+        return nil;
+    }
+    AVCaptureDevice *camera = captureDeviceArray.firstObject;
+
+#endif
+
+    NSError *error = nil;
+    AVCaptureDeviceInput *captureDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:camera error:&error];
+    if (error) {
+        NSLog(@"Conversion of AVCaptureDevice to AVCaptureDeviceInput failed");
+        return nil;
+    }
+    _input = captureDeviceInput;
+
+    return _input;
 }
 
 - (AVCaptureVideoDataOutput *)output {
@@ -153,12 +190,13 @@
 #pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
-    CVPixelBufferRef buffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-    CMTime timeStamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
+
+    CFRetain(sampleBuffer);
     id<ZGCaptureDeviceDataOutputPixelBufferDelegate> delegate = self.delegate;
-    if (delegate && [delegate respondsToSelector:@selector(captureDevice:didCapturedData:presentationTimeStamp:)]) {
-        [delegate captureDevice:self didCapturedData:buffer presentationTimeStamp:timeStamp];
+    if (delegate && [delegate respondsToSelector:@selector(captureDevice:didCapturedData:)]) {
+        [delegate captureDevice:self didCapturedData:sampleBuffer];
     }
+    CFRelease(sampleBuffer);
 }
 
 @end

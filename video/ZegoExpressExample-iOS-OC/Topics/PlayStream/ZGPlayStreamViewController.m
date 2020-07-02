@@ -1,27 +1,27 @@
 //
-//  ZGPublishStreamViewController.m
+//  ZGPlayStreamViewController.m
 //  ZegoExpressExample-iOS-OC
 //
-//  Created by Patrick Fu on 2020/5/29.
+//  Created by Patrick Fu on 2020/6/30.
 //  Copyright © 2020 Zego. All rights reserved.
 //
 
-#ifdef _Module_Publish
+#ifdef _Module_Play
 
-#import "ZGPublishStreamViewController.h"
-#import "ZGPublishStreamSettingTableViewController.h"
+#import "ZGPlayStreamViewController.h"
+#import "ZGPlayStreamSettingTableViewController.h"
 #import "ZGAppGlobalConfigManager.h"
 #import "ZGUserIDHelper.h"
 #import <ZegoExpressEngine/ZegoExpressEngine.h>
 
-NSString* const ZGPublishStreamTopicRoomID = @"ZGPublishStreamTopicRoomID";
-NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
+NSString* const ZGPlayStreamTopicRoomID = @"ZGPlayStreamTopicRoomID";
+NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
 
-@interface ZGPublishStreamViewController () <ZegoEventHandler, UITextFieldDelegate, UIPopoverPresentationControllerDelegate>
+@interface ZGPlayStreamViewController () <ZegoEventHandler, UITextFieldDelegate, UIPopoverPresentationControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *previewView;
+@property (weak, nonatomic) IBOutlet UIView *playView;
 @property (weak, nonatomic) IBOutlet UITextView *logTextView;
-@property (weak, nonatomic) IBOutlet UIView *startPublishConfigView;
+@property (weak, nonatomic) IBOutlet UIView *startPlayConfigView;
 
 @property (weak, nonatomic) IBOutlet UITextField *roomIDTextField;
 @property (weak, nonatomic) IBOutlet UITextField *streamIDTextField;
@@ -30,25 +30,29 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
 @property (weak, nonatomic) IBOutlet UIButton *stopLiveButton;
 @property (nonatomic, strong) UIBarButtonItem *settingButton;
 
-@property (weak, nonatomic) IBOutlet UILabel *roomIDAndStreamIDLabel;
 @property (weak, nonatomic) IBOutlet UILabel *roomStateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *publisherStateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *publishResolutionLabel;
-@property (weak, nonatomic) IBOutlet UILabel *publishQualityLabel;
+@property (weak, nonatomic) IBOutlet UILabel *playerStateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *roomIDAndStreamIDLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *resolutionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *bitrateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *fpsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *hardwareDecoderLabel;
+@property (weak, nonatomic) IBOutlet UILabel *networkQualityLabel;
 
 @property (nonatomic, copy) NSString *roomID;
 @property (nonatomic, copy) NSString *streamID;
 
 @property (nonatomic) ZegoRoomState roomState;
-@property (nonatomic) ZegoPublisherState publisherState;
+@property (nonatomic) ZegoPlayerState playerState;
 
 @end
 
-@implementation ZGPublishStreamViewController
+@implementation ZGPlayStreamViewController
 
 + (instancetype)instanceFromStoryboard {
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"PublishStream" bundle:nil];
-    return [sb instantiateViewControllerWithIdentifier:NSStringFromClass([ZGPublishStreamViewController class])];
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"PlayStream" bundle:nil];
+    return [sb instantiateViewControllerWithIdentifier:NSStringFromClass([ZGPlayStreamViewController class])];
 }
 
 - (void)viewDidLoad {
@@ -57,19 +61,16 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
     [self setupUI];
     [self createEngine];
 
-    self.enableCamera = YES;
-    self.enableHardwareEncoder = NO;
-    self.captureVolume = 100;
+    self.enableHardwareDecoder = NO;
+    self.playVolume = 100;
 }
 
 - (void)dealloc {
-    ZGLogInfo(@" 🔌 Stop preview");
-    [[ZegoExpressEngine sharedEngine] stopPreview];
 
     // Stop publishing before exiting
-    if (self.publisherState != ZegoPublisherStateNoPublish) {
-        ZGLogInfo(@" 📤 Stop publishing stream");
-        [[ZegoExpressEngine sharedEngine] stopPublishingStream];
+    if (self.playerState != ZegoPlayerStateNoPlay) {
+        ZGLogInfo(@" 📥 Stop playing stream");
+        [[ZegoExpressEngine sharedEngine] stopPlayingStream:self.streamID];
     }
 
     // Logout room before exiting
@@ -83,47 +84,34 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
     [ZegoExpressEngine destroyEngine:nil];
 }
 
-
 - (void)setupUI {
-    self.navigationItem.title = @"Publish Stream";
+    self.navigationItem.title = @"Play Stream";
 
     self.settingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Setting"] style:UIBarButtonItemStylePlain target:self action:@selector(showSettingController)];
 
     self.navigationItem.rightBarButtonItem = self.settingButton;
 
-    self.logTextView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
-    self.logTextView.textColor = [UIColor whiteColor];
-
-    self.roomStateLabel.text = @"🔴 RoomState: Disconnected";
-    self.roomStateLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
-    self.roomStateLabel.textColor = [UIColor whiteColor];
-
-    self.publisherStateLabel.text = @"🔴 PublisherState: NoPublish";
-    self.publisherStateLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
-    self.publisherStateLabel.textColor = [UIColor whiteColor];
-
-    self.publishResolutionLabel.text = @"";
-    self.publishResolutionLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
-    self.publishResolutionLabel.textColor = [UIColor whiteColor];
-
-    self.publishQualityLabel.text = @"";
-    self.publishQualityLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
-    self.publishQualityLabel.textColor = [UIColor whiteColor];
-
     self.stopLiveButton.alpha = 0;
-    self.startPublishConfigView.alpha = 1;
+    self.startPlayConfigView.alpha = 1;
 
-    self.roomID = [self savedValueForKey:ZGPublishStreamTopicRoomID];
+    self.roomID = [self savedValueForKey:ZGPlayStreamTopicRoomID];
     self.roomIDTextField.text = self.roomID;
     self.roomIDTextField.delegate = self;
 
-    self.streamID = [self savedValueForKey:ZGPublishStreamTopicStreamID];
+    self.streamID = [self savedValueForKey:ZGPlayStreamTopicStreamID];
     self.streamIDTextField.text = self.streamID;
     self.streamIDTextField.delegate = self;
 
+    [self resetQualityLabelText];
+}
+
+- (void)resetQualityLabelText {
     self.roomIDAndStreamIDLabel.text = [NSString stringWithFormat:@"RoomID: | StreamID: "];
-    self.roomIDAndStreamIDLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
-    self.roomIDAndStreamIDLabel.textColor = [UIColor whiteColor];
+    self.resolutionLabel.text = @"Resolution:";
+    self.bitrateLabel.text = @"Bitrate:";
+    self.fpsLabel.text = @"FPS:";
+    self.hardwareDecoderLabel.text = @"HardwareDecode:";
+    self.networkQualityLabel.text = @"NetworkQuality:";
 }
 
 #pragma mark - Actions
@@ -137,12 +125,6 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
 
     // Set debug verbose on
     //    [[ZegoExpressEngine sharedEngine] setDebugVerbose:YES language:ZegoLanguageEnglish];
-
-    // Start preview
-    ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.previewView];
-//    previewCanvas.viewMode = self.previewViewMode;
-    [self appendLog:@" 🔌 Start preview"];
-    [[ZegoExpressEngine sharedEngine] startPreview:previewCanvas];
 }
 
 - (IBAction)startLiveButtonClick:(id)sender {
@@ -160,8 +142,8 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
     self.roomID = self.roomIDTextField.text;
     self.streamID = self.streamIDTextField.text;
 
-    [self saveValue:self.roomID forKey:ZGPublishStreamTopicRoomID];
-    [self saveValue:self.streamID forKey:ZGPublishStreamTopicStreamID];
+    [self saveValue:self.roomID forKey:ZGPlayStreamTopicRoomID];
+    [self saveValue:self.streamID forKey:ZGPlayStreamTopicStreamID];
 
     // This demonstrates simply using the device model as the userID. In actual use, you can set the business-related userID as needed.
     NSString *userID = ZGUserIDHelper.userID;
@@ -172,34 +154,37 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
     // Login room
     [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:[ZegoUser userWithUserID:userID userName:userName] config:config];
 
-    [self appendLog:@" 📤 Start publishing stream"];
+    [self appendLog:@" 📥 Start playing stream"];
 
-    // Start publishing
-    [[ZegoExpressEngine sharedEngine] startPublishingStream:self.streamID];
+    // Start playing
+    ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:self.playView];
+
+    [[ZegoExpressEngine sharedEngine] startPlayingStream:self.streamID canvas:playCanvas];
 
     self.roomIDAndStreamIDLabel.text = [NSString stringWithFormat:@"RoomID: %@ | StreamID: %@", self.roomID, self.streamID];
 }
 
 - (void)stopLive {
-    // Stop publishing
-    [[ZegoExpressEngine sharedEngine] stopPublishingStream];
-    [self appendLog:@" 📤 Stop publishing stream"];
+    // Stop playing
+    [[ZegoExpressEngine sharedEngine] stopPlayingStream:self.streamID];
+    [self appendLog:@" 📥 Stop playing stream"];
 
     // Logout room
     [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
     [self appendLog:@" 🚪 Logout room"];
 
-    self.publishQualityLabel.text = @"";
+    [self resetQualityLabelText];
 }
+
 
 #pragma mark - Helper
 
 - (void)invalidateLiveStateUILayout {
     if (self.roomState == ZegoRoomStateConnected &&
-        self.publisherState == ZegoPublisherStatePublishing) {
+        self.playerState == ZegoPlayerStatePlaying) {
         [self showLiveStartedStateUI];
     } else if (self.roomState == ZegoRoomStateDisconnected &&
-               self.publisherState == ZegoPublisherStateNoPublish) {
+               self.playerState == ZegoPlayerStateNoPlay) {
         [self showLiveStoppedStateUI];
     } else {
         [self showLiveRequestingStateUI];
@@ -215,7 +200,7 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
     [self.startLiveButton setEnabled:NO];
     [self.stopLiveButton setEnabled:YES];
     [UIView animateWithDuration:0.5 animations:^{
-        self.startPublishConfigView.alpha = 0;
+        self.startPlayConfigView.alpha = 0;
         self.stopLiveButton.alpha = 1;
     }];
 }
@@ -224,7 +209,7 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
     [self.startLiveButton setEnabled:YES];
     [self.stopLiveButton setEnabled:NO];
     [UIView animateWithDuration:0.5 animations:^{
-        self.startPublishConfigView.alpha = 1;
+        self.startPlayConfigView.alpha = 1;
         self.stopLiveButton.alpha = 0;
     }];
 }
@@ -253,7 +238,7 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
 }
 
 - (void)showSettingController {
-    ZGPublishStreamSettingTableViewController *vc = [ZGPublishStreamSettingTableViewController instanceFromStoryboard];
+    ZGPlayStreamSettingTableViewController *vc = [ZGPlayStreamSettingTableViewController instanceFromStoryboard];
     vc.preferredContentSize = CGSizeMake(250.0, 150.0);
     vc.modalPresentationStyle = UIModalPresentationPopover;
     vc.popoverPresentationController.delegate = self;
@@ -261,10 +246,9 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
     vc.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
 
     vc.presenter = self;
-    vc.enableCamera = _enableCamera;
-    vc.enableHardwareEncoder = _enableHardwareEncoder;
-    vc.captureVolume = _captureVolume;
-    vc.streamExtraInfo = _streamExtraInfo;
+    vc.streamID = _streamID;
+    vc.enableHardwareDecoder = _enableHardwareDecoder;
+    vc.playVolume = _playVolume;
 
     [self presentViewController:vc animated:YES completion:nil];
 }
@@ -309,11 +293,6 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
             case ZegoRoomStateDisconnected:
                 [self appendLog:@" 🚩 🚪 Logout room"];
                 self.roomStateLabel.text = @"🔴 RoomState: Disconnected";
-
-                // After logout room, the preview will stop. You need to re-start preview.
-                ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.previewView];
-                //            previewCanvas.viewMode = self.previewViewMode;
-                [[ZegoExpressEngine sharedEngine] startPreview:previewCanvas];
                 break;
         }
     }
@@ -321,34 +300,38 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
     [self invalidateLiveStateUILayout];
 }
 
-#pragma mark - ZegoExpress EventHandler Publish Event
+#pragma mark - ZegoExpress EventHandler Play Event
 
-- (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
+- (void)onPlayerStateUpdate:(ZegoPlayerState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
     if (errorCode != 0) {
-        [self appendLog:[NSString stringWithFormat:@" 🚩 ❌ 📤 Publishing stream error of streamID: %@, errorCode:%d", streamID, errorCode]];
+        [self appendLog:[NSString stringWithFormat:@" 🚩 ❌ 📥 Playing stream error of streamID: %@, errorCode:%d", streamID, errorCode]];
     } else {
         switch (state) {
-            case ZegoPublisherStatePublishing:
-                [self appendLog:@" 🚩 📤 Publishing stream"];
-                self.publisherStateLabel.text = @"🟢 PublisherState: Publishing";
+            case ZegoPlayerStatePlaying:
+                [self appendLog:@" 🚩 📥 Playing stream"];
+                self.playerStateLabel.text = @"🟢 PlayerState: Playing";
                 break;
 
-            case ZegoPublisherStatePublishRequesting:
-                [self appendLog:@" 🚩 📤 Requesting publish stream"];
-                self.publisherStateLabel.text = @"🟡 PublisherState: Requesting";
+            case ZegoPlayerStatePlayRequesting:
+                [self appendLog:@" 🚩 📥 Requesting play stream"];
+                self.playerStateLabel.text = @"🟡 PlayerState: Requesting";
                 break;
 
-            case ZegoPublisherStateNoPublish:
-                [self appendLog:@" 🚩 📤 No publish stream"];
-                self.publisherStateLabel.text = @"🔴 PublisherState: NoPublish";
+            case ZegoPlayerStateNoPlay:
+                [self appendLog:@" 🚩 📥 No play stream"];
+                self.playerStateLabel.text = @"🔴 PlayerState: NoPlay";
                 break;
         }
     }
-    self.publisherState = state;
+    self.playerState = state;
     [self invalidateLiveStateUILayout];
 }
 
-- (void)onPublisherQualityUpdate:(ZegoPublishStreamQuality *)quality streamID:(NSString *)streamID {
+- (void)onPlayerVideoSizeChanged:(CGSize)size streamID:(NSString *)streamID {
+    self.resolutionLabel.text = [NSString stringWithFormat:@"Resolution: %.fx%.f  ", size.width, size.height];
+}
+
+- (void)onPlayerQualityUpdate:(ZegoPlayStreamQuality *)quality streamID:(NSString *)streamID {
     NSString *networkQuality = @"";
     switch (quality.level) {
         case 0:
@@ -369,30 +352,12 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
         default:
             break;
     }
-    NSMutableString *text = [NSMutableString string];
-    [text appendFormat:@"FPS: %d fps \n", (int)quality.videoSendFPS];
-    [text appendFormat:@"Bitrate: %.2f kb/s \n", quality.videoKBPS];
-    [text appendFormat:@"HardwareEncode: %@ \n", quality.isHardwareEncode ? @"✅" : @"❎"];
-    [text appendFormat:@"NetworkQuality: %@", networkQuality];
-    self.publishQualityLabel.text = [text copy];
+
+    self.bitrateLabel.text = [NSString stringWithFormat:@"Bitrate: %.2f kb/s \n", quality.videoKBPS];
+    self.fpsLabel.text = [NSString stringWithFormat:@"FPS: %d fps \n", (int)quality.videoRecvFPS];
+    self.hardwareDecoderLabel.text = [NSString stringWithFormat:@"HardwareDecode: %@ \n", quality.isHardwareDecode ? @"✅" : @"❎"];
+    self.networkQualityLabel.text = [NSString stringWithFormat:@"NetworkQuality: %@", networkQuality];
 }
-
-- (void)onPublisherCapturedAudioFirstFrame {
-    [self appendLog:@"onPublisherCapturedAudioFirstFrame"];
-}
-
-- (void)onPublisherCapturedVideoFirstFrame:(ZegoPublishChannel)channel {
-    [self appendLog:@"onPublisherCapturedVideoFirstFrame"];
-}
-
-- (void)onPublisherVideoSizeChanged:(CGSize)size channel:(ZegoPublishChannel)channel {
-    if (channel == ZegoPublishChannelAux) {
-        return;
-    }
-    self.publishResolutionLabel.text = [NSString stringWithFormat:@"Resolution: %.fx%.f  ", size.width, size.height];
-}
-
-
 
 @end
 

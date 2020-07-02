@@ -9,6 +9,7 @@
 #ifdef _Module_CustomVideoCapture
 
 #import <UIKit/UIKit.h>
+#import "ZGCaptureDeviceProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,11 +19,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *streamID;
 
-/// Capture source type, 0: Camera, 1: Motion Image
-@property (nonatomic, assign) NSUInteger captureSourceType;
+/// Capture source type
+@property (nonatomic, assign) ZGCustomVideoCaptureSourceType captureSourceType;
 
-/// Capture CVPixelBuffer data format, 0: BGRA32, 1: NV12(yuv420sp)
-@property (nonatomic, assign) NSUInteger captureDataFormat;
+/// Capture data format
+@property (nonatomic, assign) ZGCustomVideoCaptureDataFormat captureDataFormat;
+
+/// Capture buffer type
+@property (nonatomic, assign) ZGCustomVideoCaptureBufferType captureBufferType;
 
 @end
 

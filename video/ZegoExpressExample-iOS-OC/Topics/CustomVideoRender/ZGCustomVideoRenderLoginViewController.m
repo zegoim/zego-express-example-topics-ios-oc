@@ -36,8 +36,8 @@ NSString* const ZGCustomVideoRenderLoginVCKey_streamID = @"kStreamID";
     [super viewDidLoad];
     self.title = @"Custom Video Render";
     
-    self.renderBufferTypeList = @[@"Unknown", @"RawData", @"CVPixelBuffer"];
-    self.renderBufferTypeMap = @{@"Unknown": @(ZegoVideoBufferTypeUnknown), @"RawData": @(ZegoVideoBufferTypeRawData), @"CVPixelBuffer": @(ZegoVideoBufferTypeCVPixelBuffer)};
+    self.renderBufferTypeList = @[@"Unknown", @"RawData", @"CVPixelBuffer",@"EncodedData"];
+    self.renderBufferTypeMap = @{@"Unknown": @(ZegoVideoBufferTypeUnknown), @"RawData": @(ZegoVideoBufferTypeRawData), @"CVPixelBuffer": @(ZegoVideoBufferTypeCVPixelBuffer), @"EncodedData": @(ZegoVideoBufferTypeEncodedData)};
     
     self.renderFormatSeriesList = @[@"RGB", @"YUV"];
     self.renderFormatSeriesMap = @{@"RGB": @(ZegoVideoFrameFormatSeriesRGB), @"YUV": @(ZegoVideoFrameFormatSeriesYUV)};

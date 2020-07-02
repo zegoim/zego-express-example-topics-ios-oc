@@ -31,24 +31,22 @@
 }
 
 - (void)createEngine {
-    // Set render config
+
+    ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
+
+    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+
+    [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
+
+    // Init render config
     ZegoCustomVideoRenderConfig *renderConfig = [[ZegoCustomVideoRenderConfig alloc] init];
     renderConfig.bufferType = self.bufferType;
     renderConfig.frameFormatSeries = self.frameFormatSeries;
     renderConfig.enableEngineRender = self.enableEngineRender;
-    
-    ZegoEngineConfig *engineConfig = [[ZegoEngineConfig alloc] init];
-    [engineConfig setCustomVideoRenderConfig:renderConfig];
-    
-    // Set engine config, must be called before create engine
-    [ZegoExpressEngine setEngineConfig:engineConfig];
-    
-    ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
-    
-    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
-    
-    [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
-    
+
+    // Enable custom video render
+    [[ZegoExpressEngine sharedEngine] enableCustomVideoRender:YES config:renderConfig];
+
     // Set custom video render handler
     [[ZegoExpressEngine sharedEngine] setCustomVideoRenderHandler:self];
 }
@@ -76,9 +74,6 @@
             // In general, developers do not need to listen to this callback.
             ZGLogInfo(@" 🚩 🏳️ Destroy ZegoExpressEngine complete");
         }];
-        
-        // In order not to affect other example topics, restore the default engine configuration.
-        [ZegoExpressEngine setEngineConfig:[[ZegoEngineConfig alloc] init]];
     }
     [super viewDidDisappear:animated];
 }
@@ -115,6 +110,12 @@
 //    if (streamID != self.streamID) return;
     NSLog(@"pixel buffer video frame callback. format:%d, width:%f, height:%f", (int)param.format, param.size.width, param.size.height);
     [self renderWithCVPixelBuffer:buffer];
+}
+
+- (void)onRemoteVideoFrameEncodedData:(unsigned char *)data dataLength:(unsigned int)dataLength param:(ZegoVideoEncodedFrameParam *)param referenceTimeMillisecond:(unsigned long long)referenceTimeMillisecond streamID:(NSString *)streamID {
+    NSLog(@"EEEncodedData Remote video frame callback. format:%d, width:%f, height:%f", (int)param.format, param.size.width, param.size.height);
+
+    
 }
 
 #pragma mark - Custom Render Method

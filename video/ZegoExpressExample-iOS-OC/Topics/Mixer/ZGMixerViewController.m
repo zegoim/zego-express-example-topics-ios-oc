@@ -15,6 +15,9 @@
 
 NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
 
+static const unsigned int ZGMixerFirstStreamSoundLevelID = 100;
+static const unsigned int ZGMixerSecondStreamSoundLevelID = 200;
+
 @interface ZGMixerViewController () <ZegoEventHandler, UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (nonatomic, copy) NSString *roomID;
@@ -27,8 +30,10 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
 
 @property (nonatomic, strong) ZegoStream *selectFirstStream;
 @property (weak, nonatomic) IBOutlet UILabel *selectFirstStreamLabel;
+@property (weak, nonatomic) IBOutlet UIProgressView *firstStreamSoundLevelProgressView;
 @property (nonatomic, strong) ZegoStream *selectSecondStream;
 @property (weak, nonatomic) IBOutlet UILabel *selectSecondStreamLabel;
+@property (weak, nonatomic) IBOutlet UIProgressView *secondStreamSoundLevelProgressView;
 
 @property (weak, nonatomic) IBOutlet UILabel *roomIDLabel;
 @property (weak, nonatomic) IBOutlet UIView *playView;
@@ -131,10 +136,10 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
     
     // ④ (Required): Set mixer input
     CGRect firstRect = CGRectMake(0, 0, videoConfig.resolution.width, videoConfig.resolution.height/2);
-    ZegoMixerInput *firstInput = [[ZegoMixerInput alloc] initWithStreamID:self.selectFirstStream.streamID contentType:ZegoMixerInputContentTypeVideo layout:firstRect];
+    ZegoMixerInput *firstInput = [[ZegoMixerInput alloc] initWithStreamID:self.selectFirstStream.streamID contentType:ZegoMixerInputContentTypeVideo layout:firstRect soundLevelID:ZGMixerFirstStreamSoundLevelID];
     
     CGRect secondRect = CGRectMake(0, videoConfig.resolution.height/2, videoConfig.resolution.width, videoConfig.resolution.height/2);
-    ZegoMixerInput *secondInput = [[ZegoMixerInput alloc] initWithStreamID:self.selectSecondStream.streamID contentType:ZegoMixerInputContentTypeVideo layout:secondRect];
+    ZegoMixerInput *secondInput = [[ZegoMixerInput alloc] initWithStreamID:self.selectSecondStream.streamID contentType:ZegoMixerInputContentTypeVideo layout:secondRect soundLevelID:ZGMixerSecondStreamSoundLevelID];
     
     NSArray<ZegoMixerInput *> *inputArray = @[firstInput, secondInput];
     [task setInputList:inputArray];
@@ -150,7 +155,9 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
     
     // ⑦ (Optional): Set background image
     [task setBackgroundImageURL:@"preset-id://zegobg.png"];
-    
+
+    // ⑧ (Optional): Enable mixer sound level
+    [task enableSoundLevel:YES];
     
     // Start Mixer Task
     [ZegoHudManager showNetworkLoading];
@@ -249,6 +256,17 @@ NSString* const ZGMixerTopicKey_OutputTarget = @"kOutputTarget";
 - (void)onPlayerStateUpdate:(ZegoPlayerState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
     ZGLogInfo(@" 🚩 📥 Player State Update Callback: %lu, errorCode: %d, streamID: %@", (unsigned long)state, (int)errorCode, streamID);
     self.playerState = state;
+}
+
+- (void)onMixerSoundLevelUpdate:(NSDictionary<NSNumber *,NSNumber *> *)soundLevels {
+    for (NSNumber *key in soundLevels) {
+        float progress = soundLevels[key].floatValue / 100.0;
+        if (key.unsignedIntValue == ZGMixerFirstStreamSoundLevelID) {
+            self.firstStreamSoundLevelProgressView.progress = progress;
+        } else if (key.unsignedIntValue == ZGMixerSecondStreamSoundLevelID) {
+            self.secondStreamSoundLevelProgressView.progress = progress;
+        }
+    }
 }
 
 #pragma mark - Setter, Manage UI State

@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id<ZGCaptureDeviceDataOutputPixelBufferDelegate> delegate;
 
-- (instancetype)initWithMotionImage:(UIImage *)image;
+- (instancetype)initWithMotionImage:(CGImageRef)image contentSize:(CGSize)size;
 
 @end
 

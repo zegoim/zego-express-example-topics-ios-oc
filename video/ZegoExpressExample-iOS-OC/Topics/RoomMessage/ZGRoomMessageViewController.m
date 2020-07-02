@@ -17,11 +17,16 @@
 @interface ZGRoomMessageViewController () <ZegoEventHandler, UITextFieldDelegate>
 
 @property (nonatomic, copy) NSString *roomID;
+@property (nonatomic, copy) NSString *userID;
+@property (nonatomic, copy) NSString *userName;
+
 @property (nonatomic, strong) NSMutableArray<ZegoUser *> *userList;
 @property (nonatomic) ZGRoomMessageSelectUsersTableViewController *selectUsersVC;
 
-@property (weak, nonatomic) IBOutlet UILabel *roomIDLabel;
 @property (weak, nonatomic) IBOutlet UILabel *roomStateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *roomIDLabel;
+@property (weak, nonatomic) IBOutlet UILabel *userIDLabel;
+@property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 
 @property (weak, nonatomic) IBOutlet UITextView *receivedMessageTextView;
 
@@ -37,11 +42,18 @@
     [super viewDidLoad];
     self.roomID = @"ChatRoom-1";
     self.receivedMessageTextView.text = @"";
+
+    self.userID = [ZGUserIDHelper userID];
+    self.userName = [ZGUserIDHelper userName];
+
     self.userList = [NSMutableArray array];
     self.title = [NSString stringWithFormat:@"ChatRoom  ( %d Users )", (int)self.userList.count + 1];
     
     self.roomIDLabel.text = [NSString stringWithFormat:@"RoomID: %@", self.roomID];
     self.roomStateLabel.text = @"Not Connected 🔴";
+
+    self.userIDLabel.text = [NSString stringWithFormat:@"UserID: %@", self.userID];
+    self.userNameLabel.text = [NSString stringWithFormat:@"UserName: %@", self.userName];
     
     [self createEngineAndLoginRoom];
 }
@@ -52,7 +64,7 @@
     ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
     [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     
-    ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
+    ZegoUser *user = [ZegoUser userWithUserID:self.userID userName:self.userName];
     
     // To receive the onRoomUserUpdate:userList:room: callback, you need to set the isUserStatusNotify parameter to YES.
     ZegoRoomConfig *roomConfig = [[ZegoRoomConfig alloc] init];

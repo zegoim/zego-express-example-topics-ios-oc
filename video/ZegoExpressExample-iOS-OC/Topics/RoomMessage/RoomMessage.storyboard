@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="UrT-Dq-UdB">
-    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -20,16 +20,35 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3xy-Ni-DJf">
-                                <rect key="frame" x="0.0" y="44" width="414" height="20"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RoomID: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jls-F5-N21">
-                                        <rect key="frame" x="10" y="2" width="55" height="16"/>
+                                        <rect key="frame" x="10" y="3" width="55" height="16"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RoomState" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dOj-Ry-vOW">
-                                        <rect key="frame" x="337" y="2" width="67" height="16"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uTx-Ef-Mmf" userLabel="SplitLine">
+                                        <rect key="frame" x="0.0" y="19" width="414" height="2"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="2" id="quR-aj-m39"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RoomState:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dOj-Ry-vOW">
+                                        <rect key="frame" x="10" y="21" width="70.5" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="36p-mI-FNj">
+                                        <rect key="frame" x="358" y="3" width="46" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserName:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TuW-EY-jNw">
+                                        <rect key="frame" x="336" y="21" width="68" height="16"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -37,15 +56,22 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstItem="dOj-Ry-vOW" firstAttribute="centerY" secondItem="3xy-Ni-DJf" secondAttribute="centerY" id="5he-Ab-1C8"/>
-                                    <constraint firstItem="jls-F5-N21" firstAttribute="centerY" secondItem="3xy-Ni-DJf" secondAttribute="centerY" id="AED-0G-35P"/>
-                                    <constraint firstItem="jls-F5-N21" firstAttribute="leading" secondItem="3xy-Ni-DJf" secondAttribute="leading" constant="10" id="DGd-Tq-Ter"/>
-                                    <constraint firstAttribute="trailing" secondItem="dOj-Ry-vOW" secondAttribute="trailing" constant="10" id="ZTj-S1-4af"/>
-                                    <constraint firstAttribute="height" constant="20" id="aqt-lo-huI"/>
+                                    <constraint firstItem="uTx-Ef-Mmf" firstAttribute="top" secondItem="jls-F5-N21" secondAttribute="bottom" id="A6x-jV-clK"/>
+                                    <constraint firstItem="TuW-EY-jNw" firstAttribute="top" secondItem="uTx-Ef-Mmf" secondAttribute="bottom" id="J6F-OA-sEz"/>
+                                    <constraint firstAttribute="trailing" secondItem="36p-mI-FNj" secondAttribute="trailing" constant="10" id="LbR-uB-3Zg"/>
+                                    <constraint firstAttribute="trailing" secondItem="uTx-Ef-Mmf" secondAttribute="trailing" id="MQn-Vw-1CA"/>
+                                    <constraint firstItem="jls-F5-N21" firstAttribute="leading" secondItem="3xy-Ni-DJf" secondAttribute="leading" constant="10" id="QcF-i4-EJg"/>
+                                    <constraint firstItem="dOj-Ry-vOW" firstAttribute="top" secondItem="uTx-Ef-Mmf" secondAttribute="bottom" id="UB5-9p-e6H"/>
+                                    <constraint firstAttribute="trailing" secondItem="TuW-EY-jNw" secondAttribute="trailing" constant="10" id="ZRU-tq-7ev"/>
+                                    <constraint firstAttribute="height" constant="40" id="aqt-lo-huI"/>
+                                    <constraint firstItem="uTx-Ef-Mmf" firstAttribute="top" secondItem="36p-mI-FNj" secondAttribute="bottom" id="g4F-d6-AAm"/>
+                                    <constraint firstItem="dOj-Ry-vOW" firstAttribute="leading" secondItem="3xy-Ni-DJf" secondAttribute="leading" constant="10" id="hXT-N7-1Qw"/>
+                                    <constraint firstItem="uTx-Ef-Mmf" firstAttribute="leading" secondItem="3xy-Ni-DJf" secondAttribute="leading" id="i6t-DG-ybG"/>
+                                    <constraint firstItem="uTx-Ef-Mmf" firstAttribute="centerY" secondItem="3xy-Ni-DJf" secondAttribute="centerY" id="j3G-2m-xOr"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B2S-aV-Nat" userLabel="Message View">
-                                <rect key="frame" x="0.0" y="64" width="414" height="240"/>
+                                <rect key="frame" x="0.0" y="84" width="414" height="240"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4hl-l5-DwD" userLabel="BroadCastMessageView">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
@@ -241,7 +267,7 @@
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="dtg-Bm-kv9">
-                                <rect key="frame" x="0.0" y="304" width="414" height="592"/>
+                                <rect key="frame" x="0.0" y="324" width="414" height="572"/>
                                 <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -279,6 +305,8 @@
                         <outlet property="receivedMessageTextView" destination="dtg-Bm-kv9" id="2p3-cX-DBe"/>
                         <outlet property="roomIDLabel" destination="jls-F5-N21" id="7Bz-81-z2n"/>
                         <outlet property="roomStateLabel" destination="dOj-Ry-vOW" id="hpM-U2-WGL"/>
+                        <outlet property="userIDLabel" destination="36p-mI-FNj" id="Az5-W7-6PO"/>
+                        <outlet property="userNameLabel" destination="TuW-EY-jNw" id="qXM-Aq-erc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YCe-gR-6bY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

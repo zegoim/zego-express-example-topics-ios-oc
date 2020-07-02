@@ -12,8 +12,8 @@
 
 @interface ZGCaptureDeviceImage ()
 
-@property (nonatomic, strong) UIImage *motionImage;
-@property (nonatomic, assign) CGImageRef bgraImage;
+@property (nonatomic, assign) CGImageRef motionImage;
+@property (nonatomic, assign) CGSize contentSize;
 @property (nonatomic, assign) NSUInteger fps;
 @property (nonatomic, strong) NSTimer *fpsTimer;
 
@@ -21,17 +21,18 @@
 
 @implementation ZGCaptureDeviceImage
 
-- (instancetype)initWithMotionImage:(UIImage *)image {
+- (instancetype)initWithMotionImage:(CGImageRef)image contentSize:(CGSize)size {
     self = [super init];
     if (self) {
+        CGImageRetain(image);
         self.motionImage = image;
-        self.bgraImage = [self CreateBGRAImageFromRGBAImage:self.motionImage.CGImage];
+        self.contentSize = size;
     }
     return self;
 }
 
 - (void)dealloc {
-    CGImageRelease(self.bgraImage);
+    CGImageRelease(_motionImage);
 }
 
 - (void)startCapture {
@@ -57,35 +58,76 @@
 
 - (void)captureImage {
     dispatch_sync(dispatch_get_global_queue(0, 0), ^{
-        CGSize contextSize = CGSizeMake(720, 1280);
-        CGSize imgSize = self.motionImage.size;
-        CGFloat originX = arc4random()%(uint32_t)(contextSize.width-imgSize.width);
-        CGFloat originY = arc4random()%(uint32_t)(contextSize.height-imgSize.height);
-        CGPoint origin = CGPointMake(originX, originY);
         
-        CVPixelBufferRef pixelBuffer = [self pixelBufferFromCGImage:self.bgraImage contextSize:contextSize imageOrigin:origin];
-        
+        CVPixelBufferRef pixelBuffer = [self pixelBufferFromImage:self.motionImage contentSize:self.contentSize];
+
         CMTime time = CMTimeMakeWithSeconds([[NSDate date] timeIntervalSince1970], 1000);
-        
+        CMSampleTimingInfo timingInfo = { kCMTimeInvalid, time, time };
+
+        CMVideoFormatDescriptionRef desc;
+        CMVideoFormatDescriptionCreateForImageBuffer(kCFAllocatorDefault, pixelBuffer, &desc);
+
+        CMSampleBufferRef sampleBuffer;
+        CMSampleBufferCreateReadyWithImageBuffer(kCFAllocatorDefault, (CVImageBufferRef)pixelBuffer, desc, &timingInfo, &sampleBuffer);
+
         id<ZGCaptureDeviceDataOutputPixelBufferDelegate> delegate = self.delegate;
         if (delegate &&
-            [delegate respondsToSelector:@selector(captureDevice:didCapturedData:presentationTimeStamp:)]) {
-            [delegate captureDevice:self didCapturedData:pixelBuffer presentationTimeStamp:time];
+            [delegate respondsToSelector:@selector(captureDevice:didCapturedData:)]) {
+            [delegate captureDevice:self didCapturedData:sampleBuffer];
         }
-        
+
+        CFRelease(sampleBuffer);
+        CFRelease(desc);
         CVPixelBufferRelease(pixelBuffer);
     });
 }
 
 #pragma mark - Utility Method
 
-- (CVPixelBufferRef)pixelBufferFromCGImage:(CGImageRef)image contextSize:(CGSize)contextSize imageOrigin:(CGPoint)imageOrigin {
+static OSType inputPixelFormat(){
+    return kCVPixelFormatType_32BGRA;
+}
+
+static uint32_t bitmapInfoWithPixelFormatType(OSType inputPixelFormat, bool hasAlpha){
+
+    if (inputPixelFormat == kCVPixelFormatType_32BGRA) {
+        uint32_t bitmapInfo = kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Host;
+        if (!hasAlpha) {
+            bitmapInfo = kCGImageAlphaNoneSkipFirst | kCGBitmapByteOrder32Host;
+        }
+        return bitmapInfo;
+    } else if (inputPixelFormat == kCVPixelFormatType_32ARGB) {
+        uint32_t bitmapInfo = kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Big;
+        return bitmapInfo;
+    } else {
+        NSLog(@"Unsupported bitmap format");
+        return 0;
+    }
+}
+
+BOOL imageContainsAlpha(CGImageRef imageRef) {
+    if (!imageRef) {
+        return NO;
+    }
+    CGImageAlphaInfo alphaInfo = CGImageGetAlphaInfo(imageRef);
+    BOOL hasAlpha = !(alphaInfo == kCGImageAlphaNone ||
+                      alphaInfo == kCGImageAlphaNoneSkipFirst ||
+                      alphaInfo == kCGImageAlphaNoneSkipLast);
+    return hasAlpha;
+}
+
+- (CVPixelBufferRef)pixelBufferFromImage:(CGImageRef)image contentSize:(CGSize)contentSize {
+
     CVReturn status;
     CVPixelBufferRef pixelBuffer;
     
-    NSDictionary *pixelBufferAttributes = @{(id)kCVPixelBufferIOSurfacePropertiesKey: [NSDictionary dictionary]};
+    NSDictionary *pixelBufferAttributes = @{
+        (id)kCVPixelBufferIOSurfacePropertiesKey: [NSDictionary dictionary],
+        (id)kCVPixelBufferCGImageCompatibilityKey: @(YES),
+        (id)kCVPixelBufferCGBitmapContextCompatibilityKey: @(YES)
+    };
     
-    status = CVPixelBufferCreate(kCFAllocatorDefault, contextSize.width, contextSize.height, kCVPixelFormatType_32BGRA, (__bridge CFDictionaryRef)pixelBufferAttributes, &pixelBuffer);
+    status = CVPixelBufferCreate(kCFAllocatorDefault, contentSize.width, contentSize.height, inputPixelFormat(), (__bridge CFDictionaryRef)pixelBufferAttributes, &pixelBuffer);
     
     if (status != kCVReturnSuccess) {
         return NULL;
@@ -113,15 +155,19 @@
     static time_t lastTime = 0;
     
     if (lastTime != currentTime) {
-        origin.x = rand() % (int)(contextSize.width - imageWith);
-        origin.y = rand() % (int)(contextSize.height - imageHeight);
+        origin.x = rand() % (int)(contentSize.width - imageWith);
+        origin.y = rand() % (int)(contentSize.height - imageHeight);
         
         lastTime = currentTime;
     }
     
     CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+
+    BOOL hasAlpha = imageContainsAlpha(image);
+
+    uint32_t bitmapInfo = bitmapInfoWithPixelFormatType(inputPixelFormat(), (bool)hasAlpha);
     
-    CGContextRef context = CGBitmapContextCreate(data, contextSize.width, contextSize.height, 8, CVPixelBufferGetBytesPerRow(pixelBuffer), rgbColorSpace, kCGImageAlphaPremultipliedLast);
+    CGContextRef context = CGBitmapContextCreate(data, contentSize.width, contentSize.height, 8, CVPixelBufferGetBytesPerRow(pixelBuffer), rgbColorSpace, bitmapInfo);
     
     CGContextDrawImage(context, CGRectMake(origin.x, origin.y, CGImageGetWidth(image), CGImageGetHeight(image)), image);
     CGContextRelease(context);
@@ -131,48 +177,6 @@
     CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
     
     return pixelBuffer;
-}
-
-- (CGImageRef)CreateBGRAImageFromRGBAImage:(CGImageRef)rgbaImageRef {
-    if (!rgbaImageRef) {
-        return NULL;
-    }
-    
-    const size_t bitsPerPixel = CGImageGetBitsPerPixel(rgbaImageRef);
-    const size_t bitsPerComponent = CGImageGetBitsPerComponent(rgbaImageRef);
-    
-    const size_t channelCount = bitsPerPixel / bitsPerComponent;
-    if (bitsPerPixel != 32 || channelCount != 4) {
-        assert(false);
-        return NULL;
-    }
-    
-    const size_t width = CGImageGetWidth(rgbaImageRef);
-    const size_t height = CGImageGetHeight(rgbaImageRef);
-    const size_t bytesPerRow = CGImageGetBytesPerRow(rgbaImageRef);
-    
-    // rgba to bgra: swap blue and red channel
-    CFDataRef bgraData = CGDataProviderCopyData(CGImageGetDataProvider(rgbaImageRef));
-    UInt8 *pixelData = (UInt8 *)CFDataGetBytePtr(bgraData);
-    for (size_t row = 0; row < height; row++) {
-        for (size_t col = 0; col < bytesPerRow - 4; col += 4) {
-            size_t idx = row * bytesPerRow + col;
-            UInt8 tmpByte = pixelData[idx]; // red
-            pixelData[idx] = pixelData[idx+2];
-            pixelData[idx+2] = tmpByte;
-        }
-    }
-    
-    CGColorSpaceRef colorspace = CGImageGetColorSpace(rgbaImageRef);
-    CGBitmapInfo bitmapInfo = CGImageGetBitmapInfo(rgbaImageRef);
-    
-    CGDataProviderRef provider = CGDataProviderCreateWithCFData(bgraData);
-    CGImageRef bgraImageRef = CGImageCreate(width, height, bitsPerComponent, bitsPerPixel, bytesPerRow, colorspace, bitmapInfo, provider, NULL, true, kCGRenderingIntentDefault);
-    
-    CFRelease(bgraData);
-    CGDataProviderRelease(provider);
-    
-    return bgraImageRef;
 }
 
 @end

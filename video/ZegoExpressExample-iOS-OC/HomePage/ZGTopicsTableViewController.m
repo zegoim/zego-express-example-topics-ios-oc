@@ -34,6 +34,9 @@
 #ifdef _Module_Play
     [basicTopicList addObject:_Module_Play];
 #endif
+#ifdef _Module_RecordCapture
+    [advancedTopicList addObject:_Module_RecordCapture];
+#endif
 #ifdef _Module_Test
     [basicTopicList addObject:_Module_Test];
 #endif
@@ -46,8 +49,8 @@
 #ifdef _Module_Mixer
     [advancedTopicList addObject:_Module_Mixer];
 #endif
-#ifdef _Module_AudioAux
-    [advancedTopicList addObject:_Module_AudioAux];
+#ifdef _Module_AudioMixing
+    [advancedTopicList addObject:_Module_AudioMixing];
 #endif
 #ifdef _Module_SoundLevel
     [advancedTopicList addObject:_Module_SoundLevel];
@@ -169,6 +172,13 @@
     }
     #endif
     
+    #ifdef _Module_RecordCapture
+    if ([topicName isEqualToString:_Module_RecordCapture]) {
+        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"RecordCapture" bundle:nil];
+        vc = [sb instantiateInitialViewController];
+    }
+    #endif
+    
     #ifdef _Module_Test
     if ([topicName isEqualToString:_Module_Test]) {
         UIStoryboard* sb = [UIStoryboard storyboardWithName:@"Test" bundle:nil];
@@ -197,9 +207,9 @@
     }
     #endif
     
-    #ifdef _Module_AudioAux
-    if ([topicName isEqualToString:_Module_AudioAux]) {
-        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"AudioAux" bundle:nil];
+    #ifdef _Module_AudioMixing
+    if ([topicName isEqualToString:_Module_AudioMixing]) {
+        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"AudioMixing" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
     #endif

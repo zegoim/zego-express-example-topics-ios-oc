@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *cameraSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *microphoneSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *speakerSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *hardwareEncoderSwitch;
 @property (weak, nonatomic) IBOutlet UISlider *captureVolumeSlider;
 
 @property (weak, nonatomic) IBOutlet UILabel *captureResolutionLabel;
@@ -48,6 +49,7 @@
     self.cameraSwitch.on = _enableCamera;
     self.microphoneSwitch.on = ![[ZegoExpressEngine sharedEngine] isMicrophoneMuted];
     self.speakerSwitch.on = ![[ZegoExpressEngine sharedEngine] isSpeakerMuted];
+    self.hardwareEncoderSwitch.on = _enableHardwareEncoder;
     self.captureVolumeSlider.continuous = NO;
     self.captureVolumeSlider.value = _captureVolume;
 
@@ -60,6 +62,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     self.presenter.enableCamera = _enableCamera;
+    self.presenter.enableHardwareEncoder = _enableHardwareEncoder;
     self.presenter.captureVolume = _captureVolume;
     self.presenter.streamExtraInfo = _streamExtraInfo;
 }
@@ -81,6 +84,13 @@
     [[ZegoExpressEngine sharedEngine] muteSpeaker:!sender.on];
 
     [self.presenter appendLog:[NSString stringWithFormat:@"📣 Speaker %@", sender.on ? @"on 🟢" : @"off 🔴"]];
+}
+
+- (IBAction)hardwareEncoderSwitchValueChanged:(UISwitch *)sender {
+    _enableHardwareEncoder = sender.on;
+    [[ZegoExpressEngine sharedEngine] enableHardwareEncoder:_enableHardwareEncoder];
+
+    [self.presenter appendLog:[NSString stringWithFormat:@"🎛 HardwareEncoder %@", sender.on ? @"on 🟢" : @"off 🔴"]];
 }
 
 - (IBAction)captureVolumeSliderValueChanged:(UISlider *)sender {

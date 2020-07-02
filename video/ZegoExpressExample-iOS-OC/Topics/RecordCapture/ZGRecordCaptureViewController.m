@@ -1,24 +1,20 @@
 //
-//  ZGPublishStreamViewController.m
+//  ZGRecordCaptureViewController.m
 //  ZegoExpressExample-iOS-OC
 //
-//  Created by Patrick Fu on 2020/5/29.
+//  Created by zego on 2020/6/30.
 //  Copyright © 2020 Zego. All rights reserved.
 //
 
-#ifdef _Module_Publish
-
-#import "ZGPublishStreamViewController.h"
-#import "ZGPublishStreamSettingTableViewController.h"
+#import "ZGRecordCaptureViewController.h"
 #import "ZGAppGlobalConfigManager.h"
 #import "ZGUserIDHelper.h"
 #import <ZegoExpressEngine/ZegoExpressEngine.h>
 
-NSString* const ZGPublishStreamTopicRoomID = @"ZGPublishStreamTopicRoomID";
-NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
+NSString* const ZGRecordCaptureRoomID = @"kRoomID";
+NSString* const ZGRecordCaptureStreamID = @"kStreamID";
 
-@interface ZGPublishStreamViewController () <ZegoEventHandler, UITextFieldDelegate, UIPopoverPresentationControllerDelegate>
-
+@interface ZGRecordCaptureViewController ()<ZegoEventHandler, ZegoDataRecordEventHandler, UITextFieldDelegate, UIPopoverPresentationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *previewView;
 @property (weak, nonatomic) IBOutlet UITextView *logTextView;
 @property (weak, nonatomic) IBOutlet UIView *startPublishConfigView;
@@ -28,7 +24,7 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
 
 @property (weak, nonatomic) IBOutlet UIButton *startLiveButton;
 @property (weak, nonatomic) IBOutlet UIButton *stopLiveButton;
-@property (nonatomic, strong) UIBarButtonItem *settingButton;
+@property (weak, nonatomic) IBOutlet UIButton *recordButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *roomIDAndStreamIDLabel;
 @property (weak, nonatomic) IBOutlet UILabel *roomStateLabel;
@@ -39,16 +35,17 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
 @property (nonatomic, copy) NSString *roomID;
 @property (nonatomic, copy) NSString *streamID;
 
+@property (nonatomic, assign) BOOL isRecording;
+
 @property (nonatomic) ZegoRoomState roomState;
 @property (nonatomic) ZegoPublisherState publisherState;
-
 @end
 
-@implementation ZGPublishStreamViewController
+@implementation ZGRecordCaptureViewController
 
 + (instancetype)instanceFromStoryboard {
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"PublishStream" bundle:nil];
-    return [sb instantiateViewControllerWithIdentifier:NSStringFromClass([ZGPublishStreamViewController class])];
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"RecordCapture" bundle:nil];
+    return [sb instantiateViewControllerWithIdentifier:NSStringFromClass([ZGRecordCaptureViewController class])];
 }
 
 - (void)viewDidLoad {
@@ -56,10 +53,6 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
 
     [self setupUI];
     [self createEngine];
-
-    self.enableCamera = YES;
-    self.enableHardwareEncoder = NO;
-    self.captureVolume = 100;
 }
 
 - (void)dealloc {
@@ -87,10 +80,6 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
 - (void)setupUI {
     self.navigationItem.title = @"Publish Stream";
 
-    self.settingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Setting"] style:UIBarButtonItemStylePlain target:self action:@selector(showSettingController)];
-
-    self.navigationItem.rightBarButtonItem = self.settingButton;
-
     self.logTextView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
     self.logTextView.textColor = [UIColor whiteColor];
 
@@ -113,11 +102,11 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
     self.stopLiveButton.alpha = 0;
     self.startPublishConfigView.alpha = 1;
 
-    self.roomID = [self savedValueForKey:ZGPublishStreamTopicRoomID];
+    self.roomID = [self savedValueForKey:ZGRecordCaptureRoomID];
     self.roomIDTextField.text = self.roomID;
     self.roomIDTextField.delegate = self;
 
-    self.streamID = [self savedValueForKey:ZGPublishStreamTopicStreamID];
+    self.streamID = [self savedValueForKey:ZGRecordCaptureStreamID];
     self.streamIDTextField.text = self.streamID;
     self.streamIDTextField.delegate = self;
 
@@ -153,6 +142,39 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
     [self stopLive];
 }
 
+- (IBAction)recordCaptureButtonClick:(id)sender {
+    if (self.isRecording) {
+        [self stopRecord];
+        self.isRecording = NO;
+    } else {
+        [self recordCapture];
+        self.isRecording = YES;
+    }
+    [self.recordButton setTitle:self.isRecording ? @"停止录制" : @"开始录制" forState:UIControlStateNormal];
+}
+
+- (void)recordCapture {
+    //Set DataRecordEventHandler
+    [[ZegoExpressEngine sharedEngine] setDataRecordEventHandler: self];
+    
+    //Build record config
+    ZegoDataRecordConfig *config = [[ZegoDataRecordConfig alloc] init];
+    config.filePath = [self audioFileSavingPath];
+    config.recordType = ZegoDataRecordTypeAudioAndVideo;
+    
+    //Start record
+    [[ZegoExpressEngine sharedEngine] startRecordingCapturedData:config channel:ZegoPublishChannelMain];
+}
+
+- (void)stopRecord {
+    [[ZegoExpressEngine sharedEngine] stopRecordingCapturedData:ZegoPublishChannelMain];
+}
+
+- (NSString *)audioFileSavingPath {
+    NSArray *docPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *documentsPath = [docPath objectAtIndex:0];
+    return [documentsPath stringByAppendingPathComponent:@"test.mp4"];
+}
 
 - (void)startLive {
     [self appendLog:@" 🚪 Start login room"];
@@ -160,8 +182,8 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
     self.roomID = self.roomIDTextField.text;
     self.streamID = self.streamIDTextField.text;
 
-    [self saveValue:self.roomID forKey:ZGPublishStreamTopicRoomID];
-    [self saveValue:self.streamID forKey:ZGPublishStreamTopicStreamID];
+    [self saveValue:self.roomID forKey:ZGRecordCaptureRoomID];
+    [self saveValue:self.streamID forKey:ZGRecordCaptureStreamID];
 
     // This demonstrates simply using the device model as the userID. In actual use, you can set the business-related userID as needed.
     NSString *userID = ZGUserIDHelper.userID;
@@ -252,23 +274,6 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
     }
 }
 
-- (void)showSettingController {
-    ZGPublishStreamSettingTableViewController *vc = [ZGPublishStreamSettingTableViewController instanceFromStoryboard];
-    vc.preferredContentSize = CGSizeMake(250.0, 150.0);
-    vc.modalPresentationStyle = UIModalPresentationPopover;
-    vc.popoverPresentationController.delegate = self;
-    vc.popoverPresentationController.barButtonItem = self.settingButton;
-    vc.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-
-    vc.presenter = self;
-    vc.enableCamera = _enableCamera;
-    vc.enableHardwareEncoder = _enableHardwareEncoder;
-    vc.captureVolume = _captureVolume;
-    vc.streamExtraInfo = _streamExtraInfo;
-
-    [self presentViewController:vc animated:YES completion:nil];
-}
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
 
@@ -287,6 +292,25 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
 
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
     return UIModalPresentationNone;
+}
+
+#pragma mark - ZegoExpress ZegoDataRecordEventHandler
+/// 录制到文件的状态更新回调，当录制过程状态变化时触发
+///
+/// @param state 文件录制状态，开发者应根据此状态来判断文件录制的状态或者进行 UI 的提示等
+/// @param errorCode 错误码，详情请参考常用错误码文档 [https://doc-zh.zego.im/zh/308.html]
+/// @param config 录制配置对象
+/// @param channel 推流通道
+- (void)onCapturedDataRecordStateUpdate:(ZegoDataRecordState)state errorCode:(int)errorCode config:(ZegoDataRecordConfig *)config channel:(ZegoPublishChannel)channel {
+    
+}
+
+///
+/// @param progress 文件录制过程进度，开发者可以此对用户界面进行 UI 的提示等
+/// @param config 录制配置对象
+/// @param channel 推流通道
+- (void)onCapturedDataRecordProgressUpdate:(ZegoDataRecordProgress *)progress config:(ZegoDataRecordConfig *)config channel:(ZegoPublishChannel)channel {
+    
 }
 
 #pragma mark - ZegoExpress EventHandler Room Event
@@ -393,7 +417,4 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
 }
 
 
-
 @end
-
-#endif
