@@ -6,7 +6,7 @@
 //  Copyright © 2020 Zego. All rights reserved.
 //
 
-#ifdef _Module_Publish
+#ifdef _Module_PublishStream
 
 #import "ZGPublishStreamViewController.h"
 #import "ZGPublishStreamSettingTableViewController.h"
@@ -15,7 +15,7 @@
 #import <ZegoExpressEngine/ZegoExpressEngine.h>
 
 NSString* const ZGPublishStreamTopicRoomID = @"ZGPublishStreamTopicRoomID";
-NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicRoomID";
+NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
 
 @interface ZGPublishStreamViewController () <ZegoEventHandler, UITextFieldDelegate, UIPopoverPresentationControllerDelegate>
 

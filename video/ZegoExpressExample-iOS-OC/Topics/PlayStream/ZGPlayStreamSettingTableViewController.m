@@ -6,7 +6,7 @@
 //  Copyright © 2020 Zego. All rights reserved.
 //
 
-#ifdef _Module_Play
+#ifdef _Module_PlayStream
 
 #import "ZGPlayStreamSettingTableViewController.h"
 #import <ZegoExpressEngine/ZegoExpressEngine.h>

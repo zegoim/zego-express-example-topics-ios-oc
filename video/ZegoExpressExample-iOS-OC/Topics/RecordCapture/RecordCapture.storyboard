@@ -30,7 +30,7 @@
                                             <constraint firstAttribute="height" constant="34" id="DMs-lG-KHn"/>
                                             <constraint firstAttribute="width" constant="140" id="JJx-j6-yT3"/>
                                         </constraints>
-                                        <state key="normal" title="Record Capture"/>
+                                        <state key="normal" title="Start Record"/>
                                         <connections>
                                             <action selector="recordCaptureButtonClick:" destination="Kzb-0g-nST" eventType="touchUpInside" id="d7z-yE-IKW"/>
                                         </connections>

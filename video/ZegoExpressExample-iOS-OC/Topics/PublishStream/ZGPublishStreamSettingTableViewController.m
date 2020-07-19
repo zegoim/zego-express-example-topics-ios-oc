@@ -6,7 +6,7 @@
 //  Copyright © 2020 Zego. All rights reserved.
 //
 
-#ifdef _Module_Publish
+#ifdef _Module_PublishStream
 
 #import "ZGPublishStreamSettingTableViewController.h"
 #import <ZegoExpressEngine/ZegoExpressEngine.h>

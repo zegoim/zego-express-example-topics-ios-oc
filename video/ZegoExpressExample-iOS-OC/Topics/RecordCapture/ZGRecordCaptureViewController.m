@@ -11,8 +11,8 @@
 #import "ZGUserIDHelper.h"
 #import <ZegoExpressEngine/ZegoExpressEngine.h>
 
-NSString* const ZGRecordCaptureRoomID = @"kRoomID";
-NSString* const ZGRecordCaptureStreamID = @"kStreamID";
+NSString* const ZGRecordCaptureRoomID = @"ZGRecordCaptureRoomID";
+NSString* const ZGRecordCaptureStreamID = @"ZGRecordCaptureStreamID";
 
 @interface ZGRecordCaptureViewController ()<ZegoEventHandler, ZegoDataRecordEventHandler, UITextFieldDelegate, UIPopoverPresentationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *previewView;
@@ -78,7 +78,7 @@ NSString* const ZGRecordCaptureStreamID = @"kStreamID";
 
 
 - (void)setupUI {
-    self.navigationItem.title = @"Publish Stream";
+    self.navigationItem.title = @"Record Capture";
 
     self.logTextView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
     self.logTextView.textColor = [UIColor whiteColor];
@@ -124,12 +124,9 @@ NSString* const ZGRecordCaptureStreamID = @"kStreamID";
 
     [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
 
-    // Set debug verbose on
-    //    [[ZegoExpressEngine sharedEngine] setDebugVerbose:YES language:ZegoLanguageEnglish];
-
     // Start preview
     ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.previewView];
-//    previewCanvas.viewMode = self.previewViewMode;
+
     [self appendLog:@" 🔌 Start preview"];
     [[ZegoExpressEngine sharedEngine] startPreview:previewCanvas];
 }
@@ -147,33 +144,35 @@ NSString* const ZGRecordCaptureStreamID = @"kStreamID";
         [self stopRecord];
         self.isRecording = NO;
     } else {
-        [self recordCapture];
+        [self startRecord];
         self.isRecording = YES;
     }
-    [self.recordButton setTitle:self.isRecording ? @"停止录制" : @"开始录制" forState:UIControlStateNormal];
+    [self.recordButton setTitle:self.isRecording ? @"Stop Recording" : @"Start Recording" forState:UIControlStateNormal];
 }
 
-- (void)recordCapture {
-    //Set DataRecordEventHandler
+- (void)startRecord {
+    // Set DataRecordEventHandler
     [[ZegoExpressEngine sharedEngine] setDataRecordEventHandler: self];
     
-    //Build record config
+    // Build record config
     ZegoDataRecordConfig *config = [[ZegoDataRecordConfig alloc] init];
-    config.filePath = [self audioFileSavingPath];
+    config.filePath = [self recordCaptureFilePath];
     config.recordType = ZegoDataRecordTypeAudioAndVideo;
     
-    //Start record
+    // Start record
+    [self appendLog:@" 🎥 Start record capture"];
     [[ZegoExpressEngine sharedEngine] startRecordingCapturedData:config channel:ZegoPublishChannelMain];
 }
 
 - (void)stopRecord {
+    [self appendLog:@" 🎥 Stop record capture"];
     [[ZegoExpressEngine sharedEngine] stopRecordingCapturedData:ZegoPublishChannelMain];
 }
 
-- (NSString *)audioFileSavingPath {
+- (NSString *)recordCaptureFilePath {
     NSArray *docPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsPath = [docPath objectAtIndex:0];
-    return [documentsPath stringByAppendingPathComponent:@"test.mp4"];
+    return [documentsPath stringByAppendingPathComponent:@"ZGRecordCapture.mp4"];
 }
 
 - (void)startLive {
@@ -290,27 +289,15 @@ NSString* const ZGRecordCaptureStreamID = @"kStreamID";
     [self.view endEditing:YES];
 }
 
-- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
-    return UIModalPresentationNone;
-}
 
 #pragma mark - ZegoExpress ZegoDataRecordEventHandler
-/// 录制到文件的状态更新回调，当录制过程状态变化时触发
-///
-/// @param state 文件录制状态，开发者应根据此状态来判断文件录制的状态或者进行 UI 的提示等
-/// @param errorCode 错误码，详情请参考常用错误码文档 [https://doc-zh.zego.im/zh/308.html]
-/// @param config 录制配置对象
-/// @param channel 推流通道
+
 - (void)onCapturedDataRecordStateUpdate:(ZegoDataRecordState)state errorCode:(int)errorCode config:(ZegoDataRecordConfig *)config channel:(ZegoPublishChannel)channel {
-    
+    [self appendLog:[NSString stringWithFormat:@" 🎥 Record state update, state: %d, errorCode: %d, file path: %@, record type: %d", (int)state, errorCode, config.filePath, (int)config.recordType]];
 }
 
-///
-/// @param progress 文件录制过程进度，开发者可以此对用户界面进行 UI 的提示等
-/// @param config 录制配置对象
-/// @param channel 推流通道
 - (void)onCapturedDataRecordProgressUpdate:(ZegoDataRecordProgress *)progress config:(ZegoDataRecordConfig *)config channel:(ZegoPublishChannel)channel {
-    
+    NSLog(@" 🎥 Record progress update, duration: %llu, file size: %llu", progress.duration, progress.currentFileSize);
 }
 
 #pragma mark - ZegoExpress EventHandler Room Event

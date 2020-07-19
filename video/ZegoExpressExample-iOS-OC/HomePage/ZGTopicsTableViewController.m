@@ -28,11 +28,11 @@
 #ifdef _Module_QuickStart
     [basicTopicList addObject:_Module_QuickStart];
 #endif
-#ifdef _Module_Publish
-    [basicTopicList addObject:_Module_Publish];
+#ifdef _Module_PublishStream
+    [basicTopicList addObject:_Module_PublishStream];
 #endif
-#ifdef _Module_Play
-    [basicTopicList addObject:_Module_Play];
+#ifdef _Module_PlayStream
+    [basicTopicList addObject:_Module_PlayStream];
 #endif
 #ifdef _Module_RecordCapture
     [advancedTopicList addObject:_Module_RecordCapture];
@@ -67,20 +67,17 @@
 #ifdef _Module_ScalableVideoCoding
     [advancedTopicList addObject:_Module_ScalableVideoCoding];
 #endif
-#ifdef _Module_MediaRecord
-    [advancedTopicList addObject:_Module_MediaRecord];
-#endif
 #ifdef _Module_CustomVideoCapture
     [advancedTopicList addObject:_Module_CustomVideoCapture];
 #endif
 #ifdef _Module_CustomVideoRender
     [advancedTopicList addObject:_Module_CustomVideoRender];
 #endif
+#ifdef _Module_CustomAudioIO
+    [advancedTopicList addObject:_Module_CustomAudioIO];
+#endif
 #ifdef _Module_AuxPublisher
     [advancedTopicList addObject:_Module_AuxPublisher];
-#endif
-#ifdef _Module_ExternalVideoFilter
-    [advancedTopicList addObject:_Module_ExternalVideoFilter];
 #endif
 #ifdef _Module_AudioProcessing
     [advancedTopicList addObject:_Module_AudioProcessing];
@@ -158,15 +155,15 @@
     }
     #endif
     
-    #ifdef _Module_Publish
-    if ([topicName isEqualToString:_Module_Publish]) {
+    #ifdef _Module_PublishStream
+    if ([topicName isEqualToString:_Module_PublishStream]) {
         UIStoryboard* sb = [UIStoryboard storyboardWithName:@"PublishStream" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
     #endif
     
-    #ifdef _Module_Play
-    if ([topicName isEqualToString:_Module_Play]) {
+    #ifdef _Module_PlayStream
+    if ([topicName isEqualToString:_Module_PlayStream]) {
         UIStoryboard* sb = [UIStoryboard storyboardWithName:@"PlayStream" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
@@ -266,6 +263,13 @@
     #ifdef _Module_CustomVideoRender
     if ([topicName isEqualToString:_Module_CustomVideoRender]) {
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"CustomVideoRender" bundle:nil];
+        vc = [sb instantiateInitialViewController];
+    }
+    #endif
+
+    #ifdef _Module_CustomAudioIO
+    if ([topicName isEqualToString:_Module_CustomAudioIO]) {
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"CustomAudioIO" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
     #endif
