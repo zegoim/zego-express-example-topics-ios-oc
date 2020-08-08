@@ -16,9 +16,9 @@ Please ensure that the development environment meets the following technical req
 
 The SDK `ZegoExpressEngine.framework` required to run the Demo project is missing from this Repository, and needs to be downloaded and placed in the `Libs` folder of the Demo project
 
-> Run Demo directly, if the pre-compilation script detects that there is no SDK Framework under `Libs`, it will automatically download the **English version** SDK. You can also download it yourself and put it in the `Libs` folder.
+> Run Demo directly, if the pre-compilation script detects that there is no SDK Framework under `Libs`, it will automatically download the SDK. You can also download it yourself and put it in the `Libs` folder.
 
-[https://storage.zego.im/express/video/ios/en/zego-express-video-ios-en.zip](https://storage.zego.im/express/video/ios/en/zego-express-video-ios-en.zip)
+[https://storage.zego.im/express/video/ios/zego-express-video-ios.zip](https://storage.zego.im/express/video/ios/zego-express-video-ios.zip)
 
 > Note that there are two folders in the zip file: `armv7-arm64` and `armv7-arm64-x86_64`, differences:
 

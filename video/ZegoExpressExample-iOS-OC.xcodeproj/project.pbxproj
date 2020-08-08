@@ -57,6 +57,8 @@
 		861376362387E11900C30486 /* ZGRoomMessageSelectUsersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 861376352387E11900C30486 /* ZGRoomMessageSelectUsersTableViewController.m */; };
 		86200C1624976A7A00E16A47 /* AudioMixing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86200C1524976A7A00E16A47 /* AudioMixing.storyboard */; };
 		86294D2623A3992B00D91DD6 /* ZegoTestJson.json in Resources */ = {isa = PBXBuildFile; fileRef = 86294D2523A3992A00D91DD6 /* ZegoTestJson.json */; };
+		86389AF824C5898000794149 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 86389AF724C5898000794149 /* Player.m */; };
+		86389AFD24C5B55B00794149 /* Recorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 86389AFC24C5B55B00794149 /* Recorder.m */; };
 		8656819B24476DF100BEE4C8 /* sample.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8656819924476DF100BEE4C8 /* sample.mp3 */; };
 		8656819C24476DF100BEE4C8 /* test.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8656819A24476DF100BEE4C8 /* test.wav */; };
 		865A5F3423B30626001BB0F4 /* MediaPlayer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 865A5F3323B30626001BB0F4 /* MediaPlayer.storyboard */; };
@@ -72,6 +74,15 @@
 		8684965D23BC9FE600AE7A58 /* ZGCustomVideoRenderLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8684965C23BC9FE600AE7A58 /* ZGCustomVideoRenderLoginViewController.m */; };
 		8684966623BCA08500AE7A58 /* ZGCustomVideoRenderPublishStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8684966523BCA08500AE7A58 /* ZGCustomVideoRenderPublishStreamViewController.m */; };
 		8684966923BCA09300AE7A58 /* ZGCustomVideoRenderPlayStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8684966823BCA09300AE7A58 /* ZGCustomVideoRenderPlayStreamViewController.m */; };
+		8698292E24C19E56008145B1 /* AudioProcessing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8698292124C19E56008145B1 /* AudioProcessing.storyboard */; };
+		8698292F24C19E56008145B1 /* ZGAudioProcessVirtualStereoConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698292224C19E56008145B1 /* ZGAudioProcessVirtualStereoConfigVC.m */; };
+		8698293024C19E56008145B1 /* ZGAudioProcessVoiceChangeConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698292324C19E56008145B1 /* ZGAudioProcessVoiceChangeConfigVC.m */; };
+		8698293124C19E56008145B1 /* ZGAudioProcessPlayStreamVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698292524C19E56008145B1 /* ZGAudioProcessPlayStreamVC.m */; };
+		8698293224C19E56008145B1 /* ZGAudioProcessInitVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698292A24C19E56008145B1 /* ZGAudioProcessInitVC.m */; };
+		8698293324C19E56008145B1 /* ZGAudioProcessReverbConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698292C24C19E56008145B1 /* ZGAudioProcessReverbConfigVC.m */; };
+		8698293424C19E56008145B1 /* ZGAudioProcessPublishStreamVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698292D24C19E56008145B1 /* ZGAudioProcessPublishStreamVC.m */; };
+		8698293A24C1A01C008145B1 /* ZGAudioProcessTopicHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698293724C1A01B008145B1 /* ZGAudioProcessTopicHelper.m */; };
+		8698293B24C1A01C008145B1 /* ZGAudioProcessTopicConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698293824C1A01B008145B1 /* ZGAudioProcessTopicConfigManager.m */; };
 		86A502722369719900D51012 /* VideoTalk.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86A502712369719900D51012 /* VideoTalk.storyboard */; };
 		86A50278236976C200D51012 /* ZGVideoTalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86A50277236976C200D51012 /* ZGVideoTalkViewController.m */; };
 		86AA7AB0237BDB7000B2D31E /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 867BBD082376E002008F7D4F /* Bugly.framework */; };
@@ -216,6 +227,11 @@
 		861376352387E11900C30486 /* ZGRoomMessageSelectUsersTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGRoomMessageSelectUsersTableViewController.m; sourceTree = "<group>"; };
 		86200C1524976A7A00E16A47 /* AudioMixing.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AudioMixing.storyboard; sourceTree = "<group>"; };
 		86294D2523A3992A00D91DD6 /* ZegoTestJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ZegoTestJson.json; sourceTree = "<group>"; };
+		86389AF624C5897400794149 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		86389AF724C5898000794149 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
+		86389AFB24C5B55B00794149 /* Recorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Recorder.h; sourceTree = "<group>"; };
+		86389AFC24C5B55B00794149 /* Recorder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Recorder.m; sourceTree = "<group>"; };
+		86389AFE24C5B79D00794149 /* AudioToolCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioToolCommon.h; sourceTree = "<group>"; };
 		8656819924476DF100BEE4C8 /* sample.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sample.mp3; sourceTree = "<group>"; };
 		8656819A24476DF100BEE4C8 /* test.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = test.wav; sourceTree = "<group>"; };
 		865A5F3323B30626001BB0F4 /* MediaPlayer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MediaPlayer.storyboard; sourceTree = "<group>"; };
@@ -239,6 +255,23 @@
 		8684966523BCA08500AE7A58 /* ZGCustomVideoRenderPublishStreamViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGCustomVideoRenderPublishStreamViewController.m; sourceTree = "<group>"; };
 		8684966723BCA09300AE7A58 /* ZGCustomVideoRenderPlayStreamViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGCustomVideoRenderPlayStreamViewController.h; sourceTree = "<group>"; };
 		8684966823BCA09300AE7A58 /* ZGCustomVideoRenderPlayStreamViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGCustomVideoRenderPlayStreamViewController.m; sourceTree = "<group>"; };
+		8698292124C19E56008145B1 /* AudioProcessing.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AudioProcessing.storyboard; sourceTree = "<group>"; };
+		8698292224C19E56008145B1 /* ZGAudioProcessVirtualStereoConfigVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioProcessVirtualStereoConfigVC.m; sourceTree = "<group>"; };
+		8698292324C19E56008145B1 /* ZGAudioProcessVoiceChangeConfigVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioProcessVoiceChangeConfigVC.m; sourceTree = "<group>"; };
+		8698292424C19E56008145B1 /* ZGAudioProcessInitVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioProcessInitVC.h; sourceTree = "<group>"; };
+		8698292524C19E56008145B1 /* ZGAudioProcessPlayStreamVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioProcessPlayStreamVC.m; sourceTree = "<group>"; };
+		8698292624C19E56008145B1 /* ZGAudioProcessPublishStreamVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioProcessPublishStreamVC.h; sourceTree = "<group>"; };
+		8698292724C19E56008145B1 /* ZGAudioProcessReverbConfigVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioProcessReverbConfigVC.h; sourceTree = "<group>"; };
+		8698292824C19E56008145B1 /* ZGAudioProcessVirtualStereoConfigVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioProcessVirtualStereoConfigVC.h; sourceTree = "<group>"; };
+		8698292924C19E56008145B1 /* ZGAudioProcessVoiceChangeConfigVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioProcessVoiceChangeConfigVC.h; sourceTree = "<group>"; };
+		8698292A24C19E56008145B1 /* ZGAudioProcessInitVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioProcessInitVC.m; sourceTree = "<group>"; };
+		8698292B24C19E56008145B1 /* ZGAudioProcessPlayStreamVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioProcessPlayStreamVC.h; sourceTree = "<group>"; };
+		8698292C24C19E56008145B1 /* ZGAudioProcessReverbConfigVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioProcessReverbConfigVC.m; sourceTree = "<group>"; };
+		8698292D24C19E56008145B1 /* ZGAudioProcessPublishStreamVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioProcessPublishStreamVC.m; sourceTree = "<group>"; };
+		8698293624C1A01B008145B1 /* ZGAudioProcessTopicConfigManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioProcessTopicConfigManager.h; sourceTree = "<group>"; };
+		8698293724C1A01B008145B1 /* ZGAudioProcessTopicHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioProcessTopicHelper.m; sourceTree = "<group>"; };
+		8698293824C1A01B008145B1 /* ZGAudioProcessTopicConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioProcessTopicConfigManager.m; sourceTree = "<group>"; };
+		8698293924C1A01B008145B1 /* ZGAudioProcessTopicHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioProcessTopicHelper.h; sourceTree = "<group>"; };
 		86A502712369719900D51012 /* VideoTalk.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = VideoTalk.storyboard; sourceTree = "<group>"; };
 		86A50276236976C200D51012 /* ZGVideoTalkViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGVideoTalkViewController.h; sourceTree = "<group>"; };
 		86A50277236976C200D51012 /* ZGVideoTalkViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGVideoTalkViewController.m; sourceTree = "<group>"; };
@@ -418,6 +451,7 @@
 				86E90C9A24AB290900507352 /* CustomAudioIO */,
 				860B638F24066D0B00D0E9C8 /* AuxPublisher */,
 				86200C1424976A2E00E16A47 /* AudioMixing */,
+				8698292024C19E56008145B1 /* AudioEffect */,
 				8608C3F12363245100CE367B /* APITest */,
 			);
 			path = Topics;
@@ -597,6 +631,18 @@
 			path = AudioMixing;
 			sourceTree = "<group>";
 		};
+		86389AF524C580FA00794149 /* AudioTool */ = {
+			isa = PBXGroup;
+			children = (
+				86389AF624C5897400794149 /* Player.h */,
+				86389AF724C5898000794149 /* Player.m */,
+				86389AFB24C5B55B00794149 /* Recorder.h */,
+				86389AFC24C5B55B00794149 /* Recorder.m */,
+				86389AFE24C5B79D00794149 /* AudioToolCommon.h */,
+			);
+			path = AudioTool;
+			sourceTree = "<group>";
+		};
 		864498AC237D0D3000C1321D /* QuickStart */ = {
 			isa = PBXGroup;
 			children = (
@@ -668,6 +714,38 @@
 			path = CustomVideoRender;
 			sourceTree = "<group>";
 		};
+		8698292024C19E56008145B1 /* AudioEffect */ = {
+			isa = PBXGroup;
+			children = (
+				8698293524C1A01B008145B1 /* Tool */,
+				8698292124C19E56008145B1 /* AudioProcessing.storyboard */,
+				8698292424C19E56008145B1 /* ZGAudioProcessInitVC.h */,
+				8698292A24C19E56008145B1 /* ZGAudioProcessInitVC.m */,
+				8698292624C19E56008145B1 /* ZGAudioProcessPublishStreamVC.h */,
+				8698292D24C19E56008145B1 /* ZGAudioProcessPublishStreamVC.m */,
+				8698292B24C19E56008145B1 /* ZGAudioProcessPlayStreamVC.h */,
+				8698292524C19E56008145B1 /* ZGAudioProcessPlayStreamVC.m */,
+				8698292824C19E56008145B1 /* ZGAudioProcessVirtualStereoConfigVC.h */,
+				8698292224C19E56008145B1 /* ZGAudioProcessVirtualStereoConfigVC.m */,
+				8698292924C19E56008145B1 /* ZGAudioProcessVoiceChangeConfigVC.h */,
+				8698292324C19E56008145B1 /* ZGAudioProcessVoiceChangeConfigVC.m */,
+				8698292724C19E56008145B1 /* ZGAudioProcessReverbConfigVC.h */,
+				8698292C24C19E56008145B1 /* ZGAudioProcessReverbConfigVC.m */,
+			);
+			path = AudioEffect;
+			sourceTree = "<group>";
+		};
+		8698293524C1A01B008145B1 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				8698293624C1A01B008145B1 /* ZGAudioProcessTopicConfigManager.h */,
+				8698293724C1A01B008145B1 /* ZGAudioProcessTopicHelper.m */,
+				8698293824C1A01B008145B1 /* ZGAudioProcessTopicConfigManager.m */,
+				8698293924C1A01B008145B1 /* ZGAudioProcessTopicHelper.h */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
 		86B6E5362394E90800078757 /* SoundLevel */ = {
 			isa = PBXGroup;
 			children = (
@@ -696,6 +774,7 @@
 		86E90C9A24AB290900507352 /* CustomAudioIO */ = {
 			isa = PBXGroup;
 			children = (
+				86389AF524C580FA00794149 /* AudioTool */,
 				86E90C9E24AB2FDE00507352 /* CustomAudioIO.storyboard */,
 				86E90CA024AB496000507352 /* ZGCustomAudioIOLoginViewController.h */,
 				86E90CA124AB496000507352 /* ZGCustomAudioIOLoginViewController.m */,
@@ -794,6 +873,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8698292E24C19E56008145B1 /* AudioProcessing.storyboard in Resources */,
 				860B6391240673E500D0E9C8 /* AuxPublisher.storyboard in Resources */,
 				86BB70882363FEC600FF2608 /* PublishStream.storyboard in Resources */,
 				8656819C24476DF100BEE4C8 /* test.wav in Resources */,
@@ -841,7 +921,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ! -e \"Libs/ZegoExpressEngine.framework\" ]; then\n\n    cd $SRCROOT\n    echo \"[*] cd into: \"`pwd`\n\n    URL=\"https://storage.zego.im/express/video/ios/en/zego-express-video-ios-en.zip\"\n\n    if [ ! -d \"Libs/__sdk_download_tmp__\" ]; then\n        mkdir Libs/__sdk_download_tmp__\n    fi\n\n    echo \"[*] Downloading SDK from: $URL\"\n    curl \"$URL\" --output Libs/__sdk_download_tmp__/zego-express-video-ios-en.zip\n\n    cd Libs/__sdk_download_tmp__\n    echo \"[*] cd into: \"`pwd`\n\n    echo \"[*] Unzip zego-express-video-ios-en.zip\"\n    unzip -o zego-express-video-ios-en.zip\n\n    for element in `ls`; do\n        dir=$element\n        if [ -d $dir ]; then\n            cd $dir\n            echo \"[*] cd into: \"`pwd`\n            break\n        fi\n    done\n\n    if [ -d \"armv7-arm64-x86_64\" ]; then\n        cd armv7-arm64-x86_64\n        echo \"[*] cd into: \"`pwd`\n        echo \"[*] Move ZegoExpressEngine.framework from: \"`pwd`\" to: $SRCROOT/Libs\"\n        mv ZegoExpressEngine.framework $SRCROOT/Libs\n    fi\n\n    echo \"[*] Remove folder: $SRCROOT/Libs/__sdk_download_tmp__\"\n    rm -rf $SRCROOT/Libs/__sdk_download_tmp__\nfi\n";
+			shellScript = "if [ ! -e \"Libs/ZegoExpressEngine.framework\" ]; then\n\n    cd $SRCROOT\n    echo \"[*] cd into: \"`pwd`\n\n    URL=\"https://storage.zego.im/express/video/ios/zego-express-video-ios.zip\"\n\n    if [ ! -d \"Libs/__sdk_download_tmp__\" ]; then\n        mkdir Libs/__sdk_download_tmp__\n    fi\n\n    echo \"[*] Downloading SDK from: $URL\"\n    curl \"$URL\" --output Libs/__sdk_download_tmp__/zego-express-video-ios.zip\n\n    cd Libs/__sdk_download_tmp__\n    echo \"[*] cd into: \"`pwd`\n\n    echo \"[*] Unzip zego-express-video-ios.zip\"\n    unzip -o zego-express-video-ios.zip\n\n    for element in `ls`; do\n        dir=$element\n        if [ -d $dir ]; then\n            cd $dir\n            echo \"[*] cd into: \"`pwd`\n            break\n        fi\n    done\n\n    if [ -d \"armv7-arm64-x86_64\" ]; then\n        cd armv7-arm64-x86_64\n        echo \"[*] cd into: \"`pwd`\n        echo \"[*] Move ZegoExpressEngine.framework from: \"`pwd`\" to: $SRCROOT/Libs\"\n        mv ZegoExpressEngine.framework $SRCROOT/Libs\n    fi\n\n    echo \"[*] Remove folder: $SRCROOT/Libs/__sdk_download_tmp__\"\n    rm -rf $SRCROOT/Libs/__sdk_download_tmp__\nfi\n";
 		};
 		864836E12450467700AC850F /* [Script] Remove Simulator Architecture When Release */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -880,6 +960,7 @@
 				8608C3E62363244A00CE367B /* ZGShareLogViewController.m in Sources */,
 				8608C3E42363244A00CE367B /* ZGNavigationController.m in Sources */,
 				86BF980E239F6E0200319709 /* ZGBeautifyConfigTableViewController.m in Sources */,
+				8698293324C19E56008145B1 /* ZGAudioProcessReverbConfigVC.m in Sources */,
 				86F6058C24AB1DAF0034C137 /* ZGRecordCaptureViewController.m in Sources */,
 				8608C4582363246600CE367B /* ZGAppGlobalConfig.m in Sources */,
 				8608C3EB2363244A00CE367B /* ZGTestMainViewController.m in Sources */,
@@ -890,13 +971,16 @@
 				8608C3E72363244A00CE367B /* ZGTopicsTableViewController.m in Sources */,
 				8608C4572363246600CE367B /* ZegoTTYLogFormatter.m in Sources */,
 				8608C3AE23631EDB00CE367B /* AppDelegate.m in Sources */,
+				86389AFD24C5B55B00794149 /* Recorder.m in Sources */,
 				8608C4282363245900CE367B /* MBProgressHUD.m in Sources */,
 				8608C44F2363246600CE367B /* ZGJsonHelper.m in Sources */,
 				865A5F4723B370DC001BB0F4 /* ZGMediaPlayerViewController.m in Sources */,
 				86A50278236976C200D51012 /* ZGVideoTalkViewController.m in Sources */,
 				86E90C9924AB1B9A00507352 /* ZGPlayStreamSettingTableViewController.m in Sources */,
+				8698293224C19E56008145B1 /* ZGAudioProcessInitVC.m in Sources */,
 				867DB307239E712000072B3F /* ZGVideoTalkViewObject.m in Sources */,
 				86EB8A9C2480AA1A0042D256 /* ZGPublishStreamSettingTableViewController.m in Sources */,
+				8698293A24C1A01C008145B1 /* ZGAudioProcessTopicHelper.m in Sources */,
 				8608C3E82363244A00CE367B /* UIViewController+TopPresent.m in Sources */,
 				86E90C9624AB128400507352 /* ZGPlayStreamViewController.m in Sources */,
 				86EDFE7423CABD7200A1A3AC /* ZGCustomVideoCaptureLoginViewController.m in Sources */,
@@ -904,10 +988,12 @@
 				86AD331124978BD3004A0D1F /* ZGAudioMixingSettingTableViewController.m in Sources */,
 				8608C45A2363246600CE367B /* ZGAppGlobalConfigManager.m in Sources */,
 				861376362387E11900C30486 /* ZGRoomMessageSelectUsersTableViewController.m in Sources */,
+				8698293124C19E56008145B1 /* ZGAudioProcessPlayStreamVC.m in Sources */,
 				86AD330B249787E8004A0D1F /* ZGAudioMixingViewController.m in Sources */,
 				8608C3FB2363245100CE367B /* ZGTestTopicManager.m in Sources */,
 				8608C3E32363244A00CE367B /* ZGAppGlobalConfigViewController.m in Sources */,
 				8608C46923632F3100CE367B /* ZGURLDefine.m in Sources */,
+				8698292F24C19E56008145B1 /* ZGAudioProcessVirtualStereoConfigVC.m in Sources */,
 				8608C4522363246600CE367B /* ZegoTTYLogger.m in Sources */,
 				865A5F3723B3068E001BB0F4 /* ZGMediaPlayerChooseFileVC.m in Sources */,
 				8608C3E92363244A00CE367B /* ZegoHudManager.m in Sources */,
@@ -919,9 +1005,12 @@
 				86EDFE7B23CACEF500A1A3AC /* ZGCaptureDeviceCamera.m in Sources */,
 				861376262386C04B00C30486 /* ZGMixerViewController.m in Sources */,
 				8608C3EA2363244A00CE367B /* ZGTestSettingTableViewController.m in Sources */,
+				8698293424C19E56008145B1 /* ZGAudioProcessPublishStreamVC.m in Sources */,
 				8608C3BF23631EDC00CE367B /* main.m in Sources */,
 				8608C4542363246600CE367B /* ZegoDefaultLogFormatter.m in Sources */,
 				86BF980B239F47CB00319709 /* ZGBeautifyViewController.m in Sources */,
+				8698293024C19E56008145B1 /* ZGAudioProcessVoiceChangeConfigVC.m in Sources */,
+				8698293B24C1A01C008145B1 /* ZGAudioProcessTopicConfigManager.m in Sources */,
 				861376332387B79600C30486 /* ZGRoomMessageViewController.m in Sources */,
 				86E90C9D24AB293F00507352 /* ZGCustomAudioIOViewController.m in Sources */,
 				8608C3E52363244A00CE367B /* ZegoLogView.m in Sources */,
@@ -931,6 +1020,7 @@
 				86B6E5582395223600078757 /* ZGSoundLevelViewController.m in Sources */,
 				861376202386A42300C30486 /* ZGMixerLoginViewController.m in Sources */,
 				861376232386C01500C30486 /* ZGMixerPublishViewController.m in Sources */,
+				86389AF824C5898000794149 /* Player.m in Sources */,
 				860B63942406740400D0E9C8 /* ZGAuxPublisherLoginViewController.m in Sources */,
 				86EDFE7723CABF9C00A1A3AC /* ZGCustomVideoCapturePublishStreamViewController.m in Sources */,
 			);
@@ -1078,7 +1168,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 200716;
+				CURRENT_PROJECT_VERSION = 200808;
 				DEVELOPMENT_TEAM = B82BHJ5H89;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1093,7 +1183,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.11.0;
+				MARKETING_VERSION = 1.12.0;
 				OBJROOT = DerivedData/Build/Intermediates.noindex;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-OC";
 				PRODUCT_NAME = "ZegoExpressExample-iOS-OC";
@@ -1109,7 +1199,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 200716;
+				CURRENT_PROJECT_VERSION = 200808;
 				DEVELOPMENT_TEAM = B82BHJ5H89;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1124,7 +1214,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.11.0;
+				MARKETING_VERSION = 1.12.0;
 				OBJROOT = DerivedData/Build/Intermediates.noindex;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-OC";
 				PRODUCT_NAME = "ZegoExpressExample-iOS-OC";

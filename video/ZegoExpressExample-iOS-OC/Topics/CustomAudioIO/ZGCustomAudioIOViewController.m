@@ -11,6 +11,8 @@
 #import "ZGCustomAudioIOViewController.h"
 #import "ZGAppGlobalConfigManager.h"
 #import "ZGUserIDHelper.h"
+#import "Player.h"
+#import "Recorder.h"
 #import <ZegoExpressEngine/ZegoExpressEngine.h>
 
 @interface ZGCustomAudioIOViewController () <ZegoEventHandler>
@@ -40,9 +42,15 @@
 // Total render audio data to be save
 @property (nonatomic, strong) NSMutableData *audioRenderData;
 
+@property (nonatomic, strong) NSInputStream *inputStream;
+
 @end
 
 @implementation ZGCustomAudioIOViewController
+{
+    Player *player;
+    Recorder *recorder;
+}
 
 + (instancetype)instanceFromStoryboard {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"CustomAudioIO" bundle:nil];
@@ -52,7 +60,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    
+    self.audioRenderFrameParam = [[ZegoAudioFrameParam alloc] init];
+    self.audioRenderFrameParam.channel = 1;
+    self.audioRenderFrameParam.sampleRate = ZegoAudioSampleRate16K;
+    
+    self.audioCapturedFrameParam = [[ZegoAudioFrameParam alloc] init];
+    self.audioCapturedFrameParam.channel = 1;
+    self.audioCapturedFrameParam.sampleRate = ZegoAudioSampleRate16K;
+    
+    self.audioRenderData = [NSMutableData data];
+    
     [self createEngineAndLoginRoom];
 }
 
@@ -94,7 +113,6 @@
     ZGLogInfo(@" 🎶 Enable custom audio io");
     [[ZegoExpressEngine sharedEngine] enableCustomAudioIO:YES config:audioConfig];
 
-
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
 
     ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
@@ -106,16 +124,42 @@
     if (self.publisherState == ZegoPublisherStatePublishing) {
         [self stopPublishing];
     } else if (self.publisherState == ZegoPublisherStateNoPublish) {
-        [self startPublishing];
+//        [self startPublishing];
+        [self startRecording];
     }
 }
 
 - (IBAction)startPlayButtonClick:(UIButton *)sender {
     if (self.playerState == ZegoPlayerStatePlaying) {
-        [self stopPlaying];
+        [self stopPlaying:NO];
     } else if (self.playerState == ZegoPlayerStateNoPlay) {
-        [self startPlaying];
+        [self startPlaying:NO];
     }
+}
+
+- (void)startRecording {
+    ZGLogInfo(@" 🔌 Start preview");
+    ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.localPreviewView];
+    [[ZegoExpressEngine sharedEngine] startPreview:previewCanvas];
+
+    ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", self.localPublishStreamID);
+    [[ZegoExpressEngine sharedEngine] startPublishingStream:self.localPublishStreamID];
+    
+    recorder = [[Recorder alloc] initWithSampleRate:ZegoAudioSampleRate16K bufferSize:[self bufferSize]];
+    __weak ZGCustomAudioIOViewController *weakSelf = self;
+    recorder.bl_output = ^(Recorder *recorder,
+                AudioUnitRenderActionFlags *ioActionFlags,
+                const AudioTimeStamp *inTimeStamp,
+                UInt32 inBusNumber,
+                UInt32 inNumberFrames,
+                AudioBufferList *bufferList) {
+                AudioBuffer buffer = bufferList->mBuffers[0];
+                unsigned int length = (unsigned int)buffer.mDataByteSize;
+        [[ZegoExpressEngine sharedEngine] sendCustomAudioCapturePCMData:buffer.mData dataLength:length param:weakSelf.audioCapturedFrameParam];
+            
+    };
+    [recorder start];
+    
 }
 
 - (void)startPublishing {
@@ -127,6 +171,12 @@
     ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", self.localPublishStreamID);
     [[ZegoExpressEngine sharedEngine] startPublishingStream:self.localPublishStreamID];
 
+    
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"wav"];
+    NSInputStream *inputSteam = [NSInputStream inputStreamWithURL:url];
+    self.inputStream = inputSteam;
+    [inputSteam open];
+    
 
     // Start a timer that triggers every 20ms to send audio data
     self.audioCaptureTimer = [NSTimer timerWithTimeInterval:0.02 target:self selector:@selector(sendCapturedAudioFrame) userInfo:nil repeats:YES];
@@ -148,24 +198,51 @@
 
     ZGLogInfo(@" 📤 Stop publishing stream");
     [[ZegoExpressEngine sharedEngine] stopPublishingStream];
+    
+    [self.inputStream close];
+    self.inputStream = nil;
 
+    [recorder stop];
+//    recorder = nil;
 }
 
-- (void)startPlaying {
+- (void)startPlaying:(BOOL)saveToFile {
+    
+    if (!_audioRenderBuffer) {
+        _audioRenderBuffer = malloc([self bufferSize]);
+        memset(_audioRenderBuffer, 0, [self bufferSize]);
+    }
 
     ZGLogInfo(@" 📥 Start playing stream, streamID: %@", self.remotePlayStreamID);
     ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:self.remotePlayView];
     [[ZegoExpressEngine sharedEngine] startPlayingStream:self.remotePlayStreamID canvas:playCanvas];
 
-    // Start a timer that triggers every 20ms to fetch audio data
-    self.audioRenderTimer = [NSTimer timerWithTimeInterval:0.02 target:self selector:@selector(fetchRenderAudioFrame) userInfo:nil repeats:YES];
-    [NSRunLoop.mainRunLoop addTimer:self.audioRenderTimer forMode:NSRunLoopCommonModes];
-    ZGLogInfo(@" ⏱ Audio render timer fire 🚀");
-    [self.audioRenderTimer fire];
+    __weak ZGCustomAudioIOViewController *weakSelf = self;
+    player = [[Player alloc] initWithSampleRate:ZegoAudioSampleRate16K bufferSize:[self bufferSize]];
+            
+    player.bl_input = ^(Player *player,
+        AudioUnitRenderActionFlags *ioActionFlags,
+        const AudioTimeStamp *inTimeStamp,
+        UInt32 inBusNumber,
+        UInt32 inNumberFrames,
+        AudioBufferList *bufferList) {
+        AudioBuffer buffer = bufferList->mBuffers[0];
+        unsigned int length = (unsigned int)buffer.mDataByteSize;
+        
+        // Fetch and render audio render buffer
+        [[ZegoExpressEngine sharedEngine] fetchCustomAudioRenderPCMData:buffer.mData dataLength:length param:weakSelf.audioRenderFrameParam];
+        buffer.mDataByteSize = length;
+        
+        if (saveToFile) {
+            // Write audio render buffer to NSMutableData
+            [weakSelf.audioRenderData appendBytes:weakSelf.audioRenderBuffer length:length];
+        }
+    };
+    [player play];
 
 }
 
-- (void)stopPlaying {
+- (void)stopPlaying:(BOOL)saveToFile {
 
     if (self.audioRenderTimer) {
         ZGLogInfo(@" ⏱ Audio render timer invalidate");
@@ -177,15 +254,27 @@
     if (self.audioRenderBuffer) {
         free(self.audioRenderBuffer);
     }
-
-    NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    NSString *documentsPath = [docPaths objectAtIndex:0];
-    NSString *audioRenderFilePath = [documentsPath stringByAppendingPathComponent:@"CustomAudioRender.pcm"];
-    ZGLogInfo(@" 💾 Write audio render data to file: %@", audioRenderFilePath);
-    [self.audioRenderData writeToFile:audioRenderFilePath atomically:YES];
+    
+    if (saveToFile) {
+        NSArray *docPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+        NSString *documentsPath = [docPaths objectAtIndex:0];
+        NSString *audioRenderFilePath = [documentsPath stringByAppendingPathComponent:@"CustomAudioRender.pcm"];
+        ZGLogInfo(@" 💾 Write audio render data to file: %@", audioRenderFilePath);
+        [self.audioRenderData writeToFile:audioRenderFilePath atomically:YES];
+    }
 
     ZGLogInfo(@" 📥 Stop playing stream");
     [[ZegoExpressEngine sharedEngine] stopPlayingStream:self.remotePlayStreamID];
+    
+    [player stop];
+}
+
+- (void)fetchRenderAudioFrameManually {
+    // Start a timer that triggers every 20ms to fetch audio data
+    self.audioRenderTimer = [NSTimer timerWithTimeInterval:0.02 target:self selector:@selector(fetchRenderAudioFrame) userInfo:nil repeats:YES];
+    [NSRunLoop.mainRunLoop addTimer:self.audioRenderTimer forMode:NSRunLoopCommonModes];
+    ZGLogInfo(@" ⏱ Audio render timer fire 🚀");
+    [self.audioRenderTimer fire];
 }
 
 #pragma mark - Custom Audio IO
@@ -193,38 +282,10 @@
 // Will be called by the NSTimer every 20ms
 - (void)sendCapturedAudioFrame {
 
-    // Initialize audio pcm data
-    if (!_audioCapturedData) {
-        NSURL *auxURL = [[NSBundle mainBundle] URLForResource:@"test.wav" withExtension:nil];
-        _audioCapturedData = [NSData dataWithContentsOfURL:auxURL options:0 error:nil];
-        _audioCapturedDataPosition = (void *)[_audioCapturedData bytes];
-    }
-
-    if (!_audioCapturedFrameParam) {
-        _audioCapturedFrameParam = [[ZegoAudioFrameParam alloc] init];
-        _audioCapturedFrameParam.channel = 1;
-        _audioCapturedFrameParam.sampleRate = ZegoAudioSampleRate16K;
-    }
-
-    float duration = 0.02; // 20ms
-    int sampleRate = 16000;
-    int audioChannels = 1;
-    int bytesPerSample = 2;
-
-    // Calculate remaining data length
-    unsigned int remainingDataLength = (unsigned int)([_audioCapturedData bytes] + (int)[_audioCapturedData length] - _audioCapturedDataPosition);
-
-    unsigned int expectedDataLength = (unsigned int)(duration * sampleRate * audioChannels * bytesPerSample);
-
-    if (remainingDataLength >= expectedDataLength) {
-        NSLog(@"sendCustomAudioCapturePCMData, remain: %d", remainingDataLength);
-        [[ZegoExpressEngine sharedEngine] sendCustomAudioCapturePCMData:_audioCapturedDataPosition dataLength:expectedDataLength param:_audioCapturedFrameParam];
-        _audioCapturedDataPosition = _audioCapturedDataPosition + expectedDataLength;
-
-    } else {
-        _audioCapturedDataPosition = (void *)[_audioCapturedData bytes];
-    }
-
+    uint8_t *audioCapturedDataPosition = (uint8_t *)malloc([self bufferSize]);
+    NSInteger length = [self.inputStream read:audioCapturedDataPosition maxLength:[self bufferSize]];
+    [[ZegoExpressEngine sharedEngine] sendCustomAudioCapturePCMData:audioCapturedDataPosition dataLength:(unsigned int)length param:_audioCapturedFrameParam];
+    
 }
 
 // Will be called by the NSTimer every 20ms
@@ -234,18 +295,7 @@
         _audioRenderData = [NSMutableData data];
     }
 
-    if (!_audioRenderFrameParam) {
-        _audioRenderFrameParam = [[ZegoAudioFrameParam alloc] init];
-        _audioRenderFrameParam.channel = 1;
-        _audioRenderFrameParam.sampleRate = ZegoAudioSampleRate16K;
-    }
-
-    float duration = 0.02; // 20ms
-    int sampleRate = 16000;
-    int audioChannels = 1;
-    int bytesPerSample = 2;
-
-    unsigned int expectedDataLength = (unsigned int)(duration * sampleRate * audioChannels * bytesPerSample);
+    unsigned int expectedDataLength = [self bufferSize];
 
     if (!_audioRenderBuffer) {
         _audioRenderBuffer = malloc(expectedDataLength);
@@ -257,6 +307,16 @@
 
     // Write audio render buffer to NSMutableData
     [_audioRenderData appendBytes:_audioRenderBuffer length:expectedDataLength];
+}
+
+- (unsigned int)bufferSize {
+    float duration = 0.02; // 20ms
+    int sampleRate = ZegoAudioSampleRate16K;
+    int audioChannels = 1;
+    int bytesPerSample = 2;
+
+    unsigned int expectedDataLength = (unsigned int)(duration * sampleRate * audioChannels * bytesPerSample);
+    return expectedDataLength;
 }
 
 #pragma mark - ZegoEventHandler

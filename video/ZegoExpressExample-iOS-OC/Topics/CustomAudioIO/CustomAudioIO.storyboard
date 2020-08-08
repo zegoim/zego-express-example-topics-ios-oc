@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bba-fn-3nt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bba-fn-3nt">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -180,7 +180,8 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="34" id="xVT-YJ-Uku"/>
                                                 </constraints>
-                                                <state key="normal" title="Strat Play"/>
+                                                <state key="normal" title="Start Play"/>
+                                                <state key="selected" title="Stop Play"/>
                                                 <connections>
                                                     <action selector="startPlayButtonClick:" destination="vnX-Oz-boa" eventType="touchUpInside" id="r5D-Jy-yWv"/>
                                                 </connections>

@@ -18,7 +18,7 @@
 #define _Module_CustomVideoCapture @"CustomVideoCapture"
 #define _Module_CustomVideoRender @"CustomVideoRender"
 #define _Module_CustomAudioIO @"CustomAudioIO"
-//#define _Module_AudioProcessing @"AudioProcessing"
+#define _Module_AudioProcessing @"AudioProcessing"
 #define _Module_Test @"API Test"
 
 #endif
