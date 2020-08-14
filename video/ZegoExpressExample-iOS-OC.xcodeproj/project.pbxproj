@@ -74,15 +74,13 @@
 		8684965D23BC9FE600AE7A58 /* ZGCustomVideoRenderLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8684965C23BC9FE600AE7A58 /* ZGCustomVideoRenderLoginViewController.m */; };
 		8684966623BCA08500AE7A58 /* ZGCustomVideoRenderPublishStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8684966523BCA08500AE7A58 /* ZGCustomVideoRenderPublishStreamViewController.m */; };
 		8684966923BCA09300AE7A58 /* ZGCustomVideoRenderPlayStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8684966823BCA09300AE7A58 /* ZGCustomVideoRenderPlayStreamViewController.m */; };
-		8698292E24C19E56008145B1 /* AudioProcessing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8698292124C19E56008145B1 /* AudioProcessing.storyboard */; };
-		8698292F24C19E56008145B1 /* ZGAudioProcessVirtualStereoConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698292224C19E56008145B1 /* ZGAudioProcessVirtualStereoConfigVC.m */; };
-		8698293024C19E56008145B1 /* ZGAudioProcessVoiceChangeConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698292324C19E56008145B1 /* ZGAudioProcessVoiceChangeConfigVC.m */; };
-		8698293124C19E56008145B1 /* ZGAudioProcessPlayStreamVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698292524C19E56008145B1 /* ZGAudioProcessPlayStreamVC.m */; };
-		8698293224C19E56008145B1 /* ZGAudioProcessInitVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698292A24C19E56008145B1 /* ZGAudioProcessInitVC.m */; };
-		8698293324C19E56008145B1 /* ZGAudioProcessReverbConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698292C24C19E56008145B1 /* ZGAudioProcessReverbConfigVC.m */; };
-		8698293424C19E56008145B1 /* ZGAudioProcessPublishStreamVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698292D24C19E56008145B1 /* ZGAudioProcessPublishStreamVC.m */; };
-		8698293A24C1A01C008145B1 /* ZGAudioProcessTopicHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698293724C1A01B008145B1 /* ZGAudioProcessTopicHelper.m */; };
-		8698293B24C1A01C008145B1 /* ZGAudioProcessTopicConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698293824C1A01B008145B1 /* ZGAudioProcessTopicConfigManager.m */; };
+		8698292E24C19E56008145B1 /* AudioEffect.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8698292124C19E56008145B1 /* AudioEffect.storyboard */; };
+		8698292F24C19E56008145B1 /* ZGAudioEffectVirtualStereoConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698292224C19E56008145B1 /* ZGAudioEffectVirtualStereoConfigVC.m */; };
+		8698293024C19E56008145B1 /* ZGAudioEffectVoiceChangerConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698292324C19E56008145B1 /* ZGAudioEffectVoiceChangerConfigVC.m */; };
+		8698293224C19E56008145B1 /* ZGAudioEffectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698292A24C19E56008145B1 /* ZGAudioEffectViewController.m */; };
+		8698293324C19E56008145B1 /* ZGAudioEffectReverbConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698292C24C19E56008145B1 /* ZGAudioEffectReverbConfigVC.m */; };
+		8698293A24C1A01C008145B1 /* ZGAudioEffectTopicHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698293724C1A01B008145B1 /* ZGAudioEffectTopicHelper.m */; };
+		8698293B24C1A01C008145B1 /* ZGAudioEffectTopicConfigManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8698293824C1A01B008145B1 /* ZGAudioEffectTopicConfigManager.m */; };
 		86A502722369719900D51012 /* VideoTalk.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86A502712369719900D51012 /* VideoTalk.storyboard */; };
 		86A50278236976C200D51012 /* ZGVideoTalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86A50277236976C200D51012 /* ZGVideoTalkViewController.m */; };
 		86AA7AB0237BDB7000B2D31E /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 867BBD082376E002008F7D4F /* Bugly.framework */; };
@@ -255,23 +253,19 @@
 		8684966523BCA08500AE7A58 /* ZGCustomVideoRenderPublishStreamViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGCustomVideoRenderPublishStreamViewController.m; sourceTree = "<group>"; };
 		8684966723BCA09300AE7A58 /* ZGCustomVideoRenderPlayStreamViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGCustomVideoRenderPlayStreamViewController.h; sourceTree = "<group>"; };
 		8684966823BCA09300AE7A58 /* ZGCustomVideoRenderPlayStreamViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGCustomVideoRenderPlayStreamViewController.m; sourceTree = "<group>"; };
-		8698292124C19E56008145B1 /* AudioProcessing.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AudioProcessing.storyboard; sourceTree = "<group>"; };
-		8698292224C19E56008145B1 /* ZGAudioProcessVirtualStereoConfigVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioProcessVirtualStereoConfigVC.m; sourceTree = "<group>"; };
-		8698292324C19E56008145B1 /* ZGAudioProcessVoiceChangeConfigVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioProcessVoiceChangeConfigVC.m; sourceTree = "<group>"; };
-		8698292424C19E56008145B1 /* ZGAudioProcessInitVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioProcessInitVC.h; sourceTree = "<group>"; };
-		8698292524C19E56008145B1 /* ZGAudioProcessPlayStreamVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioProcessPlayStreamVC.m; sourceTree = "<group>"; };
-		8698292624C19E56008145B1 /* ZGAudioProcessPublishStreamVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioProcessPublishStreamVC.h; sourceTree = "<group>"; };
-		8698292724C19E56008145B1 /* ZGAudioProcessReverbConfigVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioProcessReverbConfigVC.h; sourceTree = "<group>"; };
-		8698292824C19E56008145B1 /* ZGAudioProcessVirtualStereoConfigVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioProcessVirtualStereoConfigVC.h; sourceTree = "<group>"; };
-		8698292924C19E56008145B1 /* ZGAudioProcessVoiceChangeConfigVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioProcessVoiceChangeConfigVC.h; sourceTree = "<group>"; };
-		8698292A24C19E56008145B1 /* ZGAudioProcessInitVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioProcessInitVC.m; sourceTree = "<group>"; };
-		8698292B24C19E56008145B1 /* ZGAudioProcessPlayStreamVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioProcessPlayStreamVC.h; sourceTree = "<group>"; };
-		8698292C24C19E56008145B1 /* ZGAudioProcessReverbConfigVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioProcessReverbConfigVC.m; sourceTree = "<group>"; };
-		8698292D24C19E56008145B1 /* ZGAudioProcessPublishStreamVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioProcessPublishStreamVC.m; sourceTree = "<group>"; };
-		8698293624C1A01B008145B1 /* ZGAudioProcessTopicConfigManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioProcessTopicConfigManager.h; sourceTree = "<group>"; };
-		8698293724C1A01B008145B1 /* ZGAudioProcessTopicHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioProcessTopicHelper.m; sourceTree = "<group>"; };
-		8698293824C1A01B008145B1 /* ZGAudioProcessTopicConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioProcessTopicConfigManager.m; sourceTree = "<group>"; };
-		8698293924C1A01B008145B1 /* ZGAudioProcessTopicHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioProcessTopicHelper.h; sourceTree = "<group>"; };
+		8698292124C19E56008145B1 /* AudioEffect.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AudioEffect.storyboard; sourceTree = "<group>"; };
+		8698292224C19E56008145B1 /* ZGAudioEffectVirtualStereoConfigVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioEffectVirtualStereoConfigVC.m; sourceTree = "<group>"; };
+		8698292324C19E56008145B1 /* ZGAudioEffectVoiceChangerConfigVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioEffectVoiceChangerConfigVC.m; sourceTree = "<group>"; };
+		8698292424C19E56008145B1 /* ZGAudioEffectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioEffectViewController.h; sourceTree = "<group>"; };
+		8698292724C19E56008145B1 /* ZGAudioEffectReverbConfigVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioEffectReverbConfigVC.h; sourceTree = "<group>"; };
+		8698292824C19E56008145B1 /* ZGAudioEffectVirtualStereoConfigVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioEffectVirtualStereoConfigVC.h; sourceTree = "<group>"; };
+		8698292924C19E56008145B1 /* ZGAudioEffectVoiceChangerConfigVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioEffectVoiceChangerConfigVC.h; sourceTree = "<group>"; };
+		8698292A24C19E56008145B1 /* ZGAudioEffectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioEffectViewController.m; sourceTree = "<group>"; };
+		8698292C24C19E56008145B1 /* ZGAudioEffectReverbConfigVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioEffectReverbConfigVC.m; sourceTree = "<group>"; };
+		8698293624C1A01B008145B1 /* ZGAudioEffectTopicConfigManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioEffectTopicConfigManager.h; sourceTree = "<group>"; };
+		8698293724C1A01B008145B1 /* ZGAudioEffectTopicHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioEffectTopicHelper.m; sourceTree = "<group>"; };
+		8698293824C1A01B008145B1 /* ZGAudioEffectTopicConfigManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAudioEffectTopicConfigManager.m; sourceTree = "<group>"; };
+		8698293924C1A01B008145B1 /* ZGAudioEffectTopicHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAudioEffectTopicHelper.h; sourceTree = "<group>"; };
 		86A502712369719900D51012 /* VideoTalk.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = VideoTalk.storyboard; sourceTree = "<group>"; };
 		86A50276236976C200D51012 /* ZGVideoTalkViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGVideoTalkViewController.h; sourceTree = "<group>"; };
 		86A50277236976C200D51012 /* ZGVideoTalkViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGVideoTalkViewController.m; sourceTree = "<group>"; };
@@ -436,6 +430,7 @@
 		8608C3EE2363245100CE367B /* Topics */ = {
 			isa = PBXGroup;
 			children = (
+				8682BF5224E3AD3100EFC88F /* AudioProcess */,
 				864498AC237D0D3000C1321D /* QuickStart */,
 				8608C3F42363245100CE367B /* PublishStream */,
 				8608C3F02363245100CE367B /* PlayStream */,
@@ -700,6 +695,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8682BF5224E3AD3100EFC88F /* AudioProcess */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AudioProcess;
+			sourceTree = "<group>";
+		};
 		8684965823BC97B900AE7A58 /* CustomVideoRender */ = {
 			isa = PBXGroup;
 			children = (
@@ -718,19 +720,15 @@
 			isa = PBXGroup;
 			children = (
 				8698293524C1A01B008145B1 /* Tool */,
-				8698292124C19E56008145B1 /* AudioProcessing.storyboard */,
-				8698292424C19E56008145B1 /* ZGAudioProcessInitVC.h */,
-				8698292A24C19E56008145B1 /* ZGAudioProcessInitVC.m */,
-				8698292624C19E56008145B1 /* ZGAudioProcessPublishStreamVC.h */,
-				8698292D24C19E56008145B1 /* ZGAudioProcessPublishStreamVC.m */,
-				8698292B24C19E56008145B1 /* ZGAudioProcessPlayStreamVC.h */,
-				8698292524C19E56008145B1 /* ZGAudioProcessPlayStreamVC.m */,
-				8698292824C19E56008145B1 /* ZGAudioProcessVirtualStereoConfigVC.h */,
-				8698292224C19E56008145B1 /* ZGAudioProcessVirtualStereoConfigVC.m */,
-				8698292924C19E56008145B1 /* ZGAudioProcessVoiceChangeConfigVC.h */,
-				8698292324C19E56008145B1 /* ZGAudioProcessVoiceChangeConfigVC.m */,
-				8698292724C19E56008145B1 /* ZGAudioProcessReverbConfigVC.h */,
-				8698292C24C19E56008145B1 /* ZGAudioProcessReverbConfigVC.m */,
+				8698292124C19E56008145B1 /* AudioEffect.storyboard */,
+				8698292424C19E56008145B1 /* ZGAudioEffectViewController.h */,
+				8698292A24C19E56008145B1 /* ZGAudioEffectViewController.m */,
+				8698292824C19E56008145B1 /* ZGAudioEffectVirtualStereoConfigVC.h */,
+				8698292224C19E56008145B1 /* ZGAudioEffectVirtualStereoConfigVC.m */,
+				8698292924C19E56008145B1 /* ZGAudioEffectVoiceChangerConfigVC.h */,
+				8698292324C19E56008145B1 /* ZGAudioEffectVoiceChangerConfigVC.m */,
+				8698292724C19E56008145B1 /* ZGAudioEffectReverbConfigVC.h */,
+				8698292C24C19E56008145B1 /* ZGAudioEffectReverbConfigVC.m */,
 			);
 			path = AudioEffect;
 			sourceTree = "<group>";
@@ -738,10 +736,10 @@
 		8698293524C1A01B008145B1 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
-				8698293624C1A01B008145B1 /* ZGAudioProcessTopicConfigManager.h */,
-				8698293724C1A01B008145B1 /* ZGAudioProcessTopicHelper.m */,
-				8698293824C1A01B008145B1 /* ZGAudioProcessTopicConfigManager.m */,
-				8698293924C1A01B008145B1 /* ZGAudioProcessTopicHelper.h */,
+				8698293624C1A01B008145B1 /* ZGAudioEffectTopicConfigManager.h */,
+				8698293824C1A01B008145B1 /* ZGAudioEffectTopicConfigManager.m */,
+				8698293924C1A01B008145B1 /* ZGAudioEffectTopicHelper.h */,
+				8698293724C1A01B008145B1 /* ZGAudioEffectTopicHelper.m */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -873,7 +871,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8698292E24C19E56008145B1 /* AudioProcessing.storyboard in Resources */,
+				8698292E24C19E56008145B1 /* AudioEffect.storyboard in Resources */,
 				860B6391240673E500D0E9C8 /* AuxPublisher.storyboard in Resources */,
 				86BB70882363FEC600FF2608 /* PublishStream.storyboard in Resources */,
 				8656819C24476DF100BEE4C8 /* test.wav in Resources */,
@@ -960,7 +958,7 @@
 				8608C3E62363244A00CE367B /* ZGShareLogViewController.m in Sources */,
 				8608C3E42363244A00CE367B /* ZGNavigationController.m in Sources */,
 				86BF980E239F6E0200319709 /* ZGBeautifyConfigTableViewController.m in Sources */,
-				8698293324C19E56008145B1 /* ZGAudioProcessReverbConfigVC.m in Sources */,
+				8698293324C19E56008145B1 /* ZGAudioEffectReverbConfigVC.m in Sources */,
 				86F6058C24AB1DAF0034C137 /* ZGRecordCaptureViewController.m in Sources */,
 				8608C4582363246600CE367B /* ZGAppGlobalConfig.m in Sources */,
 				8608C3EB2363244A00CE367B /* ZGTestMainViewController.m in Sources */,
@@ -977,10 +975,10 @@
 				865A5F4723B370DC001BB0F4 /* ZGMediaPlayerViewController.m in Sources */,
 				86A50278236976C200D51012 /* ZGVideoTalkViewController.m in Sources */,
 				86E90C9924AB1B9A00507352 /* ZGPlayStreamSettingTableViewController.m in Sources */,
-				8698293224C19E56008145B1 /* ZGAudioProcessInitVC.m in Sources */,
+				8698293224C19E56008145B1 /* ZGAudioEffectViewController.m in Sources */,
 				867DB307239E712000072B3F /* ZGVideoTalkViewObject.m in Sources */,
 				86EB8A9C2480AA1A0042D256 /* ZGPublishStreamSettingTableViewController.m in Sources */,
-				8698293A24C1A01C008145B1 /* ZGAudioProcessTopicHelper.m in Sources */,
+				8698293A24C1A01C008145B1 /* ZGAudioEffectTopicHelper.m in Sources */,
 				8608C3E82363244A00CE367B /* UIViewController+TopPresent.m in Sources */,
 				86E90C9624AB128400507352 /* ZGPlayStreamViewController.m in Sources */,
 				86EDFE7423CABD7200A1A3AC /* ZGCustomVideoCaptureLoginViewController.m in Sources */,
@@ -988,12 +986,11 @@
 				86AD331124978BD3004A0D1F /* ZGAudioMixingSettingTableViewController.m in Sources */,
 				8608C45A2363246600CE367B /* ZGAppGlobalConfigManager.m in Sources */,
 				861376362387E11900C30486 /* ZGRoomMessageSelectUsersTableViewController.m in Sources */,
-				8698293124C19E56008145B1 /* ZGAudioProcessPlayStreamVC.m in Sources */,
 				86AD330B249787E8004A0D1F /* ZGAudioMixingViewController.m in Sources */,
 				8608C3FB2363245100CE367B /* ZGTestTopicManager.m in Sources */,
 				8608C3E32363244A00CE367B /* ZGAppGlobalConfigViewController.m in Sources */,
 				8608C46923632F3100CE367B /* ZGURLDefine.m in Sources */,
-				8698292F24C19E56008145B1 /* ZGAudioProcessVirtualStereoConfigVC.m in Sources */,
+				8698292F24C19E56008145B1 /* ZGAudioEffectVirtualStereoConfigVC.m in Sources */,
 				8608C4522363246600CE367B /* ZegoTTYLogger.m in Sources */,
 				865A5F3723B3068E001BB0F4 /* ZGMediaPlayerChooseFileVC.m in Sources */,
 				8608C3E92363244A00CE367B /* ZegoHudManager.m in Sources */,
@@ -1005,12 +1002,11 @@
 				86EDFE7B23CACEF500A1A3AC /* ZGCaptureDeviceCamera.m in Sources */,
 				861376262386C04B00C30486 /* ZGMixerViewController.m in Sources */,
 				8608C3EA2363244A00CE367B /* ZGTestSettingTableViewController.m in Sources */,
-				8698293424C19E56008145B1 /* ZGAudioProcessPublishStreamVC.m in Sources */,
 				8608C3BF23631EDC00CE367B /* main.m in Sources */,
 				8608C4542363246600CE367B /* ZegoDefaultLogFormatter.m in Sources */,
 				86BF980B239F47CB00319709 /* ZGBeautifyViewController.m in Sources */,
-				8698293024C19E56008145B1 /* ZGAudioProcessVoiceChangeConfigVC.m in Sources */,
-				8698293B24C1A01C008145B1 /* ZGAudioProcessTopicConfigManager.m in Sources */,
+				8698293024C19E56008145B1 /* ZGAudioEffectVoiceChangerConfigVC.m in Sources */,
+				8698293B24C1A01C008145B1 /* ZGAudioEffectTopicConfigManager.m in Sources */,
 				861376332387B79600C30486 /* ZGRoomMessageViewController.m in Sources */,
 				86E90C9D24AB293F00507352 /* ZGCustomAudioIOViewController.m in Sources */,
 				8608C3E52363244A00CE367B /* ZegoLogView.m in Sources */,
@@ -1168,7 +1164,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 200808;
+				CURRENT_PROJECT_VERSION = 200814;
 				DEVELOPMENT_TEAM = B82BHJ5H89;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1183,7 +1179,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.12.0;
+				MARKETING_VERSION = 1.13.0;
 				OBJROOT = DerivedData/Build/Intermediates.noindex;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-OC";
 				PRODUCT_NAME = "ZegoExpressExample-iOS-OC";
@@ -1199,7 +1195,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 200808;
+				CURRENT_PROJECT_VERSION = 200814;
 				DEVELOPMENT_TEAM = B82BHJ5H89;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1214,7 +1210,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.12.0;
+				MARKETING_VERSION = 1.13.0;
 				OBJROOT = DerivedData/Build/Intermediates.noindex;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-OC";
 				PRODUCT_NAME = "ZegoExpressExample-iOS-OC";

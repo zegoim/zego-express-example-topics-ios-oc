@@ -12,12 +12,7 @@
 
 @class Recorder;
 
-typedef void (^XBAudioUnitPlayerOutputBlock)(Recorder *player,
-AudioUnitRenderActionFlags *ioActionFlags,
-const AudioTimeStamp *inTimeStamp,
-UInt32 inBusNumber,
-UInt32 inNumberFrames,
-AudioBufferList *ioData);
+typedef void (^XBAudioUnitPlayerOutputBlock)(Recorder * _Nonnull player, AudioUnitRenderActionFlags * _Nonnull ioActionFlags, const AudioTimeStamp * _Nonnull inTimeStamp, UInt32 inBusNumber, UInt32 inNumberFrames, AudioBufferList * _Nonnull ioData);
 
 NS_ASSUME_NONNULL_BEGIN
 

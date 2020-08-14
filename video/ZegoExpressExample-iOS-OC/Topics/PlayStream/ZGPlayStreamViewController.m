@@ -249,6 +249,8 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
     vc.streamID = _streamID;
     vc.enableHardwareDecoder = _enableHardwareDecoder;
     vc.playVolume = _playVolume;
+    vc.streamExtraInfo = _streamExtraInfo;
+    vc.roomExtraInfo = _roomExtraInfo;
 
     [self presentViewController:vc animated:YES completion:nil];
 }
@@ -271,6 +273,15 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
 
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
     return UIModalPresentationNone;
+}
+
+- (void)updateStreamExtraInfo:(NSArray<ZegoStream *> *)streamList {
+    NSMutableString *streamExtraInfoString = [NSMutableString string];
+    for (ZegoStream *stream in streamList) {
+        [streamExtraInfoString appendFormat:@"streamID:%@,info:%@;\n", stream.streamID, stream.extraInfo];
+    }
+    self.streamExtraInfo = streamExtraInfoString;
+    [self appendLog:[NSString stringWithFormat:@" 🚩 💬 Stream extra info update: %@", streamExtraInfoString]];
 }
 
 #pragma mark - ZegoExpress EventHandler Room Event
@@ -298,6 +309,25 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
     }
     self.roomState = state;
     [self invalidateLiveStateUILayout];
+}
+
+- (void)onRoomStreamUpdate:(ZegoUpdateType)updateType streamList:(NSArray<ZegoStream *> *)streamList roomID:(NSString *)roomID {
+    [self appendLog:[NSString stringWithFormat:@" 🚩 🌊 Room stream update, updateType:%lu, streamsCount: %lu, roomID: %@", (unsigned long)updateType, (unsigned long)streamList.count, roomID]];
+    [self updateStreamExtraInfo:streamList];
+}
+
+- (void)onRoomStreamExtraInfoUpdate:(NSArray<ZegoStream *> *)streamList roomID:(NSString *)roomID {
+    [self updateStreamExtraInfo:streamList];
+}
+
+- (void)onRoomExtraInfoUpdate:(NSArray<ZegoRoomExtraInfo *> *)roomExtraInfoList roomID:(NSString *)roomID {
+    NSMutableString *roomExtraInfoString = [NSMutableString string];
+    for (ZegoRoomExtraInfo *info in roomExtraInfoList) {
+        [roomExtraInfoString appendFormat:@"key:%@,value:%@;\n", info.key, info.value];
+
+    }
+    self.roomExtraInfo = roomExtraInfoString;
+    [self appendLog:[NSString stringWithFormat:@" 🚩 💭 Room extra info update: %@", roomExtraInfoString]];
 }
 
 #pragma mark - ZegoExpress EventHandler Play Event

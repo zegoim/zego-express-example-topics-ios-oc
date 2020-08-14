@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8ux-z8-iYV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8ux-z8-iYV">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -331,6 +331,52 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="60" id="Qt2-w8-4bs">
+                                        <rect key="frame" x="0.0" y="160" width="375" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Qt2-w8-4bs" id="RFx-Sa-gii">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="StreamExtraInfo" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="40m-3F-ki7">
+                                                    <rect key="frame" x="20" y="5" width="335" height="50"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="40m-3F-ki7" firstAttribute="top" secondItem="RFx-Sa-gii" secondAttribute="top" constant="5" id="0U9-XV-xWb"/>
+                                                <constraint firstAttribute="trailing" secondItem="40m-3F-ki7" secondAttribute="trailing" constant="20" id="OBa-ct-H2y"/>
+                                                <constraint firstAttribute="bottom" secondItem="40m-3F-ki7" secondAttribute="bottom" constant="5" id="WEe-OW-v5x"/>
+                                                <constraint firstItem="40m-3F-ki7" firstAttribute="leading" secondItem="RFx-Sa-gii" secondAttribute="leading" constant="20" id="kOr-Bq-gS9"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="60" id="1gy-uj-CpS">
+                                        <rect key="frame" x="0.0" y="220" width="375" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1gy-uj-CpS" id="ADu-pM-jX4">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="RoomExtraInfo" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="sSk-CV-VFg">
+                                                    <rect key="frame" x="20" y="5" width="335" height="50"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="sSk-CV-VFg" secondAttribute="trailing" constant="20" id="Art-wo-5de"/>
+                                                <constraint firstItem="sSk-CV-VFg" firstAttribute="leading" secondItem="ADu-pM-jX4" secondAttribute="leading" constant="20" id="LJj-Ek-OwN"/>
+                                                <constraint firstItem="sSk-CV-VFg" firstAttribute="top" secondItem="ADu-pM-jX4" secondAttribute="top" constant="5" id="dec-Zf-hUO"/>
+                                                <constraint firstAttribute="bottom" secondItem="sSk-CV-VFg" secondAttribute="bottom" constant="5" id="hM8-gG-X2e"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -339,7 +385,9 @@
                     <connections>
                         <outlet property="hardwareDecoderSwitch" destination="7v1-WA-aEW" id="JWc-WB-s5v"/>
                         <outlet property="playVolumeSlider" destination="yvV-np-Ypm" id="dxr-1B-ahK"/>
+                        <outlet property="roomExtraInfoTextView" destination="sSk-CV-VFg" id="sdA-js-hYg"/>
                         <outlet property="speakerSwitch" destination="A6x-KI-uVZ" id="hp0-aA-vSO"/>
+                        <outlet property="streamExtraInfoTextView" destination="40m-3F-ki7" id="HED-zm-GWY"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aZz-eh-ul0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

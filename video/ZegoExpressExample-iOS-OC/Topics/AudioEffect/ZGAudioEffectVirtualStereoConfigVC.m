@@ -1,17 +1,17 @@
 //
-//  ZGAudioProcessVirtualStereoConfigVC.m
+//  ZGAudioEffectVirtualStereoConfigVC.m
 //  LiveRoomPlayground-iOS
 //
 //  Created by jeffreypeng on 2019/8/27.
 //  Copyright © 2019 Zego. All rights reserved.
 //
-#ifdef _Module_AudioProcessing
+#ifdef _Module_AudioEffect
 
-#import "ZGAudioProcessVirtualStereoConfigVC.h"
-#import "ZGAudioProcessTopicConfigManager.h"
-#import "ZGAudioProcessTopicHelper.h"
+#import "ZGAudioEffectVirtualStereoConfigVC.h"
+#import "ZGAudioEffectTopicConfigManager.h"
+#import "ZGAudioEffectTopicHelper.h"
 
-@interface ZGAudioProcessVirtualStereoConfigVC ()
+@interface ZGAudioEffectVirtualStereoConfigVC ()
 
 @property (weak, nonatomic) IBOutlet UISwitch *openVirtaulStereoSwitch;
 @property (weak, nonatomic) IBOutlet UIView *virtaulStereoConfigContainerView;
@@ -20,10 +20,10 @@
 
 @end
 
-@implementation ZGAudioProcessVirtualStereoConfigVC
+@implementation ZGAudioEffectVirtualStereoConfigVC
 
 + (instancetype)instanceFromStoryboard {
-    return [[UIStoryboard storyboardWithName:@"AudioProcessing" bundle:nil] instantiateViewControllerWithIdentifier:NSStringFromClass([ZGAudioProcessVirtualStereoConfigVC class])];
+    return [[UIStoryboard storyboardWithName:@"AudioEffect" bundle:nil] instantiateViewControllerWithIdentifier:NSStringFromClass([ZGAudioEffectVirtualStereoConfigVC class])];
 }
 
 - (void)viewDidLoad {
@@ -31,12 +31,12 @@
     
     self.navigationItem.title = @"设置-立体声";
     
-    BOOL virtualStereoOpen = [ZGAudioProcessTopicConfigManager sharedInstance].virtualStereoOpen;
+    BOOL virtualStereoOpen = [ZGAudioEffectTopicConfigManager sharedInstance].virtualStereoOpen;
     
     self.virtaulStereoConfigContainerView.hidden = !virtualStereoOpen;
     self.openVirtaulStereoSwitch.on = virtualStereoOpen;
     
-    float virtualStereoAngle = [ZGAudioProcessTopicConfigManager sharedInstance].virtualStereoAngle;
+    float virtualStereoAngle = [ZGAudioEffectTopicConfigManager sharedInstance].virtualStereoAngle;
     self.angleValueSlider.minimumValue = 0;
     self.angleValueSlider.maximumValue = 180;
     self.angleValueSlider.value = virtualStereoAngle;
@@ -45,13 +45,13 @@
 
 - (IBAction)openVirtaulStereoValueChanged:(UISwitch*)sender {
     float virtualStereoOpen = sender.isOn;
-    [[ZGAudioProcessTopicConfigManager sharedInstance] setVirtualStereoOpen:virtualStereoOpen];
+    [[ZGAudioEffectTopicConfigManager sharedInstance] setVirtualStereoOpen:virtualStereoOpen];
     self.virtaulStereoConfigContainerView.hidden = !virtualStereoOpen;
 }
 
 - (IBAction)angleValueChanged:(UISlider*)sender {
     float virtualStereoAngle = sender.value;
-    [[ZGAudioProcessTopicConfigManager sharedInstance] setVirtualStereoAngle:virtualStereoAngle];
+    [[ZGAudioEffectTopicConfigManager sharedInstance] setVirtualStereoAngle:virtualStereoAngle];
     self.angleValueLabel.text = @(virtualStereoAngle).stringValue;
 }
 

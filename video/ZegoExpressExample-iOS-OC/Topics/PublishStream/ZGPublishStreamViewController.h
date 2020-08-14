@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL enableHardwareEncoder;
 @property (nonatomic, assign) int captureVolume;
 @property (nonatomic, copy) NSString *streamExtraInfo;
+@property (nonatomic, copy) NSString *roomExtraInfoKey;
+@property (nonatomic, copy) NSString *roomExtraInfoValue;
 
 - (void)appendLog:(NSString *)tipText;
 

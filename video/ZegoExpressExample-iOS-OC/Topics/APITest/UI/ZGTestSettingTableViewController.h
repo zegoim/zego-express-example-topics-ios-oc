@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZGTestSettingTableViewController : UITableViewController
 
-@property (nonatomic, strong) ZGTestTopicManager *manager;
+@property (nonatomic, strong) id<ZGTestManager> manager;
 
 - (void)setZGTestViewDelegate:(id<ZGTestViewDelegate>)delegate;
 

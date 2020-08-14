@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UISwitch *speakerSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *hardwareDecoderSwitch;
 @property (weak, nonatomic) IBOutlet UISlider *playVolumeSlider;
+@property (weak, nonatomic) IBOutlet UITextView *streamExtraInfoTextView;
+@property (weak, nonatomic) IBOutlet UITextView *roomExtraInfoTextView;
 
 @end
 
@@ -37,6 +39,8 @@
     self.hardwareDecoderSwitch.on = _enableHardwareDecoder;
     self.playVolumeSlider.continuous = NO;
     self.playVolumeSlider.value = _playVolume;
+    self.streamExtraInfoTextView.text = [NSString stringWithFormat:@"StreamExtraInfo\n%@", _streamExtraInfo];
+    self.roomExtraInfoTextView.text = [NSString stringWithFormat:@"RoomExtraInfo\n%@", _roomExtraInfo];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

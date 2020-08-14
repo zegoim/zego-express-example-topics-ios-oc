@@ -32,7 +32,10 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-@interface ZGTestTopicManager : NSObject
+
+@protocol ZGTestManager <NSObject>
+
+@required
 
 - (void)setZGTestDataSource:(id<ZGTestDataSource>)dataSource;
 
@@ -56,6 +59,9 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Room
 
 - (void)loginRoom:(NSString *)roomID userID:(NSString *)userID userName:(NSString *)userName;
+
+
+- (void)loginMultiRoom:(NSString *)roomID;
 
 
 - (void)logoutRoom:(NSString *)roomID;
@@ -202,6 +208,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @end
+
+
+
+@interface ZGTestTopicManager : NSObject<ZGTestManager>
+
+@end
+
 
 NS_ASSUME_NONNULL_END
 

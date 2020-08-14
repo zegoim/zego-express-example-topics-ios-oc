@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EGL-hM-FMU">
-    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -8,97 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Audio Process Publish StreamVC-->
-        <scene sceneID="ikP-Np-Eu2">
-            <objects>
-                <viewController storyboardIdentifier="ZGAudioProcessPublishStreamVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yhc-Ef-YYe" customClass="ZGAudioProcessPublishStreamVC" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="vfM-1P-8dM">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4FA-qb-y7h">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <color key="backgroundColor" systemColor="systemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uGr-sW-8Fi">
-                                <rect key="frame" x="349" y="813" width="50" height="29"/>
-                                <color key="backgroundColor" red="0.36460450550000001" green="0.39655775450000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="5ed-FN-CZ2"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <state key="normal" title="混响"/>
-                                <connections>
-                                    <action selector="reverbConfigButnClick:" destination="yhc-Ef-YYe" eventType="touchUpInside" id="PZe-ak-1bJ"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u5X-Te-dZ9">
-                                <rect key="frame" x="349" y="735" width="50" height="29"/>
-                                <color key="backgroundColor" red="0.36460450550000001" green="0.39655775450000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="CzC-Xy-QQs"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <state key="normal" title="变声"/>
-                                <connections>
-                                    <action selector="voiceChangeConfigButnClick:" destination="yhc-Ef-YYe" eventType="touchUpInside" id="wgk-bj-DVC"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yy3-98-QlO">
-                                <rect key="frame" x="349" y="774" width="50" height="29"/>
-                                <color key="backgroundColor" red="0.36460450550000001" green="0.39655775450000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="lv9-jk-15v"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <state key="normal" title="立体声"/>
-                                <connections>
-                                    <action selector="virtualStereoConfigButnClick:" destination="yhc-Ef-YYe" eventType="touchUpInside" id="VfX-ej-lBj"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="4FA-qb-y7h" firstAttribute="trailing" secondItem="Ohz-v8-ZeW" secondAttribute="trailing" id="AUy-Io-r4c"/>
-                            <constraint firstItem="4FA-qb-y7h" firstAttribute="top" secondItem="Ohz-v8-ZeW" secondAttribute="top" id="Btz-sG-BvL"/>
-                            <constraint firstItem="4FA-qb-y7h" firstAttribute="leading" secondItem="Ohz-v8-ZeW" secondAttribute="leading" id="ILw-Wg-DaA"/>
-                            <constraint firstItem="Ohz-v8-ZeW" firstAttribute="trailing" secondItem="u5X-Te-dZ9" secondAttribute="trailing" constant="15" id="KVk-GB-fuL"/>
-                            <constraint firstItem="Ohz-v8-ZeW" firstAttribute="trailing" secondItem="uGr-sW-8Fi" secondAttribute="trailing" constant="15" id="RBN-2N-WlN"/>
-                            <constraint firstItem="Ohz-v8-ZeW" firstAttribute="trailing" secondItem="yy3-98-QlO" secondAttribute="trailing" constant="15" id="VWt-ir-R3w"/>
-                            <constraint firstItem="Ohz-v8-ZeW" firstAttribute="bottom" secondItem="uGr-sW-8Fi" secondAttribute="bottom" constant="20" id="XgC-3D-ZHE"/>
-                            <constraint firstItem="yy3-98-QlO" firstAttribute="top" secondItem="u5X-Te-dZ9" secondAttribute="bottom" constant="10" id="Zcb-Dc-Ijd"/>
-                            <constraint firstItem="uGr-sW-8Fi" firstAttribute="top" secondItem="yy3-98-QlO" secondAttribute="bottom" constant="10" id="tyJ-KW-hDC"/>
-                            <constraint firstItem="4FA-qb-y7h" firstAttribute="bottom" secondItem="Ohz-v8-ZeW" secondAttribute="bottom" id="ynX-hh-4Qe"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="Ohz-v8-ZeW"/>
-                    </view>
-                    <connections>
-                        <outlet property="previewView" destination="4FA-qb-y7h" id="mFV-sv-bL0"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Zxu-vR-PwG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="111.59420289855073" y="23.4375"/>
-        </scene>
-        <!--Audio Process Play StreamVC-->
-        <scene sceneID="ayL-QS-G8s">
-            <objects>
-                <viewController storyboardIdentifier="ZGAudioProcessPlayStreamVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="voa-gG-meu" customClass="ZGAudioProcessPlayStreamVC" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="WPl-nZ-hVk">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="qFd-zd-12T"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hBB-94-2Hi" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="112" y="688"/>
-        </scene>
-        <!--Audio Process Voice Change ConfigVC-->
+        <!--Audio Effect Voice Changer ConfigVC-->
         <scene sceneID="lFW-5z-0Ae">
             <objects>
-                <viewController storyboardIdentifier="ZGAudioProcessVoiceChangeConfigVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="SBv-Pe-OrM" customClass="ZGAudioProcessVoiceChangeConfigVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ZGAudioEffectVoiceChangerConfigVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="SBv-Pe-OrM" customClass="ZGAudioEffectVoiceChangerConfigVC" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mLV-mM-Iu8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -142,7 +55,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="5gP-2y-yu5">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gP-2y-yu5">
                                         <rect key="frame" x="18" y="100.5" width="378" height="31"/>
                                         <connections>
                                             <action selector="customModeValueChanged:" destination="SBv-Pe-OrM" eventType="valueChanged" id="7e7-tP-pyw"/>
@@ -216,10 +129,10 @@
             </objects>
             <point key="canvasLocation" x="865.21739130434787" y="24.776785714285712"/>
         </scene>
-        <!--Audio Process Virtual Stereo ConfigVC-->
+        <!--Audio Effect Virtual Stereo ConfigVC-->
         <scene sceneID="PGb-l5-L4B">
             <objects>
-                <viewController storyboardIdentifier="ZGAudioProcessVirtualStereoConfigVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="k2D-Hv-FNs" customClass="ZGAudioProcessVirtualStereoConfigVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ZGAudioEffectVirtualStereoConfigVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="k2D-Hv-FNs" customClass="ZGAudioEffectVirtualStereoConfigVC" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mNp-H2-AWx">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -263,7 +176,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="47U-NO-guw">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47U-NO-guw">
                                         <rect key="frame" x="18" y="33" width="378" height="31"/>
                                         <connections>
                                             <action selector="angleValueChanged:" destination="k2D-Hv-FNs" eventType="valueChanged" id="UAY-Fg-paA"/>
@@ -328,10 +241,10 @@
             </objects>
             <point key="canvasLocation" x="1594.2028985507247" y="24.776785714285712"/>
         </scene>
-        <!--Audio Process Reverb ConfigVC-->
+        <!--Audio Effect Reverb ConfigVC-->
         <scene sceneID="Xv2-iD-Ney">
             <objects>
-                <viewController storyboardIdentifier="ZGAudioProcessReverbConfigVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dgj-aN-SQX" customClass="ZGAudioProcessReverbConfigVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ZGAudioEffectReverbConfigVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dgj-aN-SQX" customClass="ZGAudioEffectReverbConfigVC" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KPM-UX-iCC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -396,7 +309,7 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="dH6-MV-lAL">
+                                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dH6-MV-lAL">
                                                                 <rect key="frame" x="18" y="28" width="378" height="31"/>
                                                                 <connections>
                                                                     <action selector="customRoomSizeValueChanged:" destination="dgj-aN-SQX" eventType="valueChanged" id="SE0-uH-SI0"/>
@@ -446,7 +359,7 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ena-NB-smL">
+                                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ena-NB-smL">
                                                                 <rect key="frame" x="18" y="28" width="378" height="31"/>
                                                                 <connections>
                                                                     <action selector="customDryWetRationValueChanged:" destination="dgj-aN-SQX" eventType="valueChanged" id="LDi-Rq-NMw"/>
@@ -496,7 +409,7 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="7ru-gb-J2a">
+                                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ru-gb-J2a">
                                                                 <rect key="frame" x="18" y="28" width="378" height="31"/>
                                                                 <connections>
                                                                     <action selector="customDampingValueChanged:" destination="dgj-aN-SQX" eventType="valueChanged" id="qWu-j0-8s9"/>
@@ -546,7 +459,7 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="9RW-Xd-whk">
+                                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9RW-Xd-whk">
                                                                 <rect key="frame" x="18" y="28" width="378" height="31"/>
                                                                 <connections>
                                                                     <action selector="customReverberanceChanged:" destination="dgj-aN-SQX" eventType="valueChanged" id="Ewi-Up-9Rq"/>
@@ -659,10 +572,10 @@
             </objects>
             <point key="canvasLocation" x="2315.9420289855075" y="22.767857142857142"/>
         </scene>
-        <!--Audio Process InitVC-->
+        <!--Audio Effect View Controller-->
         <scene sceneID="sfQ-jY-1FV">
             <objects>
-                <viewController id="EGL-hM-FMU" customClass="ZGAudioProcessInitVC" sceneMemberID="viewController">
+                <viewController id="EGL-hM-FMU" customClass="ZGAudioEffectViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hiM-Qn-XoF"/>
                         <viewControllerLayoutGuide type="bottom" id="XIW-ef-R9h"/>
@@ -978,7 +891,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y5J-dK-lqW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1594.2028985507247" y="24.776785714285712"/>
+            <point key="canvasLocation" x="113" y="25"/>
         </scene>
     </scenes>
 </document>

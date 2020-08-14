@@ -72,16 +72,28 @@
 #pragma mark Room
 
 - (void)loginRoom:(NSString *)roomID userID:(NSString *)userID userName:(NSString *)userName {
-    [self.engine loginRoom:roomID user:[ZegoUser userWithUserID:userID userName:userName]];
+    ZegoRoomConfig *roomConfig = [[ZegoRoomConfig alloc] init];
+    roomConfig.isUserStatusNotify = YES;
+
+    [self.engine loginRoom:roomID user:[ZegoUser userWithUserID:userID userName:userName] config:roomConfig];
     ZGLogInfo(@" 🚪 Login room. roomID: %@", roomID);
-    [self.dataSource onActionLog:[NSString stringWithFormat:@" 🚪 Login room"]];
+    [self.dataSource onActionLog:[NSString stringWithFormat:@" 🚪 Login room. roomID: %@", roomID]];
+}
+
+- (void)loginMultiRoom:(NSString *)roomID {
+    ZegoRoomConfig *roomConfig = [[ZegoRoomConfig alloc] init];
+    roomConfig.isUserStatusNotify = YES;
+
+    [self.engine loginMultiRoom:roomID config:roomConfig];
+    ZGLogInfo(@" 🚪 Login multi room. roomID: %@", roomID);
+    [self.dataSource onActionLog:[NSString stringWithFormat:@" 🚪 Login multi room. roomID: %@", roomID]];
 }
 
 
 - (void)logoutRoom:(NSString *)roomID {
     [self.engine logoutRoom:roomID];
-    ZGLogInfo(@" 🚪 Exit the room. roomID: %@", roomID);
-    [self.dataSource onActionLog:[NSString stringWithFormat:@" 🚪 Exit the room. roomID: %@", roomID]];
+    ZGLogInfo(@" 🚪 Logout room. roomID: %@", roomID);
+    [self.dataSource onActionLog:[NSString stringWithFormat:@" 🚪 Logout room. roomID: %@", roomID]];
 }
 
 

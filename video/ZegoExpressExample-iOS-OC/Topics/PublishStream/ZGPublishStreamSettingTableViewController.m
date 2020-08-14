@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *fpsValueLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bitrateValueLabel;
 @property (weak, nonatomic) IBOutlet UILabel *streamExtraInfoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *roomExtraInfoLabel;
 
 @property (nonatomic, strong) ZegoVideoConfig *videoConfig;
 
@@ -57,7 +58,8 @@
     self.encodeResolutionLabel.text = [NSString stringWithFormat:@"%d x %d", (int)_videoConfig.encodeResolution.width, (int)_videoConfig.encodeResolution.height];
     self.fpsValueLabel.text = [NSString stringWithFormat:@"%d fps", _videoConfig.fps];
     self.bitrateValueLabel.text = [NSString stringWithFormat:@"%d kbps", _videoConfig.bitrate];
-    self.streamExtraInfoLabel.text = self.streamExtraInfo;
+    self.streamExtraInfoLabel.text = self.streamExtraInfo ?: @"";
+    self.roomExtraInfoLabel.text = [NSString stringWithFormat:@"k:%@,v:%@", _roomExtraInfoKey ?: @"", _roomExtraInfoValue ?: @""];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -65,6 +67,8 @@
     self.presenter.enableHardwareEncoder = _enableHardwareEncoder;
     self.presenter.captureVolume = _captureVolume;
     self.presenter.streamExtraInfo = _streamExtraInfo;
+    self.presenter.roomExtraInfoKey = _roomExtraInfoKey;
+    self.presenter.roomExtraInfoValue = _roomExtraInfoValue;
 }
 
 - (IBAction)cameraSwitchValueChanged:(UISwitch *)sender {
@@ -102,25 +106,28 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.row) {
-        case 4:
+        case 5:
             // Capture Resolution
             [self presentSetCaptureResolutionAlertController];
             break;
-        case 5:
+        case 6:
             // Encode Resolution
             [self presentSetEncodeResolutionAlertController];
             break;
-        case 6:
+        case 7:
             // FPS
             [self presentSetFpsAlertController];
             break;
-        case 7:
+        case 8:
             // FPS
             [self presentSetBitrateAlertController];
             break;
-        case 8:
+        case 9:
             // Stream Extra Info
             [self presentSetStreamExtraInfoAlertController];
+        case 10:
+            // Room Extra Info
+            [self presentSetRoomExtraInfoAlertController];
         default:
             break;
     }
@@ -304,11 +311,53 @@
             return;
         }
         strongSelf.streamExtraInfo = textField.text;
-        strongSelf.streamExtraInfoLabel.text = strongSelf.streamExtraInfo;
 
         [strongSelf.presenter appendLog:[NSString stringWithFormat:@"💬 Set stream extra info: %@", strongSelf.streamExtraInfo]];
         [[ZegoExpressEngine sharedEngine] setStreamExtraInfo:strongSelf.streamExtraInfo callback:^(int errorCode) {
             [strongSelf.presenter appendLog:[NSString stringWithFormat:@"🚩 💬 Set stream extra info result: %d", errorCode]];
+            strongSelf.streamExtraInfoLabel.text = strongSelf.streamExtraInfo;
+        }];
+    }];
+
+    [alertController addAction:setAction];
+
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)presentSetRoomExtraInfoAlertController {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Set Room Extra Info" message:@"Enter room extra info" preferredStyle:UIAlertControllerStyleAlert];
+
+    __weak typeof(self) weakSelf = self;
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        __strong typeof(self) strongSelf = weakSelf;
+        textField.placeholder = @"Room Extra Info Key";
+        textField.text = strongSelf.roomExtraInfoKey;
+    }];
+
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        __strong typeof(self) strongSelf = weakSelf;
+        textField.placeholder = @"Room Extra Info Value";
+        textField.text = strongSelf.roomExtraInfoValue;
+    }];
+
+    UIAlertAction *setAction = [UIAlertAction actionWithTitle:@"Set" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        __strong typeof(self) strongSelf = weakSelf;
+        UITextField *keyTextField = [alertController.textFields firstObject];
+        UITextField *valueTextField = [alertController.textFields lastObject];
+
+        if (!keyTextField || !valueTextField) return;
+
+        strongSelf.roomExtraInfoKey = keyTextField.text;
+        strongSelf.roomExtraInfoValue = valueTextField.text;
+
+        [strongSelf.presenter appendLog:[NSString stringWithFormat:@"💬 Set room extra info: %@", strongSelf.streamExtraInfo]];
+        [[ZegoExpressEngine sharedEngine] setRoomExtraInfo:strongSelf.roomExtraInfoValue forKey:strongSelf.roomExtraInfoKey roomID:strongSelf.roomID callback:^(int errorCode) {
+            [strongSelf.presenter appendLog:[NSString stringWithFormat:@" 🚩 💬 Set room extra info result: %d", errorCode]];
+            if (errorCode == ZegoErrorCodeCommonSuccess) {
+                strongSelf.roomExtraInfoLabel.text = [NSString stringWithFormat:@"k:%@,v:%@", strongSelf.roomExtraInfoKey, strongSelf.roomExtraInfoValue];
+            }
         }];
     }];
 

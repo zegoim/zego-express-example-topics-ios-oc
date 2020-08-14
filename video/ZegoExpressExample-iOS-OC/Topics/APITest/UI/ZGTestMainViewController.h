@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZGTestMainViewController : UIViewController
 
-@property (nonatomic, strong) ZGTestTopicManager *manager;
+@property (nonatomic, strong) id<ZGTestManager> manager;
 
 @end
 

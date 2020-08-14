@@ -14,6 +14,8 @@
 NSString* const ZGTestTopicKey_RoomID = @"kRoomID";
 NSString* const ZGTestTopicKey_UserID = @"kUserID";
 NSString* const ZGTestTopicKey_UserName = @"kUserName";
+NSString* const ZGTestTopicKey_MultiRoomID = @"kMultiRoomID";
+
 NSString* const ZGTestTopicKey_PublishStreamID = @"kPublishStreamID";
 NSString* const ZGTestTopicKey_PreviewBackgroundColor = @"kPreviewBackgroundColor";
 
@@ -60,6 +62,12 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginRoomButton;
 @property (weak, nonatomic) IBOutlet UIButton *logoutRoomButton;
+
+// MultiRoom
+@property (weak, nonatomic) IBOutlet UITextField *multiRoomIDTextField;
+@property (weak, nonatomic) IBOutlet UIButton *loginMultiRoomButton;
+@property (weak, nonatomic) IBOutlet UIButton *logoutMultiRoomButton;
+
 
 // Publish
 @property (weak, nonatomic) IBOutlet UITextField *publishStreamIDTextField;
@@ -195,6 +203,7 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
     self.roomIDTextField.text = [self savedValueForKey:ZGTestTopicKey_RoomID];
     self.userIDTextField.text = [self savedValueForKey:ZGTestTopicKey_UserID];
     self.userNameTextField.text = [self savedValueForKey:ZGTestTopicKey_UserName];
+    self.multiRoomIDTextField.text = [self savedValueForKey:ZGTestTopicKey_MultiRoomID];
     
     self.publishStreamIDTextField.text = [self savedValueForKey:ZGTestTopicKey_PublishStreamID];
     
@@ -266,6 +275,17 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 
 - (IBAction)logoutRoomClick:(UIButton *)sender {
     [self.manager logoutRoom:self.roomIDTextField.text];
+}
+
+#pragma mark MultiRoom
+
+- (IBAction)loginMultiRoomClick:(UIButton *)sender {
+    [self.manager loginMultiRoom:self.multiRoomIDTextField.text];
+    [self saveValue:self.multiRoomIDTextField.text forKey:ZGTestTopicKey_MultiRoomID];
+}
+
+- (IBAction)logoutMultiRoomClick:(UIButton *)sender {
+    [self.manager logoutRoom:self.multiRoomIDTextField.text];
 }
 
 #pragma mark Publisher

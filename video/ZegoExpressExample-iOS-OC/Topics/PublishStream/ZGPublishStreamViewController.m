@@ -264,7 +264,10 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
     vc.enableCamera = _enableCamera;
     vc.enableHardwareEncoder = _enableHardwareEncoder;
     vc.captureVolume = _captureVolume;
+    vc.roomID = _roomID;
     vc.streamExtraInfo = _streamExtraInfo;
+    vc.roomExtraInfoKey = _roomExtraInfoKey;
+    vc.roomExtraInfoValue = _roomExtraInfoValue;
 
     [self presentViewController:vc animated:YES completion:nil];
 }

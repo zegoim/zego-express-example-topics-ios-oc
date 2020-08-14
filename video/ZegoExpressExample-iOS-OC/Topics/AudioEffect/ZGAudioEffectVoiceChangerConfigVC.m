@@ -1,17 +1,17 @@
 //
-//  ZGAudioProcessVoiceChangeConfigVC.m
+//  ZGAudioEffectVoiceChangerConfigVC.m
 //  LiveRoomPlayground-iOS
 //
 //  Created by jeffreypeng on 2019/8/27.
 //  Copyright © 2019 Zego. All rights reserved.
 //
-#ifdef _Module_AudioProcessing
+#ifdef _Module_AudioEffect
 
-#import "ZGAudioProcessVoiceChangeConfigVC.h"
-#import "ZGAudioProcessTopicConfigManager.h"
-#import "ZGAudioProcessTopicHelper.h"
+#import "ZGAudioEffectVoiceChangerConfigVC.h"
+#import "ZGAudioEffectTopicConfigManager.h"
+#import "ZGAudioEffectTopicHelper.h"
 
-@interface ZGAudioProcessVoiceChangeConfigVC () <UIPickerViewDelegate, UIPickerViewDataSource>
+@interface ZGAudioEffectVoiceChangerConfigVC () <UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UISwitch *openVoiceChangerSwitch;
 @property (weak, nonatomic) IBOutlet UIView *voiceChargerConfigContainerView;
@@ -19,30 +19,30 @@
 @property (weak, nonatomic) IBOutlet UILabel *customModeValueLabel;
 @property (weak, nonatomic) IBOutlet UISlider *customModeValueSlider;
 
-@property (nonatomic, copy) NSArray<ZGAudioProcessTopicConfigMode*> *voiceChangerOptionModes;
+@property (nonatomic, copy) NSArray<ZGAudioEffectTopicConfigMode*> *voiceChangerOptionModes;
 
 @end
 
-@implementation ZGAudioProcessVoiceChangeConfigVC
+@implementation ZGAudioEffectVoiceChangerConfigVC
 
 + (instancetype)instanceFromStoryboard {
-    return [[UIStoryboard storyboardWithName:@"AudioProcessing" bundle:nil] instantiateViewControllerWithIdentifier:NSStringFromClass([ZGAudioProcessVoiceChangeConfigVC class])];
+    return [[UIStoryboard storyboardWithName:@"AudioEffect" bundle:nil] instantiateViewControllerWithIdentifier:NSStringFromClass([ZGAudioEffectVoiceChangerConfigVC class])];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.voiceChangerOptionModes = [ZGAudioProcessTopicHelper voiceChangerOptionModes];
+    self.voiceChangerOptionModes = [ZGAudioEffectTopicHelper voiceChangerOptionModes];
     
     self.navigationItem.title = @"设置-变声";
     
-    BOOL voiceChangerOpen = [ZGAudioProcessTopicConfigManager sharedInstance].voiceChangerOpen;
+    BOOL voiceChangerOpen = [ZGAudioEffectTopicConfigManager sharedInstance].voiceChangerOpen;
     self.voiceChargerConfigContainerView.hidden = !voiceChangerOpen;
     self.openVoiceChangerSwitch.on = voiceChangerOpen;
     self.modePicker.dataSource = self;
     self.modePicker.delegate = self;
     
-    float voiceChangerParam = [ZGAudioProcessTopicConfigManager sharedInstance].voiceChangerParam;
+    float voiceChangerParam = [ZGAudioEffectTopicConfigManager sharedInstance].voiceChangerParam;
     self.customModeValueSlider.minimumValue = -8.f;
     self.customModeValueSlider.maximumValue = 8.f;
     self.customModeValueSlider.value = voiceChangerParam;
@@ -54,22 +54,22 @@
 
 - (IBAction)voiceChangerOpenValueChanged:(UISwitch *)sender {
     BOOL voiceChangerOpen = sender.isOn;
-    [[ZGAudioProcessTopicConfigManager sharedInstance] setVoiceChangerOpen:voiceChangerOpen];
+    [[ZGAudioEffectTopicConfigManager sharedInstance] setVoiceChangerOpen:voiceChangerOpen];
     self.voiceChargerConfigContainerView.hidden = !voiceChangerOpen;
 }
 
 - (IBAction)customModeValueChanged:(UISlider*)sender {
     float voiceChangerParam = sender.value;
-    [[ZGAudioProcessTopicConfigManager sharedInstance] setVoiceChangerParam:voiceChangerParam];
+    [[ZGAudioEffectTopicConfigManager sharedInstance] setVoiceChangerParam:voiceChangerParam];
     self.customModeValueLabel.text = @(voiceChangerParam).stringValue;
     [self invalidateModePickerSelection];
 }
 
 - (void)invalidateModePickerSelection {
-    float voiceChangerParam = [ZGAudioProcessTopicConfigManager sharedInstance].voiceChangerParam;
+    float voiceChangerParam = [ZGAudioEffectTopicConfigManager sharedInstance].voiceChangerParam;
     NSInteger selectionRow = NSNotFound;
     for (NSInteger i=0; i<self.voiceChangerOptionModes.count; i++) {
-        ZGAudioProcessTopicConfigMode *mode = self.voiceChangerOptionModes[i];
+        ZGAudioEffectTopicConfigMode *mode = self.voiceChangerOptionModes[i];
         if (!mode.isCustom && mode.modeValue.floatValue == voiceChangerParam) {
             selectionRow = i;
         }
@@ -78,7 +78,7 @@
         [self.modePicker selectRow:selectionRow inComponent:0 animated:NO];
     } else {
         // 选中到‘自定义’行
-        ZGAudioProcessTopicConfigMode *customMode = [self customModeInModeList];
+        ZGAudioEffectTopicConfigMode *customMode = [self customModeInModeList];
         NSInteger customModeIdx = [self.voiceChangerOptionModes indexOfObject:customMode];
         if (customModeIdx != NSNotFound) {
             [self.modePicker selectRow:customModeIdx inComponent:0 animated:NO];
@@ -86,9 +86,9 @@
     }
 }
 
-- (ZGAudioProcessTopicConfigMode*)customModeInModeList {
-    ZGAudioProcessTopicConfigMode *tarMode =nil;
-    for (ZGAudioProcessTopicConfigMode *m in self.voiceChangerOptionModes) {
+- (ZGAudioEffectTopicConfigMode*)customModeInModeList {
+    ZGAudioEffectTopicConfigMode *tarMode =nil;
+    for (ZGAudioEffectTopicConfigMode *m in self.voiceChangerOptionModes) {
         if (m.isCustom) {
             tarMode = m;
             break;
@@ -114,10 +114,10 @@
 #pragma mark - picker view delegate
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    if ([ZGAudioProcessTopicConfigManager sharedInstance].voiceChangerOpen) {
-        ZGAudioProcessTopicConfigMode *mode = self.voiceChangerOptionModes[row];
+    if ([ZGAudioEffectTopicConfigManager sharedInstance].voiceChangerOpen) {
+        ZGAudioEffectTopicConfigMode *mode = self.voiceChangerOptionModes[row];
         if (!mode.isCustom) {
-            [[ZGAudioProcessTopicConfigManager sharedInstance] setVoiceChangerParam:mode.modeValue.floatValue];
+            [[ZGAudioEffectTopicConfigManager sharedInstance] setVoiceChangerParam:mode.modeValue.floatValue];
         }
     }
 }

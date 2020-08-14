@@ -1,11 +1,11 @@
 //
-//  ZGAudioProcessTopicHelper.h
+//  ZGAudioEffectTopicHelper.h
 //  LiveRoomPlayGround
 //
 //  Created by jeffreypeng on 2019/8/28.
 //  Copyright © 2019 Zego. All rights reserved.
 //
-#ifdef _Module_AudioProcessing
+#ifdef _Module_AudioEffect
 
 #import <Foundation/Foundation.h>
 
@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  专题的配置模式 object
  */
-@interface ZGAudioProcessTopicConfigMode : NSObject
+@interface ZGAudioEffectTopicConfigMode : NSObject
 
 // 模式类型
 @property (nonatomic) NSNumber *modeValue;
@@ -29,17 +29,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface ZGAudioProcessTopicHelper : NSObject
+@interface ZGAudioEffectTopicHelper : NSObject
 
 /**
  变声器可选的模式
  */
-+ (NSArray<ZGAudioProcessTopicConfigMode*>*)voiceChangerOptionModes;
++ (NSArray<ZGAudioEffectTopicConfigMode*>*)voiceChangerOptionModes;
 
 /**
  混响可选的模式
  */
-+ (NSArray<ZGAudioProcessTopicConfigMode*>*)reverbOptionModes;
++ (NSArray<ZGAudioEffectTopicConfigMode*>*)reverbOptionModes;
 
 @end
 

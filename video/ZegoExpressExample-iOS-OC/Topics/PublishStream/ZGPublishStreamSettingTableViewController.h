@@ -21,7 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL enableCamera;
 @property (nonatomic, assign) BOOL enableHardwareEncoder;
 @property (nonatomic, assign) int captureVolume;
+@property (nonatomic, copy) NSString *roomID;
 @property (nonatomic, copy) NSString *streamExtraInfo;
+@property (nonatomic, copy) NSString *roomExtraInfoKey;
+@property (nonatomic, copy) NSString *roomExtraInfoValue;
 
 @end
 

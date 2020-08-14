@@ -1,17 +1,17 @@
 //
-//  ZGAudioProcessReverbConfigVC.m
+//  ZGAudioEffectReverbConfigVC.m
 //  LiveRoomPlayground-iOS
 //
 //  Created by jeffreypeng on 2019/8/27.
 //  Copyright © 2019 Zego. All rights reserved.
 //
-#ifdef _Module_AudioProcessing
+#ifdef _Module_AudioEffect
 
-#import "ZGAudioProcessReverbConfigVC.h"
-#import "ZGAudioProcessTopicConfigManager.h"
-#import "ZGAudioProcessTopicHelper.h"
+#import "ZGAudioEffectReverbConfigVC.h"
+#import "ZGAudioEffectTopicConfigManager.h"
+#import "ZGAudioEffectTopicHelper.h"
 
-@interface ZGAudioProcessReverbConfigVC () <UIPickerViewDelegate, UIPickerViewDataSource>
+@interface ZGAudioEffectReverbConfigVC () <UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UISwitch *openReverbSwitch;
 @property (weak, nonatomic) IBOutlet UIView *reverbConfigContainerView;
@@ -25,48 +25,48 @@
 @property (weak, nonatomic) IBOutlet UILabel *customReverberanceValueLabel;
 @property (weak, nonatomic) IBOutlet UISlider *customReverberanceSlider;
 
-@property (nonatomic, copy) NSArray<ZGAudioProcessTopicConfigMode*> *reverbOptionModes;
+@property (nonatomic, copy) NSArray<ZGAudioEffectTopicConfigMode*> *reverbOptionModes;
 
 @end
 
-@implementation ZGAudioProcessReverbConfigVC
+@implementation ZGAudioEffectReverbConfigVC
 
 + (instancetype)instanceFromStoryboard {
-    return [[UIStoryboard storyboardWithName:@"AudioProcessing" bundle:nil] instantiateViewControllerWithIdentifier:NSStringFromClass([ZGAudioProcessReverbConfigVC class])];
+    return [[UIStoryboard storyboardWithName:@"AudioEffect" bundle:nil] instantiateViewControllerWithIdentifier:NSStringFromClass([ZGAudioEffectReverbConfigVC class])];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.reverbOptionModes = [ZGAudioProcessTopicHelper reverbOptionModes];
+    self.reverbOptionModes = [ZGAudioEffectTopicHelper reverbOptionModes];
     self.navigationItem.title = @"设置-混响";
     
-    BOOL reverbOpen = [ZGAudioProcessTopicConfigManager sharedInstance].reverbOpen;
+    BOOL reverbOpen = [ZGAudioEffectTopicConfigManager sharedInstance].reverbOpen;
     
     self.reverbConfigContainerView.hidden = !reverbOpen;
     self.openReverbSwitch.on = reverbOpen;
     self.modePicker.delegate = self;
     self.modePicker.dataSource = self;
     
-    float customReverbRoomSize = [ZGAudioProcessTopicConfigManager sharedInstance].customReverbRoomSize;
+    float customReverbRoomSize = [ZGAudioEffectTopicConfigManager sharedInstance].customReverbRoomSize;
     self.customRoomSizeSlider.minimumValue = 0.0f;
     self.customRoomSizeSlider.maximumValue = 1.0f;
     self.customRoomSizeSlider.value = customReverbRoomSize;
     self.customRoomSizeValueLabel.text = @(customReverbRoomSize).stringValue;
     
-    float customDryWetRatio = [ZGAudioProcessTopicConfigManager sharedInstance].customDryWetRatio;
+    float customDryWetRatio = [ZGAudioEffectTopicConfigManager sharedInstance].customDryWetRatio;
     self.customDryWetRatioSlider.minimumValue = 0.0f;
     self.customDryWetRatioSlider.maximumValue = 2.0f;
     self.customDryWetRatioSlider.value = customDryWetRatio;
     self.customDryWetRatioValueLabel.text = @(customDryWetRatio).stringValue;
     
-    float customDamping = [ZGAudioProcessTopicConfigManager sharedInstance].customDamping;
+    float customDamping = [ZGAudioEffectTopicConfigManager sharedInstance].customDamping;
     self.customDampingSlider.minimumValue = 0.0f;
     self.customDampingSlider.maximumValue = 2.0f;
     self.customDampingSlider.value = customDamping;
     self.customDampingValueLabel.text = @(customDamping).stringValue;
     
-    float customReverberance =[ZGAudioProcessTopicConfigManager sharedInstance].customReverberance;
+    float customReverberance =[ZGAudioEffectTopicConfigManager sharedInstance].customReverberance;
     self.customReverberanceSlider.minimumValue = 0.0f;
     self.customReverberanceSlider.maximumValue = 0.5f;
     self.customReverberanceSlider.value = customReverberance;
@@ -75,31 +75,31 @@
 
 - (IBAction)reverbValueChanged:(UISwitch*)sender {
     BOOL reverbOpen = sender.isOn;
-    [[ZGAudioProcessTopicConfigManager sharedInstance] setReverbOpen:reverbOpen];
+    [[ZGAudioEffectTopicConfigManager sharedInstance] setReverbOpen:reverbOpen];
     self.reverbConfigContainerView.hidden = !reverbOpen;
 }
 
 - (IBAction)customRoomSizeValueChanged:(UISlider*)sender {
     float customReverbRoomSize = sender.value;
-    [[ZGAudioProcessTopicConfigManager sharedInstance] setCustomReverbRoomSize:customReverbRoomSize];
+    [[ZGAudioEffectTopicConfigManager sharedInstance] setCustomReverbRoomSize:customReverbRoomSize];
     self.customRoomSizeValueLabel.text = @(customReverbRoomSize).stringValue;
 }
 
 - (IBAction)customDryWetRationValueChanged:(UISlider*)sender {
     float customDryWetRatio = sender.value;
-    [[ZGAudioProcessTopicConfigManager sharedInstance] setCustomDryWetRatio:customDryWetRatio];
+    [[ZGAudioEffectTopicConfigManager sharedInstance] setCustomDryWetRatio:customDryWetRatio];
     self.customDryWetRatioValueLabel.text = @(customDryWetRatio).stringValue;
 }
 
 - (IBAction)customDampingValueChanged:(UISlider*)sender {
     float customDamping = sender.value;
-    [[ZGAudioProcessTopicConfigManager sharedInstance] setCustomDamping:customDamping];
+    [[ZGAudioEffectTopicConfigManager sharedInstance] setCustomDamping:customDamping];
     self.customDampingValueLabel.text = @(customDamping).stringValue;
 }
 
 - (IBAction)customReverberanceChanged:(UISlider*)sender {
     float customReverberance = sender.value;
-    [[ZGAudioProcessTopicConfigManager sharedInstance] setCustomReverberance:customReverberance];
+    [[ZGAudioEffectTopicConfigManager sharedInstance] setCustomReverberance:customReverberance];
     self.customReverberanceValueLabel.text = @(customReverberance).stringValue;
 }
 
@@ -120,12 +120,12 @@
 #pragma mark - picker view delegate
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    if ([ZGAudioProcessTopicConfigManager sharedInstance].reverbOpen) {
-        ZGAudioProcessTopicConfigMode *mode = self.reverbOptionModes[row];
+    if ([ZGAudioEffectTopicConfigManager sharedInstance].reverbOpen) {
+        ZGAudioEffectTopicConfigMode *mode = self.reverbOptionModes[row];
         if (!mode.isCustom) {
-            [[ZGAudioProcessTopicConfigManager sharedInstance] setReverbMode:[mode.modeValue unsignedIntegerValue]];
+            [[ZGAudioEffectTopicConfigManager sharedInstance] setReverbMode:[mode.modeValue unsignedIntegerValue]];
         } else {
-            [[ZGAudioProcessTopicConfigManager sharedInstance] setReverbMode:NSNotFound];
+            [[ZGAudioEffectTopicConfigManager sharedInstance] setReverbMode:NSNotFound];
         }
     }
 }

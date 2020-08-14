@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *streamID;
 @property (nonatomic, assign) BOOL enableHardwareDecoder;
 @property (nonatomic, assign) int playVolume;
+@property (nonatomic, copy) NSString *streamExtraInfo;
+@property (nonatomic, copy) NSString *roomExtraInfo;
 
 @end
 
