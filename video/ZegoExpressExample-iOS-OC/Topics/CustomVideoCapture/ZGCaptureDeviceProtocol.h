@@ -50,6 +50,8 @@ typedef NS_ENUM(NSUInteger, ZGCustomVideoCaptureBufferType) {
 // Only for camera
 - (void)switchCameraPosition;
 
+- (void)setFramerate:(int)framerate;
+
 @end
 
 NS_ASSUME_NONNULL_END

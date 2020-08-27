@@ -13,7 +13,7 @@
 #import "ZGAudioEffectReverbConfigVC.h"
 
 #import "ZGAudioEffectTopicConfigManager.h"
-#import "ZGKeyCenter.h"
+#import "ZGAppGlobalConfigManager.h"
 #import "ZGUserIDHelper.h"
 #import <ZegoExpressEngine/ZegoExpressEngine.h>
 
@@ -25,10 +25,6 @@
 // Preview and Play View
 @property (weak, nonatomic) IBOutlet UIView *localPreviewView;
 @property (weak, nonatomic) IBOutlet UIView *remotePlayView;
-
-// CreateEngine
-@property (nonatomic, assign) BOOL isTestEnv;
-@property (weak, nonatomic) IBOutlet UILabel *isTestEnvLabel;
 
 // LoginRoom
 @property (nonatomic, copy) NSString *roomID;
@@ -53,13 +49,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.isTestEnv = YES;
+
     self.roomID = @"AudioEffectRoom-1";
     self.userID = [ZGUserIDHelper userID];
     
     // Print SDK version
-    [self appendLog:[NSString stringWithFormat:@" 🌞 SDK Version: %@", [ZegoExpressEngine getVersion]]];
+    [self appendLog:[NSString stringWithFormat:@"🌞 SDK Version: %@", [ZegoExpressEngine getVersion]]];
     
     [self setupUI];
     
@@ -75,28 +70,24 @@
 
 - (void)setupUI {
     self.navigationItem.title = @"Audio Process";
-    
-    self.isTestEnvLabel.text = [NSString stringWithFormat:@"isTestEnv: %@", self.isTestEnv ? @"YES" : @"NO"];
+
     self.roomIDLabel.text = [NSString stringWithFormat:@"RoomID: %@", self.roomID];
     self.userIDLabel.text = [NSString stringWithFormat:@"UserID: %@", self.userID];
 }
 
 - (void)createEngine {
-    
-    unsigned int appID = [ZGKeyCenter appID];
-    NSString *appSign = [ZGKeyCenter appSign];
-    
-    ZegoExpressEngine *engine = [ZegoExpressEngine sharedEngine];
-    
+
+    ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
+
     // Create ZegoExpressEngine and set self as a delegate (ZegoEventHandler)
-    [ZegoExpressEngine createEngineWithAppID:appID appSign:appSign isTestEnv:self.isTestEnv scenario:ZegoScenarioGeneral eventHandler:self];
+    [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     
     // You need to set channel to ZegoAudioChannelStereo when using VirtualStereo
     ZegoAudioConfig *config = [ZegoAudioConfig configWithPreset:ZegoAudioConfigPresetStandardQualityStereo];
-    [engine setAudioConfig:config];
+    [[ZegoExpressEngine sharedEngine] setAudioConfig:config];
     
     // Print log
-    [self appendLog:@" 🚀 Create ZegoExpressEngine"];
+    [self appendLog:@"🚀 Create ZegoExpressEngine"];
 
 }
 
@@ -110,7 +101,7 @@
     [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user];
     
     // Print log
-    [self appendLog:@" 🚪 Start login room"];
+    [self appendLog:@"🚪 Start login room"];
 }
 
 #pragma mark - Step 2: StartPublishing
@@ -129,7 +120,7 @@
     [[ZegoExpressEngine sharedEngine] startPublishingStream:publishStreamID];
     
     // Print log
-    [self appendLog:@" 📤 Start publishing stream"];
+    [self appendLog:@"📤 Start publishing stream"];
 }
 
 #pragma mark - Step 3: StartPlaying
@@ -145,7 +136,7 @@
     [[ZegoExpressEngine sharedEngine] startPlayingStream:playStreamID canvas:playCanvas];
     
     // Print log
-    [self appendLog:@" 📥 Strat playing stream"];
+    [self appendLog:@"📥 Strat playing stream"];
 }
 
 - (IBAction)voiceChangeConfigButnClick:(id)sender {
@@ -192,7 +183,7 @@
         NSUInteger reverbMode = [ZGAudioEffectTopicConfigManager sharedInstance].reverbMode;
         ZegoReverbParam *param = [[ZegoReverbParam alloc] init];
         if (reverbMode != NSNotFound) {
-            [[ZegoExpressEngine sharedEngine] setReverbParam:param];
+            [[ZegoExpressEngine sharedEngine] setReverbParam:[ZegoReverbParam paramWithPreset:reverbMode]];
         } else {
             float roomSize = [ZGAudioEffectTopicConfigManager sharedInstance].customReverbRoomSize;
             float reverberance = [ZGAudioEffectTopicConfigManager sharedInstance].customReverberance;
@@ -226,7 +217,7 @@
     [ZegoExpressEngine destroyEngine:nil];
     
     // Print log
-    [self appendLog:@" 🏳️ Destroy ZegoExpressEngine"];
+    [self appendLog:@"🏳️ Destroy ZegoExpressEngine"];
 }
 
 - (void)dealloc {
@@ -242,20 +233,20 @@
 #pragma mark - ZegoEventHandler Delegate
 
 - (void)onEngineStateUpdate:(ZegoEngineState)state {
-    [self appendLog:[NSString stringWithFormat:@" 🚩 🚘 ZegoExpressEngineState %lu",(unsigned long)state]];
+    [self appendLog:[NSString stringWithFormat:@"🚩 🚘 ZegoExpressEngineState %lu",(unsigned long)state]];
 }
 
 /// Room status change notification
 - (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData roomID:(NSString *)roomID {
     if (state == ZegoRoomStateConnected && errorCode == 0) {
-        [self appendLog:@" 🚩 🚪 Login room success"];
+        [self appendLog:@"🚩 🚪 Login room success"];
         
         // Add a flag to the button for successful operation
         [self.loginRoomButton setTitle:@"✅ LoginRoom" forState:UIControlStateNormal];
     }
     
     if (errorCode != 0) {
-        [self appendLog:@" 🚩 ❌ 🚪 Login room fail"];
+        [self appendLog:@"🚩 ❌ 🚪 Login room fail"];
         
         [self.loginRoomButton setTitle:@"❌ LoginRoom" forState:UIControlStateNormal];
     }
@@ -264,14 +255,14 @@
 /// Publish stream state callback
 - (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
     if (state == ZegoPublisherStatePublishing && errorCode == 0) {
-        [self appendLog:@" 🚩 📤 Publishing stream success"];
+        [self appendLog:@"🚩 📤 Publishing stream success"];
         
         // Add a flag to the button for successful operation
         [self.startPublishingButton setTitle:@"✅ StartPublishing" forState:UIControlStateNormal];
     }
     
     if (errorCode != 0) {
-        [self appendLog:@" 🚩 ❌ 📤 Publishing stream fail"];
+        [self appendLog:@"🚩 ❌ 📤 Publishing stream fail"];
         
         [self.startPublishingButton setTitle:@"❌ StartPublishing" forState:UIControlStateNormal];
     }
@@ -280,14 +271,14 @@
 /// Play stream state callback
 - (void)onPlayerStateUpdate:(ZegoPlayerState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
     if (state == ZegoPlayerStatePlaying && errorCode == 0) {
-        [self appendLog:@" 🚩 📥 Playing stream success"];
+        [self appendLog:@"🚩 📥 Playing stream success"];
         
         // Add a flag to the button for successful operation
         [self.startPlayingButton setTitle:@"✅ StartPlaying" forState:UIControlStateNormal];
     }
     
     if (errorCode != 0) {
-        [self appendLog:@" 🚩 ❌ 📥 Playing stream fail"];
+        [self appendLog:@"🚩 ❌ 📥 Playing stream fail"];
         
         [self.startPlayingButton setTitle:@"❌ StartPlaying" forState:UIControlStateNormal];
     }
@@ -357,7 +348,7 @@
     
     NSString *oldText = self.logTextView.text;
     NSString *newLine = oldText.length == 0 ? @"" : @"\n";
-    NSString *newText = [NSString stringWithFormat:@"%@%@%@", oldText, newLine, tipText];
+    NSString *newText = [NSString stringWithFormat:@"%@%@ %@", oldText, newLine, tipText];
     
     self.logTextView.text = newText;
     if(newText.length > 0 ) {

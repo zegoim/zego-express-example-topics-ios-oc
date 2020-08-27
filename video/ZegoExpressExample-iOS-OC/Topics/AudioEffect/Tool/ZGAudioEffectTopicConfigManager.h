@@ -14,10 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
 /** 音频混响模式 */
 typedef NS_ENUM(NSUInteger, ExpressAPIAudioReverbMode)
 {
-    ExpressAPIAudioReverbModeSoftRoom = 0,
-    ExpressAPIAudioReverbModeWarmClub = 1,
-    ExpressAPIAudioReverbModeConcertHall = 2,
-    ExpressAPIAudioReverbModeLargeAuditorium = 3,
+    ExpressAPIAudioReverbModeNone = 0,
+    ExpressAPIAudioReverbModeSoftRoom = 1, //小房间
+    ExpressAPIAudioReverbModeLargeRoom = 2, //大房间
+    ExpressAPIAudioReverbModeConcertHall = 3, //音乐厅
+    ExpressAPIAudioReverbModeValley = 4, //山谷
+    
 };
 
 /** 无变声音效 值: 0.0 */

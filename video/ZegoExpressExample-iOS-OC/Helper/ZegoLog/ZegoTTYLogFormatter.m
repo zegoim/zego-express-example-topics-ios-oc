@@ -42,7 +42,7 @@ NSDateFormatter *_zg_tty_dateFormatter = nil;
             break;
     }
     
-    NSString *formattedMsg = [NSString stringWithFormat:@"[%@]:%@ %@",
+    NSString *formattedMsg = [NSString stringWithFormat:@"[%@] %@ %@",
                               [ZegoTTYLogFormatter.dateFormatter stringFromDate:message.date],
                               prefix,
                               message.message];

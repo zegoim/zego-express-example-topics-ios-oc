@@ -36,7 +36,7 @@
 }
 
 - (void)startCapture {
-    ZGLogInfo(@" ▶️ Start capture motion image");
+    ZGLogInfo(@"▶️ Start capture motion image");
     if (!self.fpsTimer) {
         self.fps = self.fps ? self.fps : 15;
         NSTimeInterval delta = 1.f / self.fps;
@@ -49,7 +49,7 @@
 }
 
 - (void)stopCapture {
-    ZGLogInfo(@" ⏸ Stop capture motion image");
+    ZGLogInfo(@"⏸ Stop capture motion image");
     if (self.fpsTimer) {
         [self.fpsTimer invalidate];
         self.fpsTimer = nil;

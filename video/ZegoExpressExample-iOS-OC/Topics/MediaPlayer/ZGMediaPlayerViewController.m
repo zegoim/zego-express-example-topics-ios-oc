@@ -50,12 +50,12 @@
     
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
-    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+    ZGLogInfo(@"🚀 Create ZegoExpressEngine");
     [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     
     [[ZegoExpressEngine sharedEngine] loginRoom:_roomID user:[ZegoUser userWithUserID:[ZGUserIDHelper userID]]];
     
-    ZGLogInfo(@" 🚪 Login room. roomID: %@", _roomID);
+    ZGLogInfo(@"🚪 Login room. roomID: %@", _roomID);
 
     // use userID as streamID
     self.streamID = [NSString stringWithFormat:@"s-%@", [ZGUserIDHelper userID]];
@@ -68,13 +68,13 @@
 - (void)createMediaPlayer {
     self.player = [[ZegoExpressEngine sharedEngine] createMediaPlayer];
     if (self.player) {
-        ZGLogInfo(@" 💽 Create ZegoMediaPlayer");
+        ZGLogInfo(@"💽 Create ZegoMediaPlayer");
     } else {
-        ZGLogWarn(@" 💽 ❌ Create ZegoMediaPlayer failed");
+        ZGLogWarn(@"💽 ❌ Create ZegoMediaPlayer failed");
     }
     
     [self.player loadResource:self.mediaItem.fileURL callback:^(int errorCode) {
-        ZGLogInfo(@" 🚩 💽 Media Player load resource. errorCode: %d", errorCode);
+        ZGLogInfo(@"🚩 💽 Media Player load resource. errorCode: %d", errorCode);
         [self setupMediaPlayerUI];
     }];
     
@@ -135,10 +135,10 @@
 - (void)viewDidDisappear:(BOOL)animated {
     if (self.isBeingDismissed || self.isMovingFromParentViewController
         || (self.navigationController && self.navigationController.isBeingDismissed)) {
-        ZGLogInfo(@" 🏳️ Destroy ZegoMediaPlayer");
+        ZGLogInfo(@"🏳️ Destroy ZegoMediaPlayer");
         [[ZegoExpressEngine sharedEngine] destroyMediaPlayer:self.player];
         
-        ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+        ZGLogInfo(@"🏳️ Destroy ZegoExpressEngine");
         [ZegoExpressEngine destroyEngine:nil];
     }
     [super viewDidDisappear:animated];
@@ -159,69 +159,69 @@
 
 - (void)startLive {
     [[ZegoExpressEngine sharedEngine] startPreview:[ZegoCanvas canvasWithView:self.publisherView]];
-    ZGLogInfo(@" 🔌 Start preview");
+    ZGLogInfo(@"🔌 Start preview");
 
     [[ZegoExpressEngine sharedEngine] startPublishingStream:_streamID];
-    ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", [ZGUserIDHelper userID]);
+    ZGLogInfo(@"📤 Start publishing stream. streamID: %@", [ZGUserIDHelper userID]);
 }
 
 - (void)stopLive {
     [[ZegoExpressEngine sharedEngine] stopPublishingStream];
-    ZGLogInfo(@" 📤 Stop publishing stream");
+    ZGLogInfo(@"📤 Stop publishing stream");
     
     [[ZegoExpressEngine sharedEngine] stopPreview];
-    ZGLogInfo(@" 🔌 Stop preview");
+    ZGLogInfo(@"🔌 Stop preview");
 }
 
 #pragma mark Media Player Actions
 
 - (IBAction)playButtonClick:(UIButton *)sender {
     [self.player start];
-    ZGLogInfo(@" ▶️ Media Player start");
+    ZGLogInfo(@"▶️ Media Player start");
 }
 
 - (IBAction)pauseButtonClick:(UIButton *)sender {
     [self.player pause];
-    ZGLogInfo(@" ⏸ Media Player pause");
+    ZGLogInfo(@"⏸ Media Player pause");
 }
 
 - (IBAction)resumeButtonClick:(UIButton *)sender {
     [self.player resume];
-    ZGLogInfo(@" ⏯ Media Player resume");
+    ZGLogInfo(@"⏯ Media Player resume");
 }
 
 - (IBAction)stopButtonClick:(UIButton *)sender {
     [self.player stop];
-    ZGLogInfo(@" ⏹ Media Player stop");
+    ZGLogInfo(@"⏹ Media Player stop");
 }
 
 - (IBAction)enableRepeatSwitchAction:(UISwitch *)sender {
     [self.player enableRepeat:sender.on];
-    ZGLogInfo(@" %@ Media Player enable repeat: %@", sender.on ? @"🔂" : @"↩️", sender.on ? @"YES" : @"NO");
+    ZGLogInfo(@"%@ Media Player enable repeat: %@", sender.on ? @"🔂" : @"↩️", sender.on ? @"YES" : @"NO");
 }
 
 - (IBAction)enableAuxSwitchAction:(UISwitch *)sender {
     [self.player enableAux:sender.on];
-    ZGLogInfo(@" ⏺ Media Player enable aux: %@", sender.on ? @"YES" : @"NO");
+    ZGLogInfo(@"⏺ Media Player enable aux: %@", sender.on ? @"YES" : @"NO");
 }
 
 - (IBAction)muteLocalSwitchAction:(UISwitch *)sender {
     [self.player muteLocal:sender.on];
-    ZGLogInfo(@" %@ Media Player mute local: %@", sender.on ? @"🔇" : @"🔈", sender.on ? @"YES" : @"NO");
+    ZGLogInfo(@"%@ Media Player mute local: %@", sender.on ? @"🔇" : @"🔈", sender.on ? @"YES" : @"NO");
 }
 
 #pragma mark Media Player Slider Actions
 
 - (IBAction)volumeSliderValueChanged:(UISlider *)sender {
     [self.player setVolume:(int)sender.value];
-    ZGLogInfo(@" 🔊 Media Player set volume: %d", (int)sender.value);
+    ZGLogInfo(@"🔊 Media Player set volume: %d", (int)sender.value);
 }
 
 - (IBAction)processSliderValueChanged:(UISlider *)sender {
     [self.player seekTo:(unsigned long long)sender.value callback:^(int errorCode) {
-        ZGLogInfo(@" 🚩 🔍 Media Player seek to callback. errorCode: %d", errorCode);
+        ZGLogInfo(@"🚩 🔍 Media Player seek to callback. errorCode: %d", errorCode);
     }];
-    ZGLogInfo(@" 🔍 Media Player seek to: %llu", (unsigned long long)sender.value);
+    ZGLogInfo(@"🔍 Media Player seek to: %llu", (unsigned long long)sender.value);
 }
 
 - (void)processSliderTouchDown {
@@ -235,7 +235,7 @@
 #pragma mark Publisher Event
 
 - (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
-    ZGLogInfo(@" 🚩 📤 Publisher State Update Callback: %lu, errorCode: %d, streamID: %@", (unsigned long)state, (int)errorCode, streamID);
+    ZGLogInfo(@"🚩 📤 Publisher State Update Callback: %lu, errorCode: %d, streamID: %@", (unsigned long)state, (int)errorCode, streamID);
     
     _publisherState = state;
     
@@ -253,7 +253,7 @@
 #pragma mark - Media Player Event Handler
 
 - (void)mediaPlayer:(ZegoMediaPlayer *)mediaPlayer stateUpdate:(ZegoMediaPlayerState)state errorCode:(int)errorCode {
-    ZGLogInfo(@" 🚩 📻 Media Player State Update: %d, errorCode: %d", (int)state, errorCode);
+    ZGLogInfo(@"🚩 📻 Media Player State Update: %d, errorCode: %d", (int)state, errorCode);
     switch (state) {
         case ZegoMediaPlayerStateNoPlay:
             // Stop
@@ -271,7 +271,7 @@
 }
 
 - (void)mediaPlayer:(ZegoMediaPlayer *)mediaPlayer networkEvent:(ZegoMediaPlayerNetworkEvent)networkEvent {
-    ZGLogInfo(@" 🚩 ⏳ Media Player Network Event: %d", (int)networkEvent);
+    ZGLogInfo(@"🚩 ⏳ Media Player Network Event: %d", (int)networkEvent);
     if (networkEvent == ZegoMediaPlayerNetworkEventBufferBegin) {
         // Show loading UI, etc.
     } else if (networkEvent == ZegoMediaPlayerNetworkEventBufferEnded) {

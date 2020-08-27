@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIBarButtonItem *goGlobalConfigItem = [[UIBarButtonItem alloc] initWithTitle:@"Setting" style:UIBarButtonItemStylePlain target:self action:@selector(goGlobalConfigPage:)];
+    UIBarButtonItem *goGlobalConfigItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"home.setting.button", nil) style:UIBarButtonItemStylePlain target:self action:@selector(goGlobalConfigPage:)];
     self.navigationItem.rightBarButtonItem = goGlobalConfigItem;
     
     NSMutableArray *basicTopicList = [NSMutableArray array];

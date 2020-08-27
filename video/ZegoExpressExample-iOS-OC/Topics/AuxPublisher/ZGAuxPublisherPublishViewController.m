@@ -96,7 +96,7 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
     
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
-    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+    ZGLogInfo(@"🚀 Create ZegoExpressEngine");
     
     [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
 
@@ -131,12 +131,12 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
 
 - (void)loginRoom {
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
-    ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
+    ZGLogInfo(@"🚪 Login room. roomID: %@", self.roomID);
     [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
 }
 
 - (void)logoutRoom {
-    ZGLogInfo(@" 🚪 Logout room. roomID: %@", self.roomID);
+    ZGLogInfo(@"🚪 Logout room. roomID: %@", self.roomID);
     [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
 }
 
@@ -160,16 +160,16 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
     [self saveValue:self.mainStreamID forKey:ZGAuxPublisherPublishVCKey_mainStreamID];
     
     // Start preview for main channel
-    ZGLogInfo(@" 🔌 Start preview main channel");
+    ZGLogInfo(@"🔌 Start preview main channel");
     ZegoCanvas *mainPreviewCanvas = [ZegoCanvas canvasWithView:self.mainPreviewView];
     [[ZegoExpressEngine sharedEngine] startPreview:mainPreviewCanvas];
     
-    ZGLogInfo(@" 📤 Start publishing stream main channel. streamID: %@", self.mainStreamID);
+    ZGLogInfo(@"📤 Start publishing stream main channel. streamID: %@", self.mainStreamID);
     [[ZegoExpressEngine sharedEngine] startPublishingStream:self.mainStreamID channel:ZegoPublishChannelMain];
 }
 
 - (void)stopPublishMainChannel {
-    ZGLogInfo(@" 📤 Stop publishing stream main channel");
+    ZGLogInfo(@"📤 Stop publishing stream main channel");
     [[ZegoExpressEngine sharedEngine] stopPublishingStream:ZegoPublishChannelMain];
 }
 
@@ -192,23 +192,23 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
     self.auxStreamID = self.auxStreamIDTextField.text;
     [self saveValue:self.auxStreamID forKey:ZGAuxPublisherPublishVCKey_auxStreamID];
     
-    ZGLogInfo(@" 📤 Start publishing stream aux channel. streamID: %@", self.auxStreamID);
+    ZGLogInfo(@"📤 Start publishing stream aux channel. streamID: %@", self.auxStreamID);
     [[ZegoExpressEngine sharedEngine] startPublishingStream:self.auxStreamID channel:ZegoPublishChannelAux];
 }
 
 - (void)stopPublishAuxChannel {
-    ZGLogInfo(@" 📤 Stop publishing stream aux channel");
+    ZGLogInfo(@"📤 Stop publishing stream aux channel");
     [[ZegoExpressEngine sharedEngine] stopPublishingStream:ZegoPublishChannelAux];
 }
 
 #pragma mark - Exit
 
 - (void)dealloc {
-    ZGLogInfo(@" 🚪 Exit the room");
+    ZGLogInfo(@"🚪 Exit the room");
     [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
     
     // Can destroy the engine when you don't need audio and video calls
-    ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+    ZGLogInfo(@"🏳️ Destroy ZegoExpressEngine");
     [ZegoExpressEngine destroyEngine:nil];
 }
 
@@ -226,13 +226,13 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
 
 // Note: This callback is not in the main thread. If you have UI operations, please switch to the main thread yourself.
 - (void)onStart:(ZegoPublishChannel)channel {
-    ZGLogInfo(@" 🚩 🟢 ZegoCustomVideoCaptureHandler onStart, channel: %@", channel == ZegoPublishChannelMain ? @"Main" : @"Aux");
+    ZGLogInfo(@"🚩 🟢 ZegoCustomVideoCaptureHandler onStart, channel: %@", channel == ZegoPublishChannelMain ? @"Main" : @"Aux");
     [self.captureDevice startCapture];
 }
 
 // Note: This callback is not in the main thread. If you have UI operations, please switch to the main thread yourself.
 - (void)onStop:(ZegoPublishChannel)channel {
-    ZGLogInfo(@" 🚩 🔴 ZegoCustomVideoCaptureHandler onStop, channel: %@", channel == ZegoPublishChannelMain ? @"Main" : @"Aux");
+    ZGLogInfo(@"🚩 🔴 ZegoCustomVideoCaptureHandler onStop, channel: %@", channel == ZegoPublishChannelMain ? @"Main" : @"Aux");
     [self.captureDevice stopCapture];
 }
 
@@ -267,19 +267,19 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
 - (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData roomID:(NSString *)roomID {
     self.roomState = state;
     if (errorCode != 0) {
-        ZGLogError(@" 🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode);
+        ZGLogError(@"🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode);
     } else {
         if (state == ZegoRoomStateConnected) {
-            ZGLogInfo(@" 🚩 🚪 Login room success");
+            ZGLogInfo(@"🚩 🚪 Login room success");
             self.roomStateLabel.text = @"Connected 🟢";
             [self.loginRoomButton setTitle:@"Logout Room" forState:UIControlStateNormal];
             [self hidePublishButtonAndTextField:NO];
         } else if (state == ZegoRoomStateConnecting) {
-            ZGLogInfo(@" 🚩 🚪 Requesting login room");
+            ZGLogInfo(@"🚩 🚪 Requesting login room");
             self.roomStateLabel.text = @"Connecting 🟡";
             [self.loginRoomButton setTitle:@"Connecting" forState:UIControlStateNormal];
         } else if (state == ZegoRoomStateDisconnected) {
-            ZGLogInfo(@" 🚩 🚪 Logout room");
+            ZGLogInfo(@"🚩 🚪 Logout room");
             self.roomStateLabel.text = @"Not Connected 🔴";
             [self.loginRoomButton setTitle:@"Login Room" forState:UIControlStateNormal];
             [self hidePublishButtonAndTextField:YES];
@@ -288,7 +288,7 @@ NSString* const ZGAuxPublisherPublishVCKey_auxStreamID = @"kAuxStreamID";
 }
 
 - (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode extendedData:(nullable NSDictionary *)extendedData streamID:(nonnull NSString *)streamID {
-    ZGLogInfo(@" 🚩 📤 Publisher State Update Callback: %lu, errorCode: %d, streamID: %@", (unsigned long)state, (int)errorCode, streamID);
+    ZGLogInfo(@"🚩 📤 Publisher State Update Callback: %lu, errorCode: %d, streamID: %@", (unsigned long)state, (int)errorCode, streamID);
     
     if (streamID == self.mainStreamID) {
         self.mainPublisherState = state;

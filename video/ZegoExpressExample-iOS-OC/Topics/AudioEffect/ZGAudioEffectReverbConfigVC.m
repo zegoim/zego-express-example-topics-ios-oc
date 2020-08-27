@@ -39,7 +39,7 @@
     [super viewDidLoad];
     
     self.reverbOptionModes = [ZGAudioEffectTopicHelper reverbOptionModes];
-    self.navigationItem.title = @"设置-混响";
+    self.navigationItem.title = @"Set Reverberation";
     
     BOOL reverbOpen = [ZGAudioEffectTopicConfigManager sharedInstance].reverbOpen;
     

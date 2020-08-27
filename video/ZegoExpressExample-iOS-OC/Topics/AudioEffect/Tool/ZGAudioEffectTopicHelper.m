@@ -44,11 +44,11 @@
     static NSArray<ZGAudioEffectTopicConfigMode*> *_reverbOptionModes = nil;
     dispatch_once(&onceToken, ^{
         _reverbOptionModes =
-        @[[ZGAudioEffectTopicConfigMode modeWithModeValue:@(ExpressAPIAudioReverbModeConcertHall) modeName:@"音乐厅" isCustom:NO],
-          [ZGAudioEffectTopicConfigMode modeWithModeValue:@(ExpressAPIAudioReverbModeLargeAuditorium) modeName:@"大教堂" isCustom:NO],
-          [ZGAudioEffectTopicConfigMode modeWithModeValue:@(ExpressAPIAudioReverbModeWarmClub) modeName:@"俱乐部" isCustom:NO],
-          [ZGAudioEffectTopicConfigMode modeWithModeValue:@(ExpressAPIAudioReverbModeSoftRoom) modeName:@"房间" isCustom:NO],
-          [ZGAudioEffectTopicConfigMode modeWithModeValue:nil modeName:@"自定义" isCustom:YES]];
+        @[[ZGAudioEffectTopicConfigMode modeWithModeValue:@(ExpressAPIAudioReverbModeConcertHall) modeName:@"ConcertHall" isCustom:NO],
+          [ZGAudioEffectTopicConfigMode modeWithModeValue:@(ExpressAPIAudioReverbModeLargeRoom) modeName:@"LargeRoom" isCustom:NO],
+          [ZGAudioEffectTopicConfigMode modeWithModeValue:@(ExpressAPIAudioReverbModeSoftRoom) modeName:@"SoftRoom" isCustom:NO],
+          [ZGAudioEffectTopicConfigMode modeWithModeValue:@(ExpressAPIAudioReverbModeValley) modeName:@"Valley" isCustom:NO],
+          [ZGAudioEffectTopicConfigMode modeWithModeValue:nil modeName:@"Custom" isCustom:YES]];
     });
     return _reverbOptionModes;
 }

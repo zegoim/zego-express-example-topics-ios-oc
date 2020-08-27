@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *encodeResolutionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fpsValueLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bitrateValueLabel;
+@property (weak, nonatomic) IBOutlet UILabel *mirrorValueLabel;
 @property (weak, nonatomic) IBOutlet UILabel *streamExtraInfoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *roomExtraInfoLabel;
 
@@ -58,6 +59,7 @@
     self.encodeResolutionLabel.text = [NSString stringWithFormat:@"%d x %d", (int)_videoConfig.encodeResolution.width, (int)_videoConfig.encodeResolution.height];
     self.fpsValueLabel.text = [NSString stringWithFormat:@"%d fps", _videoConfig.fps];
     self.bitrateValueLabel.text = [NSString stringWithFormat:@"%d kbps", _videoConfig.bitrate];
+    self.mirrorValueLabel.text = @"";
     self.streamExtraInfoLabel.text = self.streamExtraInfo ?: @"";
     self.roomExtraInfoLabel.text = [NSString stringWithFormat:@"k:%@,v:%@", _roomExtraInfoKey ?: @"", _roomExtraInfoValue ?: @""];
 }
@@ -123,9 +125,13 @@
             [self presentSetBitrateAlertController];
             break;
         case 9:
+            // Mirror
+            [self presentSetMirrorAlertController];
+            break;
+        case 10:
             // Stream Extra Info
             [self presentSetStreamExtraInfoAlertController];
-        case 10:
+        case 11:
             // Room Extra Info
             [self presentSetRoomExtraInfoAlertController];
         default:
@@ -293,6 +299,32 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+- (void)presentSetMirrorAlertController {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Set Video Mirror Mode" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+
+    NSDictionary<NSString *, NSNumber *> *mirrorModeMap = @{
+        @"OnlyPreviewMirror": @(ZegoVideoMirrorModeOnlyPreviewMirror),
+        @"BothMirror": @(ZegoVideoMirrorModeBothMirror),
+        @"NoMirror": @(ZegoVideoMirrorModeNoMirror),
+        @"OnlyPublishMirror": @(ZegoVideoMirrorModeOnlyPublishMirror)
+    };
+
+    __weak typeof(self) weakSelf = self;
+
+    for (NSString *key in mirrorModeMap) {
+        [alertController addAction:[UIAlertAction actionWithTitle:key style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            __strong typeof(self) strongSelf = weakSelf;
+            strongSelf.mirrorValueLabel.text = key;
+            ZegoVideoMirrorMode mirrorMode = (ZegoVideoMirrorMode)mirrorModeMap[key].intValue;
+            [[ZegoExpressEngine sharedEngine] setVideoMirrorMode:mirrorMode];
+        }]];
+    }
+
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
 
 - (void)presentSetStreamExtraInfoAlertController {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Set Stream Extra Info" message:@"Enter stream extra info" preferredStyle:UIAlertControllerStyleAlert];
@@ -354,7 +386,7 @@
 
         [strongSelf.presenter appendLog:[NSString stringWithFormat:@"💬 Set room extra info: %@", strongSelf.streamExtraInfo]];
         [[ZegoExpressEngine sharedEngine] setRoomExtraInfo:strongSelf.roomExtraInfoValue forKey:strongSelf.roomExtraInfoKey roomID:strongSelf.roomID callback:^(int errorCode) {
-            [strongSelf.presenter appendLog:[NSString stringWithFormat:@" 🚩 💬 Set room extra info result: %d", errorCode]];
+            [strongSelf.presenter appendLog:[NSString stringWithFormat:@"🚩 💬 Set room extra info result: %d", errorCode]];
             if (errorCode == ZegoErrorCodeCommonSuccess) {
                 strongSelf.roomExtraInfoLabel.text = [NSString stringWithFormat:@"k:%@,v:%@", strongSelf.roomExtraInfoKey, strongSelf.roomExtraInfoValue];
             }

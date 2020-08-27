@@ -1,12 +1,12 @@
 
 
-#import "Player.h"
+#import "ZGAudioToolPlayer.h"
 #import <AudioUnit/AudioUnit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "AudioToolCommon.h"
 #import <assert.h>
 
-@implementation Player
+@implementation ZGAudioToolPlayer
 {
     AudioUnit audioUnit;
     AudioBufferList *buffList;
@@ -122,7 +122,7 @@ static OSStatus PlayCallback(void *inRefCon,
                              UInt32 inBusNumber,
                              UInt32 inNumberFrames,
                              AudioBufferList *ioData) {
-    Player *player = (__bridge Player *)inRefCon;
+    ZGAudioToolPlayer *player = (__bridge ZGAudioToolPlayer *)inRefCon;
     typeof(player) __weak weakPlayer = player;
 //    ioData->mBuffers[0].mDataByteSize = (UInt32)[player->inputSteam read:ioData->mBuffers[0].mData maxLength:(NSInteger)ioData->mBuffers[0].mDataByteSize];
     NSLog(@"out size: %d", ioData->mBuffers[0].mDataByteSize);
@@ -151,7 +151,7 @@ static OSStatus PlayCallback(void *inRefCon,
     }
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(onPlayToEnd:)]) {
-        __strong typeof (Player) *player = self;
+        __strong typeof (ZGAudioToolPlayer) *player = self;
         [self.delegate onPlayToEnd:player];
     }
 //    AudioUnitUninitialize(audioUnit);

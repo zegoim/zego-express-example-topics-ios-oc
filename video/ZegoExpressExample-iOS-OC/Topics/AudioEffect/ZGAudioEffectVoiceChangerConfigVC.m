@@ -34,7 +34,7 @@
     
     self.voiceChangerOptionModes = [ZGAudioEffectTopicHelper voiceChangerOptionModes];
     
-    self.navigationItem.title = @"设置-变声";
+    self.navigationItem.title = @"Set Voice Changer";
     
     BOOL voiceChangerOpen = [ZGAudioEffectTopicConfigManager sharedInstance].voiceChangerOpen;
     self.voiceChargerConfigContainerView.hidden = !voiceChangerOpen;

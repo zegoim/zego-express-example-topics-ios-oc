@@ -69,18 +69,18 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
 
     // Stop publishing before exiting
     if (self.playerState != ZegoPlayerStateNoPlay) {
-        ZGLogInfo(@" 📥 Stop playing stream");
+        ZGLogInfo(@"📥 Stop playing stream");
         [[ZegoExpressEngine sharedEngine] stopPlayingStream:self.streamID];
     }
 
     // Logout room before exiting
     if (self.roomState != ZegoRoomStateDisconnected) {
-        ZGLogInfo(@" 🚪 Logout room");
+        ZGLogInfo(@"🚪 Logout room");
         [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
     }
 
     // Can destroy the engine when you don't need audio and video calls
-    ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+    ZGLogInfo(@"🏳️ Destroy ZegoExpressEngine");
     [ZegoExpressEngine destroyEngine:nil];
 }
 
@@ -119,7 +119,7 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
 - (void)createEngine {
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
 
-    [self appendLog:@" 🚀 Create ZegoExpressEngine"];
+    [self appendLog:@"🚀 Create ZegoExpressEngine"];
 
     [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
 
@@ -137,7 +137,7 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
 
 
 - (void)startLive {
-    [self appendLog:@" 🚪 Start login room"];
+    [self appendLog:@"🚪 Start login room"];
 
     self.roomID = self.roomIDTextField.text;
     self.streamID = self.streamIDTextField.text;
@@ -154,7 +154,7 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
     // Login room
     [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:[ZegoUser userWithUserID:userID userName:userName] config:config];
 
-    [self appendLog:@" 📥 Start playing stream"];
+    [self appendLog:@"📥 Start playing stream"];
 
     // Start playing
     ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:self.playView];
@@ -167,11 +167,11 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
 - (void)stopLive {
     // Stop playing
     [[ZegoExpressEngine sharedEngine] stopPlayingStream:self.streamID];
-    [self appendLog:@" 📥 Stop playing stream"];
+    [self appendLog:@"📥 Stop playing stream"];
 
     // Logout room
     [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
-    [self appendLog:@" 🚪 Logout room"];
+    [self appendLog:@"🚪 Logout room"];
 
     [self resetQualityLabelText];
 }
@@ -224,7 +224,7 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
 
     NSString *oldText = self.logTextView.text;
     NSString *newLine = oldText.length == 0 ? @"" : @"\n";
-    NSString *newText = [NSString stringWithFormat:@"%@%@%@", oldText, newLine, tipText];
+    NSString *newText = [NSString stringWithFormat:@"%@%@ %@", oldText, newLine, tipText];
 
     self.logTextView.text = newText;
     if(newText.length > 0 ) {
@@ -281,28 +281,28 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
         [streamExtraInfoString appendFormat:@"streamID:%@,info:%@;\n", stream.streamID, stream.extraInfo];
     }
     self.streamExtraInfo = streamExtraInfoString;
-    [self appendLog:[NSString stringWithFormat:@" 🚩 💬 Stream extra info update: %@", streamExtraInfoString]];
+    [self appendLog:[NSString stringWithFormat:@"🚩 💬 Stream extra info update: %@", streamExtraInfoString]];
 }
 
 #pragma mark - ZegoExpress EventHandler Room Event
 
 - (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData roomID:(NSString *)roomID {
     if (errorCode != 0) {
-        [self appendLog:[NSString stringWithFormat:@" 🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode]];
+        [self appendLog:[NSString stringWithFormat:@"🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode]];
     } else {
         switch (state) {
             case ZegoRoomStateConnected:
-                [self appendLog:@" 🚩 🚪 Login room success"];
+                [self appendLog:@"🚩 🚪 Login room success"];
                 self.roomStateLabel.text = @"🟢 RoomState: Connected";
                 break;
 
             case ZegoRoomStateConnecting:
-                [self appendLog:@" 🚩 🚪 Requesting login room"];
+                [self appendLog:@"🚩 🚪 Requesting login room"];
                 self.roomStateLabel.text = @"🟡 RoomState: Connecting";
                 break;
 
             case ZegoRoomStateDisconnected:
-                [self appendLog:@" 🚩 🚪 Logout room"];
+                [self appendLog:@"🚩 🚪 Logout room"];
                 self.roomStateLabel.text = @"🔴 RoomState: Disconnected";
                 break;
         }
@@ -312,7 +312,7 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
 }
 
 - (void)onRoomStreamUpdate:(ZegoUpdateType)updateType streamList:(NSArray<ZegoStream *> *)streamList roomID:(NSString *)roomID {
-    [self appendLog:[NSString stringWithFormat:@" 🚩 🌊 Room stream update, updateType:%lu, streamsCount: %lu, roomID: %@", (unsigned long)updateType, (unsigned long)streamList.count, roomID]];
+    [self appendLog:[NSString stringWithFormat:@"🚩 🌊 Room stream update, updateType:%lu, streamsCount: %lu, roomID: %@", (unsigned long)updateType, (unsigned long)streamList.count, roomID]];
     [self updateStreamExtraInfo:streamList];
 }
 
@@ -327,28 +327,28 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
 
     }
     self.roomExtraInfo = roomExtraInfoString;
-    [self appendLog:[NSString stringWithFormat:@" 🚩 💭 Room extra info update: %@", roomExtraInfoString]];
+    [self appendLog:[NSString stringWithFormat:@"🚩 💭 Room extra info update: %@", roomExtraInfoString]];
 }
 
 #pragma mark - ZegoExpress EventHandler Play Event
 
 - (void)onPlayerStateUpdate:(ZegoPlayerState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
     if (errorCode != 0) {
-        [self appendLog:[NSString stringWithFormat:@" 🚩 ❌ 📥 Playing stream error of streamID: %@, errorCode:%d", streamID, errorCode]];
+        [self appendLog:[NSString stringWithFormat:@"🚩 ❌ 📥 Playing stream error of streamID: %@, errorCode:%d", streamID, errorCode]];
     } else {
         switch (state) {
             case ZegoPlayerStatePlaying:
-                [self appendLog:@" 🚩 📥 Playing stream"];
+                [self appendLog:@"🚩 📥 Playing stream"];
                 self.playerStateLabel.text = @"🟢 PlayerState: Playing";
                 break;
 
             case ZegoPlayerStatePlayRequesting:
-                [self appendLog:@" 🚩 📥 Requesting play stream"];
+                [self appendLog:@"🚩 📥 Requesting play stream"];
                 self.playerStateLabel.text = @"🟡 PlayerState: Requesting";
                 break;
 
             case ZegoPlayerStateNoPlay:
-                [self appendLog:@" 🚩 📥 No play stream"];
+                [self appendLog:@"🚩 📥 No play stream"];
                 self.playerStateLabel.text = @"🔴 PlayerState: NoPlay";
                 break;
         }

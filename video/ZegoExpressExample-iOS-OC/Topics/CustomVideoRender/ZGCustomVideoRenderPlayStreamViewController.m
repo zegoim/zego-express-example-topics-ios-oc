@@ -34,7 +34,7 @@
 
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
 
-    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+    ZGLogInfo(@"🚀 Create ZegoExpressEngine");
 
     [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
 
@@ -54,11 +54,11 @@
 - (void)startLive {
     // Login Room
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
-    ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
+    ZGLogInfo(@"🚪 Login room. roomID: %@", self.roomID);
     [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
     
     // Start playing
-    ZGLogInfo(@" 📥 Start playing stream. streamID: %@", self.streamID);
+    ZGLogInfo(@"📥 Start playing stream. streamID: %@", self.streamID);
     [[ZegoExpressEngine sharedEngine] startPlayingStream:self.streamID canvas:[ZegoCanvas canvasWithView:self.engineRenderPlayView]];
     
 }
@@ -66,13 +66,13 @@
 - (void)viewDidDisappear:(BOOL)animated {
     if (self.isBeingDismissed || self.isMovingFromParentViewController
         || (self.navigationController && self.navigationController.isBeingDismissed)) {
-        ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+        ZGLogInfo(@"🏳️ Destroy ZegoExpressEngine");
         [ZegoExpressEngine destroyEngine:^{
             // This callback is only used to notify the completion of the release of internal resources of the engine.
             // Developers cannot release resources related to the engine within this callback.
             //
             // In general, developers do not need to listen to this callback.
-            ZGLogInfo(@" 🚩 🏳️ Destroy ZegoExpressEngine complete");
+            ZGLogInfo(@"🚩 🏳️ Destroy ZegoExpressEngine complete");
         }];
     }
     [super viewDidDisappear:animated];

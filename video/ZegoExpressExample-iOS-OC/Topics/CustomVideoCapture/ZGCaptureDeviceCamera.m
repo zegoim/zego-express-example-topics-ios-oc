@@ -16,9 +16,11 @@
 
 @property (nonatomic, assign) OSType pixelFormatType;
 @property (nonatomic, assign) AVCaptureDevicePosition cameraPosition;
+@property (nonatomic, strong) AVCaptureDevice *device;
 @property (nonatomic, strong) AVCaptureDeviceInput *input;
 @property (nonatomic, strong) AVCaptureVideoDataOutput *output;
 @property (nonatomic, strong) AVCaptureSession *session;
+@property (nonatomic, assign) int framerate;
 
 @property (nonatomic, assign) BOOL isRunning;
 
@@ -34,6 +36,9 @@
         // Use front camera as default
         _cameraPosition = AVCaptureDevicePositionFront;
 
+        // Default is 30 fps
+        _framerate = 30;
+
         _sampleBufferCallbackQueue = dispatch_queue_create("im.zego.ZGCustomVideoCaptureCameraDevice.outputCallbackQueue", DISPATCH_QUEUE_SERIAL);
     }
     return self;
@@ -45,7 +50,7 @@
 
 
 - (void)startCapture {
-    ZGLogInfo(@" ▶️ Camera start to capture");
+    ZGLogInfo(@"▶️ Camera start to capture");
     if (self.isRunning) {
         return;
     }
@@ -87,11 +92,11 @@
     }
     
     self.isRunning = YES;
-    ZGLogInfo(@" ⏺ Camera has started capturing");
+    ZGLogInfo(@"⏺ Camera has started capturing");
 }
 
 - (void)stopCapture {
-    ZGLogInfo(@" ⏸ Camera stops capture");
+    ZGLogInfo(@"⏸ Camera stops capture");
     if (!self.isRunning) {
         return;
     }
@@ -102,7 +107,7 @@
     }
     
     self.isRunning = NO;
-    ZGLogInfo(@" ⏹ Camera has stopped capturing");
+    ZGLogInfo(@"⏹ Camera has stopped capturing");
 }
 
 - (void)switchCameraPosition {
@@ -115,11 +120,11 @@
 
 #if TARGET_OS_OSX
 
-    ZGLogInfo(@" 📷 🔄 macOS does not support switching front/back camera");
+    ZGLogInfo(@"📷 🔄 macOS does not support switching front/back camera");
 
 #elif TARGET_OS_IOS
 
-    ZGLogInfo(@" 📷 🔄 Switch to the %@ camera", self.cameraPosition == AVCaptureDevicePositionFront ? @"front" : @"back");
+    ZGLogInfo(@"📷 🔄 Switch to the %@ camera", self.cameraPosition == AVCaptureDevicePositionFront ? @"front" : @"back");
 
     // Restart capture
     if (self.isRunning) {
@@ -128,6 +133,36 @@
     }
 
 #endif
+}
+
+- (void)setFramerate:(int)framerate {
+    if (!_device) {
+        NSLog(@"Camera is not actived");
+        return;
+    }
+
+    NSArray<AVFrameRateRange *> *ranges = _device.activeFormat.videoSupportedFrameRateRanges;
+    AVFrameRateRange *range = [ranges firstObject];
+
+    if (!range) {
+        NSLog(@"videoSupportedFrameRateRanges is empty");
+        return;
+    }
+
+    if (framerate > range.maxFrameRate || framerate < range.minFrameRate) {
+        NSLog(@"Unsupport framerate: %d, range is %.2f ~ %.2f", framerate, range.minFrameRate, range.maxFrameRate);
+        return;
+    }
+
+    NSError *error = [[NSError alloc] init];
+    if (![_device lockForConfiguration:&error]) {
+        NSLog(@"AVCaptureDevice lockForConfiguration failed. errCode:%ld, domain:%@", error.code, error.domain);
+    }
+    _device.activeVideoMinFrameDuration = CMTimeMake(1, framerate);
+    _device.activeVideoMaxFrameDuration = CMTimeMake(1, framerate);
+    [_device unlockForConfiguration];
+
+    NSLog(@"Set framerate to %d", framerate);
 }
 
 
@@ -141,8 +176,7 @@
 }
 
 // Reacquire the camera every time it is called
-- (AVCaptureDeviceInput *)input {
-
+- (AVCaptureDevice *)device {
     NSArray *cameras= [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
 
 #if TARGET_OS_OSX
@@ -166,8 +200,15 @@
 
 #endif
 
+    _device = camera;
+    return _device;
+}
+
+// Reacquire the camera every time it is called
+- (AVCaptureDeviceInput *)input {
+
     NSError *error = nil;
-    AVCaptureDeviceInput *captureDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:camera error:&error];
+    AVCaptureDeviceInput *captureDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:self.device error:&error];
     if (error) {
         NSLog(@"Conversion of AVCaptureDevice to AVCaptureDeviceInput failed");
         return nil;

@@ -60,26 +60,31 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
     self.enableCamera = YES;
     self.enableHardwareEncoder = NO;
     self.captureVolume = 100;
+
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:UIDeviceOrientationDidChangeNotification object:[UIDevice currentDevice]];
 }
 
 - (void)dealloc {
-    ZGLogInfo(@" 🔌 Stop preview");
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
+
+    ZGLogInfo(@"🔌 Stop preview");
     [[ZegoExpressEngine sharedEngine] stopPreview];
 
     // Stop publishing before exiting
     if (self.publisherState != ZegoPublisherStateNoPublish) {
-        ZGLogInfo(@" 📤 Stop publishing stream");
+        ZGLogInfo(@"📤 Stop publishing stream");
         [[ZegoExpressEngine sharedEngine] stopPublishingStream];
     }
 
     // Logout room before exiting
     if (self.roomState != ZegoRoomStateDisconnected) {
-        ZGLogInfo(@" 🚪 Logout room");
+        ZGLogInfo(@"🚪 Logout room");
         [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
     }
 
     // Can destroy the engine when you don't need audio and video calls
-    ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+    ZGLogInfo(@"🏳️ Destroy ZegoExpressEngine");
     [ZegoExpressEngine destroyEngine:nil];
 }
 
@@ -131,7 +136,7 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
 - (void)createEngine {
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
 
-    [self appendLog:@" 🚀 Create ZegoExpressEngine"];
+    [self appendLog:@"🚀 Create ZegoExpressEngine"];
 
     [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
 
@@ -141,7 +146,7 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
     // Start preview
     ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.previewView];
 //    previewCanvas.viewMode = self.previewViewMode;
-    [self appendLog:@" 🔌 Start preview"];
+    [self appendLog:@"🔌 Start preview"];
     [[ZegoExpressEngine sharedEngine] startPreview:previewCanvas];
 }
 
@@ -155,7 +160,7 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
 
 
 - (void)startLive {
-    [self appendLog:@" 🚪 Start login room"];
+    [self appendLog:@"🚪 Start login room"];
 
     self.roomID = self.roomIDTextField.text;
     self.streamID = self.streamIDTextField.text;
@@ -172,7 +177,7 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
     // Login room
     [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:[ZegoUser userWithUserID:userID userName:userName] config:config];
 
-    [self appendLog:@" 📤 Start publishing stream"];
+    [self appendLog:@"📤 Start publishing stream"];
 
     // Start publishing
     [[ZegoExpressEngine sharedEngine] startPublishingStream:self.streamID];
@@ -183,11 +188,11 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
 - (void)stopLive {
     // Stop publishing
     [[ZegoExpressEngine sharedEngine] stopPublishingStream];
-    [self appendLog:@" 📤 Stop publishing stream"];
+    [self appendLog:@"📤 Stop publishing stream"];
 
     // Logout room
     [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
-    [self appendLog:@" 🚪 Logout room"];
+    [self appendLog:@"🚪 Logout room"];
 
     self.publishQualityLabel.text = @"";
 }
@@ -239,7 +244,7 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
 
     NSString *oldText = self.logTextView.text;
     NSString *newLine = oldText.length == 0 ? @"" : @"\n";
-    NSString *newText = [NSString stringWithFormat:@"%@%@%@", oldText, newLine, tipText];
+    NSString *newText = [NSString stringWithFormat:@"%@%@ %@", oldText, newLine, tipText];
 
     self.logTextView.text = newText;
     if(newText.length > 0 ) {
@@ -292,25 +297,60 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
     return UIModalPresentationNone;
 }
 
+- (void)orientationChanged:(NSNotification *)notification {
+    UIDevice *device = notification.object;
+
+    ZegoVideoConfig *videoConfig = [[ZegoExpressEngine sharedEngine] getVideoConfig];
+    UIInterfaceOrientation orientation = UIInterfaceOrientationUnknown;
+
+    switch (device.orientation) {
+        // Note that UIInterfaceOrientationLandscapeLeft is equal to UIDeviceOrientationLandscapeRight (and vice versa).
+        // This is because rotating the device to the left requires rotating the content to the right.
+        case UIDeviceOrientationLandscapeLeft:
+            orientation = UIInterfaceOrientationLandscapeRight;
+            videoConfig.encodeResolution = CGSizeMake(640, 360);
+            break;
+        case UIDeviceOrientationLandscapeRight:
+            orientation = UIInterfaceOrientationLandscapeLeft;
+            videoConfig.encodeResolution = CGSizeMake(640, 360);
+            break;
+        case UIDeviceOrientationPortrait:
+            orientation = UIInterfaceOrientationPortrait;
+            videoConfig.encodeResolution = CGSizeMake(360, 640);
+            break;
+        case UIDeviceOrientationPortraitUpsideDown:
+            orientation = UIInterfaceOrientationPortraitUpsideDown;
+            videoConfig.encodeResolution = CGSizeMake(360, 640);
+            break;
+        default:
+            // Unknown / FaceUp / FaceDown
+            break;
+    }
+
+    [[ZegoExpressEngine sharedEngine] setVideoConfig:videoConfig];
+    [[ZegoExpressEngine sharedEngine] setAppOrientation:orientation];
+}
+
+
 #pragma mark - ZegoExpress EventHandler Room Event
 
 - (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData roomID:(NSString *)roomID {
     if (errorCode != 0) {
-        [self appendLog:[NSString stringWithFormat:@" 🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode]];
+        [self appendLog:[NSString stringWithFormat:@"🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode]];
     } else {
         switch (state) {
             case ZegoRoomStateConnected:
-                [self appendLog:@" 🚩 🚪 Login room success"];
+                [self appendLog:@"🚩 🚪 Login room success"];
                 self.roomStateLabel.text = @"🟢 RoomState: Connected";
                 break;
 
             case ZegoRoomStateConnecting:
-                [self appendLog:@" 🚩 🚪 Requesting login room"];
+                [self appendLog:@"🚩 🚪 Requesting login room"];
                 self.roomStateLabel.text = @"🟡 RoomState: Connecting";
                 break;
 
             case ZegoRoomStateDisconnected:
-                [self appendLog:@" 🚩 🚪 Logout room"];
+                [self appendLog:@"🚩 🚪 Logout room"];
                 self.roomStateLabel.text = @"🔴 RoomState: Disconnected";
 
                 // After logout room, the preview will stop. You need to re-start preview.
@@ -328,21 +368,21 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
 
 - (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
     if (errorCode != 0) {
-        [self appendLog:[NSString stringWithFormat:@" 🚩 ❌ 📤 Publishing stream error of streamID: %@, errorCode:%d", streamID, errorCode]];
+        [self appendLog:[NSString stringWithFormat:@"🚩 ❌ 📤 Publishing stream error of streamID: %@, errorCode:%d", streamID, errorCode]];
     } else {
         switch (state) {
             case ZegoPublisherStatePublishing:
-                [self appendLog:@" 🚩 📤 Publishing stream"];
+                [self appendLog:@"🚩 📤 Publishing stream"];
                 self.publisherStateLabel.text = @"🟢 PublisherState: Publishing";
                 break;
 
             case ZegoPublisherStatePublishRequesting:
-                [self appendLog:@" 🚩 📤 Requesting publish stream"];
+                [self appendLog:@"🚩 📤 Requesting publish stream"];
                 self.publisherStateLabel.text = @"🟡 PublisherState: Requesting";
                 break;
 
             case ZegoPublisherStateNoPublish:
-                [self appendLog:@" 🚩 📤 No publish stream"];
+                [self appendLog:@"🚩 📤 No publish stream"];
                 self.publisherStateLabel.text = @"🔴 PublisherState: NoPublish";
                 break;
         }
@@ -381,11 +421,11 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
 }
 
 - (void)onPublisherCapturedAudioFirstFrame {
-    [self appendLog:@"onPublisherCapturedAudioFirstFrame"];
+    [self appendLog:@"🚩 🎶 onPublisherCapturedAudioFirstFrame"];
 }
 
 - (void)onPublisherCapturedVideoFirstFrame:(ZegoPublishChannel)channel {
-    [self appendLog:@"onPublisherCapturedVideoFirstFrame"];
+    [self appendLog:@"🚩 📷 onPublisherCapturedVideoFirstFrame"];
 }
 
 - (void)onPublisherVideoSizeChanged:(CGSize)size channel:(ZegoPublishChannel)channel {

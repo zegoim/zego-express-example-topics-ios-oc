@@ -41,12 +41,12 @@ NSString* const ZGCustomVideoCaptureLoginVCKey_streamID = @"kStreamID";
 
 - (IBAction)publishStream:(UIButton *)sender {
     if (!self.roomIDTextField.text || [self.roomIDTextField.text isEqualToString:@""]) {
-        ZGLogError(@" ❗️ Please fill in roomID.");
+        ZGLogError(@"❗️ Please fill in roomID.");
         return;
     }
 
     if (!self.streamIDTextField.text || [self.streamIDTextField.text isEqualToString:@""]) {
-        ZGLogError(@" ❗️ Please fill in streamID.");
+        ZGLogError(@"❗️ Please fill in streamID.");
         return;
     }
 

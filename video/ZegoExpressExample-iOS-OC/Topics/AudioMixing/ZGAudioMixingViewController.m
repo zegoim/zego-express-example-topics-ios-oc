@@ -73,7 +73,7 @@
 - (void)startLive {
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
 
-    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+    ZGLogInfo(@"🚀 Create ZegoExpressEngine");
     [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
 
     // Set self as audio mixing handler
@@ -83,15 +83,15 @@
 
     ZegoRoomConfig *roomConfig = [ZegoRoomConfig defaultConfig];
 
-    ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
+    ZGLogInfo(@"🚪 Login room. roomID: %@", self.roomID);
     [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:roomConfig];
 
     // Start preview
-    ZGLogInfo(@" 🔌 Start preview");
+    ZGLogInfo(@"🔌 Start preview");
     [[ZegoExpressEngine sharedEngine] startPreview:[ZegoCanvas canvasWithView:self.view]];
 
     // Start publishing
-    ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", self.streamID);
+    ZGLogInfo(@"📤 Start publishing stream. streamID: %@", self.streamID);
     [[ZegoExpressEngine sharedEngine] startPublishingStream:self.streamID];
 
     // Set up audio mixing
@@ -101,11 +101,11 @@
 }
 
 - (void)dealloc {
-    ZGLogInfo(@" 🚪 Logout room");
+    ZGLogInfo(@"🚪 Logout room");
     [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
 
     // Can destroy the engine when you don't need audio and video calls
-    ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+    ZGLogInfo(@"🏳️ Destroy ZegoExpressEngine");
     [ZegoExpressEngine destroyEngine:nil];
 }
 
@@ -124,17 +124,17 @@
     vc.audioMixingVolume = _audioMixingVolume;
 
     vc.enableAudioMixingBlock = ^(BOOL enable) {
-        ZGLogInfo(@" 🎶 %@ audio mixing", enable ? @"Enable" : @"Disable");
+        ZGLogInfo(@"🎶 %@ audio mixing", enable ? @"Enable" : @"Disable");
         [[ZegoExpressEngine sharedEngine] enableAudioMixing:enable];
     };
 
     vc.muteLocalAudioMixingBlock = ^(BOOL mute) {
-        ZGLogInfo(@" %@ local audio mixing", mute ? @"🔇 Mute" : @"🔈 Unmute");
+        ZGLogInfo(@"%@ local audio mixing", mute ? @"🔇 Mute" : @"🔈 Unmute");
         [[ZegoExpressEngine sharedEngine] muteLocalAudioMixing:mute];
     };
 
     vc.setAudioMixingVolumeBlock = ^(int volume) {
-        ZGLogInfo(@" 🔊 Set audio mixing volume: %d", volume);
+        ZGLogInfo(@"🔊 Set audio mixing volume: %d", volume);
         [[ZegoExpressEngine sharedEngine] setAudioMixingVolume:volume];
     };
 
@@ -150,21 +150,21 @@
 
 - (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData roomID:(NSString *)roomID {
     if (errorCode != 0) {
-        ZGLogInfo(@" 🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode);
+        ZGLogInfo(@"🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode);
     } else {
         switch (state) {
             case ZegoRoomStateConnected:
-                ZGLogInfo(@" 🚩 🚪 Login room success");
+                ZGLogInfo(@"🚩 🚪 Login room success");
                 self.roomStateLabel.text = @"🟢 RoomState: Connected";
                 break;
 
             case ZegoRoomStateConnecting:
-                ZGLogInfo(@" 🚩 🚪 Requesting login room");
+                ZGLogInfo(@"🚩 🚪 Requesting login room");
                 self.roomStateLabel.text = @"🟡 RoomState: Connecting";
                 break;
 
             case ZegoRoomStateDisconnected:
-                ZGLogInfo(@" 🚩 🚪 Logout room");
+                ZGLogInfo(@"🚩 🚪 Logout room");
                 self.roomStateLabel.text = @"🔴 RoomState: Disconnected";
                 break;
         }
@@ -173,21 +173,21 @@
 
 - (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
     if (errorCode != 0) {
-        ZGLogInfo(@" 🚩 ❌ 📤 Publishing stream error of streamID: %@, errorCode:%d", streamID, errorCode);
+        ZGLogInfo(@"🚩 ❌ 📤 Publishing stream error of streamID: %@, errorCode:%d", streamID, errorCode);
     } else {
         switch (state) {
             case ZegoPublisherStatePublishing:
-                ZGLogInfo(@" 🚩 📤 Publishing stream");
+                ZGLogInfo(@"🚩 📤 Publishing stream");
                 self.publisherStateLabel.text = @"🟢 PublisherState: Publishing";
                 break;
 
             case ZegoPublisherStatePublishRequesting:
-                ZGLogInfo(@" 🚩 📤 Requesting publish stream");
+                ZGLogInfo(@"🚩 📤 Requesting publish stream");
                 self.publisherStateLabel.text = @"🟡 PublisherState: Requesting";
                 break;
 
             case ZegoPublisherStateNoPublish:
-                ZGLogInfo(@" 🚩 📤 No publish stream");
+                ZGLogInfo(@"🚩 📤 No publish stream");
                 self.publisherStateLabel.text = @"🔴 PublisherState: NoPublish";
                 break;
         }

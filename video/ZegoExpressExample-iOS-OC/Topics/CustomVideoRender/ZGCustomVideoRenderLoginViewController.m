@@ -58,12 +58,12 @@ NSString* const ZGCustomVideoRenderLoginVCKey_streamID = @"kStreamID";
 
 - (BOOL)prepareForJump {
     if (!self.roomIDTextField.text || [self.roomIDTextField.text isEqualToString:@""]) {
-        ZGLogError(@" ❗️ Please fill in roomID.");
+        ZGLogError(@"❗️ Please fill in roomID.");
         return NO;
     }
     
     if (!self.streamIDTextField.text || [self.streamIDTextField.text isEqualToString:@""]) {
-        ZGLogError(@" ❗️ Please fill in streamID.");
+        ZGLogError(@"❗️ Please fill in streamID.");
         return NO;
     }
     

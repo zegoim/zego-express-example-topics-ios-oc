@@ -92,7 +92,7 @@ NSString* const ZGAuxPublisherPlayVCKey_secondStreamID = @"kSecondStreamID";
 - (void)createEngineAndLoginRoom {
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
-    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+    ZGLogInfo(@"🚀 Create ZegoExpressEngine");
     
     [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
 }
@@ -114,12 +114,12 @@ NSString* const ZGAuxPublisherPlayVCKey_secondStreamID = @"kSecondStreamID";
 
 - (void)loginRoom {
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
-    ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
+    ZGLogInfo(@"🚪 Login room. roomID: %@", self.roomID);
     [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
 }
 
 - (void)logoutRoom {
-    ZGLogInfo(@" 🚪 Logout room. roomID: %@", self.roomID);
+    ZGLogInfo(@"🚪 Logout room. roomID: %@", self.roomID);
     [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
 }
 
@@ -142,13 +142,13 @@ NSString* const ZGAuxPublisherPlayVCKey_secondStreamID = @"kSecondStreamID";
     self.firstStreamID = self.firstStreamIDTextField.text;
     [self saveValue:self.firstStreamID forKey:ZGAuxPublisherPlayVCKey_firstStreamID];
     
-    ZGLogInfo(@" 📥 Start playing stream. streamID: %@", self.firstStreamID);
+    ZGLogInfo(@"📥 Start playing stream. streamID: %@", self.firstStreamID);
     ZegoCanvas *firstPlayCanvas = [ZegoCanvas canvasWithView:self.firstStreamPlayView];
     [[ZegoExpressEngine sharedEngine] startPlayingStream:self.firstStreamID canvas:firstPlayCanvas];
 }
 
 - (void)stopPlayingFirstSream {
-    ZGLogInfo(@" 📥 Stop playing stream");
+    ZGLogInfo(@"📥 Stop playing stream");
     [[ZegoExpressEngine sharedEngine] stopPlayingStream:self.firstStreamID];
 }
 
@@ -171,24 +171,24 @@ NSString* const ZGAuxPublisherPlayVCKey_secondStreamID = @"kSecondStreamID";
     self.secondStreamID = self.secondStreamIDTextField.text;
     [self saveValue:self.secondStreamID forKey:ZGAuxPublisherPlayVCKey_secondStreamID];
     
-    ZGLogInfo(@" 📥 Start playing stream. streamID: %@", self.secondStreamID);
+    ZGLogInfo(@"📥 Start playing stream. streamID: %@", self.secondStreamID);
     ZegoCanvas *secondPlayCanvas = [ZegoCanvas canvasWithView:self.secondStreamPlayView];
     [[ZegoExpressEngine sharedEngine] startPlayingStream:self.secondStreamID canvas:secondPlayCanvas];
 }
 
 - (void)stopPlayingSecondStream {
-    ZGLogInfo(@" 📥 Stop playing stream");
+    ZGLogInfo(@"📥 Stop playing stream");
     [[ZegoExpressEngine sharedEngine] stopPlayingStream:self.secondStreamID];
 }
 
 #pragma mark - Exit
 
 - (void)dealloc {
-    ZGLogInfo(@" 🚪 Exit the room");
+    ZGLogInfo(@"🚪 Exit the room");
     [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
     
     // Can destroy the engine when you don't need audio and video calls
-    ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+    ZGLogInfo(@"🏳️ Destroy ZegoExpressEngine");
     [ZegoExpressEngine destroyEngine:nil];
 }
 
@@ -197,19 +197,19 @@ NSString* const ZGAuxPublisherPlayVCKey_secondStreamID = @"kSecondStreamID";
 - (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData roomID:(NSString *)roomID {
     self.roomState = state;
     if (errorCode != 0) {
-        ZGLogError(@" 🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode);
+        ZGLogError(@"🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode);
     } else {
         if (state == ZegoRoomStateConnected) {
-            ZGLogInfo(@" 🚩 🚪 Login room success");
+            ZGLogInfo(@"🚩 🚪 Login room success");
             self.roomStateLabel.text = @"Connected 🟢";
             [self.loginRoomButton setTitle:@"Logout Room" forState:UIControlStateNormal];
             [self hidePlayButtonAndTextField:NO];
         } else if (state == ZegoRoomStateConnecting) {
-            ZGLogInfo(@" 🚩 🚪 Requesting login room");
+            ZGLogInfo(@"🚩 🚪 Requesting login room");
             self.roomStateLabel.text = @"Connecting 🟡";
             [self.loginRoomButton setTitle:@"Connecting" forState:UIControlStateNormal];
         } else if (state == ZegoRoomStateDisconnected) {
-            ZGLogInfo(@" 🚩 🚪 Logout room");
+            ZGLogInfo(@"🚩 🚪 Logout room");
             self.roomStateLabel.text = @"Not Connected 🔴";
             [self.loginRoomButton setTitle:@"Login Room" forState:UIControlStateNormal];
             [self hidePlayButtonAndTextField:YES];
@@ -218,7 +218,7 @@ NSString* const ZGAuxPublisherPlayVCKey_secondStreamID = @"kSecondStreamID";
 }
 
 - (void)onPlayerStateUpdate:(ZegoPlayerState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
-    ZGLogInfo(@" 🚩 📥 Player State Update Callback: %lu, errorCode: %d, streamID: %@", (unsigned long)state, (int)errorCode, streamID);
+    ZGLogInfo(@"🚩 📥 Player State Update Callback: %lu, errorCode: %d, streamID: %@", (unsigned long)state, (int)errorCode, streamID);
     
     if (streamID == self.firstStreamID) {
         self.firstStreamPlayerState = state;

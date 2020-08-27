@@ -64,6 +64,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)loginMultiRoom:(NSString *)roomID;
 
 
+- (void)switchRoom:(NSString *)fromRoomID toRoomID:(NSString *)toRoomID;
+
+
 - (void)logoutRoom:(NSString *)roomID;
 
 

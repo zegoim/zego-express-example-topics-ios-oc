@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"设置-立体声";
+    self.navigationItem.title = @"Set Virtual Stereo";
     
     BOOL virtualStereoOpen = [ZGAudioEffectTopicConfigManager sharedInstance].virtualStereoOpen;
     

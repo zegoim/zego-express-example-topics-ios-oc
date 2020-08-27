@@ -1,5 +1,5 @@
 //
-//  Recorder.h
+//  ZGAudioToolRecorder.h
 //  ZegoExpressExample-iOS-OC
 //
 //  Created by zego on 2020/7/20.
@@ -10,13 +10,13 @@
 #import <AudioUnit/AudioUnit.h>
 #import <AVFoundation/AVFoundation.h>
 
-@class Recorder;
+@class ZGAudioToolRecorder;
 
-typedef void (^XBAudioUnitPlayerOutputBlock)(Recorder * _Nonnull player, AudioUnitRenderActionFlags * _Nonnull ioActionFlags, const AudioTimeStamp * _Nonnull inTimeStamp, UInt32 inBusNumber, UInt32 inNumberFrames, AudioBufferList * _Nonnull ioData);
+typedef void (^XBAudioUnitPlayerOutputBlock)(ZGAudioToolRecorder * _Nonnull player, AudioUnitRenderActionFlags * _Nonnull ioActionFlags, const AudioTimeStamp * _Nonnull inTimeStamp, UInt32 inBusNumber, UInt32 inNumberFrames, AudioBufferList * _Nonnull ioData);
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Recorder : NSObject
+@interface ZGAudioToolRecorder : NSObject
 
 @property (nonatomic,copy) XBAudioUnitPlayerOutputBlock bl_output;
 

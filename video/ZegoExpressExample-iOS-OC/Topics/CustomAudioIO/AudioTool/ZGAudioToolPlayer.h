@@ -4,9 +4,9 @@
 #import <AudioUnit/AudioUnit.h>
 #import <AVFoundation/AVFoundation.h>
 
-@class Player;
+@class ZGAudioToolPlayer;
 
-typedef void (^XBAudioUnitPlayerInputBlock)(Player *player,
+typedef void (^XBAudioUnitPlayerInputBlock)(ZGAudioToolPlayer *player,
 AudioUnitRenderActionFlags *ioActionFlags,
 const AudioTimeStamp *inTimeStamp,
 UInt32 inBusNumber,
@@ -15,12 +15,12 @@ AudioBufferList *ioData);
 
 @protocol LYPlayerDelegate <NSObject>
 
-- (void)onPlayToEnd:(Player *)player;
+- (void)onPlayToEnd:(ZGAudioToolPlayer *)player;
 
 @end
 
 
-@interface Player : NSObject
+@interface ZGAudioToolPlayer : NSObject
 
 @property (nonatomic, weak) id<LYPlayerDelegate> delegate;
 @property (nonatomic,copy) XBAudioUnitPlayerInputBlock bl_input;

@@ -83,12 +83,12 @@ static const unsigned int ZGMixerSecondStreamSoundLevelID = 200;
 - (void)createEngineAndLoginRoom {
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
-    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+    ZGLogInfo(@"🚀 Create ZegoExpressEngine");
     [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
     
-    ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
+    ZGLogInfo(@"🚪 Login room. roomID: %@", self.roomID);
     [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
 }
 
@@ -104,20 +104,20 @@ static const unsigned int ZGMixerSecondStreamSoundLevelID = 200;
 
 - (void)startMixerTask {
     if (!self.selectFirstStream || !self.selectSecondStream) {
-        ZGLogWarn(@" ❕ Please select streams first");
-        [ZegoHudManager showMessage:@" ❕ Please select streams first"];
+        ZGLogWarn(@"❕ Please select streams first");
+        [ZegoHudManager showMessage:@"❕ Please select streams first"];
         return;
     } else if (self.selectFirstStream == self.selectSecondStream) {
-        ZGLogWarn(@" ❕ Please select two different streams");
-        [ZegoHudManager showMessage:@" ❕ Please select two different streams"];
+        ZGLogWarn(@"❕ Please select two different streams");
+        [ZegoHudManager showMessage:@"❕ Please select two different streams"];
         return;
     } else if (self.outputTargetTextField.text.length <= 0) {
-        ZGLogWarn(@" ❕ Please enter output target");
-        [ZegoHudManager showMessage:@" ❕ Please enter output target"];
+        ZGLogWarn(@"❕ Please enter output target");
+        [ZegoHudManager showMessage:@"❕ Please enter output target"];
         return;
     }
     
-    ZGLogInfo(@" 🧬 Start mixer task");
+    ZGLogInfo(@"🧬 Start mixer task");
     
     NSString *taskID = [NSString stringWithFormat:@"%@%@", self.selectFirstStream.streamID, self.selectSecondStream.streamID];
     
@@ -163,7 +163,7 @@ static const unsigned int ZGMixerSecondStreamSoundLevelID = 200;
     [ZegoHudManager showNetworkLoading];
     
     [[ZegoExpressEngine sharedEngine] startMixerTask:task callback:^(int errorCode, NSDictionary * _Nullable extendedData) {
-        ZGLogInfo(@" 🚩 🧬 Start mixer task result errorCode: %d", errorCode);
+        ZGLogInfo(@"🚩 🧬 Start mixer task result errorCode: %d", errorCode);
         
         [ZegoHudManager hideNetworkLoading];
         
@@ -171,7 +171,7 @@ static const unsigned int ZGMixerSecondStreamSoundLevelID = 200;
             self.isMixing = YES;
             
         } else {
-            [ZegoHudManager showMessage:[NSString stringWithFormat:@" 🚩 🧬 Start mixer errorCode: %d", errorCode]];
+            [ZegoHudManager showMessage:[NSString stringWithFormat:@"🚩 🧬 Start mixer errorCode: %d", errorCode]];
         }
     }];
     
@@ -183,9 +183,9 @@ static const unsigned int ZGMixerSecondStreamSoundLevelID = 200;
 }
 
 - (void)stopMixerTask {
-    ZGLogInfo(@" 🧬 Stop mixer task");
+    ZGLogInfo(@"🧬 Stop mixer task");
     [[ZegoExpressEngine sharedEngine] stopMixerTask:self.mixerTask callback:^(int errorCode) {
-        ZGLogInfo(@" 🚩 🧬 Stop mixer task result errorCode: %d", errorCode);
+        ZGLogInfo(@"🚩 🧬 Stop mixer task result errorCode: %d", errorCode);
     }];
     
     self.isMixing = NO;
@@ -203,17 +203,17 @@ static const unsigned int ZGMixerSecondStreamSoundLevelID = 200;
 
 - (void)startPlaying {
     if (self.outputTargetTextField.text.length > 0) {
-        ZGLogInfo(@" 📥 Start playing stream: %@", self.outputTargetTextField.text);
+        ZGLogInfo(@"📥 Start playing stream: %@", self.outputTargetTextField.text);
         
         [[ZegoExpressEngine sharedEngine] startPlayingStream:self.outputTargetTextField.text canvas:[ZegoCanvas canvasWithView:self.playView]];
     } else {
-        ZGLogWarn(@" ❕ Please enter output target");
-        [ZegoHudManager showMessage:@" ❕ Please enter output target"];
+        ZGLogWarn(@"❕ Please enter output target");
+        [ZegoHudManager showMessage:@"❕ Please enter output target"];
     }
 }
 
 - (void)stopPlaying {
-    ZGLogInfo(@" 📥 Stop playing stream: %@", self.outputTargetTextField.text);
+    ZGLogInfo(@"📥 Stop playing stream: %@", self.outputTargetTextField.text);
     
     [[ZegoExpressEngine sharedEngine] stopPlayingStream:self.outputTargetTextField.text];
 }
@@ -222,18 +222,18 @@ static const unsigned int ZGMixerSecondStreamSoundLevelID = 200;
 
 // Refresh the remote streams list
 - (void)onRoomStreamUpdate:(ZegoUpdateType)updateType streamList:(NSArray<ZegoStream *> *)streamList roomID:(NSString *)roomID {
-    ZGLogInfo(@" 🚩 🌊 Room Stream Update Callback: %lu, StreamsCount: %lu, roomID: %@", (unsigned long)updateType, (unsigned long)streamList.count, roomID);
+    ZGLogInfo(@"🚩 🌊 Room Stream Update Callback: %lu, StreamsCount: %lu, roomID: %@", (unsigned long)updateType, (unsigned long)streamList.count, roomID);
     
     if (updateType == ZegoUpdateTypeAdd) {
         for (ZegoStream *stream in streamList) {
-            ZGLogInfo(@" 🚩 🌊 --- [Add] StreamID: %@, UserID: %@", stream.streamID, stream.user.userID);
+            ZGLogInfo(@"🚩 🌊 --- [Add] StreamID: %@, UserID: %@", stream.streamID, stream.user.userID);
             if (![self.remoteStreamList containsObject:stream]) {
                 [self.remoteStreamList addObject:stream];
             }
         }
     } else if (updateType == ZegoUpdateTypeDelete) {
         for (ZegoStream *stream in streamList) {
-            ZGLogInfo(@" 🚩 🌊 --- [Delete] StreamID: %@, UserID: %@", stream.streamID, stream.user.userID);
+            ZGLogInfo(@"🚩 🌊 --- [Delete] StreamID: %@, UserID: %@", stream.streamID, stream.user.userID);
             __block ZegoStream *delStream = nil;
             [self.remoteStreamList enumerateObjectsUsingBlock:^(ZegoStream * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 if ([obj.streamID isEqualToString:stream.streamID] && [obj.user.userID isEqualToString:stream.user.userID]) {
@@ -249,12 +249,12 @@ static const unsigned int ZGMixerSecondStreamSoundLevelID = 200;
 }
 
 - (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData roomID:(NSString *)roomID {
-    ZGLogInfo(@" 🚩 🚪 Room State Update Callback: %lu, errorCode: %d, roomID: %@", (unsigned long)state, (int)errorCode, roomID);
+    ZGLogInfo(@"🚩 🚪 Room State Update Callback: %lu, errorCode: %d, roomID: %@", (unsigned long)state, (int)errorCode, roomID);
 }
 
 // Refresh the player state
 - (void)onPlayerStateUpdate:(ZegoPlayerState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
-    ZGLogInfo(@" 🚩 📥 Player State Update Callback: %lu, errorCode: %d, streamID: %@", (unsigned long)state, (int)errorCode, streamID);
+    ZGLogInfo(@"🚩 📥 Player State Update Callback: %lu, errorCode: %d, streamID: %@", (unsigned long)state, (int)errorCode, streamID);
     self.playerState = state;
 }
 
@@ -327,11 +327,11 @@ static const unsigned int ZGMixerSecondStreamSoundLevelID = 200;
 #pragma mark - Exit
 
 - (void)dealloc {
-    ZGLogInfo(@" 🚪 Exit the room. roomID: %@", self.roomID);
+    ZGLogInfo(@"🚪 Exit the room. roomID: %@", self.roomID);
     [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
     
     // Can destroy the engine when you don't need audio and video calls
-    ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+    ZGLogInfo(@"🏳️ Destroy ZegoExpressEngine");
     [ZegoExpressEngine destroyEngine:nil];
 }
 

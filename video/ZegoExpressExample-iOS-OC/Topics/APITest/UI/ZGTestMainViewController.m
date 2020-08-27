@@ -92,7 +92,7 @@
     
     NSString *oldText = self.logTextView.text;
     NSString *newLine = oldText.length == 0 ? @"" : @"\n";
-    NSString *newText = [NSString stringWithFormat:@"%@%@%@", oldText, newLine, tipText];
+    NSString *newText = [NSString stringWithFormat:@"%@%@ %@", oldText, newLine, tipText];
     
     self.logTextView.text = newText;
     if(newText.length > 0 ) {

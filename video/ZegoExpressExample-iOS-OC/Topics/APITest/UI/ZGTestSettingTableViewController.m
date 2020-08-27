@@ -273,6 +273,13 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
     [self saveValue:self.userNameTextField.text forKey:ZGTestTopicKey_UserName];
 }
 
+- (IBAction)switchRoomClick:(UIButton *)sender {
+    NSString *currentRoomID = [self savedValueForKey:ZGTestTopicKey_RoomID];
+    NSString *newRoomID = self.roomIDTextField.text;
+    [self.manager switchRoom:currentRoomID toRoomID:newRoomID];
+    [self saveValue:newRoomID forKey:ZGTestTopicKey_RoomID];
+}
+
 - (IBAction)logoutRoomClick:(UIButton *)sender {
     [self.manager logoutRoom:self.roomIDTextField.text];
 }

@@ -40,7 +40,7 @@
 - (ZegoExpressEngine *)engine {
     if (!_engine) {
         ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
-        ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+        ZGLogInfo(@"🚀 Create ZegoExpressEngine");
         _engine = [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     }
     return _engine;
@@ -49,23 +49,23 @@
 - (void)startLive {
     // Login Room
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
-    ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
+    ZGLogInfo(@"🚪 Login room. roomID: %@", self.roomID);
     [self.engine loginRoom:self.roomID user:user];
     
     // Start preview
     ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.previewView];
-    ZGLogInfo(@" 🔌 Start preview");
+    ZGLogInfo(@"🔌 Start preview");
     [self.engine startPreview:previewCanvas];
     
     // Start publishing
     // Use userID as streamID
     NSString *streamID = [NSString stringWithFormat:@"%@", user.userID];
-    ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", streamID);
+    ZGLogInfo(@"📤 Start publishing stream. streamID: %@", streamID);
     [self.engine startPublishingStream:streamID];
     
     // Start playing
     ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:self.playView];
-    ZGLogInfo(@" 📥 Start playing stream, streamID: %@", streamID);
+    ZGLogInfo(@"📥 Start playing stream, streamID: %@", streamID);
     [self.engine startPlayingStream:streamID canvas:playCanvas];
 }
 
@@ -83,11 +83,11 @@
 #pragma mark - Exit
 
 - (void)dealloc {
-    ZGLogInfo(@" 🚪 Exit the room");
+    ZGLogInfo(@"🚪 Exit the room");
     [self.engine logoutRoom:self.roomID];
     
     // Can destroy the engine when you don't need audio and video calls
-    ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+    ZGLogInfo(@"🏳️ Destroy ZegoExpressEngine");
     [ZegoExpressEngine destroyEngine:nil];
 }
 

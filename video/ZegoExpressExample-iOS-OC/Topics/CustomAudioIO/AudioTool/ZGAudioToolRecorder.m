@@ -1,12 +1,12 @@
 //
-//  Recorder.m
+//  ZGAudioToolRecorder.m
 //  ZegoExpressExample-iOS-OC
 //
 //  Created by zego on 2020/7/20.
 //  Copyright © 2020 Zego. All rights reserved.
 //
 
-#import "Recorder.h"
+#import "ZGAudioToolRecorder.h"
 #import <AudioUnit/AudioUnit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "AudioToolCommon.h"
@@ -28,7 +28,7 @@ static void CheckError(OSStatus error, const char *operation)
     exit(1);
 }
 
-@implementation Recorder
+@implementation ZGAudioToolRecorder
 {
     AudioUnit audioUnit;
     int _sampleRate;
@@ -163,7 +163,7 @@ static OSStatus RecordCallback(void *inRefCon,
                                UInt32 inNumberFrames,
                                AudioBufferList *ioData)
 {
-    Recorder *recorder = (__bridge Recorder *)inRefCon;
+    ZGAudioToolRecorder *recorder = (__bridge ZGAudioToolRecorder *)inRefCon;
         typeof(recorder) __weak weakPlayer = recorder;
     AudioBufferList bufferList;
     bufferList.mNumberBuffers = 1;

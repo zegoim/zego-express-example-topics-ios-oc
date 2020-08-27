@@ -42,26 +42,26 @@ NSString* const ZGMixerTopicKey_PublishStreamID = @"kPublishStreamID";
 - (void)startPreview {
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
-    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+    ZGLogInfo(@"🚀 Create ZegoExpressEngine");
     [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
     
-    ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
+    ZGLogInfo(@"🚪 Login room. roomID: %@", self.roomID);
     [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
     
-    ZGLogInfo(@" 🔌 Start preview");
+    ZGLogInfo(@"🔌 Start preview");
     [[ZegoExpressEngine sharedEngine] startPreview:[ZegoCanvas canvasWithView:self.previewView]];
 }
 
 - (IBAction)startPublishing {
     if (self.streamIDTextField.text.length > 0) {
         [self saveValue:self.streamIDTextField.text forKey:ZGMixerTopicKey_PublishStreamID];
-        ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", self.streamIDTextField.text);
+        ZGLogInfo(@"📤 Start publishing stream. streamID: %@", self.streamIDTextField.text);
         [[ZegoExpressEngine sharedEngine] startPublishingStream:self.streamIDTextField.text];
     } else {
-        ZGLogWarn(@" ❕ Please enter stream ID");
-        [ZegoHudManager showMessage:@" ❕ Please enter stream ID"];
+        ZGLogWarn(@"❕ Please enter stream ID");
+        [ZegoHudManager showMessage:@"❕ Please enter stream ID"];
     }
 }
 
@@ -69,11 +69,11 @@ NSString* const ZGMixerTopicKey_PublishStreamID = @"kPublishStreamID";
 #pragma mark - ZegoEventHandler
 
 - (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData roomID:(NSString *)roomID {
-    ZGLogInfo(@" 🚩 🚪 Room State Update Callback: %lu, errorCode: %d, roomID: %@", (unsigned long)state, (int)errorCode, roomID);
+    ZGLogInfo(@"🚩 🚪 Room State Update Callback: %lu, errorCode: %d, roomID: %@", (unsigned long)state, (int)errorCode, roomID);
 }
 
 - (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
-    ZGLogInfo(@" 🚩 📤 Publisher State Update Callback: %lu, errorCode: %d, streamID: %@", (unsigned long)state, (int)errorCode, streamID);
+    ZGLogInfo(@"🚩 📤 Publisher State Update Callback: %lu, errorCode: %d, streamID: %@", (unsigned long)state, (int)errorCode, streamID);
     if (state == ZegoPublisherStatePublishing) {
         self.title = @"🔵 Publishing";
         [self.startPublishingButton setTitle:@"🎉 Start Publishing Success" forState:UIControlStateNormal];
@@ -85,11 +85,11 @@ NSString* const ZGMixerTopicKey_PublishStreamID = @"kPublishStreamID";
 #pragma mark - Exit
 
 - (void)dealloc {
-    ZGLogInfo(@" 🚪 Exit the room");
+    ZGLogInfo(@"🚪 Exit the room");
     [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
     
     // Can destroy the engine when you don't need audio and video calls
-    ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+    ZGLogInfo(@"🏳️ Destroy ZegoExpressEngine");
     [ZegoExpressEngine destroyEngine:nil];
 }
 

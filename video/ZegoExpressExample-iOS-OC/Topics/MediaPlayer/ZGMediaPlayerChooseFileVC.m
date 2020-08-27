@@ -103,7 +103,7 @@
             });
         });
     } else {
-        ZGLogWarn(@" ❕ Cannot load local media library resources under iOS9.3");
+        ZGLogWarn(@"❕ Cannot load local media library resources under iOS9.3");
     }
 }
 

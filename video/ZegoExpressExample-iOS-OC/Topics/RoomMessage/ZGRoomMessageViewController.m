@@ -61,7 +61,7 @@
 - (void)createEngineAndLoginRoom {
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
-    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+    ZGLogInfo(@"🚀 Create ZegoExpressEngine");
     [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     
     ZegoUser *user = [ZegoUser userWithUserID:self.userID userName:self.userName];
@@ -70,7 +70,7 @@
     ZegoRoomConfig *roomConfig = [[ZegoRoomConfig alloc] init];
     roomConfig.isUserStatusNotify = YES;
     
-    ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
+    ZGLogInfo(@"🚪 Login room. roomID: %@", self.roomID);
     [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:roomConfig];
 }
 
@@ -94,8 +94,8 @@
 - (void)sendBroadcastMessage {
     NSString *message = self.broadcastMessageTextField.text;
     [[ZegoExpressEngine sharedEngine] sendBroadcastMessage:message roomID:self.roomID callback:^(int errorCode, unsigned long long messageID) {
-        ZGLogInfo(@" 🚩 💬 Send broadcast message result, errorCode: %d, messageID: %llu", errorCode, messageID);
-        [self appendMessage:[NSString stringWithFormat:@" 💬 📤 Sent: %@", message]];
+        ZGLogInfo(@"🚩 💬 Send broadcast message result, errorCode: %d, messageID: %llu", errorCode, messageID);
+        [self appendMessage:[NSString stringWithFormat:@"💬 📤 Sent: %@", message]];
     }];
 }
 
@@ -103,16 +103,16 @@
     NSString *command = self.customCommandTextField.text;
     NSArray<ZegoUser *> *toUserList = self.selectUsersVC.selectedUsers;
     [[ZegoExpressEngine sharedEngine] sendCustomCommand:command toUserList:toUserList roomID:self.roomID callback:^(int errorCode) {
-        ZGLogInfo(@" 🚩 💭 Send custom command to %d users result, errorCode: %d", (int)toUserList.count, errorCode);
-        [self appendMessage:[NSString stringWithFormat:@" 💭 📤 Sent to %d users: %@", (int)toUserList.count, command]];
+        ZGLogInfo(@"🚩 💭 Send custom command to %d users result, errorCode: %d", (int)toUserList.count, errorCode);
+        [self appendMessage:[NSString stringWithFormat:@"💭 📤 Sent to %d users: %@", (int)toUserList.count, command]];
     }];
 }
 
 - (void)sendBarrageMessage {
     NSString *message = self.barrageMessageTextField.text;
     [[ZegoExpressEngine sharedEngine] sendBarrageMessage:message roomID:self.roomID callback:^(int errorCode, NSString * _Nonnull messageID) {
-        ZGLogInfo(@" 🚩 🗯 Send barrage message result, errorCode: %d, messageID: %@", errorCode, messageID);
-        [self appendMessage:[NSString stringWithFormat:@" 🗯 📤 Sent: %@", message]];
+        ZGLogInfo(@"🚩 🗯 Send barrage message result, errorCode: %d, messageID: %@", errorCode, messageID);
+        [self appendMessage:[NSString stringWithFormat:@"🗯 📤 Sent: %@", message]];
     }];
 }
 
@@ -158,16 +158,16 @@
 
 - (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData roomID:(NSString *)roomID {
     if (errorCode != 0) {
-        ZGLogError(@" 🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode);
+        ZGLogError(@"🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode);
     } else {
         if (state == ZegoRoomStateConnected) {
-            ZGLogInfo(@" 🚩 🚪 Login room success");
+            ZGLogInfo(@"🚩 🚪 Login room success");
             self.roomStateLabel.text = @"Connected 🟢";
         } else if (state == ZegoRoomStateConnecting) {
-            ZGLogInfo(@" 🚩 🚪 Requesting login room");
+            ZGLogInfo(@"🚩 🚪 Requesting login room");
             self.roomStateLabel.text = @"Connecting 🟡";
         } else if (state == ZegoRoomStateDisconnected) {
-            ZGLogInfo(@" 🚩 🚪 Logout room");
+            ZGLogInfo(@"🚩 🚪 Logout room");
             self.roomStateLabel.text = @"Not Connected 🔴";
         }
     }
@@ -175,18 +175,18 @@
 
 
 - (void)onRoomUserUpdate:(ZegoUpdateType)updateType userList:(NSArray<ZegoUser *> *)userList roomID:(NSString *)roomID {
-    ZGLogInfo(@" 🚩 🕺 Room User Update Callback: %lu, UsersCount: %lu, roomID: %@", (unsigned long)updateType, (unsigned long)userList.count, roomID);
+    ZGLogInfo(@"🚩 🕺 Room User Update Callback: %lu, UsersCount: %lu, roomID: %@", (unsigned long)updateType, (unsigned long)userList.count, roomID);
     
     if (updateType == ZegoUpdateTypeAdd) {
         for (ZegoUser *user in userList) {
-            ZGLogInfo(@" 🚩 🕺 --- [Add] UserID: %@, UserName: %@", user.userID, user.userName);
+            ZGLogInfo(@"🚩 🕺 --- [Add] UserID: %@, UserName: %@", user.userID, user.userName);
             if (![self.userList containsObject:user]) {
                 [self.userList addObject:user];
             }
         }
     } else if (updateType == ZegoUpdateTypeDelete) {
         for (ZegoUser *user in userList) {
-            ZGLogInfo(@" 🚩 🕺 --- [Delete] UserID: %@, UserName: %@", user.userID, user.userName);
+            ZGLogInfo(@"🚩 🕺 --- [Delete] UserID: %@, UserName: %@", user.userID, user.userName);
             __block ZegoUser *delUser = nil;
             [self.userList enumerateObjectsUsingBlock:^(ZegoUser * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 if ([obj.userID isEqualToString:user.userID] && [obj.userName isEqualToString:user.userName]) {
@@ -203,31 +203,31 @@
 }
 
 - (void)onIMRecvBroadcastMessage:(NSArray<ZegoBroadcastMessageInfo *> *)messageList roomID:(NSString *)roomID {
-    ZGLogInfo(@" 🚩 💬 IM Recv Broadcast Message Callback: roomID: %@", roomID);
+    ZGLogInfo(@"🚩 💬 IM Recv Broadcast Message Callback: roomID: %@", roomID);
     
     for (int idx = 0; idx < messageList.count; idx ++) {
         ZegoBroadcastMessageInfo *info = messageList[idx];
-        ZGLogInfo(@" 🚩 💬 --- message: %@, fromUserID: %@, sendTime: %llu, messageID: %llu", info.message, info.fromUser.userID, info.sendTime, info.messageID);
+        ZGLogInfo(@"🚩 💬 --- message: %@, fromUserID: %@, sendTime: %llu, messageID: %llu", info.message, info.fromUser.userID, info.sendTime, info.messageID);
         
-        [self appendMessage:[NSString stringWithFormat:@" 💬 %@ [FromUserID: %@]", info.message, info.fromUser.userID]];
+        [self appendMessage:[NSString stringWithFormat:@"💬 %@ [FromUserID: %@]", info.message, info.fromUser.userID]];
     }
 }
 
 - (void)onIMRecvCustomCommand:(NSString *)command fromUser:(ZegoUser *)fromUser roomID:(NSString *)roomID {
-    ZGLogInfo(@" 🚩 💭 IM Recv Custom Command Callback: roomID: %@", roomID);
-    ZGLogInfo(@" 🚩 💭 --- command: %@, fromUserID: %@", command, fromUser.userID);
+    ZGLogInfo(@"🚩 💭 IM Recv Custom Command Callback: roomID: %@", roomID);
+    ZGLogInfo(@"🚩 💭 --- command: %@, fromUserID: %@", command, fromUser.userID);
     
-    [self appendMessage:[NSString stringWithFormat:@" 💭 %@ [FromUserID: %@]", command, fromUser.userID]];
+    [self appendMessage:[NSString stringWithFormat:@"💭 %@ [FromUserID: %@]", command, fromUser.userID]];
 }
 
 - (void)onIMRecvBarrageMessage:(NSArray<ZegoBarrageMessageInfo *> *)messageList roomID:(NSString *)roomID {
-    ZGLogInfo(@" 🚩 🗯 IM Recv Barrage Message Callback: roomID: %@", roomID);
+    ZGLogInfo(@"🚩 🗯 IM Recv Barrage Message Callback: roomID: %@", roomID);
 
     for (int idx = 0; idx < messageList.count; idx ++) {
         ZegoBarrageMessageInfo *info = messageList[idx];
-        ZGLogInfo(@" 🚩 🗯 --- message: %@, fromUserID: %@, sendTime: %llu, messageID: %@", info.message, info.fromUser.userID, info.sendTime, info.messageID);
+        ZGLogInfo(@"🚩 🗯 --- message: %@, fromUserID: %@, sendTime: %llu, messageID: %@", info.message, info.fromUser.userID, info.sendTime, info.messageID);
 
-        [self appendMessage:[NSString stringWithFormat:@" 🗯 %@ [FromUserID: %@]", info.message, info.fromUser.userID]];
+        [self appendMessage:[NSString stringWithFormat:@"🗯 %@ [FromUserID: %@]", info.message, info.fromUser.userID]];
     }
 }
 
@@ -237,11 +237,11 @@
     if (self.isBeingDismissed || self.isMovingFromParentViewController
         || (self.navigationController && self.navigationController.isBeingDismissed)) {
         
-        ZGLogInfo(@" 🚪 Exit the room");
+        ZGLogInfo(@"🚪 Exit the room");
         [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
         
         // Can destroy the engine when you don't need audio and video calls
-        ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+        ZGLogInfo(@"🏳️ Destroy ZegoExpressEngine");
         [ZegoExpressEngine destroyEngine:nil];
     }
     [super viewDidDisappear:animated];

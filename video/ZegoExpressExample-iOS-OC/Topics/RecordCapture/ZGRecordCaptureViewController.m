@@ -56,23 +56,23 @@ NSString* const ZGRecordCaptureStreamID = @"ZGRecordCaptureStreamID";
 }
 
 - (void)dealloc {
-    ZGLogInfo(@" 🔌 Stop preview");
+    ZGLogInfo(@"🔌 Stop preview");
     [[ZegoExpressEngine sharedEngine] stopPreview];
 
     // Stop publishing before exiting
     if (self.publisherState != ZegoPublisherStateNoPublish) {
-        ZGLogInfo(@" 📤 Stop publishing stream");
+        ZGLogInfo(@"📤 Stop publishing stream");
         [[ZegoExpressEngine sharedEngine] stopPublishingStream];
     }
 
     // Logout room before exiting
     if (self.roomState != ZegoRoomStateDisconnected) {
-        ZGLogInfo(@" 🚪 Logout room");
+        ZGLogInfo(@"🚪 Logout room");
         [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
     }
 
     // Can destroy the engine when you don't need audio and video calls
-    ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+    ZGLogInfo(@"🏳️ Destroy ZegoExpressEngine");
     [ZegoExpressEngine destroyEngine:nil];
 }
 
@@ -120,14 +120,14 @@ NSString* const ZGRecordCaptureStreamID = @"ZGRecordCaptureStreamID";
 - (void)createEngine {
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
 
-    [self appendLog:@" 🚀 Create ZegoExpressEngine"];
+    [self appendLog:@"🚀 Create ZegoExpressEngine"];
 
     [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
 
     // Start preview
     ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.previewView];
 
-    [self appendLog:@" 🔌 Start preview"];
+    [self appendLog:@"🔌 Start preview"];
     [[ZegoExpressEngine sharedEngine] startPreview:previewCanvas];
 }
 
@@ -160,12 +160,12 @@ NSString* const ZGRecordCaptureStreamID = @"ZGRecordCaptureStreamID";
     config.recordType = ZegoDataRecordTypeAudioAndVideo;
     
     // Start record
-    [self appendLog:@" 🎥 Start record capture"];
+    [self appendLog:@"🎥 Start record capture"];
     [[ZegoExpressEngine sharedEngine] startRecordingCapturedData:config channel:ZegoPublishChannelMain];
 }
 
 - (void)stopRecord {
-    [self appendLog:@" 🎥 Stop record capture"];
+    [self appendLog:@"🎥 Stop record capture"];
     [[ZegoExpressEngine sharedEngine] stopRecordingCapturedData:ZegoPublishChannelMain];
 }
 
@@ -176,7 +176,7 @@ NSString* const ZGRecordCaptureStreamID = @"ZGRecordCaptureStreamID";
 }
 
 - (void)startLive {
-    [self appendLog:@" 🚪 Start login room"];
+    [self appendLog:@"🚪 Start login room"];
 
     self.roomID = self.roomIDTextField.text;
     self.streamID = self.streamIDTextField.text;
@@ -193,7 +193,7 @@ NSString* const ZGRecordCaptureStreamID = @"ZGRecordCaptureStreamID";
     // Login room
     [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:[ZegoUser userWithUserID:userID userName:userName] config:config];
 
-    [self appendLog:@" 📤 Start publishing stream"];
+    [self appendLog:@"📤 Start publishing stream"];
 
     // Start publishing
     [[ZegoExpressEngine sharedEngine] startPublishingStream:self.streamID];
@@ -204,11 +204,11 @@ NSString* const ZGRecordCaptureStreamID = @"ZGRecordCaptureStreamID";
 - (void)stopLive {
     // Stop publishing
     [[ZegoExpressEngine sharedEngine] stopPublishingStream];
-    [self appendLog:@" 📤 Stop publishing stream"];
+    [self appendLog:@"📤 Stop publishing stream"];
 
     // Logout room
     [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
-    [self appendLog:@" 🚪 Logout room"];
+    [self appendLog:@"🚪 Logout room"];
 
     self.publishQualityLabel.text = @"";
 }
@@ -260,7 +260,7 @@ NSString* const ZGRecordCaptureStreamID = @"ZGRecordCaptureStreamID";
 
     NSString *oldText = self.logTextView.text;
     NSString *newLine = oldText.length == 0 ? @"" : @"\n";
-    NSString *newText = [NSString stringWithFormat:@"%@%@%@", oldText, newLine, tipText];
+    NSString *newText = [NSString stringWithFormat:@"%@%@ %@", oldText, newLine, tipText];
 
     self.logTextView.text = newText;
     if(newText.length > 0 ) {
@@ -293,32 +293,32 @@ NSString* const ZGRecordCaptureStreamID = @"ZGRecordCaptureStreamID";
 #pragma mark - ZegoExpress ZegoDataRecordEventHandler
 
 - (void)onCapturedDataRecordStateUpdate:(ZegoDataRecordState)state errorCode:(int)errorCode config:(ZegoDataRecordConfig *)config channel:(ZegoPublishChannel)channel {
-    [self appendLog:[NSString stringWithFormat:@" 🎥 Record state update, state: %d, errorCode: %d, file path: %@, record type: %d", (int)state, errorCode, config.filePath, (int)config.recordType]];
+    [self appendLog:[NSString stringWithFormat:@"🎥 Record state update, state: %d, errorCode: %d, file path: %@, record type: %d", (int)state, errorCode, config.filePath, (int)config.recordType]];
 }
 
 - (void)onCapturedDataRecordProgressUpdate:(ZegoDataRecordProgress *)progress config:(ZegoDataRecordConfig *)config channel:(ZegoPublishChannel)channel {
-    NSLog(@" 🎥 Record progress update, duration: %llu, file size: %llu", progress.duration, progress.currentFileSize);
+    NSLog(@"🎥 Record progress update, duration: %llu, file size: %llu", progress.duration, progress.currentFileSize);
 }
 
 #pragma mark - ZegoExpress EventHandler Room Event
 
 - (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData roomID:(NSString *)roomID {
     if (errorCode != 0) {
-        [self appendLog:[NSString stringWithFormat:@" 🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode]];
+        [self appendLog:[NSString stringWithFormat:@"🚩 ❌ 🚪 Room state error, errorCode: %d", errorCode]];
     } else {
         switch (state) {
             case ZegoRoomStateConnected:
-                [self appendLog:@" 🚩 🚪 Login room success"];
+                [self appendLog:@"🚩 🚪 Login room success"];
                 self.roomStateLabel.text = @"🟢 RoomState: Connected";
                 break;
 
             case ZegoRoomStateConnecting:
-                [self appendLog:@" 🚩 🚪 Requesting login room"];
+                [self appendLog:@"🚩 🚪 Requesting login room"];
                 self.roomStateLabel.text = @"🟡 RoomState: Connecting";
                 break;
 
             case ZegoRoomStateDisconnected:
-                [self appendLog:@" 🚩 🚪 Logout room"];
+                [self appendLog:@"🚩 🚪 Logout room"];
                 self.roomStateLabel.text = @"🔴 RoomState: Disconnected";
 
                 // After logout room, the preview will stop. You need to re-start preview.
@@ -336,21 +336,21 @@ NSString* const ZGRecordCaptureStreamID = @"ZGRecordCaptureStreamID";
 
 - (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
     if (errorCode != 0) {
-        [self appendLog:[NSString stringWithFormat:@" 🚩 ❌ 📤 Publishing stream error of streamID: %@, errorCode:%d", streamID, errorCode]];
+        [self appendLog:[NSString stringWithFormat:@"🚩 ❌ 📤 Publishing stream error of streamID: %@, errorCode:%d", streamID, errorCode]];
     } else {
         switch (state) {
             case ZegoPublisherStatePublishing:
-                [self appendLog:@" 🚩 📤 Publishing stream"];
+                [self appendLog:@"🚩 📤 Publishing stream"];
                 self.publisherStateLabel.text = @"🟢 PublisherState: Publishing";
                 break;
 
             case ZegoPublisherStatePublishRequesting:
-                [self appendLog:@" 🚩 📤 Requesting publish stream"];
+                [self appendLog:@"🚩 📤 Requesting publish stream"];
                 self.publisherStateLabel.text = @"🟡 PublisherState: Requesting";
                 break;
 
             case ZegoPublisherStateNoPublish:
-                [self appendLog:@" 🚩 📤 No publish stream"];
+                [self appendLog:@"🚩 📤 No publish stream"];
                 self.publisherStateLabel.text = @"🔴 PublisherState: NoPublish";
                 break;
         }

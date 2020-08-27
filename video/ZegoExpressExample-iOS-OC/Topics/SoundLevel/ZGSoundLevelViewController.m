@@ -45,14 +45,14 @@
 - (void)startLive {
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
-    ZGLogInfo(@" 🚀 Create ZegoExpressEngine");
+    ZGLogInfo(@"🚀 Create ZegoExpressEngine");
     [ZegoExpressEngine createEngineWithAppID:appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
     
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
     
     ZegoRoomConfig *roomConfig = [ZegoRoomConfig defaultConfig];
     
-    ZGLogInfo(@" 🚪 Login room. roomID: %@", self.roomID);
+    ZGLogInfo(@"🚪 Login room. roomID: %@", self.roomID);
     [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:roomConfig];
     
     // Use userID as streamID
@@ -62,14 +62,14 @@
     [[ZegoExpressEngine sharedEngine] enableCamera:NO];
     
     // Start publishing
-    ZGLogInfo(@" 📤 Start publishing stream. streamID: %@", self.localStreamID);
+    ZGLogInfo(@"📤 Start publishing stream. streamID: %@", self.localStreamID);
     [[ZegoExpressEngine sharedEngine] startPublishingStream:self.localStreamID];
     
     // Start monitoring
-    ZGLogInfo(@" 🎼 Start sound level monitor");
+    ZGLogInfo(@"🎼 Start sound level monitor");
     [[ZegoExpressEngine sharedEngine] startSoundLevelMonitor];
     
-    ZGLogInfo(@" 🎼 Start audio frequency spectrum monitor");
+    ZGLogInfo(@"🎼 Start audio frequency spectrum monitor");
     [[ZegoExpressEngine sharedEngine] startAudioSpectrumMonitor];
 }
 
@@ -77,22 +77,22 @@
 
 // Refresh the remote streams list
 - (void)onRoomStreamUpdate:(ZegoUpdateType)updateType streamList:(NSArray<ZegoStream *> *)streamList roomID:(NSString *)roomID {
-    ZGLogInfo(@" 🚩 🌊 Room Stream Update Callback: %lu, StreamsCount: %lu, roomID: %@", (unsigned long)updateType, (unsigned long)streamList.count, roomID);
+    ZGLogInfo(@"🚩 🌊 Room Stream Update Callback: %lu, StreamsCount: %lu, roomID: %@", (unsigned long)updateType, (unsigned long)streamList.count, roomID);
     
     if (updateType == ZegoUpdateTypeAdd) {
         for (ZegoStream *stream in streamList) {
-            ZGLogInfo(@" 🚩 🌊 --- [Add] StreamID: %@, UserID: %@", stream.streamID, stream.user.userID);
+            ZGLogInfo(@"🚩 🌊 --- [Add] StreamID: %@, UserID: %@", stream.streamID, stream.user.userID);
             if (![self.remoteStreamList containsObject:stream]) {
                 [self.remoteStreamList addObject:stream];
             }
             
             // Play remote stream without rendering
-            ZGLogInfo(@" 📥 Start playing stream, streamID: %@", stream.streamID);
+            ZGLogInfo(@"📥 Start playing stream, streamID: %@", stream.streamID);
             [[ZegoExpressEngine sharedEngine] startPlayingStream:stream.streamID canvas:nil];
         }
     } else if (updateType == ZegoUpdateTypeDelete) {
         for (ZegoStream *stream in streamList) {
-            ZGLogInfo(@" 🚩 🌊 --- [Delete] StreamID: %@, UserID: %@", stream.streamID, stream.user.userID);
+            ZGLogInfo(@"🚩 🌊 --- [Delete] StreamID: %@, UserID: %@", stream.streamID, stream.user.userID);
             __block ZegoStream *delStream = nil;
             [self.remoteStreamList enumerateObjectsUsingBlock:^(ZegoStream * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 if ([obj.streamID isEqualToString:stream.streamID] && [obj.user.userID isEqualToString:stream.user.userID]) {
@@ -103,7 +103,7 @@
             [self.remoteStreamList removeObject:delStream];
             
             // Stop playing the remote stream
-            ZGLogInfo(@" 📥 Stop playing stream, streamID: %@", stream.streamID);
+            ZGLogInfo(@"📥 Stop playing stream, streamID: %@", stream.streamID);
             [[ZegoExpressEngine sharedEngine] stopPlayingStream:stream.streamID];
         }
     }
@@ -180,11 +180,11 @@
 #pragma mark - Exit
 
 - (void)dealloc {
-    ZGLogInfo(@" 🚪 Exit the room");
+    ZGLogInfo(@"🚪 Exit the room");
     [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
     
     // Can destroy the engine when you don't need audio and video calls
-    ZGLogInfo(@" 🏳️ Destroy ZegoExpressEngine");
+    ZGLogInfo(@"🏳️ Destroy ZegoExpressEngine");
     [ZegoExpressEngine destroyEngine:nil];
 }
 
