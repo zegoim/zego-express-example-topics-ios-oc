@@ -17,8 +17,8 @@
 		86385178247BB09700CF95C9 /* ZGNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86385177247BB09700CF95C9 /* ZGNavigationController.m */; };
 		8638517B247BB0EB00CF95C9 /* ZGTopicsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8638517A247BB0EB00CF95C9 /* ZGTopicsTableViewController.m */; };
 		8682BF5724E3BF6900EFC88F /* AudioEffect.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8682BF5624E3BF6900EFC88F /* AudioEffect.storyboard */; };
-		8682BF5A24E3BF8600EFC88F /* ZGAudioEffectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8682BF5924E3BF8600EFC88F /* ZGAudioEffectViewController.m */; };
-		8682BF5D24E3BF9C00EFC88F /* ZGAudioEffectConfigTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8682BF5C24E3BF9C00EFC88F /* ZGAudioEffectConfigTableViewController.m */; };
+		8682BF5A24E3BF8600EFC88F /* ZGAudioPreprocessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8682BF5924E3BF8600EFC88F /* ZGAudioPreprocessViewController.m */; };
+		8682BF5D24E3BF9C00EFC88F /* ZGAudioPreprocessConfigTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8682BF5C24E3BF9C00EFC88F /* ZGAudioPreprocessConfigTableViewController.m */; };
 		86872837247CE9F8005E4326 /* ZGUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 86872836247CE9F8005E4326 /* ZGUserDefaults.m */; };
 		86872841247D0DBC005E4326 /* ZGSoundLevelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8687283E247D0DBB005E4326 /* ZGSoundLevelTableViewCell.m */; };
 		86872842247D0DBC005E4326 /* ZGSoundLevelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86872840247D0DBC005E4326 /* ZGSoundLevelTableViewCell.xib */; };
@@ -77,10 +77,10 @@
 		86385179247BB0EB00CF95C9 /* ZGTopicsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGTopicsTableViewController.h; sourceTree = "<group>"; };
 		8638517A247BB0EB00CF95C9 /* ZGTopicsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGTopicsTableViewController.m; sourceTree = "<group>"; };
 		8682BF5624E3BF6900EFC88F /* AudioEffect.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AudioEffect.storyboard; sourceTree = "<group>"; };
-		8682BF5824E3BF8600EFC88F /* ZGAudioEffectViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGAudioEffectViewController.h; sourceTree = "<group>"; };
-		8682BF5924E3BF8600EFC88F /* ZGAudioEffectViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGAudioEffectViewController.m; sourceTree = "<group>"; };
-		8682BF5B24E3BF9C00EFC88F /* ZGAudioEffectConfigTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGAudioEffectConfigTableViewController.h; sourceTree = "<group>"; };
-		8682BF5C24E3BF9C00EFC88F /* ZGAudioEffectConfigTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGAudioEffectConfigTableViewController.m; sourceTree = "<group>"; };
+		8682BF5824E3BF8600EFC88F /* ZGAudioPreprocessViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGAudioPreprocessViewController.h; sourceTree = "<group>"; };
+		8682BF5924E3BF8600EFC88F /* ZGAudioPreprocessViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGAudioPreprocessViewController.m; sourceTree = "<group>"; };
+		8682BF5B24E3BF9C00EFC88F /* ZGAudioPreprocessConfigTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGAudioPreprocessConfigTableViewController.h; sourceTree = "<group>"; };
+		8682BF5C24E3BF9C00EFC88F /* ZGAudioPreprocessConfigTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGAudioPreprocessConfigTableViewController.m; sourceTree = "<group>"; };
 		86872835247CE9F8005E4326 /* ZGUserDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGUserDefaults.h; sourceTree = "<group>"; };
 		86872836247CE9F8005E4326 /* ZGUserDefaults.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGUserDefaults.m; sourceTree = "<group>"; };
 		8687283E247D0DBB005E4326 /* ZGSoundLevelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGSoundLevelTableViewCell.m; sourceTree = "<group>"; };
@@ -214,10 +214,10 @@
 			isa = PBXGroup;
 			children = (
 				8682BF5624E3BF6900EFC88F /* AudioEffect.storyboard */,
-				8682BF5824E3BF8600EFC88F /* ZGAudioEffectViewController.h */,
-				8682BF5924E3BF8600EFC88F /* ZGAudioEffectViewController.m */,
-				8682BF5B24E3BF9C00EFC88F /* ZGAudioEffectConfigTableViewController.h */,
-				8682BF5C24E3BF9C00EFC88F /* ZGAudioEffectConfigTableViewController.m */,
+				8682BF5824E3BF8600EFC88F /* ZGAudioPreprocessViewController.h */,
+				8682BF5924E3BF8600EFC88F /* ZGAudioPreprocessViewController.m */,
+				8682BF5B24E3BF9C00EFC88F /* ZGAudioPreprocessConfigTableViewController.h */,
+				8682BF5C24E3BF9C00EFC88F /* ZGAudioPreprocessConfigTableViewController.m */,
 			);
 			path = AudioEffect;
 			sourceTree = "<group>";
@@ -449,14 +449,14 @@
 				86872862247D1EBD005E4326 /* ZegoDiskLogFormatter.m in Sources */,
 				8687288C247D3DB6005E4326 /* ZGHashTableHelper.m in Sources */,
 				8687286B247D1F7B005E4326 /* UIViewController+TopPresent.m in Sources */,
-				8682BF5A24E3BF8600EFC88F /* ZGAudioEffectViewController.m in Sources */,
+				8682BF5A24E3BF8600EFC88F /* ZGAudioPreprocessViewController.m in Sources */,
 				86E5A234247CBB4E00E22F38 /* ZGKeyCenter.m in Sources */,
 				86872861247D1EBD005E4326 /* ZegoLog.m in Sources */,
 				86872863247D1EBD005E4326 /* ZegoTTYLogger.m in Sources */,
 				86872868247D1EBD005E4326 /* ZegoTTYLogFormatter.m in Sources */,
 				8638517B247BB0EB00CF95C9 /* ZGTopicsTableViewController.m in Sources */,
 				86872867247D1EBD005E4326 /* ZegoDiskLogger.m in Sources */,
-				8682BF5D24E3BF9C00EFC88F /* ZGAudioEffectConfigTableViewController.m in Sources */,
+				8682BF5D24E3BF9C00EFC88F /* ZGAudioPreprocessConfigTableViewController.m in Sources */,
 				8687288F247D403F005E4326 /* NSObject+Persistence.m in Sources */,
 				86385172247BA5BC00CF95C9 /* ZGQuickStartViewController.m in Sources */,
 				8638515C247B9C1A00CF95C9 /* main.m in Sources */,

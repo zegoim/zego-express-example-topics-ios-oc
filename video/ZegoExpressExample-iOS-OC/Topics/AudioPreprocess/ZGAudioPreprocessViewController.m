@@ -1,23 +1,23 @@
 //
-//  ZGAudioEffectViewController.m
+//  ZGAudioPreprocessViewController.m
 //  LiveRoomPlayground-iOS
 //
 //  Created by jeffreypeng on 2019/8/27.
 //  Copyright © 2019 Zego. All rights reserved.
 //
-#ifdef _Module_AudioEffect
+#ifdef _Module_AudioPreprocess
 
-#import "ZGAudioEffectViewController.h"
-#import "ZGAudioEffectVoiceChangerConfigVC.h"
-#import "ZGAudioEffectVirtualStereoConfigVC.h"
-#import "ZGAudioEffectReverbConfigVC.h"
+#import "ZGAudioPreprocessViewController.h"
+#import "ZGAudioPreprocessVoiceChangerConfigVC.h"
+#import "ZGAudioPreprocessVirtualStereoConfigVC.h"
+#import "ZGAudioPreprocessReverbConfigVC.h"
 
-#import "ZGAudioEffectTopicConfigManager.h"
+#import "ZGAudioPreprocessTopicConfigManager.h"
 #import "ZGAppGlobalConfigManager.h"
 #import "ZGUserIDHelper.h"
 #import <ZegoExpressEngine/ZegoExpressEngine.h>
 
-@interface ZGAudioEffectViewController ()<ZegoEventHandler, ZGAudioEffectTopicConfigChangedHandler>
+@interface ZGAudioPreprocessViewController ()<ZegoEventHandler, ZGAudioPreprocessTopicConfigChangedHandler>
 
 // Log View
 @property (weak, nonatomic) IBOutlet UITextView *logTextView;
@@ -43,14 +43,14 @@
 
 @end
 
-@implementation ZGAudioEffectViewController
+@implementation ZGAudioPreprocessViewController
 
 #pragma mark - Setup
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.roomID = @"AudioEffectRoom-1";
+    self.roomID = @"AudioPreprocessRoom-1";
     self.userID = [ZGUserIDHelper userID];
     
     // Print SDK version
@@ -58,7 +58,7 @@
     
     [self setupUI];
     
-    [[ZGAudioEffectTopicConfigManager sharedInstance] addConfigChangedHandler:self];
+    [[ZGAudioPreprocessTopicConfigManager sharedInstance] addConfigChangedHandler:self];
     
     [self createEngine];
 }
@@ -140,17 +140,17 @@
 }
 
 - (IBAction)voiceChangeConfigButnClick:(id)sender {
-    ZGAudioEffectVoiceChangerConfigVC *vc = [ZGAudioEffectVoiceChangerConfigVC instanceFromStoryboard];
+    ZGAudioPreprocessVoiceChangerConfigVC *vc = [ZGAudioPreprocessVoiceChangerConfigVC instanceFromStoryboard];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)virtualStereoConfigButnClick:(id)sender {
-    ZGAudioEffectVirtualStereoConfigVC *vc = [ZGAudioEffectVirtualStereoConfigVC instanceFromStoryboard];
+    ZGAudioPreprocessVirtualStereoConfigVC *vc = [ZGAudioPreprocessVirtualStereoConfigVC instanceFromStoryboard];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)reverbConfigButnClick:(id)sender {
-    ZGAudioEffectReverbConfigVC *vc = [ZGAudioEffectReverbConfigVC instanceFromStoryboard];
+    ZGAudioPreprocessReverbConfigVC *vc = [ZGAudioPreprocessReverbConfigVC instanceFromStoryboard];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -158,9 +158,9 @@
 
 - (void)applyVoiceChangerConfig {
     float voiceChangerParam = EXPRESS_API_VOICE_CHANGER_NONE;
-    BOOL voiceChangerOpen = [ZGAudioEffectTopicConfigManager sharedInstance].voiceChangerOpen;
+    BOOL voiceChangerOpen = [ZGAudioPreprocessTopicConfigManager sharedInstance].voiceChangerOpen;
     if (voiceChangerOpen) {
-        voiceChangerParam = [ZGAudioEffectTopicConfigManager sharedInstance].voiceChangerParam;
+        voiceChangerParam = [ZGAudioPreprocessTopicConfigManager sharedInstance].voiceChangerParam;
     }
     ZegoVoiceChangerParam *param = [[ZegoVoiceChangerParam alloc] init];
     param.pitch = voiceChangerParam;
@@ -168,9 +168,9 @@
 }
 
 - (void)applyVirtualStereoConfig {
-    BOOL virtualStereoOpen = [ZGAudioEffectTopicConfigManager sharedInstance].virtualStereoOpen;
+    BOOL virtualStereoOpen = [ZGAudioPreprocessTopicConfigManager sharedInstance].virtualStereoOpen;
     if (virtualStereoOpen) {
-        int angle = [ZGAudioEffectTopicConfigManager sharedInstance].virtualStereoAngle;
+        int angle = [ZGAudioPreprocessTopicConfigManager sharedInstance].virtualStereoAngle;
         [[ZegoExpressEngine sharedEngine] enableVirtualStereo:YES angle:angle];
     } else {
         [[ZegoExpressEngine sharedEngine] enableVirtualStereo:NO angle:0];
@@ -178,17 +178,17 @@
 }
 
 - (void)applyReverbConfig {
-    BOOL reverbOpen = [ZGAudioEffectTopicConfigManager sharedInstance].reverbOpen;
+    BOOL reverbOpen = [ZGAudioPreprocessTopicConfigManager sharedInstance].reverbOpen;
     if (reverbOpen) {
-        NSUInteger reverbMode = [ZGAudioEffectTopicConfigManager sharedInstance].reverbMode;
+        NSUInteger reverbMode = [ZGAudioPreprocessTopicConfigManager sharedInstance].reverbMode;
         ZegoReverbParam *param = [[ZegoReverbParam alloc] init];
         if (reverbMode != NSNotFound) {
             [[ZegoExpressEngine sharedEngine] setReverbParam:[ZegoReverbParam paramWithPreset:reverbMode]];
         } else {
-            float roomSize = [ZGAudioEffectTopicConfigManager sharedInstance].customReverbRoomSize;
-            float reverberance = [ZGAudioEffectTopicConfigManager sharedInstance].customReverberance;
-            float damping = [ZGAudioEffectTopicConfigManager sharedInstance].customDamping;
-            float drWetRatio = [ZGAudioEffectTopicConfigManager sharedInstance].customDryWetRatio;
+            float roomSize = [ZGAudioPreprocessTopicConfigManager sharedInstance].customReverbRoomSize;
+            float reverberance = [ZGAudioPreprocessTopicConfigManager sharedInstance].customReverberance;
+            float damping = [ZGAudioPreprocessTopicConfigManager sharedInstance].customDamping;
+            float drWetRatio = [ZGAudioPreprocessTopicConfigManager sharedInstance].customDryWetRatio;
             param.roomSize = roomSize;
             param.reverberance = reverberance;
             param.damping = damping;
@@ -284,54 +284,54 @@
     }
 }
 
-#pragma mark - ZGAudioEffectTopicConfigChangedHandler
+#pragma mark - ZGAudioPreprocessTopicConfigChangedHandler
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
                voiceChangerOpenChanged:(BOOL)voiceChangerOpen {
     [self applyVoiceChangerConfig];
 }
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
               voiceChangerParamChanged:(float)voiceChangerParam {
     [self applyVoiceChangerConfig];
 }
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
               virtualStereoOpenChanged:(BOOL)virtualStereoOpen {
     [self applyVirtualStereoConfig];
 }
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
              virtualStereoAngleChanged:(int)virtualStereoAngle {
     [self applyVirtualStereoConfig];
 }
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
                      reverbOpenChanged:(BOOL)reverbOpen {
     [self applyReverbConfig];
 }
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
                      reverbModeChanged:(NSUInteger)reverbMode {
     [self applyReverbConfig];
 }
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
            customReverbRoomSizeChanged:(float)customReverbRoomSize {
     [self applyReverbConfig];
 }
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
               customDryWetRatioChanged:(float)customDryWetRatio {
     [self applyReverbConfig];
 }
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
                   customDampingChanged:(float)customDamping {
     [self applyReverbConfig];
 }
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
              customReverberanceChanged:(float)customReverberance {
     [self applyReverbConfig];
 }

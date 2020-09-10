@@ -23,7 +23,7 @@
 "Topic.CustomVideoCapture"       = "CustomVideoCapture";
 "Topic.CustomVideoRender"        = "CustomVideoRender";
 "Topic.CustomAudioIO"            = "CustomAudioIO";
-"Topic.AudioEffect"              = "AudioEffect";
+"Topic.AudioPreprocess"          = "AudioPreprocess";
 "Topic.APITest"                  = "API Test";
 
 "CustomVideoCapture.RenderPreview" = "When the custom video capture BufferType is EncodedFrame, the engine cannot render the preview encoded video frame and the developer should render the preview frame himself. Please use another device to play this stream to view the screen.";

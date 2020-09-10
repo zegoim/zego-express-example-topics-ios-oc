@@ -10,11 +10,14 @@
 
 #import "ZGSoundLevelViewController.h"
 #import "ZGSoundLevelTableViewCell.h"
+#import "ZGSoundLevelSettingTabelViewController.h"
 #import "ZGAppGlobalConfigManager.h"
 #import "ZGUserIDHelper.h"
 #import <ZegoExpressEngine/ZegoExpressEngine.h>
 
-@interface ZGSoundLevelViewController () <ZegoEventHandler>
+@interface ZGSoundLevelViewController () <ZegoEventHandler, UIPopoverPresentationControllerDelegate>
+
+@property (nonatomic, strong) UIBarButtonItem *settingButton;
 
 @property (nonatomic, copy) NSString *roomID;
 
@@ -29,14 +32,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     self.roomID = @"SoundLevelRoom-1";
     self.remoteStreamList = [NSMutableArray array];
+
+    self.enableSoundLevelMonitor = YES;
+    self.enableAudioSpectrumMonitor = YES;
+    self.soundLevelInterval = 100;
+    self.audioSpectrumInterval = 100;
+
     [self setupUI];
+
     [self startLive];
 }
 
 - (void)setupUI {
     self.title = [NSString stringWithFormat:@"%@", self.roomID];
+
+    self.settingButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Setting"] style:UIBarButtonItemStylePlain target:self action:@selector(showSettingController)];
+    self.navigationItem.rightBarButtonItem = self.settingButton;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"ZGSoundLevelTableViewCell" bundle:nil] forCellReuseIdentifier:@"ZGSoundLevelTableViewCell"];
     self.tableView.separatorStyle = UITableViewCellEditingStyleNone;
@@ -66,11 +80,32 @@
     [[ZegoExpressEngine sharedEngine] startPublishingStream:self.localStreamID];
     
     // Start monitoring
-    ZGLogInfo(@"🎼 Start sound level monitor");
+    ZGLogInfo(@"🎼 Start sound level monitor, with default interval 100ms");
     [[ZegoExpressEngine sharedEngine] startSoundLevelMonitor];
     
-    ZGLogInfo(@"🎼 Start audio frequency spectrum monitor");
+    ZGLogInfo(@"🎼 Start audio frequency spectrum monitor, with default interval 100ms");
     [[ZegoExpressEngine sharedEngine] startAudioSpectrumMonitor];
+}
+
+- (void)showSettingController {
+    ZGSoundLevelSettingTabelViewController *vc = [ZGSoundLevelSettingTabelViewController instanceFromStoryboard];
+    vc.preferredContentSize = CGSizeMake(250.0, 150.0);
+    vc.modalPresentationStyle = UIModalPresentationPopover;
+    vc.popoverPresentationController.delegate = self;
+    vc.popoverPresentationController.barButtonItem = self.settingButton;
+    vc.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+
+    vc.presenter = self;
+    vc.enableSoundLevelMonitor = _enableSoundLevelMonitor;
+    vc.enableAudioSpectrumMonitor = _enableAudioSpectrumMonitor;
+    vc.soundLevelInterval = _soundLevelInterval;
+    vc.audioSpectrumInterval = _audioSpectrumInterval;
+
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
+    return UIModalPresentationNone;
 }
 
 #pragma mark Streams Update Callback

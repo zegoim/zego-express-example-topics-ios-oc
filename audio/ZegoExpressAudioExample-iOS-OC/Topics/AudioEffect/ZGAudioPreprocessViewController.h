@@ -1,5 +1,5 @@
 //
-//  ZGAudioEffectConfigTableViewController.h
+//  ZGAudioPreprocessViewController.h
 //  ZegoExpressAudioExample-iOS-OC
 //
 //  Created by Patrick Fu on 2020/8/12.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZGAudioEffectConfigTableViewController : UITableViewController
+@interface ZGAudioPreprocessViewController : UIViewController
 
 @end
 

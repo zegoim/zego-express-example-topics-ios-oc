@@ -79,8 +79,8 @@
 #ifdef _Module_AuxPublisher
     [advancedTopicList addObject:_Module_AuxPublisher];
 #endif
-#ifdef _Module_AudioEffect
-    [advancedTopicList addObject:_Module_AudioEffect];
+#ifdef _Module_AudioPreprocess
+    [advancedTopicList addObject:_Module_AudioPreprocess];
 #endif
     
     _topicList = topicList;
@@ -288,9 +288,9 @@
     }
     #endif
     
-    #ifdef _Module_AudioEffect
-    if ([topicName isEqualToString:_Module_AudioEffect]) {
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"AudioEffect" bundle:nil];
+    #ifdef _Module_AudioPreprocess
+    if ([topicName isEqualToString:_Module_AudioPreprocess]) {
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"AudioPreprocess" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
     #endif

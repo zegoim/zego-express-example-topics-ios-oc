@@ -1,11 +1,11 @@
 //
-//  ZGAudioEffectTopicConfigManager.h
+//  ZGAudioPreprocessTopicConfigManager.h
 //  LiveRoomPlayGround
 //
 //  Created by jeffreypeng on 2019/8/27.
 //  Copyright © 2019 Zego. All rights reserved.
 //
-#ifdef _Module_AudioEffect
+#ifdef _Module_AudioPreprocess
 
 #import <Foundation/Foundation.h>
 
@@ -33,37 +33,37 @@ static float const EXPRESS_API_VOICE_CHANGER_WOMEN_TO_CHILD = 6.0;
 /** 男声变童声 值: 8.0*/
 static float const EXPRESS_API_VOICE_CHANGER_MEN_TO_CHILD = 8.0;
 
-@class ZGAudioEffectTopicConfigManager;
-@protocol ZGAudioEffectTopicConfigChangedHandler <NSObject>
+@class ZGAudioPreprocessTopicConfigManager;
+@protocol ZGAudioPreprocessTopicConfigChangedHandler <NSObject>
 @optional
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
                voiceChangerOpenChanged:(BOOL)voiceChangerOpen;
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
                voiceChangerParamChanged:(float)voiceChangerParam;
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
               virtualStereoOpenChanged:(BOOL)virtualStereoOpen;
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
               virtualStereoAngleChanged:(int)virtualStereoAngle;
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
              reverbOpenChanged:(BOOL)reverbOpen;
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
              reverbModeChanged:(NSUInteger)reverbMode;
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
              customReverbRoomSizeChanged:(float)customReverbRoomSize;
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
            customDryWetRatioChanged:(float)customDryWetRatio;
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
               customDampingChanged:(float)customDamping;
 
-- (void)audioEffectTopicConfigManager:(ZGAudioEffectTopicConfigManager *)configManager
+- (void)audioPreprocessTopicConfigManager:(ZGAudioPreprocessTopicConfigManager *)configManager
                   customReverberanceChanged:(float)customReverberance;
 
 @end
@@ -71,15 +71,15 @@ static float const EXPRESS_API_VOICE_CHANGER_MEN_TO_CHILD = 8.0;
 /**
  音频处理专题设置管理器。
  
- * 通过实现 `ZGAudioEffectTopicConfigChangedHandler` 并添加到管理器中，可以收到专题设置更新事件。
+ * 通过实现 `ZGAudioPreprocessTopicConfigChangedHandler` 并添加到管理器中，可以收到专题设置更新事件。
  */
-@interface ZGAudioEffectTopicConfigManager : NSObject
+@interface ZGAudioPreprocessTopicConfigManager : NSObject
 
 + (instancetype)sharedInstance;
 
-- (void)addConfigChangedHandler:(id<ZGAudioEffectTopicConfigChangedHandler>)handler;
+- (void)addConfigChangedHandler:(id<ZGAudioPreprocessTopicConfigChangedHandler>)handler;
 
-- (void)removeConfigChangedHandler:(id<ZGAudioEffectTopicConfigChangedHandler>)handler;
+- (void)removeConfigChangedHandler:(id<ZGAudioPreprocessTopicConfigChangedHandler>)handler;
 
 #pragma mark - 变声
 

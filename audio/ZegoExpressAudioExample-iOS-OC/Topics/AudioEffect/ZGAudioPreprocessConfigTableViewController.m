@@ -1,18 +1,18 @@
 //
-//  ZGAudioEffectConfigTableViewController.m
+//  ZGAudioPreprocessConfigTableViewController.m
 //  ZegoExpressAudioExample-iOS-OC
 //
 //  Created by Patrick Fu on 2020/8/12.
 //  Copyright © 2020 Zego. All rights reserved.
 //
 
-#import "ZGAudioEffectConfigTableViewController.h"
+#import "ZGAudioPreprocessConfigTableViewController.h"
 
-@interface ZGAudioEffectConfigTableViewController ()
+@interface ZGAudioPreprocessConfigTableViewController ()
 
 @end
 
-@implementation ZGAudioEffectConfigTableViewController
+@implementation ZGAudioPreprocessConfigTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

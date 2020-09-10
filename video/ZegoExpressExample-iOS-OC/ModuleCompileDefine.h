@@ -16,7 +16,7 @@
 #define _Module_CustomVideoCapture       NSLocalizedString(@"Topic.CustomVideoCapture", nil)
 #define _Module_CustomVideoRender        NSLocalizedString(@"Topic.CustomVideoRender", nil)
 #define _Module_CustomAudioIO            NSLocalizedString(@"Topic.CustomAudioIO", nil)
-#define _Module_AudioEffect              NSLocalizedString(@"Topic.AudioEffect", nil)
+#define _Module_AudioPreprocess          NSLocalizedString(@"Topic.AudioPreprocess", nil)
 #define _Module_Test                     NSLocalizedString(@"Topic.APITest", nil)
 
 #endif

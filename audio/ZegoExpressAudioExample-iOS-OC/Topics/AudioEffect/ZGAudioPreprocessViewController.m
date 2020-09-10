@@ -1,18 +1,18 @@
 //
-//  ZGAudioEffectViewController.m
+//  ZGAudioPreprocessViewController.m
 //  ZegoExpressAudioExample-iOS-OC
 //
 //  Created by Patrick Fu on 2020/8/12.
 //  Copyright © 2020 Zego. All rights reserved.
 //
 
-#import "ZGAudioEffectViewController.h"
+#import "ZGAudioPreprocessViewController.h"
 
-@interface ZGAudioEffectViewController ()
+@interface ZGAudioPreprocessViewController ()
 
 @end
 
-@implementation ZGAudioEffectViewController
+@implementation ZGAudioPreprocessViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
