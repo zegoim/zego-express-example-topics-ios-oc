@@ -8,22 +8,34 @@
 
 "home.setting.button" = "Setting";
 
+"Topic.Module.Basic"             = "Basic Module";
 "Topic.QuickStart"               = "QuickStart";
 "Topic.PublishStream"            = "PublishStream";
 "Topic.PlayStream"               = "PlayStream";
-"Topic.RecordCapture"            = "RecordCapture";
 "Topic.VideoTalk"                = "VideoTalk";
-"Topic.RoomMessage"              = "RoomMessage";
-"Topic.Mixer"                    = "Mixer";
-"Topic.SoundLevel&AudioSpectrum" = "SoundLevel&AudioSpectrum";
-"Topic.AudioMixing"              = "AudioMixing";
+
+"Topic.Module.Common"            = "Common Module";
 "Topic.Beautify&Watermark"       = "Beautify&Watermark";
 "Topic.MediaPlayer"              = "MediaPlayer";
+"Topic.AudioEffectPlayer"        = "AudioEffectPlayer";
+"Topic.RecordCapture"            = "RecordCapture";
+"Topic.Mixer"                    = "Mixer";
+"Topic.RoomMessage"              = "RoomMessage";
+
+"Topic.Module.StreamAdvanced"    = "Stream Advanced Module";
 "Topic.AuxPublisher"             = "AuxPublisher";
-"Topic.CustomVideoCapture"       = "CustomVideoCapture";
+
+"Topic.Module.VideoAdvanced"     = "Video Advanced Module";
 "Topic.CustomVideoRender"        = "CustomVideoRender";
+"Topic.CustomVideoCapture"       = "CustomVideoCapture";
+"Topic.ScreenCapture"            = "ScreenCapture";
+
+"Topic.Module.AudioAdvanced"     = "Audio Advanced Module";
+"Topic.SoundLevel&AudioSpectrum" = "SoundLevel&AudioSpectrum";
 "Topic.CustomAudioIO"            = "CustomAudioIO";
+"Topic.AudioMixing"              = "AudioMixing";
 "Topic.AudioPreprocess"          = "AudioPreprocess";
-"Topic.APITest"                  = "API Test";
+
+
 
 "CustomVideoCapture.RenderPreview" = "When the custom video capture BufferType is EncodedFrame, the engine cannot render the preview encoded video frame and the developer should render the preview frame himself. Please use another device to play this stream to view the screen.";

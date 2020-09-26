@@ -42,6 +42,10 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 
 @property (nonatomic, assign) ZegoVideoConfigPreset selectedMixerVideoConfigPreset;
 
+@property (nonatomic, copy) NSArray<NSString *> *audioConfigPresetList;
+@property (nonatomic, copy) NSDictionary<NSNumber *, NSString *> *audioConfigCodecIDMap;
+@property (nonatomic, assign) ZegoAudioConfigPreset selectedAudioConfigPreset;
+
 // Engine
 @property (weak, nonatomic) IBOutlet UITextField *appIDTextField;
 @property (weak, nonatomic) IBOutlet UITextField *appSignTextField;
@@ -55,6 +59,8 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 @property (weak, nonatomic) IBOutlet UISwitch *setDebugVerboseSwitch;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *setDebugVerboseLanguageSeg;
 @property (weak, nonatomic) IBOutlet UIButton *setDebugVerboseButton;
+@property (weak, nonatomic) IBOutlet UITextField *advancedConfigKeyTextField;
+@property (weak, nonatomic) IBOutlet UITextField *advancedConfigValueTextField;
 
 // Room
 @property (weak, nonatomic) IBOutlet UITextField *roomIDTextField;
@@ -84,6 +90,8 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 @property (weak, nonatomic) IBOutlet UIButton *setVideoMirrorModeButton;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *setAppOrientationSeg;
 @property (weak, nonatomic) IBOutlet UIButton *setAppOrientationButton;
+@property (weak, nonatomic) IBOutlet UIPickerView *setAudioConfigPicker;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *setAudioConfigCodecIDSeg;
 @property (weak, nonatomic) IBOutlet UISwitch *mutePublishAudioSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *mutePublishAudioButton;
 @property (weak, nonatomic) IBOutlet UISwitch *mutePublishVideoSwitch;
@@ -103,6 +111,7 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 @property (weak, nonatomic) IBOutlet UIButton *setCaptureScaleModeButton;
 @property (weak, nonatomic) IBOutlet UITextField *sendSEITextField;
 @property (weak, nonatomic) IBOutlet UIButton *sendSEIButton;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *setAudioCaptureStereoModeSeg;
 
 // Play
 @property (weak, nonatomic) IBOutlet UITextField *playStreamIDTextField;
@@ -190,6 +199,27 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
     self.mixerResolutionPicker.dataSource = self;
     self.mixerResolutionPicker.tag = 3;
     [self pickerView:self.mixerResolutionPicker didSelectRow:0 inComponent:0];
+
+    self.audioConfigPresetList = @[@"16k / Mono", @"48k / Mono", @"56k / Stereo", @"128k / Mono", @"192k / Stereo"];
+    self.setAudioConfigPicker.delegate = self;
+    self.setAudioConfigPicker.dataSource = self;
+    self.setAudioConfigPicker.tag = 4;
+    [self pickerView:self.setAudioConfigPicker didSelectRow:1 inComponent:0];
+
+    self.audioConfigCodecIDMap = @{
+        @(ZegoAudioCodecIDDefault): @"Default",
+        @(ZegoAudioCodecIDNormal): @"AAC-HE",
+        @(ZegoAudioCodecIDNormal2): @"AAC-LC",
+        @(ZegoAudioCodecIDNormal3): @"MP3",
+        @(ZegoAudioCodecIDLow): @"EVS",
+        @(ZegoAudioCodecIDLow2): @"SILK",
+        @(ZegoAudioCodecIDLow3): @"OPUS"
+    };
+    [self.setAudioConfigCodecIDSeg removeAllSegments];
+    for (NSNumber *idx in self.audioConfigCodecIDMap) {
+        [self.setAudioConfigCodecIDSeg insertSegmentWithTitle:self.audioConfigCodecIDMap[idx] atIndex:idx.integerValue animated:NO];
+    }
+    self.setAudioConfigCodecIDSeg.selectedSegmentIndex = 0;
     
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     
@@ -258,6 +288,16 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 
 - (IBAction)uploadLogClick:(UIButton *)sender {
     [self.manager uploadLog];
+}
+
+- (IBAction)setAdvancedConfigClick:(UIButton *)sender {
+    NSString *key = self.advancedConfigKeyTextField.text;
+    NSString *value = self.advancedConfigValueTextField.text;
+    if (key && [key length] > 0 && value && [value length] > 0) {
+        ZegoEngineConfig *config = [[ZegoEngineConfig alloc] init];
+        config.advancedConfig = @{key: value};
+        [self.manager setEngineConfig:config];
+    }
 }
 
 - (IBAction)setDebugVerboseClick:(UIButton *)sender {
@@ -331,6 +371,19 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
     [self.manager setAppOrientation:(UIInterfaceOrientation)self.setAppOrientationSeg.selectedSegmentIndex];
 }
 
+- (IBAction)setAudioConfigClick:(UIButton *)sender {
+    ZegoAudioConfig *config = [ZegoAudioConfig configWithPreset:self.selectedAudioConfigPreset];
+    [self.manager setAudioConfig:config];
+    ZegoAudioConfig *newConfig = [self.manager getAudioConfig];
+    self.setAudioConfigCodecIDSeg.selectedSegmentIndex = (int)newConfig.codecID;
+}
+
+- (IBAction)setAudioConfigCodecIDClick:(UIButton *)sender {
+    ZegoAudioConfig *config = [self.manager getAudioConfig];
+    config.codecID = (ZegoAudioCodecID)self.setAudioConfigCodecIDSeg.selectedSegmentIndex;
+    [self.manager setAudioConfig:config];
+}
+
 - (IBAction)mutePublishAudioClick:(UIButton *)sender {
     [self.manager mutePublishStreamAudio:self.mutePublishAudioSwitch.on];
 }
@@ -370,9 +423,13 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 }
 
 - (IBAction)sendSEIButtonClick:(UIButton *)sender {
-    char *str = "1234567\0";
-//    [self.manager sendSEI:[self.sendSEITextField.text dataUsingEncoding:NSUTF8StringEncoding]];
-    [self.manager sendSEI:[NSData dataWithBytes:str length:7 ]];
+//    char *str = "1234567\0";
+//    [self.manager sendSEI:[NSData dataWithBytes:str length:7 ]];
+    [self.manager sendSEI:[self.sendSEITextField.text dataUsingEncoding:NSUTF8StringEncoding]];
+}
+
+- (IBAction)setAudioCaptureStereoModeClick:(UIButton *)sender {
+    [self.manager setAudioCaptureStereoMode:(ZegoAudioCaptureStereoMode)self.setAudioCaptureStereoModeSeg.selectedSegmentIndex];
 }
 
 #pragma mark Player
@@ -606,6 +663,8 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     if (pickerView.tag == 2 || pickerView.tag == 3) {
         return self.resolutionList.count;
+    } else if (pickerView.tag == 4) {
+        return self.audioConfigPresetList.count;
     }
     return 0;
 }
@@ -613,39 +672,19 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     if (pickerView.tag == 2 || pickerView.tag == 3) {
         return self.resolutionList[row];
+    } else if (pickerView.tag == 4) {
+        return self.audioConfigPresetList[row];
     }
     return 0;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if (pickerView.tag == 2) {
-        if (row == 0) {
-            self.selectedVideoConfigPreset = ZegoVideoConfigPreset180P;
-        } else if (row == 1) {
-            self.selectedVideoConfigPreset = ZegoVideoConfigPreset270P;
-        } else if (row == 2) {
-            self.selectedVideoConfigPreset = ZegoVideoConfigPreset360P;
-        } else if (row == 3) {
-            self.selectedVideoConfigPreset = ZegoVideoConfigPreset540P;
-        } else if (row == 4) {
-            self.selectedVideoConfigPreset = ZegoVideoConfigPreset720P;
-        } else {
-            self.selectedVideoConfigPreset = ZegoVideoConfigPreset1080P;
-        }
+        self.selectedVideoConfigPreset = (ZegoVideoConfigPreset)row;
     } else if (pickerView.tag == 3) {
-        if (row == 0) {
-            self.selectedMixerVideoConfigPreset = ZegoVideoConfigPreset180P;
-        } else if (row == 1) {
-            self.selectedMixerVideoConfigPreset = ZegoVideoConfigPreset270P;
-        } else if (row == 2) {
-            self.selectedMixerVideoConfigPreset = ZegoVideoConfigPreset360P;
-        } else if (row == 3) {
-            self.selectedMixerVideoConfigPreset = ZegoVideoConfigPreset540P;
-        } else if (row == 4) {
-            self.selectedMixerVideoConfigPreset = ZegoVideoConfigPreset720P;
-        } else {
-            self.selectedMixerVideoConfigPreset = ZegoVideoConfigPreset1080P;
-        }
+        self.selectedMixerVideoConfigPreset = (ZegoVideoConfigPreset)row;
+    } else if (pickerView.tag == 4) {
+        self.selectedAudioConfigPreset = (ZegoAudioConfigPreset)row;
     }
 }
 

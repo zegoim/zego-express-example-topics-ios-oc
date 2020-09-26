@@ -21,7 +21,7 @@
 }
 
 - (instancetype)init {
-    self = [super initWithSuiteName:@"group.ZegoExpressExample-iOS-OC"];
+    self = [super initWithSuiteName:@"group.im.zego.express"];
     return self;
 }
 

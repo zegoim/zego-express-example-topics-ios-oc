@@ -71,6 +71,7 @@
         ZGLogInfo(@"💽 Create ZegoMediaPlayer");
     } else {
         ZGLogWarn(@"💽 ❌ Create ZegoMediaPlayer failed");
+        return;
     }
     
     [self.player loadResource:self.mediaItem.fileURL callback:^(int errorCode) {

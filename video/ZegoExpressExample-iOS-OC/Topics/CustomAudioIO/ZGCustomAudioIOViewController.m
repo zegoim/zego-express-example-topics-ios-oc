@@ -26,17 +26,17 @@
 @property (nonatomic, assign) ZegoPlayerState playerState;
 @property (weak, nonatomic) IBOutlet UIButton *startPlayButton;
 
-@property (strong, nonatomic) NSTimer *audioCaptureTimer;
 
 @property (nonatomic, strong) ZegoAudioFrameParam *audioCapturedFrameParam;
 @property (nonatomic, strong) ZegoAudioFrameParam *audioRenderFrameParam;
 
-// Audio data to be sent
-@property (nonatomic, strong) NSData *audioCapturedData;
-// Audio origin data position
-@property (nonatomic, assign) void *audioCapturedDataPosition;
 
-@property (nonatomic, strong) NSInputStream *inputStream;
+// Audio capture timer (used by local media source)
+@property (strong, nonatomic) NSTimer *audioCaptureTimer;
+// Audio data to be sent (used by local media source)
+@property (nonatomic, strong) NSInputStream *audioCapturedDataInputStream;
+// Audio origin data position (used by local media source)
+@property (nonatomic, assign) void *audioCapturedDataPosition;
 
 @end
 
@@ -67,11 +67,11 @@
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    if ([self.audioCaptureTimer isValid]) {
-        ZGLogInfo(@"⏱ Audio capture timer invalidate");
+    if (self.audioSourceType == ZGCustomAudioCaptureSourceTypeLocalMedia && [self.audioCaptureTimer isValid]) {
+        ZGLogInfo(@"⏱ Custom audio capture timer invalidate");
         [self.audioCaptureTimer invalidate];
+        self.audioCaptureTimer = nil;
     }
-    self.audioCaptureTimer = nil;
 
     ZGLogInfo(@"🚪 Logout room");
     [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
@@ -81,11 +81,13 @@
     [ZegoExpressEngine destroyEngine:nil];
 }
 
-- (void)dealloc {
-    ZGLogInfo(@"🔴 %s dealloc", __FILE__);
-}
-
 - (void)createEngineAndLoginRoom {
+    if (!self.enableCustomAudioRender) {
+        ZegoEngineConfig *engineConfig = [[ZegoEngineConfig alloc] init];
+        engineConfig.advancedConfig = @{@"ext_capture_and_inner_render": @"true"};
+        [ZegoExpressEngine setEngineConfig:engineConfig];
+    }
+
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
 
     ZGLogInfo(@"🚀 Create ZegoExpressEngine");
@@ -107,49 +109,27 @@
 
 - (IBAction)startPublishButtonClick:(UIButton *)sender {
     if (self.publisherState == ZegoPublisherStatePublishing) {
-        [self stopPublishing];
+
+        [self stopPublishing:self.audioSourceType];
+
     } else if (self.publisherState == ZegoPublisherStateNoPublish) {
-//        [self startPublishing];
-        [self startRecording];
+
+        [self startPublishing:self.audioSourceType];
     }
 }
 
 - (IBAction)startPlayButtonClick:(UIButton *)sender {
     if (self.playerState == ZegoPlayerStatePlaying) {
-        [self stopPlaying:NO];
+
+        [self stopPlaying:self.enableCustomAudioRender];
+
     } else if (self.playerState == ZegoPlayerStateNoPlay) {
-        [self startPlaying:NO];
+
+        [self startPlaying:self.enableCustomAudioRender];
     }
 }
 
-- (void)startRecording {
-    ZGLogInfo(@"🔌 Start preview");
-    ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.localPreviewView];
-    [[ZegoExpressEngine sharedEngine] startPreview:previewCanvas];
-
-    ZGLogInfo(@"📤 Start publishing stream. streamID: %@", self.localPublishStreamID);
-    [[ZegoExpressEngine sharedEngine] startPublishingStream:self.localPublishStreamID];
-
-    if (!_audioToolRecorder) {
-        _audioToolRecorder = [[ZGAudioToolRecorder alloc] initWithSampleRate:ZegoAudioSampleRate16K bufferSize:[self bufferSize]];
-        __weak ZGCustomAudioIOViewController *weakSelf = self;
-        _audioToolRecorder.bl_output = ^(ZGAudioToolRecorder *recorder,
-                                         AudioUnitRenderActionFlags *ioActionFlags,
-                                         const AudioTimeStamp *inTimeStamp,
-                                         UInt32 inBusNumber,
-                                         UInt32 inNumberFrames,
-                                         AudioBufferList *bufferList) {
-            AudioBuffer buffer = bufferList->mBuffers[0];
-            unsigned int length = (unsigned int)buffer.mDataByteSize;
-            [[ZegoExpressEngine sharedEngine] sendCustomAudioCapturePCMData:buffer.mData dataLength:length param:weakSelf.audioCapturedFrameParam];
-
-        };
-    }
-
-    [_audioToolRecorder start];
-}
-
-- (void)startPublishing {
+- (void)startPublishing:(ZGCustomAudioCaptureSourceType)captureSourceType {
 
     ZGLogInfo(@"🔌 Start preview");
     ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.localPreviewView];
@@ -158,26 +138,63 @@
     ZGLogInfo(@"📤 Start publishing stream. streamID: %@", self.localPublishStreamID);
     [[ZegoExpressEngine sharedEngine] startPublishingStream:self.localPublishStreamID];
 
-    
-    NSURL *url = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"wav"];
-    NSInputStream *inputSteam = [NSInputStream inputStreamWithURL:url];
-    self.inputStream = inputSteam;
-    [inputSteam open];
-    
 
-    // Start a timer that triggers every 20ms to send audio data
-    self.audioCaptureTimer = [NSTimer timerWithTimeInterval:0.02 target:self selector:@selector(sendCapturedAudioFrame) userInfo:nil repeats:YES];
-    [NSRunLoop.mainRunLoop addTimer:self.audioCaptureTimer forMode:NSRunLoopCommonModes];
-    ZGLogInfo(@"⏱ Audio capture timer fire 🚀");
-    [self.audioCaptureTimer fire];
+    if (captureSourceType == ZGCustomAudioCaptureSourceTypeLocalMedia) {
+
+        if (!self.audioCapturedDataInputStream) {
+            NSURL *url = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"wav"];
+            NSInputStream *inputSteam = [NSInputStream inputStreamWithURL:url];
+            self.audioCapturedDataInputStream = inputSteam;
+        }
+        [self.audioCapturedDataInputStream open];
+
+        // Start a timer that triggers every 20ms to send audio data
+        if (!self.audioCaptureTimer) {
+            self.audioCaptureTimer = [NSTimer timerWithTimeInterval:0.02 target:self selector:@selector(sendCapturedAudioFrame) userInfo:nil repeats:YES];
+            [NSRunLoop.mainRunLoop addTimer:self.audioCaptureTimer forMode:NSRunLoopCommonModes];
+        }
+        ZGLogInfo(@"⏱ Custom audio capture timer fire");
+        [self.audioCaptureTimer fire];
+
+    } else if (captureSourceType == ZGCustomAudioCaptureSourceTypeDeviceMicrophone) {
+
+        if (!_audioToolRecorder) {
+            _audioToolRecorder = [[ZGAudioToolRecorder alloc] initWithSampleRate:ZegoAudioSampleRate16K bufferSize:[self bufferSize]];
+            __weak ZGCustomAudioIOViewController *weakSelf = self;
+            _audioToolRecorder.bl_output = ^(ZGAudioToolRecorder *recorder,
+                                             AudioUnitRenderActionFlags *ioActionFlags,
+                                             const AudioTimeStamp *inTimeStamp,
+                                             UInt32 inBusNumber,
+                                             UInt32 inNumberFrames,
+                                             AudioBufferList *bufferList) {
+                AudioBuffer buffer = bufferList->mBuffers[0];
+                unsigned int length = (unsigned int)buffer.mDataByteSize;
+                [[ZegoExpressEngine sharedEngine] sendCustomAudioCapturePCMData:buffer.mData dataLength:length param:weakSelf.audioCapturedFrameParam];
+
+            };
+        }
+        ZGLogInfo(@"🎙 Custom audio capture microphone start record");
+        [_audioToolRecorder start];
+    }
 }
 
-- (void)stopPublishing {
+- (void)stopPublishing:(ZGCustomAudioCaptureSourceType)captureSourceType {
 
-    if (self.audioCaptureTimer) {
-        ZGLogInfo(@"⏱ Audio capture timer invalidate");
-        [self.audioCaptureTimer invalidate];
-        self.audioCaptureTimer = nil;
+    if (captureSourceType == ZGCustomAudioCaptureSourceTypeLocalMedia) {
+        if (self.audioCaptureTimer) {
+            ZGLogInfo(@"⏱ Custom audio capture timer invalidate");
+            [self.audioCaptureTimer invalidate];
+            self.audioCaptureTimer = nil;
+        }
+
+        if (self.audioCapturedDataInputStream) {
+            [self.audioCapturedDataInputStream close];
+            self.audioCapturedDataInputStream = nil;
+        }
+
+    } else if (captureSourceType == ZGCustomAudioCaptureSourceTypeDeviceMicrophone) {
+        ZGLogInfo(@"🎙 Custom audio capture microphone stop record");
+        [_audioToolRecorder stop];
     }
 
     ZGLogInfo(@"🔌 Stop preview");
@@ -185,59 +202,60 @@
 
     ZGLogInfo(@"📤 Stop publishing stream");
     [[ZegoExpressEngine sharedEngine] stopPublishingStream];
-    
-    [self.inputStream close];
-    self.inputStream = nil;
-
-    [_audioToolRecorder stop];
 }
 
-- (void)startPlaying:(BOOL)saveToFile {
+- (void)startPlaying:(BOOL)enableCustomAudioRender {
 
     ZGLogInfo(@"📥 Start playing stream, streamID: %@", self.remotePlayStreamID);
     ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:self.remotePlayView];
     [[ZegoExpressEngine sharedEngine] startPlayingStream:self.remotePlayStreamID canvas:playCanvas];
 
-    if (!_audioToolPlayer) {
-        _audioToolPlayer = [[ZGAudioToolPlayer alloc] initWithSampleRate:ZegoAudioSampleRate16K bufferSize:[self bufferSize]];
-        __weak ZGCustomAudioIOViewController *weakSelf = self;
-        _audioToolPlayer.bl_input = ^(ZGAudioToolPlayer *player,
-                                      AudioUnitRenderActionFlags *ioActionFlags,
-                                      const AudioTimeStamp *inTimeStamp,
-                                      UInt32 inBusNumber,
-                                      UInt32 inNumberFrames,
-                                      AudioBufferList *bufferList) {
+    // Use custom audio render
+    if (enableCustomAudioRender) {
+        if (!_audioToolPlayer) {
+            _audioToolPlayer = [[ZGAudioToolPlayer alloc] initWithSampleRate:ZegoAudioSampleRate16K bufferSize:[self bufferSize]];
+            __weak ZGCustomAudioIOViewController *weakSelf = self;
+            _audioToolPlayer.bl_input = ^(ZGAudioToolPlayer *player,
+                                          AudioUnitRenderActionFlags *ioActionFlags,
+                                          const AudioTimeStamp *inTimeStamp,
+                                          UInt32 inBusNumber,
+                                          UInt32 inNumberFrames,
+                                          AudioBufferList *bufferList) {
 
-            AudioBuffer buffer = bufferList->mBuffers[0];
-            unsigned int length = (unsigned int)buffer.mDataByteSize;
+                AudioBuffer buffer = bufferList->mBuffers[0];
+                unsigned int length = (unsigned int)buffer.mDataByteSize;
 
-            // Fetch and render audio render buffer
-            [[ZegoExpressEngine sharedEngine] fetchCustomAudioRenderPCMData:buffer.mData dataLength:length param:weakSelf.audioRenderFrameParam];
-            buffer.mDataByteSize = length;
-        };
+                // Fetch and render audio render buffer
+                [[ZegoExpressEngine sharedEngine] fetchCustomAudioRenderPCMData:buffer.mData dataLength:length param:weakSelf.audioRenderFrameParam];
+                buffer.mDataByteSize = length;
+            };
+        }
+
+        ZGLogInfo(@"🔉 Custom audio render speaker start play");
+        [_audioToolPlayer play];
     }
-
-    [_audioToolPlayer play];
 }
 
-- (void)stopPlaying:(BOOL)saveToFile {
+- (void)stopPlaying:(BOOL)enableCustomAudioRender {
 
     ZGLogInfo(@"📥 Stop playing stream");
     [[ZegoExpressEngine sharedEngine] stopPlayingStream:self.remotePlayStreamID];
-    
-    [_audioToolPlayer stop];
+
+    if (enableCustomAudioRender) {
+        ZGLogInfo(@"🔉 Custom audio render speaker stop play");
+        [_audioToolPlayer stop];
+    }
 }
 
 
-#pragma mark - Custom Audio IO
+#pragma mark - Custom audio capture send data (for local media source)
 
 // Will be called by the NSTimer every 20ms
 - (void)sendCapturedAudioFrame {
 
     uint8_t *audioCapturedDataPosition = (uint8_t *)malloc([self bufferSize]);
-    NSInteger length = [self.inputStream read:audioCapturedDataPosition maxLength:[self bufferSize]];
+    NSInteger length = [self.audioCapturedDataInputStream read:audioCapturedDataPosition maxLength:[self bufferSize]];
     [[ZegoExpressEngine sharedEngine] sendCustomAudioCapturePCMData:audioCapturedDataPosition dataLength:(unsigned int)length param:_audioCapturedFrameParam];
-    
 }
 
 - (unsigned int)bufferSize {
@@ -249,6 +267,7 @@
     unsigned int expectedDataLength = (unsigned int)(duration * sampleRate * audioChannels * bytesPerSample);
     return expectedDataLength;
 }
+
 
 #pragma mark - ZegoEventHandler
 

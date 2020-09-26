@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Pmk-Sn-PbV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Pmk-Sn-PbV">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,7 +22,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GZd-Gx-at9">
                                 <rect key="frame" x="117.66666666666669" y="389" width="140" height="34"/>
-                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="linkColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="REd-Lx-R0V"/>
                                     <constraint firstAttribute="width" constant="140" id="hle-9r-DDa"/>
@@ -33,7 +34,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LmR-DW-SpX">
                                 <rect key="frame" x="117.66666666666669" y="453" width="140" height="34"/>
-                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="linkColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="140" id="o4u-9g-GZV"/>
                                     <constraint firstAttribute="height" constant="34" id="rPI-cI-56P"/>
@@ -53,7 +54,7 @@ This topic requires three devices to experience, two devices start publishing, a
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="jev-tV-D4Z" secondAttribute="trailing" constant="30" id="2Yb-Qp-qgX"/>
                             <constraint firstItem="LmR-DW-SpX" firstAttribute="top" secondItem="GZd-Gx-at9" secondAttribute="bottom" constant="30" id="EQW-Qt-Jge"/>
@@ -91,11 +92,11 @@ This topic requires three devices to experience, two devices start publishing, a
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SRi-t8-7rx">
                                 <rect key="frame" x="20" y="95" width="335" height="568"/>
-                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jO-TG-KOb">
                                 <rect key="frame" x="30" y="717" width="315" height="34"/>
-                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="linkColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="RrY-fp-xka"/>
                                 </constraints>
@@ -104,7 +105,7 @@ This topic requires three devices to experience, two devices start publishing, a
                                     <action selector="startPublishing" destination="lnv-et-v55" eventType="touchUpInside" id="7mp-Nk-SOL"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Stream ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xnf-fK-5sl">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Stream ID" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Xnf-fK-5sl">
                                 <rect key="frame" x="30" y="673" width="315" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="gja-w7-8ns"/>
@@ -119,7 +120,7 @@ This topic requires three devices to experience, two devices start publishing, a
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="drh-ea-K33" firstAttribute="leading" secondItem="QCg-ew-03O" secondAttribute="leading" constant="10" id="0Df-kB-8eo"/>
                             <constraint firstItem="Xnf-fK-5sl" firstAttribute="leading" secondItem="QCg-ew-03O" secondAttribute="leading" constant="30" id="0dR-CM-AWi"/>
@@ -171,11 +172,11 @@ This topic requires three devices to experience, two devices start publishing, a
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vaF-m5-TdF">
                                 <rect key="frame" x="20" y="94.333333333333314" width="335" height="347"/>
-                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Kp-rv-VXq">
                                 <rect key="frame" x="30" y="665" width="315" height="34"/>
-                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="linkColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="arD-iI-P4N"/>
                                 </constraints>
@@ -186,7 +187,7 @@ This topic requires three devices to experience, two devices start publishing, a
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4SC-iN-4wE">
                                 <rect key="frame" x="30" y="714" width="315" height="34"/>
-                                <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="linkColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="66y-FO-3jI"/>
                                 </constraints>
@@ -204,7 +205,7 @@ This topic requires three devices to experience, two devices start publishing, a
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Output Stream ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jUp-vJ-5jT">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Output Stream ID" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jUp-vJ-5jT">
                                 <rect key="frame" x="136" y="608" width="219" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -217,7 +218,7 @@ This topic requires three devices to experience, two devices start publishing, a
                             </label>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5zk-jK-x69">
                                 <rect key="frame" x="0.0" y="518" width="375" height="75"/>
-                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="75" id="gL5-Sv-Xav"/>
                                 </constraints>
@@ -250,7 +251,7 @@ This topic requires three devices to experience, two devices start publishing, a
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7Ad-bO-FSR">
-                                                        <rect key="frame" x="38.333333333333329" y="2.6666666666666288" width="134.33333333333337" height="2"/>
+                                                        <rect key="frame" x="38.333333333333329" y="1.6666666666666288" width="134.33333333333337" height="4"/>
                                                     </progressView>
                                                 </subviews>
                                             </stackView>
@@ -285,7 +286,7 @@ This topic requires three devices to experience, two devices start publishing, a
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FpO-RD-QdP">
-                                                        <rect key="frame" x="38.333333333333343" y="2.6666666666666288" width="134" height="2"/>
+                                                        <rect key="frame" x="38.333333333333343" y="1.6666666666666288" width="134" height="4"/>
                                                     </progressView>
                                                 </subviews>
                                             </stackView>
@@ -298,7 +299,7 @@ This topic requires three devices to experience, two devices start publishing, a
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="5zk-jK-x69" firstAttribute="top" secondItem="CbQ-sp-71c" secondAttribute="bottom" constant="5" id="5z1-Yg-TiB"/>
                             <constraint firstItem="4SC-iN-4wE" firstAttribute="top" secondItem="2Kp-rv-VXq" secondAttribute="bottom" constant="15" id="8dv-BZ-pxz"/>
@@ -346,4 +347,15 @@ This topic requires three devices to experience, two devices start publishing, a
             <point key="canvasLocation" x="2528.8000000000002" y="154.43349753694582"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

@@ -8,7 +8,6 @@
 
 #import "ZGTopicsTableViewController.h"
 #import "ZGAppGlobalConfigViewController.h"
-#import "ZGTestMainViewController.h"
 
 @implementation ZGTopicsTableViewController {
     NSArray<NSArray<NSString*>*>* _topicList;
@@ -22,8 +21,13 @@
     
     NSMutableArray *basicTopicList = [NSMutableArray array];
     NSMutableArray *commonTopicList = [NSMutableArray array];
-    NSMutableArray *advancedTopicList = [NSMutableArray array];
-    NSArray *topicList = @[basicTopicList, commonTopicList, advancedTopicList];
+    NSMutableArray *streamAdvancedTopicList = [NSMutableArray array];
+    NSMutableArray *videoAdvancedTopicList = [NSMutableArray array];
+    NSMutableArray *audioAdvancedTopicList = [NSMutableArray array];
+    NSArray *topicList = @[basicTopicList, commonTopicList, streamAdvancedTopicList, videoAdvancedTopicList, audioAdvancedTopicList];
+
+
+    // Basic topics
 
 #ifdef _Module_QuickStart
     [basicTopicList addObject:_Module_QuickStart];
@@ -34,54 +38,65 @@
 #ifdef _Module_PlayStream
     [basicTopicList addObject:_Module_PlayStream];
 #endif
-#ifdef _Module_RecordCapture
-    [advancedTopicList addObject:_Module_RecordCapture];
-#endif
-#ifdef _Module_Test
-    [basicTopicList addObject:_Module_Test];
-#endif
 #ifdef _Module_VideoTalk
-    [commonTopicList addObject:_Module_VideoTalk];
+    [basicTopicList addObject:_Module_VideoTalk];
+#endif
+
+    // Common topics
+
+#ifdef _Module_Beautify
+    [commonTopicList addObject:_Module_Beautify];
+#endif
+#ifdef _Module_MediaPlayer
+    [commonTopicList addObject:_Module_MediaPlayer];
+#endif
+#ifdef _Module_AudioEffectPlayer
+    [commonTopicList addObject:_Module_AudioEffectPlayer];
+#endif
+#ifdef _Module_RecordCapture
+    [commonTopicList addObject:_Module_RecordCapture];
+#endif
+#ifdef _Module_Mixer
+    [commonTopicList addObject:_Module_Mixer];
 #endif
 #ifdef _Module_RoomMessage
     [commonTopicList addObject:_Module_RoomMessage];
 #endif
-#ifdef _Module_Mixer
-    [advancedTopicList addObject:_Module_Mixer];
+
+    // Stream advanced topics
+
+#ifdef _Module_AuxPublisher
+    [streamAdvancedTopicList addObject:_Module_AuxPublisher];
 #endif
-#ifdef _Module_AudioMixing
-    [advancedTopicList addObject:_Module_AudioMixing];
-#endif
-#ifdef _Module_SoundLevel
-    [advancedTopicList addObject:_Module_SoundLevel];
-#endif
-#ifdef _Module_Beautify
-    [advancedTopicList addObject:_Module_Beautify];
-#endif
-#ifdef _Module_MediaPlayer
-    [advancedTopicList addObject:_Module_MediaPlayer];
-#endif
-#ifdef _Module_MediaSideInfo
-    [advancedTopicList addObject:_Module_MediaSideInfo];
-#endif
-#ifdef _Module_ScalableVideoCoding
-    [advancedTopicList addObject:_Module_ScalableVideoCoding];
-#endif
-#ifdef _Module_CustomVideoCapture
-    [advancedTopicList addObject:_Module_CustomVideoCapture];
-#endif
+
+    // Video advanced topics
+
 #ifdef _Module_CustomVideoRender
-    [advancedTopicList addObject:_Module_CustomVideoRender];
+    [videoAdvancedTopicList addObject:_Module_CustomVideoRender];
+#endif
+
+#ifdef _Module_CustomVideoCapture
+    [videoAdvancedTopicList addObject:_Module_CustomVideoCapture];
+#endif
+#ifdef _Module_ScreenCapture
+    [videoAdvancedTopicList addObject:_Module_ScreenCapture];
+#endif
+
+    // Audio advanced topics
+
+#ifdef _Module_SoundLevel
+    [audioAdvancedTopicList addObject:_Module_SoundLevel];
 #endif
 #ifdef _Module_CustomAudioIO
-    [advancedTopicList addObject:_Module_CustomAudioIO];
+    [audioAdvancedTopicList addObject:_Module_CustomAudioIO];
 #endif
-#ifdef _Module_AuxPublisher
-    [advancedTopicList addObject:_Module_AuxPublisher];
+#ifdef _Module_AudioMixing
+    [audioAdvancedTopicList addObject:_Module_AudioMixing];
 #endif
 #ifdef _Module_AudioPreprocess
-    [advancedTopicList addObject:_Module_AudioPreprocess];
+    [audioAdvancedTopicList addObject:_Module_AudioPreprocess];
 #endif
+
     
     _topicList = topicList;
 }
@@ -132,11 +147,15 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return @"Basic Module";
+        return NSLocalizedString(@"Topic.Module.Basic", @"Basic Module");
     } else if (section == 1) {
-        return @"Common Module";
+        return NSLocalizedString(@"Topic.Module.Common", @"Common Module");
+    } else if (section == 2) {
+        return NSLocalizedString(@"Topic.Module.StreamAdvanced", @"Stream Advanced Module");
+    } else if (section == 3) {
+        return NSLocalizedString(@"Topic.Module.VideoAdvanced", @"Video Advanced Module");
     }
-    return @"Advanced Module";
+    return NSLocalizedString(@"Topic.Module.AudioAdvanced", @"Audio Advanced Module");
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -147,154 +166,143 @@
     NSString* topicName = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
     
     UIViewController* vc = nil;
+
+    // Basic topics
     
-    #ifdef _Module_QuickStart
+#ifdef _Module_QuickStart
     if ([topicName isEqualToString:_Module_QuickStart]) {
         UIStoryboard* sb = [UIStoryboard storyboardWithName:@"QuickStart" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
-    #endif
+#endif
     
-    #ifdef _Module_PublishStream
+#ifdef _Module_PublishStream
     if ([topicName isEqualToString:_Module_PublishStream]) {
         UIStoryboard* sb = [UIStoryboard storyboardWithName:@"PublishStream" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
-    #endif
+#endif
     
-    #ifdef _Module_PlayStream
+#ifdef _Module_PlayStream
     if ([topicName isEqualToString:_Module_PlayStream]) {
         UIStoryboard* sb = [UIStoryboard storyboardWithName:@"PlayStream" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
-    #endif
-    
-    #ifdef _Module_RecordCapture
-    if ([topicName isEqualToString:_Module_RecordCapture]) {
-        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"RecordCapture" bundle:nil];
-        vc = [sb instantiateInitialViewController];
-    }
-    #endif
-    
-    #ifdef _Module_Test
-    if ([topicName isEqualToString:_Module_Test]) {
-        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"Test" bundle:nil];
-        vc = [sb instantiateInitialViewController];
-    }
-    #endif
-    
-    #ifdef _Module_VideoTalk
+#endif
+
+#ifdef _Module_VideoTalk
     if ([topicName isEqualToString:_Module_VideoTalk]) {
         UIStoryboard* sb = [UIStoryboard storyboardWithName:@"VideoTalk" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
-    #endif
-    
-    #ifdef _Module_RoomMessage
-    if ([topicName isEqualToString:_Module_RoomMessage]) {
-        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"RoomMessage" bundle:nil];
-        vc = [sb instantiateInitialViewController];
-    }
-    #endif
+#endif
 
-    #ifdef _Module_Mixer
-    if ([topicName isEqualToString:_Module_Mixer]) {
-        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"Mixer" bundle:nil];
-        vc = [sb instantiateInitialViewController];
-    }
-    #endif
-    
-    #ifdef _Module_AudioMixing
-    if ([topicName isEqualToString:_Module_AudioMixing]) {
-        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"AudioMixing" bundle:nil];
-        vc = [sb instantiateInitialViewController];
-    }
-    #endif
-    
-    #ifdef _Module_SoundLevel
-    if ([topicName isEqualToString:_Module_SoundLevel]) {
-        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"SoundLevel" bundle:nil];
-        vc = [sb instantiateInitialViewController];
-    }
-    #endif
-    
-    #ifdef _Module_Beautify
+    // Common topics
+
+#ifdef _Module_Beautify
     if ([topicName isEqualToString:_Module_Beautify]) {
         UIStoryboard* sb = [UIStoryboard storyboardWithName:@"Beautify" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
-    #endif
-    
-    #ifdef _Module_MediaPlayer
+#endif
+
+#ifdef _Module_MediaPlayer
     if ([topicName isEqualToString:_Module_MediaPlayer]) {
         UIStoryboard* sb = [UIStoryboard storyboardWithName:@"MediaPlayer" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
-    #endif
-    
-    #ifdef _Module_MediaSideInfo
-    if ([topicName isEqualToString:_Module_MediaSideInfo]) {
-        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"MediaSideInfo" bundle:nil];
-        vc = [sb instantiateInitialViewController];
-    }
-    #endif
-    
-    #ifdef _Module_ScalableVideoCoding
-    if ([topicName isEqualToString:_Module_ScalableVideoCoding]) {
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"SVC" bundle:nil];
-        vc = [sb instantiateInitialViewController];
-    }
-    #endif
-    
-    #ifdef _Module_MediaRecord
-    if ([topicName isEqualToString:_Module_MediaRecord]) {
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"MediaRecord" bundle:nil];
-        vc = [sb instantiateInitialViewController];
-    }
-    #endif
-    
-    #ifdef _Module_CustomVideoCapture
-    if ([topicName isEqualToString:_Module_CustomVideoCapture]) {
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"CustomVideoCapture" bundle:nil];
-        vc = [sb instantiateInitialViewController];
-    }
-    #endif
-    
-    #ifdef _Module_CustomVideoRender
-    if ([topicName isEqualToString:_Module_CustomVideoRender]) {
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"CustomVideoRender" bundle:nil];
-        vc = [sb instantiateInitialViewController];
-    }
-    #endif
+#endif
 
-    #ifdef _Module_CustomAudioIO
-    if ([topicName isEqualToString:_Module_CustomAudioIO]) {
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"CustomAudioIO" bundle:nil];
+#ifdef _Module_AudioEffectPlayer
+    if ([topicName isEqualToString:_Module_AudioEffectPlayer]) {
+        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"AudioEffectPlayer" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
-    #endif
+#endif
     
-    #ifdef _Module_AuxPublisher
+#ifdef _Module_RecordCapture
+    if ([topicName isEqualToString:_Module_RecordCapture]) {
+        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"RecordCapture" bundle:nil];
+        vc = [sb instantiateInitialViewController];
+    }
+#endif
+    
+#ifdef _Module_Mixer
+    if ([topicName isEqualToString:_Module_Mixer]) {
+        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"Mixer" bundle:nil];
+        vc = [sb instantiateInitialViewController];
+    }
+#endif
+
+#ifdef _Module_RoomMessage
+    if ([topicName isEqualToString:_Module_RoomMessage]) {
+        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"RoomMessage" bundle:nil];
+        vc = [sb instantiateInitialViewController];
+    }
+#endif
+
+    // Stream advanced topics
+
+#ifdef _Module_AuxPublisher
     if ([topicName isEqualToString:_Module_AuxPublisher]) {
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"AuxPublisher" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
-    #endif
-    
-    #ifdef _Module_ExternalVideoFilter
-    if ([topicName isEqualToString:_Module_ExternalVideoFilter]) {
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"ExternalVideoFilter" bundle:nil];
+#endif
+
+    // Video advanced topics
+
+#ifdef _Module_CustomVideoRender
+    if ([topicName isEqualToString:_Module_CustomVideoRender]) {
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"CustomVideoRender" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
-    #endif
+#endif
+
+#ifdef _Module_CustomVideoCapture
+    if ([topicName isEqualToString:_Module_CustomVideoCapture]) {
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"CustomVideoCapture" bundle:nil];
+        vc = [sb instantiateInitialViewController];
+    }
+#endif
+
+#ifdef _Module_ScreenCapture
+    if ([topicName isEqualToString:_Module_ScreenCapture]) {
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"ScreenCapture" bundle:nil];
+        vc = [sb instantiateInitialViewController];
+    }
+#endif
+
+    // Audio advanced topics
+
+#ifdef _Module_SoundLevel
+    if ([topicName isEqualToString:_Module_SoundLevel]) {
+        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"SoundLevel" bundle:nil];
+        vc = [sb instantiateInitialViewController];
+    }
+#endif
+
+#ifdef _Module_CustomAudioIO
+    if ([topicName isEqualToString:_Module_CustomAudioIO]) {
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"CustomAudioIO" bundle:nil];
+        vc = [sb instantiateInitialViewController];
+    }
+#endif
     
-    #ifdef _Module_AudioPreprocess
+#ifdef _Module_AudioMixing
+    if ([topicName isEqualToString:_Module_AudioMixing]) {
+        UIStoryboard* sb = [UIStoryboard storyboardWithName:@"AudioMixing" bundle:nil];
+        vc = [sb instantiateInitialViewController];
+    }
+#endif
+    
+#ifdef _Module_AudioPreprocess
     if ([topicName isEqualToString:_Module_AudioPreprocess]) {
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"AudioPreprocess" bundle:nil];
         vc = [sb instantiateInitialViewController];
     }
-    #endif
-    
+#endif
+
     if (vc) {
         [self.navigationController pushViewController:vc animated:YES];
     }

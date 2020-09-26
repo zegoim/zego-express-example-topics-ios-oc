@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VSk-AM-Q9Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VSk-AM-Q9Q">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -110,12 +111,12 @@ NetworkQuality:</string>
                                     <constraint firstAttribute="height" constant="70" id="Bvi-JT-8s5"/>
                                 </constraints>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="9aX-wz-X0d" firstAttribute="top" secondItem="b2U-Xa-Q6X" secondAttribute="topMargin" id="AqJ-t7-G3o"/>
                             <constraint firstItem="SBq-IF-5Kl" firstAttribute="width" secondItem="SBq-IF-5Kl" secondAttribute="height" multiplier="11:16" id="B5S-bt-a1S"/>
@@ -159,9 +160,9 @@ NetworkQuality:</string>
             <objects>
                 <tableViewController storyboardIdentifier="TestSettingTableViewController" id="Jgi-4M-b0k" customClass="ZGTestSettingTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ku5-9q-Tzb">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="4000"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="4500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <sections>
                             <tableViewSection headerTitle="Engine" id="eQ6-YM-wbr" userLabel="Engine">
                                 <cells>
@@ -172,9 +173,9 @@ NetworkQuality:</string>
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="AppID (unsigned int default 0)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iOc-82-pPx">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="AppID (unsigned int default 0)" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="iOc-82-pPx">
                                                     <rect key="frame" x="95" y="8" width="270" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="1hU-zy-DZZ"/>
                                                     </constraints>
@@ -207,9 +208,9 @@ NetworkQuality:</string>
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="AppSign (NSString default @&quot;&quot;)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vxa-dV-Piz">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="AppSign (NSString default @&quot;&quot;)" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vxa-dV-Piz">
                                                     <rect key="frame" x="95" y="8" width="270" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="2eP-TG-PxC"/>
                                                     </constraints>
@@ -285,9 +286,8 @@ NetworkQuality:</string>
                                                     <rect key="frame" x="90" y="9.5" width="275" height="32"/>
                                                     <segments>
                                                         <segment title="General"/>
+                                                        <segment title="Communication"/>
                                                         <segment title="Live"/>
-                                                        <segment title="Room"/>
-                                                        <segment title="Education"/>
                                                     </segments>
                                                 </segmentedControl>
                                             </subviews>
@@ -309,20 +309,20 @@ NetworkQuality:</string>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BQj-bP-2nw">
-                                                    <rect key="frame" x="10" y="8.5" width="101" height="33"/>
+                                                    <rect key="frame" x="10" y="8.5" width="100" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="createEngine">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="createEngineClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="Juc-NK-e4c"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YdM-pG-fi4">
-                                                    <rect key="frame" x="255" y="8.5" width="110" height="33"/>
+                                                    <rect key="frame" x="256" y="8.5" width="109" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="destroyEngine">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="destroyEngineClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="2d1-t4-lXC"/>
@@ -348,7 +348,7 @@ NetworkQuality:</string>
                                                     <rect key="frame" x="10" y="8.5" width="82" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="getVersion">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="getVersionClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="1cF-5s-PfZ"/>
@@ -358,7 +358,7 @@ NetworkQuality:</string>
                                                     <rect key="frame" x="284" y="8.5" width="81" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="uploadLog">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="uploadLogClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="IfH-j1-yoL"/>
@@ -394,7 +394,7 @@ NetworkQuality:</string>
                                                     <rect key="frame" x="176" y="8.5" width="189" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="setDebugVerbose&amp;Lang">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="setDebugVerboseClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="FfJ-im-bgf"/>
@@ -415,20 +415,82 @@ NetworkQuality:</string>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="CLA-sS-uLn">
+                                        <rect key="frame" x="0.0" y="378" width="375" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CLA-sS-uLn" id="jiv-Ty-iLV">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RVj-9X-GIW">
+                                                    <rect key="frame" x="275" y="8.5" width="90" height="33"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="90" id="luD-jg-Pk9"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <state key="normal" title="setAdvConf">
+                                                        <color key="titleColor" systemColor="linkColor"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="setAdvancedConfigClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="2bl-Ml-GED"/>
+                                                    </connections>
+                                                </button>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Key" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wgu-zs-2iQ">
+                                                    <rect key="frame" x="10" y="8" width="180" height="34"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="34" id="DCf-ei-Udf"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="=" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="We2-oa-i77">
+                                                    <rect key="frame" x="192" y="14.5" width="11" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="11" id="Heo-3w-ddI"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Value" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fq3-3A-cU7">
+                                                    <rect key="frame" x="205" y="8" width="60" height="34"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="L2e-ET-8en"/>
+                                                        <constraint firstAttribute="height" constant="34" id="VUe-YJ-BCc"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="We2-oa-i77" firstAttribute="centerY" secondItem="jiv-Ty-iLV" secondAttribute="centerY" id="2Rb-fC-H7a"/>
+                                                <constraint firstItem="We2-oa-i77" firstAttribute="leading" secondItem="wgu-zs-2iQ" secondAttribute="trailing" constant="2" id="6cM-er-AGF"/>
+                                                <constraint firstItem="RVj-9X-GIW" firstAttribute="centerY" secondItem="jiv-Ty-iLV" secondAttribute="centerY" id="JDF-hI-xzV"/>
+                                                <constraint firstItem="RVj-9X-GIW" firstAttribute="leading" secondItem="fq3-3A-cU7" secondAttribute="trailing" constant="10" id="JyO-9j-5tz"/>
+                                                <constraint firstItem="fq3-3A-cU7" firstAttribute="centerY" secondItem="jiv-Ty-iLV" secondAttribute="centerY" id="Qd0-jz-9ax"/>
+                                                <constraint firstItem="fq3-3A-cU7" firstAttribute="leading" secondItem="We2-oa-i77" secondAttribute="trailing" constant="2" id="ZPh-pP-Ukb"/>
+                                                <constraint firstItem="wgu-zs-2iQ" firstAttribute="leading" secondItem="jiv-Ty-iLV" secondAttribute="leading" constant="10" id="epj-Up-BRb"/>
+                                                <constraint firstItem="wgu-zs-2iQ" firstAttribute="centerY" secondItem="jiv-Ty-iLV" secondAttribute="centerY" id="tqJ-kd-eoN"/>
+                                                <constraint firstAttribute="trailing" secondItem="RVj-9X-GIW" secondAttribute="trailing" constant="10" id="uFA-l0-NIq"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Room" id="R2w-bt-Sbm" userLabel="Room">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="kdi-MU-5Pe">
-                                        <rect key="frame" x="0.0" y="434" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="484" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kdi-MU-5Pe" id="SUA-TX-nqe">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Room ID (NSString default @&quot;&quot;)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o06-Ue-ba3">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Room ID (NSString default @&quot;&quot;)" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="o06-Ue-ba3">
                                                     <rect key="frame" x="105" y="8" width="260" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="HIX-ii-gRy"/>
                                                     </constraints>
@@ -455,15 +517,15 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="Wpg-1p-Yzo">
-                                        <rect key="frame" x="0.0" y="484" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="534" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Wpg-1p-Yzo" id="w3A-DT-c7Q">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User ID (NSString default @&quot;&quot;)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="F12-IL-IHw">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User ID (NSString default @&quot;&quot;)" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="F12-IL-IHw">
                                                     <rect key="frame" x="105" y="8" width="260" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="lVv-Zm-3ie"/>
                                                     </constraints>
@@ -490,15 +552,15 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="kkd-9d-aC7">
-                                        <rect key="frame" x="0.0" y="534" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="584" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kkd-9d-aC7" id="Xv4-Jv-uMH">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User Name (NSString default @&quot;&quot;)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Esb-4y-NPe">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User Name (NSString default @&quot;&quot;)" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Esb-4y-NPe">
                                                     <rect key="frame" x="105" y="8" width="260" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="7xz-pV-Sk8"/>
                                                     </constraints>
@@ -525,17 +587,17 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="SmG-5C-TmS">
-                                        <rect key="frame" x="0.0" y="584" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="634" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SmG-5C-TmS" id="ZcY-4h-FjT">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EpQ-7B-Gh1">
-                                                    <rect key="frame" x="10" y="8.5" width="82" height="33"/>
+                                                    <rect key="frame" x="10" y="8.5" width="81" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="loginRoom">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="loginRoomClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="5Cz-1E-R3t"/>
@@ -545,7 +607,7 @@ NetworkQuality:</string>
                                                     <rect key="frame" x="272" y="8.5" width="93" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="logoutRoom">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="logoutRoomClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="bPB-fj-dHJ"/>
@@ -561,7 +623,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="OMz-qv-oEZ">
-                                        <rect key="frame" x="0.0" y="634" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="684" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OMz-qv-oEZ" id="ii2-zP-iej">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -571,7 +633,7 @@ NetworkQuality:</string>
                                                     <rect key="frame" x="10" y="8.5" width="94" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="switchRoom">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="switchRoomClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="mFd-hc-7eM"/>
@@ -589,15 +651,15 @@ NetworkQuality:</string>
                             <tableViewSection headerTitle="MultiRoom" id="9Og-Ab-njc" userLabel="Room">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="vta-aX-gps">
-                                        <rect key="frame" x="0.0" y="740" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="790" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vta-aX-gps" id="UOD-WK-TcE">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Room ID (NSString default @&quot;&quot;)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HRm-i2-ZoJ">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Room ID (NSString default @&quot;&quot;)" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="HRm-i2-ZoJ">
                                                     <rect key="frame" x="105" y="8" width="260" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="VR4-Tn-a2b"/>
                                                     </constraints>
@@ -624,27 +686,27 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="eXw-tU-qks">
-                                        <rect key="frame" x="0.0" y="790" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="840" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eXw-tU-qks" id="bCa-uE-xqL">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tB7-xS-Lad">
-                                                    <rect key="frame" x="10" y="8.5" width="119" height="33"/>
+                                                    <rect key="frame" x="10" y="8.5" width="118" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="loginMultiRoom">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="loginMultiRoomClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="xfn-fw-SI6"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yZ5-O2-buE">
-                                                    <rect key="frame" x="234" y="8.5" width="131" height="33"/>
+                                                    <rect key="frame" x="235" y="8.5" width="130" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="logoutMultiRoom">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="logoutMultiRoomClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="pqP-s7-L40"/>
@@ -664,7 +726,7 @@ NetworkQuality:</string>
                             <tableViewSection headerTitle="Publisher" id="kV8-eT-EgN" userLabel="Publisher">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="TZG-fC-UTQ">
-                                        <rect key="frame" x="0.0" y="896" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="946" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TZG-fC-UTQ" id="QZM-Sw-Xay">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -679,9 +741,9 @@ NetworkQuality:</string>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="PublishStreamID(NSString default @&quot;&quot;)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qYf-7m-izJ">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="PublishStreamID(NSString default @&quot;&quot;)" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="qYf-7m-izJ">
                                                     <rect key="frame" x="95" y="8" width="270" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="FVy-R9-3vZ"/>
                                                     </constraints>
@@ -699,17 +761,17 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="L8B-ij-8e3">
-                                        <rect key="frame" x="0.0" y="946" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="996" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="L8B-ij-8e3" id="azB-jf-Txh">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kqU-GE-CfN">
-                                                    <rect key="frame" x="10" y="8.5" width="92" height="33"/>
+                                                    <rect key="frame" x="10" y="8.5" width="91" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="startPublish">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="startPublishClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="t4B-M0-6gn"/>
@@ -719,7 +781,7 @@ NetworkQuality:</string>
                                                     <rect key="frame" x="275" y="8.5" width="90" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="stopPublish">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="stopPublishClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="hdO-zt-iBc"/>
@@ -735,7 +797,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="ljA-E5-nNY">
-                                        <rect key="frame" x="0.0" y="996" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="1046" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ljA-E5-nNY" id="BYG-Nb-4ns">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -758,7 +820,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="44C-Q1-JwD">
-                                        <rect key="frame" x="0.0" y="1046" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="1096" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="44C-Q1-JwD" id="hSc-bj-4DU">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -773,9 +835,9 @@ NetworkQuality:</string>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0xRRGGBB" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="neG-FR-Tzp">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0xRRGGBB" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="neG-FR-Tzp">
                                                     <rect key="frame" x="220" y="8" width="145" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="beJ-AU-Ocj"/>
                                                     </constraints>
@@ -793,7 +855,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="n0a-vT-wZm">
-                                        <rect key="frame" x="0.0" y="1096" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="1146" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="n0a-vT-wZm" id="3JK-4z-S1T">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -803,7 +865,7 @@ NetworkQuality:</string>
                                                     <rect key="frame" x="271" y="8.5" width="94" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="stopPreview">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="stopPreviewClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="I9q-cq-OmS"/>
@@ -813,7 +875,7 @@ NetworkQuality:</string>
                                                     <rect key="frame" x="10" y="8.5" width="96" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="startPreview">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="startPreviewClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="QCq-hr-mwy"/>
@@ -829,7 +891,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="ycc-un-YVf">
-                                        <rect key="frame" x="0.0" y="1146" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="1196" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ycc-un-YVf" id="cfM-4x-cG4">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -842,7 +904,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="setVideoConfig">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="setVideoConfigClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="Rjl-Yr-oij"/>
@@ -864,7 +926,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="sCV-Yl-PHN">
-                                        <rect key="frame" x="0.0" y="1196" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="1246" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sCV-Yl-PHN" id="TBI-zo-w7t">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -888,7 +950,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="6pJ-mp-ylc">
-                                        <rect key="frame" x="0.0" y="1246" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="1296" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6pJ-mp-ylc" id="UdE-wj-li8">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -898,7 +960,7 @@ NetworkQuality:</string>
                                                     <rect key="frame" x="10" y="8.5" width="157" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="setVideoMirrorMode">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="setMirrorClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="yao-QP-Ymb"/>
@@ -912,7 +974,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="Re5-gZ-rnP">
-                                        <rect key="frame" x="0.0" y="1296" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="1346" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Re5-gZ-rnP" id="96O-XL-YSo">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -937,17 +999,17 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="TeN-ca-4r3">
-                                        <rect key="frame" x="0.0" y="1346" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="1396" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TeN-ca-4r3" id="ttj-Jg-KRW">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vem-DO-Loh">
-                                                    <rect key="frame" x="10" y="8.5" width="140" height="33"/>
+                                                    <rect key="frame" x="10" y="8.5" width="139" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="setAppOrientation">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="setCapOrientationClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="BXG-7T-hFm"/>
@@ -960,8 +1022,89 @@ NetworkQuality:</string>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="nUD-mc-p4J">
+                                        <rect key="frame" x="0.0" y="1446" width="375" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nUD-mc-p4J" id="u7A-e2-aEB">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="322-7v-xVu">
+                                                    <rect key="frame" x="245" y="8.5" width="120" height="33"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="120" id="coh-HO-57w"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <state key="normal" title="setAudioConfig">
+                                                        <color key="titleColor" systemColor="linkColor"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="setAudioConfigClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="HRw-U3-MhG"/>
+                                                    </connections>
+                                                </button>
+                                                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="njr-8I-FpQ" userLabel="ZegoLatencyModePicker">
+                                                    <rect key="frame" x="5" y="5" width="230" height="40"/>
+                                                </pickerView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="njr-8I-FpQ" firstAttribute="centerY" secondItem="u7A-e2-aEB" secondAttribute="centerY" id="5Zt-Ms-a4b"/>
+                                                <constraint firstAttribute="trailing" secondItem="322-7v-xVu" secondAttribute="trailing" constant="10" id="Q1m-Ob-NOm"/>
+                                                <constraint firstItem="njr-8I-FpQ" firstAttribute="leading" secondItem="u7A-e2-aEB" secondAttribute="leading" constant="5" id="UdB-SV-OYi"/>
+                                                <constraint firstItem="322-7v-xVu" firstAttribute="leading" secondItem="njr-8I-FpQ" secondAttribute="trailing" constant="10" id="fQN-EH-Lgp"/>
+                                                <constraint firstAttribute="bottom" secondItem="njr-8I-FpQ" secondAttribute="bottom" constant="5" id="hSf-MR-hvV"/>
+                                                <constraint firstItem="322-7v-xVu" firstAttribute="centerY" secondItem="u7A-e2-aEB" secondAttribute="centerY" id="i0c-SU-ez2"/>
+                                                <constraint firstItem="njr-8I-FpQ" firstAttribute="top" secondItem="u7A-e2-aEB" secondAttribute="top" constant="5" id="zJ2-Zk-3w2"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="Mrp-AE-1AY">
+                                        <rect key="frame" x="0.0" y="1496" width="375" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Mrp-AE-1AY" id="bOR-TM-G21">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="NRQ-Ep-Nn0">
+                                                    <rect key="frame" x="10" y="9.5" width="355" height="32"/>
+                                                    <segments>
+                                                        <segment title="CodecID"/>
+                                                        <segment title="None"/>
+                                                    </segments>
+                                                </segmentedControl>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="NRQ-Ep-Nn0" firstAttribute="centerY" secondItem="bOR-TM-G21" secondAttribute="centerY" id="KRB-44-jX6"/>
+                                                <constraint firstItem="NRQ-Ep-Nn0" firstAttribute="leading" secondItem="bOR-TM-G21" secondAttribute="leading" constant="10" id="YDh-rR-fxK"/>
+                                                <constraint firstAttribute="trailing" secondItem="NRQ-Ep-Nn0" secondAttribute="trailing" constant="10" id="tcw-a8-njk"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="YYN-WP-euD">
+                                        <rect key="frame" x="0.0" y="1546" width="375" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YYN-WP-euD" id="Ia5-WC-w8W">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hux-Zv-ZQY">
+                                                    <rect key="frame" x="10" y="8.5" width="196" height="33"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <state key="normal" title="setAudioConfig(CodecID)">
+                                                        <color key="titleColor" systemColor="linkColor"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="setAudioConfigCodecIDClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="L29-G0-jG3"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="hux-Zv-ZQY" firstAttribute="centerY" secondItem="Ia5-WC-w8W" secondAttribute="centerY" id="XvD-ff-qa6"/>
+                                                <constraint firstItem="hux-Zv-ZQY" firstAttribute="leading" secondItem="Ia5-WC-w8W" secondAttribute="leading" constant="10" id="fap-49-X53"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="73z-EO-zqS">
-                                        <rect key="frame" x="0.0" y="1396" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="1596" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="73z-EO-zqS" id="cBP-0j-yZU">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -974,7 +1117,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="mutePublishAudio">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="mutePublishAudioClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="Jda-Sn-DZ6"/>
@@ -993,7 +1136,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="cTR-Xq-WQJ">
-                                        <rect key="frame" x="0.0" y="1446" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="1646" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cTR-Xq-WQJ" id="4lL-sa-JoU">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1006,7 +1149,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="mutePublishVideo">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="mutePublishVideoClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="AwY-bO-WN4"/>
@@ -1025,17 +1168,17 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="Vd3-Yw-D1P">
-                                        <rect key="frame" x="0.0" y="1496" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="1696" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Vd3-Yw-D1P" id="9OV-pw-wXU">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aWM-YW-lG9">
-                                                    <rect key="frame" x="176" y="8.5" width="189" height="33"/>
+                                                    <rect key="frame" x="177" y="8.5" width="188" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="enableHardwareEncoder">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="enableHardwareEncoderClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="8r9-YH-apK"/>
@@ -1054,7 +1197,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="Ahv-9n-Q7q">
-                                        <rect key="frame" x="0.0" y="1546" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="1746" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ahv-9n-Q7q" id="8EW-bk-8tr">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1067,15 +1210,15 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="setCaptureVolume">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="setCaptureVolumeClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="4Up-d8-rNl"/>
                                                     </connections>
                                                 </button>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Volume (int)(0~100)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3u9-MY-aNV">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Volume (int)(0~100)" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="3u9-MY-aNV">
                                                     <rect key="frame" x="10" y="8" width="160" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="Wyu-NA-By0"/>
                                                         <constraint firstAttribute="width" constant="160" id="uJS-6E-sb8"/>
@@ -1093,7 +1236,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="txM-vD-hMF">
-                                        <rect key="frame" x="0.0" y="1596" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="1796" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="txM-vD-hMF" id="f9s-mN-lGj">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1108,9 +1251,9 @@ NetworkQuality:</string>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="URL" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="coc-OK-arq">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="URL" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="coc-OK-arq">
                                                     <rect key="frame" x="95" y="8" width="270" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="T1H-R9-oge"/>
                                                     </constraints>
@@ -1128,7 +1271,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="pSP-EE-qvz">
-                                        <rect key="frame" x="0.0" y="1646" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="1846" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pSP-EE-qvz" id="QMP-dN-dK4">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1138,17 +1281,17 @@ NetworkQuality:</string>
                                                     <rect key="frame" x="255" y="8.5" width="110" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="removeCdnUrl">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="removeCdnUrlClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="0Cv-co-dKH"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ROD-ye-3SW">
-                                                    <rect key="frame" x="10" y="8.5" width="83" height="33"/>
+                                                    <rect key="frame" x="10" y="8.5" width="82" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="addCdnUrl">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="addCdnUrlClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="8AB-FK-ZxV"/>
@@ -1164,7 +1307,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="dkp-L4-GUA">
-                                        <rect key="frame" x="0.0" y="1696" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="1896" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dkp-L4-GUA" id="6ei-CB-DDg">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1194,7 +1337,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="VAP-Vd-LNk">
-                                        <rect key="frame" x="0.0" y="1746" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="1946" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VAP-Vd-LNk" id="9DX-Ig-8al">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1224,7 +1367,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="2n2-il-K0W">
-                                        <rect key="frame" x="0.0" y="1796" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="1996" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2n2-il-K0W" id="vZD-Ix-h0R">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1237,15 +1380,15 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="setWatermark">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="setWatermarkClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="12R-Bg-SG7"/>
                                                     </connections>
                                                 </button>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Watermark File Path" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g4j-Q1-0G6">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Watermark File Path" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="g4j-Q1-0G6">
                                                     <rect key="frame" x="10" y="8" width="180" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="3bB-3N-qsl"/>
                                                         <constraint firstAttribute="width" constant="180" id="vel-EW-kzq"/>
@@ -1263,7 +1406,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="oWP-HG-q2b">
-                                        <rect key="frame" x="0.0" y="1846" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="2046" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oWP-HG-q2b" id="8GG-JX-Fj9">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1283,7 +1426,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="setCaptureScaleMode">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="setCapturePipelineScaleModeClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="Ooi-gD-UgQ"/>
@@ -1300,7 +1443,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="W67-N9-e38">
-                                        <rect key="frame" x="0.0" y="1896" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="2096" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="W67-N9-e38" id="2eX-wJ-bvR">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1313,15 +1456,15 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="sendSEI">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="sendSEIButtonClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="jio-rY-jyS"/>
                                                     </connections>
                                                 </button>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="SEI" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d8v-eF-Wlv">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="SEI" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="d8v-eF-Wlv">
                                                     <rect key="frame" x="10" y="8" width="265" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="GC9-dh-H0V"/>
                                                     </constraints>
@@ -1338,12 +1481,59 @@ NetworkQuality:</string>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="JwK-Ke-HRG">
+                                        <rect key="frame" x="0.0" y="2146" width="375" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JwK-Ke-HRG" id="h5q-m6-Ogb">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gZI-yM-BRp">
+                                                    <rect key="frame" x="10" y="9.5" width="355" height="32"/>
+                                                    <segments>
+                                                        <segment title="None(Mono)"/>
+                                                        <segment title="Always"/>
+                                                        <segment title="Adaptive"/>
+                                                    </segments>
+                                                </segmentedControl>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="gZI-yM-BRp" firstAttribute="leading" secondItem="h5q-m6-Ogb" secondAttribute="leading" constant="10" id="E4G-nl-inO"/>
+                                                <constraint firstAttribute="trailing" secondItem="gZI-yM-BRp" secondAttribute="trailing" constant="10" id="gdQ-73-Z7g"/>
+                                                <constraint firstItem="gZI-yM-BRp" firstAttribute="centerY" secondItem="h5q-m6-Ogb" secondAttribute="centerY" id="vQc-rq-ZeV"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="MRG-91-RXB">
+                                        <rect key="frame" x="0.0" y="2196" width="375" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="MRG-91-RXB" id="JPv-gW-vgk">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="suO-96-5rK">
+                                                    <rect key="frame" x="10" y="8.5" width="222" height="33"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <state key="normal" title="setAudioCaptureStereoMode">
+                                                        <color key="titleColor" systemColor="linkColor"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="setAudioCaptureStereoModeClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="LUP-Ob-rwH"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="suO-96-5rK" firstAttribute="centerY" secondItem="JPv-gW-vgk" secondAttribute="centerY" id="0P2-pD-cS5"/>
+                                                <constraint firstItem="suO-96-5rK" firstAttribute="leading" secondItem="JPv-gW-vgk" secondAttribute="leading" constant="10" id="dp0-st-m9T"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Player" id="n3V-0T-IQZ" userLabel="Player">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="v2K-Tu-r9a">
-                                        <rect key="frame" x="0.0" y="2002" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="2302" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="v2K-Tu-r9a" id="MEB-GK-6cZ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1358,9 +1548,9 @@ NetworkQuality:</string>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="PlayStreamID (NSString default @&quot;&quot;)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RsK-rQ-NBK">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="PlayStreamID (NSString default @&quot;&quot;)" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="RsK-rQ-NBK">
                                                     <rect key="frame" x="95" y="8" width="270" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="lvd-h6-D9n"/>
                                                     </constraints>
@@ -1378,7 +1568,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="lMk-cK-ISx">
-                                        <rect key="frame" x="0.0" y="2052" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="2352" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lMk-cK-ISx" id="qsF-uG-qeo">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1391,7 +1581,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="startPlaying">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="startPlayClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="mCh-3q-9Tf"/>
@@ -1404,7 +1594,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="stopPlaying">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="stopPlayClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="TNt-B5-wJj"/>
@@ -1420,7 +1610,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="gIa-Ot-sPz">
-                                        <rect key="frame" x="0.0" y="2102" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="2402" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gIa-Ot-sPz" id="bPI-RJ-J3Q">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1443,7 +1633,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="Ehr-TI-tD0">
-                                        <rect key="frame" x="0.0" y="2152" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="2452" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ehr-TI-tD0" id="01h-wo-LkW">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1458,9 +1648,9 @@ NetworkQuality:</string>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0xRRGGBB" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TAy-Ir-eUy">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0xRRGGBB" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="TAy-Ir-eUy">
                                                     <rect key="frame" x="220" y="8" width="145" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="Vtv-xT-56M"/>
                                                     </constraints>
@@ -1478,7 +1668,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="JNt-5c-fYu">
-                                        <rect key="frame" x="0.0" y="2202" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="2502" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JNt-5c-fYu" id="1YG-Aq-o7s">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1491,7 +1681,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="mutePlayAudio">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="mutePlayAudioClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="eCN-FP-Hjm"/>
@@ -1510,7 +1700,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="mEn-yF-tnf">
-                                        <rect key="frame" x="0.0" y="2252" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="2552" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mEn-yF-tnf" id="tCb-Np-Mmc">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1523,7 +1713,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="mutePlayVideo">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="mutePlayVideoClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="PQY-y6-1cP"/>
@@ -1542,17 +1732,17 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="1x3-gw-Qgy">
-                                        <rect key="frame" x="0.0" y="2302" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="2602" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1x3-gw-Qgy" id="Fq9-jc-cL0">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wHp-kC-NNR">
-                                                    <rect key="frame" x="174" y="8.5" width="191" height="33"/>
+                                                    <rect key="frame" x="175" y="8.5" width="190" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="enableHardwareDecoder">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="enableHardwareDecoderClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="2d6-3I-Rhd"/>
@@ -1572,15 +1762,15 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="ZUC-m0-Sop">
-                                        <rect key="frame" x="0.0" y="2352" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="2652" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZUC-m0-Sop" id="mO1-By-pXn">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Volume (int)(0~100)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tDp-AO-VIJ">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Volume (int)(0~100)" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="tDp-AO-VIJ">
                                                     <rect key="frame" x="10" y="8" width="160" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="Dvi-FO-hV4"/>
                                                         <constraint firstAttribute="width" constant="160" id="Lh9-W9-6RR"/>
@@ -1595,7 +1785,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="setPlayVolume">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="setPlayVolumeClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="yvg-71-3DU"/>
@@ -1611,7 +1801,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="Kun-79-FKC">
-                                        <rect key="frame" x="0.0" y="2402" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="2702" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Kun-79-FKC" id="9wZ-bl-jg4">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1621,7 +1811,7 @@ NetworkQuality:</string>
                                                     <rect key="frame" x="236" y="8.5" width="129" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="enableCheckPoc">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="enableCheckPocClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="iFi-g2-ha7"/>
@@ -1644,7 +1834,7 @@ NetworkQuality:</string>
                             <tableViewSection headerTitle="Preprocess" id="g56-VV-WCC" userLabel="Preprocess">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="rwu-pq-f84">
-                                        <rect key="frame" x="0.0" y="2508" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="2808" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rwu-pq-f84" id="hpT-66-WoR">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1665,7 +1855,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="setAECMode">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="setAECModeClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="sSo-OG-R7x"/>
@@ -1682,7 +1872,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="ATs-EY-bbI">
-                                        <rect key="frame" x="0.0" y="2558" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="2858" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ATs-EY-bbI" id="jel-ei-gGl">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1695,7 +1885,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="enableAEC">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="enableAECClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="RXQ-YA-cI3"/>
@@ -1714,7 +1904,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="hLS-eJ-NzI">
-                                        <rect key="frame" x="0.0" y="2608" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="2908" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hLS-eJ-NzI" id="hAK-rz-LgK">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1727,7 +1917,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="enableAGC">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="enableAGCClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="oNh-Xh-BrD"/>
@@ -1746,7 +1936,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="Cun-rL-vFQ">
-                                        <rect key="frame" x="0.0" y="2658" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="2958" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Cun-rL-vFQ" id="bO1-pd-XGo">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1759,7 +1949,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="enableANS">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="enableANSClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="f4b-ED-fxI"/>
@@ -1778,15 +1968,15 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="lQU-nE-PVo">
-                                        <rect key="frame" x="0.0" y="2708" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="3008" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lQU-nE-PVo" id="5lR-9X-JTL">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="feature(int)(bitMask)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QMH-fk-GVh">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="feature(int)(bitMask)" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="QMH-fk-GVh">
                                                     <rect key="frame" x="10" y="8" width="160" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="160" id="JF6-Di-CIv"/>
                                                         <constraint firstAttribute="height" constant="34" id="mGC-PD-OSe"/>
@@ -1801,7 +1991,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="enableBeautify">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="enableBeautifyClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="mhh-oX-pOS"/>
@@ -1821,7 +2011,7 @@ NetworkQuality:</string>
                             <tableViewSection headerTitle="Device" id="qXF-oA-MGD" userLabel="Device">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="lgk-U4-4A2">
-                                        <rect key="frame" x="0.0" y="2814" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="3114" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lgk-U4-4A2" id="ttq-1C-4fi">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1834,7 +2024,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="muteMicrophone">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="muteMicrophoneClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="MZx-2B-66E"/>
@@ -1853,7 +2043,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="7OX-8A-FEy">
-                                        <rect key="frame" x="0.0" y="2864" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="3164" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7OX-8A-FEy" id="YUW-wh-xxy">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1866,7 +2056,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="muteSpeaker">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="muteSpeakerClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="P6R-ZS-T5v"/>
@@ -1886,7 +2076,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="RrB-yz-4oF">
-                                        <rect key="frame" x="0.0" y="2914" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="3214" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RrB-yz-4oF" id="gbr-Uw-BuH">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1899,7 +2089,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="enableCamera">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="enableCameraClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="57x-4v-jVt"/>
@@ -1918,7 +2108,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="6mo-f4-ecN">
-                                        <rect key="frame" x="0.0" y="2964" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="3264" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6mo-f4-ecN" id="l5b-FT-KtT">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1931,7 +2121,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="useFrontCamera">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="useFrontCameraClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="80j-yF-unr"/>
@@ -1950,17 +2140,17 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="2n3-NV-Nc3">
-                                        <rect key="frame" x="0.0" y="3014" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="3314" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2n3-NV-Nc3" id="HFD-dh-OLB">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vqr-0W-VyI">
-                                                    <rect key="frame" x="157" y="8.5" width="208" height="33"/>
+                                                    <rect key="frame" x="158" y="8.5" width="207" height="33"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="enableAudioCaptureDevice">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="enableAudioCaptureDeviceClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="siD-BA-gbg"/>
@@ -1979,7 +2169,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="JyI-VB-4qW">
-                                        <rect key="frame" x="0.0" y="3064" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="3364" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JyI-VB-4qW" id="3qk-9s-td5">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -1992,7 +2182,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="startSoundLevel">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="startSoundLevelMonitorClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="3r5-lt-Tvj"/>
@@ -2005,7 +2195,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="stopSoundLevel">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="stopSoundLevelMonitorClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="s9Q-6X-gvA"/>
@@ -2021,7 +2211,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="XbE-Wx-bWK">
-                                        <rect key="frame" x="0.0" y="3114" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="3414" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XbE-Wx-bWK" id="c5o-go-dkU">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -2034,7 +2224,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="startSpectrum">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="startAudioSpectrumMonitor:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="CUp-9z-LXL"/>
@@ -2047,7 +2237,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="stopSpectrum">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="stopAudioSpectrumMonitor:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="X1M-g5-NAd"/>
@@ -2067,7 +2257,7 @@ NetworkQuality:</string>
                             <tableViewSection headerTitle="Mixer" id="Da1-vK-gAc">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="zgV-fM-rfN">
-                                        <rect key="frame" x="0.0" y="3220" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="3520" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zgV-fM-rfN" id="e1M-0w-3a2">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -2098,7 +2288,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="xPf-6S-9hj">
-                                        <rect key="frame" x="0.0" y="3270" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="3570" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xPf-6S-9hj" id="KZD-Jr-1vX">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -2113,9 +2303,9 @@ NetworkQuality:</string>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="TaskID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a8N-8n-RkS">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="TaskID" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="a8N-8n-RkS">
                                                     <rect key="frame" x="140" y="8" width="225" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="yG0-j3-OKG"/>
                                                     </constraints>
@@ -2133,7 +2323,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="U59-so-j8i">
-                                        <rect key="frame" x="0.0" y="3320" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="3620" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="U59-so-j8i" id="y8v-3o-kTj">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -2167,15 +2357,15 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="YPm-dC-tDe">
-                                        <rect key="frame" x="0.0" y="3370" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="3670" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YPm-dC-tDe" id="Wia-HU-2a8">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Input Stream 2" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fMl-pM-wzD">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Input Stream 2" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="fMl-pM-wzD">
                                                     <rect key="frame" x="225" y="8" width="140" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="140" id="dMc-VA-Dt7"/>
                                                         <constraint firstAttribute="height" constant="34" id="qdB-7q-FHN"/>
@@ -2183,9 +2373,9 @@ NetworkQuality:</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Input Stream 1" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oLM-9w-7lo">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Input Stream 1" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="oLM-9w-7lo">
                                                     <rect key="frame" x="10" y="8" width="140" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="W0v-lR-trh"/>
                                                         <constraint firstAttribute="width" constant="140" id="iUa-PO-D4v"/>
@@ -2203,7 +2393,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="e2u-nN-u6f">
-                                        <rect key="frame" x="0.0" y="3420" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="3720" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e2u-nN-u6f" id="KB3-ub-qfp">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -2218,9 +2408,9 @@ NetworkQuality:</string>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Separate with spaces" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H26-ZU-Lqi">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Separate with spaces" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="H26-ZU-Lqi">
                                                     <rect key="frame" x="140" y="8" width="225" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="ElZ-jf-NOf"/>
                                                     </constraints>
@@ -2238,7 +2428,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="Niy-PK-ZTm">
-                                        <rect key="frame" x="0.0" y="3470" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="3770" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Niy-PK-ZTm" id="K9h-G8-MiE">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -2251,7 +2441,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="startMixerTask">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="startMixerTaskClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="EGm-we-dvG"/>
@@ -2264,7 +2454,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="stopMixerTask">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="stopMixerTaskClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="7LP-of-pz9"/>
@@ -2280,7 +2470,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="100" id="GED-zD-6Zb">
-                                        <rect key="frame" x="0.0" y="3520" width="375" height="100"/>
+                                        <rect key="frame" x="0.0" y="3820" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GED-zD-6Zb" id="ZUR-Gc-bjR">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
@@ -2288,8 +2478,8 @@ NetworkQuality:</string>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="json string from ZegoTestJson.json" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SbM-gK-H82">
                                                     <rect key="frame" x="5" y="2" width="365" height="96"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                    <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <color key="textColor" systemColor="labelColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
@@ -2303,7 +2493,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="bzb-Gc-Bea">
-                                        <rect key="frame" x="0.0" y="3620" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="3920" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bzb-Gc-Bea" id="6lE-9z-9Is">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -2316,7 +2506,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="startMixerTask With JSON">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="startMixerTaskWithJsonClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="RNt-w6-t5y"/>
@@ -2334,7 +2524,7 @@ NetworkQuality:</string>
                             <tableViewSection headerTitle="IM" id="Ego-kl-0Jj" userLabel="IM">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="Q8u-kf-3iC">
-                                        <rect key="frame" x="0.0" y="3726" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="4026" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Q8u-kf-3iC" id="APg-r9-25b">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -2355,15 +2545,15 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="1Fx-Dn-sHO">
-                                        <rect key="frame" x="0.0" y="3776" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="4076" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1Fx-Dn-sHO" id="Oyc-O5-uEo">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Broadcast Message" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oke-KA-SBf">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Broadcast Message" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="oke-KA-SBf">
                                                     <rect key="frame" x="10" y="8" width="295" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="yPK-kK-R3P"/>
                                                     </constraints>
@@ -2377,7 +2567,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="Send!">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="sendBroadcastMessageClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="lKy-T9-BQ6"/>
@@ -2394,7 +2584,7 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="fTG-Te-sEg">
-                                        <rect key="frame" x="0.0" y="3826" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="4126" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fTG-Te-sEg" id="RFh-fl-b8b">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -2415,15 +2605,15 @@ NetworkQuality:</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="4m8-ua-QSA">
-                                        <rect key="frame" x="0.0" y="3876" width="375" height="50"/>
+                                        <rect key="frame" x="0.0" y="4176" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4m8-ua-QSA" id="qlX-gY-CI2">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Custom Command  (to All User)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jy6-HS-4e8">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Custom Command  (to All User)" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Jy6-HS-4e8">
                                                     <rect key="frame" x="10" y="8" width="295" height="34"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="xl4-7e-toA"/>
                                                     </constraints>
@@ -2437,7 +2627,7 @@ NetworkQuality:</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <state key="normal" title="Send!">
-                                                        <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleColor" systemColor="linkColor"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="sendCustomCommandClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="1TQ-Je-nSz"/>
@@ -2461,10 +2651,12 @@ NetworkQuality:</string>
                             <outlet property="delegate" destination="Jgi-4M-b0k" id="Rk9-oJ-PLi"/>
                         </connections>
                     </tableView>
-                    <size key="freeformSize" width="375" height="4000"/>
+                    <size key="freeformSize" width="375" height="4500"/>
                     <connections>
                         <outlet property="CdnUrlTextField" destination="coc-OK-arq" id="8sy-3S-RVG"/>
                         <outlet property="addCdnUrlButton" destination="ROD-ye-3SW" id="abo-Hi-wfq"/>
+                        <outlet property="advancedConfigKeyTextField" destination="wgu-zs-2iQ" id="zWz-pJ-6WY"/>
+                        <outlet property="advancedConfigValueTextField" destination="fq3-3A-cU7" id="9aO-4L-0Em"/>
                         <outlet property="appIDTextField" destination="iOc-82-pPx" id="HiZ-4T-uhf"/>
                         <outlet property="appSignTextField" destination="vxa-dV-Piz" id="yKJ-Fn-LHJ"/>
                         <outlet property="broadcastMessageTextField" destination="oke-KA-SBf" id="6Fs-js-DkD"/>
@@ -2529,6 +2721,9 @@ NetworkQuality:</string>
                         <outlet property="setAECModeSeg" destination="RUR-QB-Yy8" id="Qh6-17-5DP"/>
                         <outlet property="setAppOrientationButton" destination="Vem-DO-Loh" id="KDw-s3-wNS"/>
                         <outlet property="setAppOrientationSeg" destination="tS6-Vw-J2e" id="B0I-VW-oLe"/>
+                        <outlet property="setAudioCaptureStereoModeSeg" destination="gZI-yM-BRp" id="sGM-wt-edH"/>
+                        <outlet property="setAudioConfigCodecIDSeg" destination="NRQ-Ep-Nn0" id="tcU-vN-2Uw"/>
+                        <outlet property="setAudioConfigPicker" destination="njr-8I-FpQ" id="QJu-7W-DGu"/>
                         <outlet property="setCapturePipelineScaleModeSeg" destination="ip5-Ql-4FF" id="8Nh-NO-2Dr"/>
                         <outlet property="setCaptureScaleModeButton" destination="8uX-sO-jq2" id="OZN-AQ-Y9j"/>
                         <outlet property="setCaptureVolumeButton" destination="iJW-DM-dGR" id="G5u-oN-Y5C"/>
@@ -2573,4 +2768,21 @@ NetworkQuality:</string>
             <point key="canvasLocation" x="571.73913043478262" y="-99.107142857142847"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemGroupedBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

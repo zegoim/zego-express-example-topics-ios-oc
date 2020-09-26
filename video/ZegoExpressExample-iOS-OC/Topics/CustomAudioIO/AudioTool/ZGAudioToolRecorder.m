@@ -82,7 +82,7 @@ static void CheckError(OSStatus error, const char *operation)
                                       sizeof(flag));
     }
     if (status) {
-        NSLog(@"AudioUnitSetProperty error with status:%d", status);
+        NSLog(@"AudioUnitSetProperty error with status:%d", (int)status);
     }
     
     // format
@@ -105,7 +105,7 @@ static void CheckError(OSStatus error, const char *operation)
                                   &recordFormat,
                                   sizeof(recordFormat));
     if (status) {
-        NSLog(@"AudioUnitSetProperty eror with status:%d", status);
+        NSLog(@"AudioUnitSetProperty eror with status:%d", (int)status);
     }
     
     // enable record
@@ -116,7 +116,7 @@ static void CheckError(OSStatus error, const char *operation)
                          &flag,
                          sizeof(flag));
     if (status != noErr) {
-        NSLog(@"AudioUnitGetProperty error, ret: %d", status);
+        NSLog(@"AudioUnitGetProperty error, ret: %d", (int)status);
     }
     
     //设置回调
@@ -131,7 +131,7 @@ static void CheckError(OSStatus error, const char *operation)
                                   &inputCallBackStruce,
                                   sizeof(inputCallBackStruce));
     if (status != noErr) {
-        NSLog(@"setProperty InputCallback error, ret: %d", status);
+        NSLog(@"setProperty InputCallback error, ret: %d", (int)status);
     }
     
     AudioStreamBasicDescription outputDesc0;

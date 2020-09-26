@@ -8,7 +8,6 @@
 #ifdef _Module_AudioPreprocess
 
 #import "ZGAudioPreprocessTopicConfigManager.h"
-#import "ZGUserDefaults.h"
 #import "ZGHashTableHelper.h"
 
 NSString* const ZGAudioPreprocessTopicConfigVoiceChangerOpenKey = @"ZGAudioPreprocessTopicConfigVoiceChangerOpenKey";
@@ -30,7 +29,6 @@ NSString* const ZGAudioPreprocessTopicConfigCustomReverberanceKey = @"ZGAudioPre
     dispatch_queue_t _configOptQueue;
 }
 
-@property (nonatomic) ZGUserDefaults *zgUserDefaults;
 @property (nonatomic) NSHashTable *configChangedHandlers;
 
 @end
@@ -59,7 +57,6 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 
 - (instancetype)init {
     if (self = [super init]) {
-        _zgUserDefaults = [[ZGUserDefaults alloc] init];
         _configChangedHandlers = [ZGHashTableHelper createWeakReferenceHashTable];
         _configOptQueue = dispatch_queue_create("com.doudong.ZGAudioPreprocessTopicConfigOptQueue", DISPATCH_QUEUE_SERIAL);
     }
@@ -85,7 +82,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (void)setVoiceChangerOpen:(BOOL)voiceChangerOpen {
     dispatch_async(_configOptQueue, ^{
         NSNumber *obj = @(voiceChangerOpen);
-        [self.zgUserDefaults setObject:obj forKey:ZGAudioPreprocessTopicConfigVoiceChangerOpenKey];
+        [[NSUserDefaults standardUserDefaults] setObject:obj forKey:ZGAudioPreprocessTopicConfigVoiceChangerOpenKey];
         dispatch_async(dispatch_get_main_queue(), ^{
             for (id<ZGAudioPreprocessTopicConfigChangedHandler> handler in self.configChangedHandlers) {
                 if ([handler respondsToSelector:@selector(audioPreprocessTopicConfigManager:voiceChangerOpenChanged:)]) {
@@ -99,7 +96,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (BOOL)voiceChangerOpen {
     __block BOOL isOpen = NO;
     dispatch_sync(_configOptQueue, ^{
-        NSNumber *n = [self.zgUserDefaults objectForKey:ZGAudioPreprocessTopicConfigVoiceChangerOpenKey];
+        NSNumber *n = [[NSUserDefaults standardUserDefaults] objectForKey:ZGAudioPreprocessTopicConfigVoiceChangerOpenKey];
         if (n) {
             isOpen = [n boolValue];
         } else {
@@ -113,7 +110,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (void)setVoiceChangerParam:(float)voiceChangerParam {
     dispatch_async(_configOptQueue, ^{
         NSNumber *obj = @(voiceChangerParam);
-        [self.zgUserDefaults setObject:obj forKey:ZGAudioPreprocessTopicConfigVoiceChangerParamKey];
+        [[NSUserDefaults standardUserDefaults] setObject:obj forKey:ZGAudioPreprocessTopicConfigVoiceChangerParamKey];
         dispatch_async(dispatch_get_main_queue(), ^{
             for (id<ZGAudioPreprocessTopicConfigChangedHandler> handler in self.configChangedHandlers) {
                 if ([handler respondsToSelector:@selector(audioPreprocessTopicConfigManager:voiceChangerParamChanged:)]) {
@@ -127,7 +124,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (float)voiceChangerParam {
     __block float val = 0;
     dispatch_sync(_configOptQueue, ^{
-        NSNumber *n = [self.zgUserDefaults objectForKey:ZGAudioPreprocessTopicConfigVoiceChangerParamKey];
+        NSNumber *n = [[NSUserDefaults standardUserDefaults] objectForKey:ZGAudioPreprocessTopicConfigVoiceChangerParamKey];
         if (n) {
             val = [n floatValue];
         } else {
@@ -141,7 +138,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (void)setVirtualStereoOpen:(BOOL)virtualStereoOpen {
     dispatch_async(_configOptQueue, ^{
         NSNumber *obj = @(virtualStereoOpen);
-        [self.zgUserDefaults setObject:obj forKey:ZGAudioPreprocessTopicConfigVirtualStereoOpenKey];
+        [[NSUserDefaults standardUserDefaults] setObject:obj forKey:ZGAudioPreprocessTopicConfigVirtualStereoOpenKey];
         dispatch_async(dispatch_get_main_queue(), ^{
             for (id<ZGAudioPreprocessTopicConfigChangedHandler> handler in self.configChangedHandlers) {
                 if ([handler respondsToSelector:@selector(audioPreprocessTopicConfigManager:virtualStereoOpenChanged:)]) {
@@ -155,7 +152,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (BOOL)virtualStereoOpen {
     __block BOOL isOpen = NO;
     dispatch_sync(_configOptQueue, ^{
-        NSNumber *n = [self.zgUserDefaults objectForKey:ZGAudioPreprocessTopicConfigVirtualStereoOpenKey];
+        NSNumber *n = [[NSUserDefaults standardUserDefaults] objectForKey:ZGAudioPreprocessTopicConfigVirtualStereoOpenKey];
         if (n) {
             isOpen = [n boolValue];
         } else {
@@ -169,7 +166,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (void)setVirtualStereoAngle:(int)angle {
     dispatch_async(_configOptQueue, ^{
         NSNumber *obj = @(angle);
-        [self.zgUserDefaults setObject:obj forKey:ZGAudioPreprocessTopicConfigVirtualStereoAngleKey];
+        [[NSUserDefaults standardUserDefaults] setObject:obj forKey:ZGAudioPreprocessTopicConfigVirtualStereoAngleKey];
         dispatch_async(dispatch_get_main_queue(), ^{
             for (id<ZGAudioPreprocessTopicConfigChangedHandler> handler in self.configChangedHandlers) {
                 if ([handler respondsToSelector:@selector(audioPreprocessTopicConfigManager:virtualStereoAngleChanged:)]) {
@@ -183,7 +180,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (int)virtualStereoAngle {
     __block int val = 0;
     dispatch_sync(_configOptQueue, ^{
-        NSNumber *n = [self.zgUserDefaults objectForKey:ZGAudioPreprocessTopicConfigVirtualStereoAngleKey];
+        NSNumber *n = [[NSUserDefaults standardUserDefaults] objectForKey:ZGAudioPreprocessTopicConfigVirtualStereoAngleKey];
         if (n) {
             val = [n intValue];
         } else {
@@ -197,7 +194,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (void)setReverbOpen:(BOOL)reverbOpen {
     dispatch_async(_configOptQueue, ^{
         NSNumber *obj = @(reverbOpen);
-        [self.zgUserDefaults setObject:obj forKey:ZGAudioPreprocessTopicConfigReverbOpenKey];
+        [[NSUserDefaults standardUserDefaults] setObject:obj forKey:ZGAudioPreprocessTopicConfigReverbOpenKey];
         dispatch_async(dispatch_get_main_queue(), ^{
             for (id<ZGAudioPreprocessTopicConfigChangedHandler> handler in self.configChangedHandlers) {
                 if ([handler respondsToSelector:@selector(audioPreprocessTopicConfigManager:reverbOpenChanged:)]) {
@@ -211,7 +208,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (BOOL)reverbOpen {
     __block BOOL isOpen = NO;
     dispatch_sync(_configOptQueue, ^{
-        NSNumber *n = [self.zgUserDefaults objectForKey:ZGAudioPreprocessTopicConfigReverbOpenKey];
+        NSNumber *n = [[NSUserDefaults standardUserDefaults] objectForKey:ZGAudioPreprocessTopicConfigReverbOpenKey];
         if (n) {
             isOpen = [n boolValue];
         } else {
@@ -225,7 +222,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (void)setReverbMode:(NSUInteger)reverbMode {
     dispatch_async(_configOptQueue, ^{
         NSNumber *obj = @(reverbMode);
-        [self.zgUserDefaults setObject:obj forKey:ZGAudioPreprocessTopicConfigReverbModeKey];
+        [[NSUserDefaults standardUserDefaults] setObject:obj forKey:ZGAudioPreprocessTopicConfigReverbModeKey];
         dispatch_async(dispatch_get_main_queue(), ^{
             for (id<ZGAudioPreprocessTopicConfigChangedHandler> handler in self.configChangedHandlers) {
                 if ([handler respondsToSelector:@selector(audioPreprocessTopicConfigManager:reverbModeChanged:)]) {
@@ -239,7 +236,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (NSUInteger)reverbMode {
     __block NSUInteger val = NSNotFound;
     dispatch_sync(_configOptQueue, ^{
-        NSNumber *n = [self.zgUserDefaults objectForKey:ZGAudioPreprocessTopicConfigReverbModeKey];
+        NSNumber *n = [[NSUserDefaults standardUserDefaults] objectForKey:ZGAudioPreprocessTopicConfigReverbModeKey];
         if (n) {
             val = [n unsignedIntegerValue];
         } else {
@@ -253,7 +250,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (void)setCustomReverbRoomSize:(float)roomSize {
     dispatch_async(_configOptQueue, ^{
         NSNumber *obj = @(roomSize);
-        [self.zgUserDefaults setObject:obj forKey:ZGAudioPreprocessTopicConfigCustomReverbRoomSizeKey];
+        [[NSUserDefaults standardUserDefaults] setObject:obj forKey:ZGAudioPreprocessTopicConfigCustomReverbRoomSizeKey];
         dispatch_async(dispatch_get_main_queue(), ^{
             for (id<ZGAudioPreprocessTopicConfigChangedHandler> handler in self.configChangedHandlers) {
                 if ([handler respondsToSelector:@selector(audioPreprocessTopicConfigManager:customReverbRoomSizeChanged:)]) {
@@ -267,7 +264,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (float)customReverbRoomSize {
     __block float val = 0;
     dispatch_sync(_configOptQueue, ^{
-        NSNumber *n = [self.zgUserDefaults objectForKey:ZGAudioPreprocessTopicConfigCustomReverbRoomSizeKey];
+        NSNumber *n = [[NSUserDefaults standardUserDefaults] objectForKey:ZGAudioPreprocessTopicConfigCustomReverbRoomSizeKey];
         if (n) {
             val = [n floatValue];
         } else {
@@ -281,7 +278,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (void)setCustomDryWetRatio:(float)dryWetRatio {
     dispatch_async(_configOptQueue, ^{
         NSNumber *obj = @(dryWetRatio);
-        [self.zgUserDefaults setObject:obj forKey:ZGAudioPreprocessTopicConfigCustomDryWetRatioKey];
+        [[NSUserDefaults standardUserDefaults] setObject:obj forKey:ZGAudioPreprocessTopicConfigCustomDryWetRatioKey];
         dispatch_async(dispatch_get_main_queue(), ^{
             for (id<ZGAudioPreprocessTopicConfigChangedHandler> handler in self.configChangedHandlers) {
                 if ([handler respondsToSelector:@selector(audioPreprocessTopicConfigManager:customDryWetRatioChanged:)]) {
@@ -295,7 +292,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (float)customDryWetRatio {
     __block float val = 0;
     dispatch_sync(_configOptQueue, ^{
-        NSNumber *n = [self.zgUserDefaults objectForKey:ZGAudioPreprocessTopicConfigCustomDryWetRatioKey];
+        NSNumber *n = [[NSUserDefaults standardUserDefaults] objectForKey:ZGAudioPreprocessTopicConfigCustomDryWetRatioKey];
         if (n) {
             val = [n floatValue];
         } else {
@@ -309,7 +306,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (void)setCustomDamping:(float)damping {
     dispatch_async(_configOptQueue, ^{
         NSNumber *obj = @(damping);
-        [self.zgUserDefaults setObject:obj forKey:ZGAudioPreprocessTopicConfigCustomDampingKey];
+        [[NSUserDefaults standardUserDefaults] setObject:obj forKey:ZGAudioPreprocessTopicConfigCustomDampingKey];
         dispatch_async(dispatch_get_main_queue(), ^{
             for (id<ZGAudioPreprocessTopicConfigChangedHandler> handler in self.configChangedHandlers) {
                 if ([handler respondsToSelector:@selector(audioPreprocessTopicConfigManager:customDampingChanged:)]) {
@@ -323,7 +320,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (float)customDamping {
     __block float val = 0;
     dispatch_sync(_configOptQueue, ^{
-        NSNumber *n = [self.zgUserDefaults objectForKey:ZGAudioPreprocessTopicConfigCustomDampingKey];
+        NSNumber *n = [[NSUserDefaults standardUserDefaults] objectForKey:ZGAudioPreprocessTopicConfigCustomDampingKey];
         if (n) {
             val = [n floatValue];
         } else {
@@ -337,7 +334,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (void)setCustomReverberance:(float)reverberance {
     dispatch_async(_configOptQueue, ^{
         NSNumber *obj = @(reverberance);
-        [self.zgUserDefaults setObject:obj forKey:ZGAudioPreprocessTopicConfigCustomReverberanceKey];
+        [[NSUserDefaults standardUserDefaults] setObject:obj forKey:ZGAudioPreprocessTopicConfigCustomReverberanceKey];
         dispatch_async(dispatch_get_main_queue(), ^{
             for (id<ZGAudioPreprocessTopicConfigChangedHandler> handler in self.configChangedHandlers) {
                 if ([handler respondsToSelector:@selector(audioPreprocessTopicConfigManager:customReverberanceChanged:)]) {
@@ -351,7 +348,7 @@ static ZGAudioPreprocessTopicConfigManager *instance = nil;
 - (float)customReverberance {
     __block float val = 0;
     dispatch_sync(_configOptQueue, ^{
-        NSNumber *n = [self.zgUserDefaults objectForKey:ZGAudioPreprocessTopicConfigCustomReverberanceKey];
+        NSNumber *n = [[NSUserDefaults standardUserDefaults] objectForKey:ZGAudioPreprocessTopicConfigCustomReverberanceKey];
         if (n) {
             val = [n floatValue];
         } else {

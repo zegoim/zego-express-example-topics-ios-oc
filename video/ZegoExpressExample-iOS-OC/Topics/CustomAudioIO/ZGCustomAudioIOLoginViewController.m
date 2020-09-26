@@ -20,6 +20,8 @@ NSString* const ZGCustomAudioIORemotePlayStreamID = @"ZGCustomAudioIORemotePlayS
 @property (weak, nonatomic) IBOutlet UITextField *roomIDTextField;
 @property (weak, nonatomic) IBOutlet UITextField *localPublishStreamIDTextField;
 @property (weak, nonatomic) IBOutlet UITextField *remotePlayStreamIDTextField;
+@property (weak, nonatomic) IBOutlet UISwitch *enableCustomAudioRenderSwitch;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *audioSourceSeg;
 
 @end
 
@@ -44,6 +46,10 @@ NSString* const ZGCustomAudioIORemotePlayStreamID = @"ZGCustomAudioIORemotePlayS
     vc.roomID = self.roomIDTextField.text;
     vc.localPublishStreamID = self.localPublishStreamIDTextField.text;
     vc.remotePlayStreamID = self.remotePlayStreamIDTextField.text;
+
+    vc.audioSourceType = (ZGCustomAudioCaptureSourceType)self.audioSourceSeg.selectedSegmentIndex;
+    
+    vc.enableCustomAudioRender = self.enableCustomAudioRenderSwitch.on;
 
     [self.navigationController pushViewController:vc animated:YES];
 }

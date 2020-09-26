@@ -56,6 +56,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setDebugVerbose:(BOOL)enable language:(ZegoLanguage)language;
 
 
+- (void)setEngineConfig:(ZegoEngineConfig *)config;
+
+
 #pragma mark - Room
 
 - (void)loginRoom:(NSString *)roomID userID:(NSString *)userID userName:(NSString *)userName;
@@ -93,6 +96,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setAppOrientation:(UIInterfaceOrientation)orientation;
 
 
+- (ZegoAudioConfig *)getAudioConfig;
+
+
+- (void)setAudioConfig:(ZegoAudioConfig *)config;
+
+
 - (void)mutePublishStreamAudio:(BOOL)mute;
 
 
@@ -118,6 +127,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 - (void)sendSEI:(NSData *)data;
+
+
+- (void)setAudioCaptureStereoMode:(ZegoAudioCaptureStereoMode)mode;
 
 
 #pragma mark - Player

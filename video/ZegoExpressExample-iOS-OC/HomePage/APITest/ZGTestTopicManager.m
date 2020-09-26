@@ -68,6 +68,16 @@
     [self.dataSource onActionLog:[NSString stringWithFormat:@"📬 set debug verbose:%d, language:%@", enable, language == ZegoLanguageEnglish ? @"English" : @"中文"]];
 }
 
+- (void)setEngineConfig:(ZegoEngineConfig *)config {
+    [ZegoExpressEngine setEngineConfig:config];
+    NSMutableString *advancedConfig = [[NSMutableString alloc] init];
+    for (NSString *key in config.advancedConfig) {
+        [advancedConfig appendFormat:@"%@=%@; ", key, config.advancedConfig[key]];
+    }
+    ZGLogInfo(@"🔩 Set engien config, advanced config: %@", advancedConfig);
+    [self.dataSource onActionLog:[NSString stringWithFormat:@"🔩 Set engien config, advanced config: %@", advancedConfig]];
+}
+
 
 #pragma mark Room
 
@@ -153,6 +163,16 @@
     [self.dataSource onActionLog:[NSString stringWithFormat:@"⚙️ Set capture orientation: %d", (int)orientation]];
 }
 
+- (ZegoAudioConfig *)getAudioConfig {
+    return [[ZegoExpressEngine sharedEngine] getAudioConfig];
+}
+
+- (void)setAudioConfig:(ZegoAudioConfig *)config {
+    [self.engine setAudioConfig:config];
+    ZGLogInfo(@"🧷 Set audio config. bitrate: %d, channel: %d, codecID: %d", config.bitrate, (int)config.channel, (int)config.codecID);
+    [self.dataSource onActionLog:[NSString stringWithFormat:@"🧷 Set audio config. bitrate: %d, channel: %d, codecID: %d", config.bitrate, (int)config.channel, (int)config.codecID]];
+}
+
 
 - (void)mutePublishStreamAudio:(BOOL)mute {
     [self.engine mutePublishStreamAudio:mute];
@@ -220,6 +240,12 @@
     NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     ZGLogInfo(@"✉️ Send SEI: %@", str);
     [self.dataSource onActionLog:[NSString stringWithFormat:@"✉️ Send SEI: %@", str]];
+}
+
+- (void)setAudioCaptureStereoMode:(ZegoAudioCaptureStereoMode)mode {
+    [self.engine setAudioCaptureStereoMode:mode];
+    ZGLogInfo(@"🎶 Set audio capture stereo mode: %d", (int)mode);
+    [self.dataSource onActionLog:[NSString stringWithFormat:@"🎶 Set audio capture stereo mode: %d", (int)mode]];
 }
 
 

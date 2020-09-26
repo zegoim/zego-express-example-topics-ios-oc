@@ -12,11 +12,20 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, ZGCustomAudioCaptureSourceType) {
+    ZGCustomAudioCaptureSourceTypeLocalMedia = 0,
+    ZGCustomAudioCaptureSourceTypeDeviceMicrophone = 1,
+};
+
 @interface ZGCustomAudioIOViewController : UIViewController
 
 @property (nonatomic, copy) NSString *roomID;
 @property (nonatomic, copy) NSString *localPublishStreamID;
 @property (nonatomic, copy) NSString *remotePlayStreamID;
+
+@property (nonatomic, assign) ZGCustomAudioCaptureSourceType audioSourceType;
+
+@property (nonatomic, assign) BOOL enableCustomAudioRender;
 
 @end
 

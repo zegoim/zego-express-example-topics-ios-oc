@@ -9,6 +9,7 @@
 #import "ZGAppGlobalConfigViewController.h"
 #import "ZGAppGlobalConfigManager.h"
 #import <ZegoExpressEngine/ZegoExpressEngine.h>
+#import <ReplayKit/ReplayKit.h>
 
 @interface ZGAppGlobalConfigViewController ()
 
@@ -20,6 +21,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *SDKVersionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *appVersionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *appBuildLabel;
 
 @end
 
@@ -39,6 +41,18 @@
     [[UIPasteboard generalPasteboard] setString:[ZegoExpressEngine getVersion]];
 }
 
+- (IBAction)onClickAPITest:(UIButton *)sender {
+#ifdef _Module_Test
+    UIStoryboard *apiTestStroyBoard = [UIStoryboard storyboardWithName:@"Test" bundle:nil];
+    UIViewController *vc = [apiTestStroyBoard instantiateInitialViewController];
+    if (vc) {
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+#else
+    [ZegoHudManager showMessage:@"API Test is not enabled"];
+#endif
+}
+
 #pragma mark - private methods
 
 - (void)setupUI {
@@ -51,6 +65,7 @@
     
     self.SDKVersionLabel.text = [NSString stringWithFormat:@"%@", [ZegoExpressEngine getVersion]];
     self.appVersionLabel.text = [NSString stringWithFormat:@"Demo Version: %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
+    self.appBuildLabel.text = [NSString stringWithFormat:@"Demo BuildNumber: %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
 
     ZGAppGlobalConfig *config = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
     [self applyConfig:config];
