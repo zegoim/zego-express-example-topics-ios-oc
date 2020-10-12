@@ -135,7 +135,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		86CE0F5B251221DB0039462F /* PBXContainerItemProxy */ = {
+		86FC6AF4253408EE00DB16DE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8608C3A123631EDB00CE367B /* Project object */;
 			proxyType = 1;
@@ -962,7 +962,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				86CE0F5C251221DB0039462F /* PBXTargetDependency */,
+				86FC6AF5253408EE00DB16DE /* PBXTargetDependency */,
 			);
 			name = "ZegoExpressExample-iOS-OC";
 			productName = "ZegoExpressExample-iOS-OC";
@@ -973,6 +973,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 86CE0F61251221DB0039462F /* Build configuration list for PBXNativeTarget "ZegoExpressExample-iOS-OC-Broadcast" */;
 			buildPhases = (
+				86FC6AF62534091D00DB16DE /* [Script] Download SDK If Need */,
 				86CE0F4F251221DB0039462F /* Sources */,
 				86CE0F50251221DB0039462F /* Frameworks */,
 				86CE0F51251221DB0039462F /* Resources */,
@@ -1112,6 +1113,24 @@
 			shellPath = /bin/sh;
 			shellScript = "if [ $CONFIGURATION == \"Release\" ]; then\n\n    echo \"[*] Build release, remove simulator architecture\"\n\n    cd Libs/ZegoExpressEngine.framework\n    echo \"[*] cd into: \"`pwd`\n\n    if [ -e \"ZegoExpressEngine\" ]; then\n\n        lipo -info ZegoExpressEngine\n\n        echo \"[*] remove i386 architecture\"\n        lipo ZegoExpressEngine -remove i386 -output ZegoExpressEngine\n\n        echo \"[*] remove x86_64 architecture\"\n        lipo ZegoExpressEngine -remove x86_64 -output ZegoExpressEngine\n\n        lipo -info ZegoExpressEngine\n\n    fi\n\nfi\n";
 		};
+		86FC6AF62534091D00DB16DE /* [Script] Download SDK If Need */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Script] Download SDK If Need";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ ! -e \"Libs/ZegoExpressEngine.framework\" ]; then\n\n    cd $SRCROOT\n    echo \"[*] cd into: \"`pwd`\n\n    URL=\"https://storage.zego.im/express/video/ios/zego-express-video-ios.zip\"\n\n    if [ ! -d \"Libs/__sdk_download_tmp__\" ]; then\n        mkdir Libs/__sdk_download_tmp__\n    fi\n\n    echo \"[*] Downloading SDK from: $URL\"\n    curl \"$URL\" --output Libs/__sdk_download_tmp__/zego-express-video-ios.zip\n\n    cd Libs/__sdk_download_tmp__\n    echo \"[*] cd into: \"`pwd`\n\n    echo \"[*] Unzip zego-express-video-ios.zip\"\n    unzip -o zego-express-video-ios.zip\n\n    for element in `ls`; do\n        dir=$element\n        if [ -d $dir ]; then\n            cd $dir\n            echo \"[*] cd into: \"`pwd`\n            break\n        fi\n    done\n\n    if [ -d \"armv7-arm64-x86_64\" ]; then\n        cd armv7-arm64-x86_64\n        echo \"[*] cd into: \"`pwd`\n        echo \"[*] Move ZegoExpressEngine.framework from: \"`pwd`\" to: $SRCROOT/Libs\"\n        mv ZegoExpressEngine.framework $SRCROOT/Libs\n    fi\n\n    echo \"[*] Remove folder: $SRCROOT/Libs/__sdk_download_tmp__\"\n    rm -rf $SRCROOT/Libs/__sdk_download_tmp__\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1211,10 +1230,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		86CE0F5C251221DB0039462F /* PBXTargetDependency */ = {
+		86FC6AF5253408EE00DB16DE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 86CE0F52251221DB0039462F /* ZegoExpressExample-iOS-OC-Broadcast */;
-			targetProxy = 86CE0F5B251221DB0039462F /* PBXContainerItemProxy */;
+			targetProxy = 86FC6AF4253408EE00DB16DE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1455,7 +1474,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.16.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-Objective-C.${SAMPLE_CODE_DISAMBIGUATOR}.Broadcast";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1483,7 +1502,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.16.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-Objective-C.${SAMPLE_CODE_DISAMBIGUATOR}.Broadcast";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
