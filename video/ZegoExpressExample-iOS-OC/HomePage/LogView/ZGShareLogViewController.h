@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "../../Topics/ScreenCapture/ZGScreenCaptureDefines.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ZGShareLogViewController : UIViewController
+
+- (void)shareMainAppLogs;
+
+- (void)shareReplayKitExtensionLogs;
 
 @end
 

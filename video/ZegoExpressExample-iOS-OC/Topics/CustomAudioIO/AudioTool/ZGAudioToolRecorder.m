@@ -59,7 +59,7 @@ static void CheckError(OSStatus error, const char *operation)
     
     // set audio session
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:&error];
     
     AudioComponentDescription audioDesc;
     audioDesc.componentType = kAudioUnitType_Output;

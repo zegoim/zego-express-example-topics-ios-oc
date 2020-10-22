@@ -37,6 +37,9 @@
 @property (weak, nonatomic) IBOutlet UISwitch *enableRepeatSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *enableAuxSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *muteLocalSwitch;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *audioTrackSeg;
+@property (weak, nonatomic) IBOutlet UILabel *pitchValueLabel;
+@property (weak, nonatomic) IBOutlet UISlider *pitchSlider;
 
 @end
 
@@ -119,6 +122,18 @@
     self.enableRepeatSwitch.on = YES;
     self.enableAuxSwitch.on = YES;
     self.muteLocalSwitch.on = NO;
+
+    [self.audioTrackSeg removeAllSegments];
+    unsigned int trackCount = self.player.audioTrackCount;
+    if (trackCount > 0) {
+        for (int i = 0; i < trackCount; i++) {
+            [self.audioTrackSeg insertSegmentWithTitle:[NSString stringWithFormat:@"%d", i] atIndex:i animated:NO];
+        }
+    } else {
+        [self.audioTrackSeg insertSegmentWithTitle:@"None" atIndex:0 animated:NO];
+    }
+
+    self.pitchSlider.continuous = NO;
     
     if (self.mediaItem.isVideo) {
         [self.player setPlayerCanvas:[ZegoCanvas canvasWithView:self.playerView]];
@@ -211,6 +226,12 @@
     ZGLogInfo(@"%@ Media Player mute local: %@", sender.on ? @"🔇" : @"🔈", sender.on ? @"YES" : @"NO");
 }
 
+- (IBAction)audioTrackSegValueChanged:(UISegmentedControl *)sender {
+    unsigned int index = (unsigned int)self.audioTrackSeg.selectedSegmentIndex;
+    [self.player setAudioTrackIndex:index];
+    ZGLogInfo(@"🎵 Media Player set audio track index: %d", index);
+}
+
 #pragma mark Media Player Slider Actions
 
 - (IBAction)volumeSliderValueChanged:(UISlider *)sender {
@@ -231,6 +252,14 @@
 
 - (void)processSliderTouchUp {
     [self.player resume];
+}
+
+- (IBAction)pitchSliderValueChanged:(UISlider *)sender {
+    ZegoVoiceChangerParam *param = [[ZegoVoiceChangerParam alloc] init];
+    param.pitch = self.pitchSlider.value;
+    [self.player setVoiceChangerParam:param audioChannel:ZegoMediaPlayerAudioChannelAll];
+    self.pitchValueLabel.text = [NSString stringWithFormat:@"Pitch: %.2f", param.pitch];
+    ZGLogInfo(@"🗣 Media Player set voice changer pitch: %.2f", param.pitch);
 }
 
 #pragma mark Publisher Event

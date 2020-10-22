@@ -42,7 +42,7 @@
     
     // set audio session
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker error:&error];
     
     AudioComponentDescription audioDesc;
     audioDesc.componentType = kAudioUnitType_Output;
@@ -125,7 +125,7 @@ static OSStatus PlayCallback(void *inRefCon,
     ZGAudioToolPlayer *player = (__bridge ZGAudioToolPlayer *)inRefCon;
     typeof(player) __weak weakPlayer = player;
 //    ioData->mBuffers[0].mDataByteSize = (UInt32)[player->inputSteam read:ioData->mBuffers[0].mData maxLength:(NSInteger)ioData->mBuffers[0].mDataByteSize];
-    NSLog(@"out size: %d", ioData->mBuffers[0].mDataByteSize);
+//    NSLog(@"out size: %d", ioData->mBuffers[0].mDataByteSize);
     if (player.bl_input)
     {
         player.bl_input(weakPlayer, ioActionFlags, inTimeStamp, inBusNumber, inNumberFrames, ioData);

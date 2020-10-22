@@ -94,7 +94,7 @@ NSUInteger ZegoDiskLggerBufferSize = 100;
 
 - (NSString *)defaultStoragePath {
     NSString* docPath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
-    return [docPath stringByAppendingPathComponent:@"ZegoLogs/ZGAppLog.txt"];;
+    return [docPath stringByAppendingPathComponent:@"ZegoLogs/ZGDemoLog.log"];;
 }
 
 @end

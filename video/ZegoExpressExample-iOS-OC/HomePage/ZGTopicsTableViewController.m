@@ -13,6 +13,10 @@
     NSArray<NSArray<NSString*>*>* _topicList;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [self setInterfaceOrientation:UIInterfaceOrientationPortrait];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -316,5 +320,18 @@
     [self.tableView reloadData];
 }
 
+#pragma mark - Helper
+
+- (void)setInterfaceOrientation:(UIInterfaceOrientation)orientation {
+    UIDevice *device = [UIDevice currentDevice];
+    if (device.orientation != (UIDeviceOrientation)orientation && [device respondsToSelector:@selector(setOrientation:)]) {
+        SEL selector  = NSSelectorFromString(@"setOrientation:");
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+        [invocation setSelector:selector];
+        [invocation setTarget:[UIDevice currentDevice]];
+        [invocation setArgument:&orientation atIndex:2];
+        [invocation invoke];
+    }
+}
 
 @end

@@ -72,8 +72,7 @@ static ZegoLogView *view = nil;
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(onLogMessagesUpdate) name:ZegoRAMStoreLoggerLogDidChangeNotification object:nil];
     
     self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
-    
-    //UI
+
     self.naviBar = [[UIView alloc] init];
     self.naviBar.backgroundColor = [UIColor clearColor];
     
@@ -85,7 +84,8 @@ static ZegoLogView *view = nil;
     self.shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.shareBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.shareBtn setTitle:@"Share" forState:UIControlStateNormal];
-    [self.shareBtn addTarget:self action:@selector(onShare) forControlEvents:UIControlEventTouchUpInside];
+    [self.shareBtn addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onShareMainAppLogs:)]];
+    [self.shareBtn addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onShareReplayKitExtensionLogs:)]];
 
     self.deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.deleteBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -132,12 +132,22 @@ static ZegoLogView *view = nil;
     [self.logger flush];
 }
 
-- (void)onShare {
+- (void)onShareMainAppLogs:(UIGestureRecognizer *)gesture {
     [self hide];
-    
     ZGShareLogViewController *vc = [[ZGShareLogViewController alloc] init];
     UIViewController *rootVC = UIApplication.sharedApplication.keyWindow.rootViewController;
     [rootVC.topPresentedViewController presentViewController:vc animated:YES completion:nil];
+    [vc shareMainAppLogs];
+}
+
+- (void)onShareReplayKitExtensionLogs:(UIGestureRecognizer *)gesture {
+    if (gesture.state != UIGestureRecognizerStateBegan) return;
+    
+    [self hide];
+    ZGShareLogViewController *vc = [[ZGShareLogViewController alloc] init];
+    UIViewController *rootVC = UIApplication.sharedApplication.keyWindow.rootViewController;
+    [rootVC.topPresentedViewController presentViewController:vc animated:YES completion:nil];
+    [vc shareReplayKitExtensionLogs];
 }
 
 - (void)onDelete {
@@ -147,11 +157,13 @@ static ZegoLogView *view = nil;
     [alertController addAction:[UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
 
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            // Handling paths
-            NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-            NSString *logPath = [cachesPath stringByAppendingString:@"/ZegoLogs"];
+            // Delete main app logs
+            NSString *mainAppLogPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingString:@"/ZegoLogs"];
+            [[NSFileManager defaultManager] removeItemAtPath:mainAppLogPath error:nil];
 
-            [[NSFileManager defaultManager] removeItemAtPath:logPath error:nil];
+            // Delete ReplayKit extension logs
+            NSString *replayKitLogDir = [[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:APP_GROUP] URLByAppendingPathComponent:@"ZegoLogsReplayKit" isDirectory:YES].path;
+            [[NSFileManager defaultManager] removeItemAtPath:replayKitLogDir error:nil];
         });
 
     }]];

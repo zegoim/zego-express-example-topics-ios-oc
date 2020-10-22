@@ -7,7 +7,6 @@
 //
 
 #import "ZGAppGlobalConfigManager.h"
-#import "ZGUserDefaults.h"
 #import "ZGJsonHelper.h"
 #import "ZGHashTableHelper.h"
 #import "ZGKeyCenter.h"
@@ -20,7 +19,6 @@ NSString* const ZGAppGlobalConfigKey = @"kZGAppGlobalConfig";
     dispatch_queue_t _configOptQueue;
 }
 
-@property (nonatomic) ZGUserDefaults *zgUserDefaults;
 @property (nonatomic, copy) NSString *cachedConfigStr;
 
 @property (nonatomic) NSHashTable *configChangedHandlers;
@@ -52,7 +50,6 @@ static ZGAppGlobalConfigManager *instance = nil;
 - (instancetype)init {
     if (self = [super init]) {
         _configOptQueue = dispatch_queue_create("com.doudong.ZGAppGlobalConfigOptQueue", DISPATCH_QUEUE_SERIAL);
-        _zgUserDefaults = [[ZGUserDefaults alloc] init];
         _configChangedHandlers = [ZGHashTableHelper createWeakReferenceHashTable];
     }
     return self;
@@ -71,8 +68,9 @@ static ZGAppGlobalConfigManager *instance = nil;
     dispatch_async(_configOptQueue, ^{
         // Delete settings when confObj is nil
         if (!confObj) {
-            [self.zgUserDefaults removeObjectForKey:ZGAppGlobalConfigKey];
-            [self.zgUserDefaults synchronize];
+
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:ZGAppGlobalConfigKey];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             self.cachedConfigStr = nil;
             [self notifyGlobalConfigChanged:nil];
             return;
@@ -82,8 +80,8 @@ static ZGAppGlobalConfigManager *instance = nil;
         NSString *configStr = [ZGJsonHelper encodeToJSON:confDic];
         if (configStr) {
             self.cachedConfigStr = configStr;
-            [self.zgUserDefaults setObject:configStr forKey:ZGAppGlobalConfigKey];
-            [self.zgUserDefaults synchronize];
+            [[NSUserDefaults standardUserDefaults] setObject:configStr forKey:ZGAppGlobalConfigKey];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             [self notifyGlobalConfigChanged:confObj];
         }
     });
@@ -94,7 +92,7 @@ static ZGAppGlobalConfigManager *instance = nil;
     dispatch_sync(_configOptQueue, ^{
         NSString *configStr = self.cachedConfigStr;
         if (configStr == nil || configStr.length == 0) {
-            configStr = [self.zgUserDefaults stringForKey:ZGAppGlobalConfigKey];
+            configStr = [[NSUserDefaults standardUserDefaults] stringForKey:ZGAppGlobalConfigKey];
         }
         
         ZGAppGlobalConfig *confObj = nil;

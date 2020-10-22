@@ -14,10 +14,33 @@ static ZGScreenCaptureManager *_sharedManager = nil;
 @interface ZGScreenCaptureManager ()<ZegoEventHandler>
 
 @property (nonatomic, copy) NSString *appGroup;
-
-@property (nonatomic, assign) ZegoEngineState engineState;
-
 @property (nonatomic, strong) NSUserDefaults *userDefaults;
+
+
+// Parameters synchronized from the main App process
+
+// for [createEngine]
+@property (nonatomic, assign) unsigned int appID;
+@property (nonatomic, copy) NSString *appSign;
+@property (nonatomic, assign) BOOL isTestEnv;
+@property (nonatomic, assign) ZegoScenario scenario;
+
+// for [setVideoConfig]
+@property (nonatomic, assign) float videoSizeWidth;
+@property (nonatomic, assign) float videoSizeHeight;
+@property (nonatomic, assign) int videoFPS;
+@property (nonatomic, assign) int videoBitrate;
+
+// for [loginRoom]
+@property (nonatomic, copy) NSString *roomID;
+@property (nonatomic, copy) NSString *userID;
+@property (nonatomic, copy) NSString *userName;
+
+// for [startPublishingStream]
+@property (nonatomic, copy) NSString *streamID;
+
+// for demo
+@property (nonatomic, assign) BOOL onlyCaptureVideo;
 
 @end
 
@@ -38,116 +61,139 @@ static ZGScreenCaptureManager *_sharedManager = nil;
 - (void)startBroadcastWithAppGroup:(NSString *)appGroup {
     self.appGroup = appGroup;
     self.userDefaults = [[NSUserDefaults alloc] initWithSuiteName:_appGroup];
-    self.engineState = ZegoEngineStateStop;
 
+    [self syncParametersFromMainAppProcess];
+
+    [self setEngineConfig];
     [self setupEngine];
+    [self setVideoConfig];
     [self loginRoom];
     [self startPublish];
 }
 
 - (void)stopBroadcast {
-    NSString *roomID = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_ROOM_ID"];
     [[ZegoExpressEngine sharedEngine] stopPublishingStream];
-    [[ZegoExpressEngine sharedEngine] logoutRoom:roomID];
+    [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
     [ZegoExpressEngine destroyEngine:nil];
 }
 
 - (void)handleSampleBuffer:(CMSampleBufferRef)sampleBuffer withType:(RPSampleBufferType)sampleBufferType {
-    switch (sampleBufferType) {
-        case RPSampleBufferTypeVideo:
-            // Handle video sample buffer
-            [self handlerVideoBuffer:sampleBuffer];
-            break;
-        case RPSampleBufferTypeAudioApp:
-            // Handle audio sample buffer for app audio
-            break;
-        case RPSampleBufferTypeAudioMic:
-            // Handle audio sample buffer for mic audio
-            break;
 
-        default:
-            break;
+    if (self.onlyCaptureVideo && sampleBufferType != RPSampleBufferTypeVideo) {
+        // Skip audio buffer
+        return;
     }
+
+    [[ZegoExpressEngine sharedEngine] handleReplayKitSampleBuffer:sampleBuffer bufferType:sampleBufferType];
 }
+
 
 #pragma mark - Private methods
 
-- (void)handlerVideoBuffer:(CMSampleBufferRef)buffer {
-    if (_engineState != ZegoEngineStateStart) {
-        return;
+// Set some config for engine
+- (void)setEngineConfig {
+
+    // Set ZEGO log directory with AppGroup
+    NSURL *logDirURL = [[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:self.appGroup] URLByAppendingPathComponent:@"ZegoLogsReplayKit" isDirectory:YES];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:logDirURL.path]) {
+        [[NSFileManager defaultManager] createDirectoryAtURL:logDirURL withIntermediateDirectories:YES attributes:nil error:nil];
     }
-    CFRetain(buffer);
-    [[ZegoExpressEngine sharedEngine] sendCustomVideoCapturePixelBuffer:CMSampleBufferGetImageBuffer(buffer) timestamp:CMSampleBufferGetPresentationTimeStamp(buffer)];
-    CFRelease(buffer);
+
+    ZegoLogConfig *logConfig = [[ZegoLogConfig alloc] init];
+    logConfig.logPath = logDirURL.path;
+
+    ZegoEngineConfig *engineConfig = [[ZegoEngineConfig alloc] init];
+    engineConfig.logConfig = logConfig;
+
+    // Set some optimization options to reduce memory usage when publishing stream
+    engineConfig.advancedConfig = @{
+        @"replaykit_handle_rotation": @"false", // Specify not to process the screen rotation on the publisher side, but to process it on the player side, thereby reduce memory usage, but in this case, the player must not play this stream from the CDN but directly from the ZEGO server. If you need to play this stream from the CDN and the captured screen needs to be dynamically rotated, please comment this line of code.
+
+        @"max_channels": @"0",                  // Specify the max number of streams to play as 0  (Because this extension only needs to publish stream)
+        @"max_publish_channels": @"1"           // Specify the max number of streams to publish as 1
+    };
+
+    [ZegoExpressEngine setEngineConfig:engineConfig];
 }
 
+
 - (void)setupEngine {
-    // Prepare some config for ReplayKit
-    ZegoEngineConfig *engineConfig = [[ZegoEngineConfig alloc] init];
-    engineConfig.advancedConfig = @{
-        @"replaykit_handle_rotation": @"false",
-        @"max_channels": @"0",
-        @"max_publish_channels": @"1"
-    };
-    [ZegoExpressEngine setEngineConfig:engineConfig];
 
-    // Get parameters for [createEngine]
-    NSNumber *appID = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_APP_ID"];
-    NSString *appSign = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_APP_SIGN"];
-    NSNumber *isTestEnv = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_IS_TEST_ENV"];
-    NSNumber *scenario = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_SCENARIO"];
+    // Create engine
+    [ZegoExpressEngine createEngineWithAppID:self.appID appSign:self.appSign isTestEnv:self.isTestEnv scenario:self.scenario eventHandler:self];
 
-    [ZegoExpressEngine createEngineWithAppID:appID.unsignedIntValue appSign:appSign isTestEnv:isTestEnv.boolValue scenario:(ZegoScenario)scenario.unsignedIntValue eventHandler:self];
+    // Init SDK ReplayKit module
+    [[ZegoExpressEngine sharedEngine] prepareForReplayKit];
 
-    // Enable custom video capture
-    ZegoCustomVideoCaptureConfig *captureConfig = [[ZegoCustomVideoCaptureConfig alloc] init];
-    captureConfig.bufferType = ZegoVideoBufferTypeCVPixelBuffer;
-    [[ZegoExpressEngine sharedEngine] enableCustomVideoCapture:YES config:captureConfig];
-
-    // Enable hardware encode/decode
+    // Enable hardware encoder to reduce memory usage when publishing stream
     [[ZegoExpressEngine sharedEngine] enableHardwareEncoder:YES];
-    [[ZegoExpressEngine sharedEngine] enableHardwareDecoder:YES];
 
-    // Get parameters for [setVideoConfig]
-    NSNumber *videoSizeWidth = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_VIDEO_SIZE_WIDTH"];
-    NSNumber *videoSizeHeight = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_VIDEO_SIZE_HEIGHT"];
-    NSNumber *videoFPS = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_SCREEN_CAPTURE_VIDEO_FPS"];
-    NSNumber *videoBitrate = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_SCREEN_CAPTURE_VIDEO_BITRATE_KBPS"];
+}
+
+
+- (void)setVideoConfig {
 
     // Set video config
     ZegoVideoConfig *videoConfig = [[ZegoVideoConfig alloc] init];
-    videoConfig.captureResolution = CGSizeMake(videoSizeWidth.floatValue, videoSizeHeight.floatValue);
+    videoConfig.captureResolution = CGSizeMake(self.videoSizeWidth, self.videoSizeHeight);
     videoConfig.encodeResolution = videoConfig.captureResolution;
-    videoConfig.fps = videoFPS.intValue;
-    videoConfig.bitrate = videoBitrate.intValue;
+    videoConfig.fps = self.videoFPS;
+    videoConfig.bitrate = self.videoBitrate;
     [[ZegoExpressEngine sharedEngine] setVideoConfig:videoConfig];
 }
 
 - (void)loginRoom {
-    // Get parameters for [loginRoom]
-    NSString *userID = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_USER_ID"];
-    NSString *userName = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_USER_NAME"];
-    NSString *roomID = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_ROOM_ID"];
-    [[ZegoExpressEngine sharedEngine] loginRoom:roomID user:[ZegoUser userWithUserID:userID userName:userName]];
+    [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:[ZegoUser userWithUserID:self.userID userName:self.userName]];
 }
 
 - (void)startPublish {
-    // Get parameters for [startPublishingStream]
-    NSString *streamID = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_STREAM_ID"];
-    [[ZegoExpressEngine sharedEngine] startPublishingStream:streamID];
+    [[ZegoExpressEngine sharedEngine] startPublishingStream:self.streamID];
 }
 
-#pragma mark - Zego Express Handler
+#pragma mark Helper
+
+- (void)syncParametersFromMainAppProcess {
+
+    // Get parameters for [createEngine]
+    self.appID = [(NSNumber *)[self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_APP_ID"] unsignedIntValue];
+    self.appSign = (NSString *)[self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_APP_SIGN"];
+    self.isTestEnv = [(NSNumber *)[self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_IS_TEST_ENV"] boolValue];
+    self.scenario = (ZegoScenario)[(NSNumber *)[self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_SCENARIO"] intValue];
+
+    // Get parameters for [setVideoConfig]
+    self.videoSizeWidth = [(NSNumber *)[self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_VIDEO_SIZE_WIDTH"] floatValue];
+    self.videoSizeHeight = [(NSNumber *)[self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_VIDEO_SIZE_HEIGHT"] floatValue];
+    self.videoFPS = [(NSNumber *)[self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_SCREEN_CAPTURE_VIDEO_FPS"] intValue];
+    self.videoBitrate = [(NSNumber *)[self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_SCREEN_CAPTURE_VIDEO_BITRATE_KBPS"] intValue];
+
+    // Get parameters for [loginRoom]
+    self.userID = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_USER_ID"];
+    self.userName = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_USER_NAME"];
+    self.roomID = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_ROOM_ID"];
+
+    // Get parameters for [startPublishingStream]
+    self.streamID = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_STREAM_ID"];
+
+    // Get parameters for demo
+    self.onlyCaptureVideo = [(NSNumber *)[self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_ONLY_CAPTURE_VIDEO"] boolValue];
+}
+
+#pragma mark - Zego Express Event Handler
 
 - (void)onRoomStateUpdate:(ZegoRoomState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData roomID:(NSString *)roomID {
     NSLog(@"🚩 🚪 Room State Update, state: %d, errorCode: %d, roomID: %@", (int)state, (int)errorCode, roomID);
 }
 
-- (void)onEngineStateUpdate:(ZegoEngineState)state {
-    NSLog(@"🚩 🚀 Engine State Update, state: %d", (int)state);
-    self.engineState = state;
+- (void)onPublisherStateUpdate:(ZegoPublisherState)state errorCode:(int)errorCode extendedData:(NSDictionary *)extendedData streamID:(NSString *)streamID {
+    NSLog(@"🚩 📤 Publisher State Update, state: %d, errorCode: %d, streamID: %@", (int)state, (int)errorCode, streamID);
 }
 
+- (void)onPublisherVideoSizeChanged:(CGSize)size channel:(ZegoPublishChannel)channel {
+    NSLog(@"🚩 📐 Publisher Video Size Changed, width: %.f, height: %.f", size.width, size.height);
+}
 
+- (void)onPublisherQualityUpdate:(ZegoPublishStreamQuality *)quality streamID:(NSString *)streamID {
+    NSLog(@"🚩 📈 Publisher Quality Update, fps:%.2f, bitrate:%.2f, level:%d, streamID: %@", quality.videoSendFPS, quality.videoKBPS, (int)quality.level, streamID);
+}
 
 @end

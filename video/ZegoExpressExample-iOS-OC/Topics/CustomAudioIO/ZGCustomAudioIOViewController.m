@@ -8,6 +8,9 @@
 
 #ifdef _Module_CustomAudioIO
 
+// When the custom audio render is turned on, whether to save the audio render data to a local file while using the speaker to play the data
+#define SAVE_AUDIO_RENDER_DATA_TO_FILE 1
+
 #import "ZGCustomAudioIOViewController.h"
 #import "ZGAppGlobalConfigManager.h"
 #import "ZGUserIDHelper.h"
@@ -38,6 +41,11 @@
 // Audio origin data position (used by local media source)
 @property (nonatomic, assign) void *audioCapturedDataPosition;
 
+#if SAVE_AUDIO_RENDER_DATA_TO_FILE
+// Total custom audio render data to be save
+@property (nonatomic, strong) NSMutableData *audioRenderData;
+#endif
+
 @end
 
 @implementation ZGCustomAudioIOViewController
@@ -64,6 +72,10 @@
     self.audioCapturedFrameParam.sampleRate = ZegoAudioSampleRate16K;
     
     [self createEngineAndLoginRoom];
+
+#if SAVE_AUDIO_RENDER_DATA_TO_FILE
+    self.audioRenderData = [NSMutableData data];
+#endif
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -72,6 +84,8 @@
         [self.audioCaptureTimer invalidate];
         self.audioCaptureTimer = nil;
     }
+
+    [self stopPlaying:self.enableCustomAudioRender];
 
     ZGLogInfo(@"🚪 Logout room");
     [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
@@ -82,11 +96,10 @@
 }
 
 - (void)createEngineAndLoginRoom {
-    if (!self.enableCustomAudioRender) {
-        ZegoEngineConfig *engineConfig = [[ZegoEngineConfig alloc] init];
-        engineConfig.advancedConfig = @{@"ext_capture_and_inner_render": @"true"};
-        [ZegoExpressEngine setEngineConfig:engineConfig];
-    }
+
+    ZegoEngineConfig *engineConfig = [[ZegoEngineConfig alloc] init];
+    engineConfig.advancedConfig = @{@"ext_capture_and_inner_render": self.enableCustomAudioRender ? @"false" : @"true"};
+    [ZegoExpressEngine setEngineConfig:engineConfig];
 
     ZGAppGlobalConfig *appConfig = [[ZGAppGlobalConfigManager sharedManager] globalConfig];
 
@@ -99,6 +112,11 @@
 
     ZGLogInfo(@"🎶 Enable custom audio io");
     [[ZegoExpressEngine sharedEngine] enableCustomAudioIO:YES config:audioConfig];
+
+    // Enable 3A process
+    [[ZegoExpressEngine sharedEngine] enableAEC:YES];
+    [[ZegoExpressEngine sharedEngine] enableANS:YES];
+    [[ZegoExpressEngine sharedEngine] enableAGC:YES];
 
     ZegoUser *user = [ZegoUser userWithUserID:[ZGUserIDHelper userID] userName:[ZGUserIDHelper userName]];
 
@@ -228,6 +246,10 @@
                 // Fetch and render audio render buffer
                 [[ZegoExpressEngine sharedEngine] fetchCustomAudioRenderPCMData:buffer.mData dataLength:length param:weakSelf.audioRenderFrameParam];
                 buffer.mDataByteSize = length;
+
+#if SAVE_AUDIO_RENDER_DATA_TO_FILE
+                [weakSelf.audioRenderData appendBytes:buffer.mData length:length];
+#endif
             };
         }
 
@@ -244,6 +266,13 @@
     if (enableCustomAudioRender) {
         ZGLogInfo(@"🔉 Custom audio render speaker stop play");
         [_audioToolPlayer stop];
+
+#if SAVE_AUDIO_RENDER_DATA_TO_FILE
+        NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *audioRenderFilePath = [documentsPath stringByAppendingPathComponent:@"CustomAudioRender.pcm"];
+        [self.audioRenderData writeToFile:audioRenderFilePath atomically:YES];
+        ZGLogInfo(@"💾 Write custom audio render data to file: %@", audioRenderFilePath);
+#endif
     }
 }
 

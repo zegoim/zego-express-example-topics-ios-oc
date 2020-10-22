@@ -6,7 +6,6 @@
 //
 
 #import "ZGUserIDHelper.h"
-#import "ZGUserDefaults.h"
 
 #if TARGET_OS_OSX
 #import <IOKit/IOKitLib.h>
@@ -29,13 +28,9 @@ static NSString *_userName = nil;
 
 @implementation ZGUserIDHelper
 
-+ (ZGUserDefaults *)myUserDefaults {
-    return [[ZGUserDefaults alloc] init];
-}
-
 + (NSString *)userID {
     if (_userID.length == 0) {
-        NSUserDefaults *ud = [self myUserDefaults];
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
         NSString *userID = [ud stringForKey:kZGUserIDKey];
         if (userID.length > 0) {
             _userID = userID;
@@ -53,7 +48,7 @@ static NSString *_userName = nil;
 
 + (NSString *)userName {
     if (_userName.length == 0) {
-        NSUserDefaults *ud = [self myUserDefaults];
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
         NSString *userName = [ud stringForKey:kZGUserNameKey];
         if (userName.length > 0) {
             _userName = userName;

@@ -106,36 +106,50 @@
     [self.presenter appendLog:[NSString stringWithFormat:@"🔊 Set capture volume: %d", _captureVolume]];
 }
 
+- (IBAction)takePublishStreamSnapshotButtonClick:(UIButton *)sender {
+
+    __weak typeof(self) weakSelf = self;
+    [[ZegoExpressEngine sharedEngine] takePublishStreamSnapshot:^(int errorCode, UIImage * _Nullable image) {
+        __strong typeof(self) strongSelf = weakSelf;
+
+        [strongSelf.presenter appendLog:[NSString stringWithFormat:@"🚩 📸 Take snapshot result, errorCode: %d, w:%.f, h:%.f", errorCode, image.size.width, image.size.height]];
+
+        if (errorCode == ZegoErrorCodeCommonSuccess && image) {
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, UIScreen.mainScreen.bounds.size.width / 2, UIScreen.mainScreen.bounds.size.height / 2)];
+            imageView.image = image;
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
+
+            [ZegoHudManager showCustomMessage:@"Take Snapshot" customView:imageView done:nil];
+        }
+    }];
+
+    [self.presenter appendLog:[NSString stringWithFormat:@"📸 Take snapshot"]];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.row) {
-        case 5:
-            // Capture Resolution
-            [self presentSetCaptureResolutionAlertController];
-            break;
-        case 6:
-            // Encode Resolution
-            [self presentSetEncodeResolutionAlertController];
-            break;
-        case 7:
-            // FPS
-            [self presentSetFpsAlertController];
-            break;
-        case 8:
-            // FPS
-            [self presentSetBitrateAlertController];
-            break;
-        case 9:
-            // Mirror
-            [self presentSetMirrorAlertController];
-            break;
-        case 10:
-            // Stream Extra Info
-            [self presentSetStreamExtraInfoAlertController];
-        case 11:
-            // Room Extra Info
-            [self presentSetRoomExtraInfoAlertController];
-        default:
-            break;
+    NSString *identifier = [tableView cellForRowAtIndexPath:indexPath].reuseIdentifier;
+
+    if ([identifier isEqualToString:@"CaptureResolution"]) {
+        [self presentSetCaptureResolutionAlertController];
+
+    } else if ([identifier isEqualToString:@"EncodeResolution"]) {
+        [self presentSetEncodeResolutionAlertController];
+
+    } else if ([identifier isEqualToString:@"FPS"]) {
+        [self presentSetFpsAlertController];
+
+    } else if ([identifier isEqualToString:@"Bitrate"]) {
+        [self presentSetBitrateAlertController];
+
+    } else if ([identifier isEqualToString:@"Mirror"]) {
+        [self presentSetMirrorAlertController];
+
+    } else if ([identifier isEqualToString:@"StreamExtraInfo"]) {
+        [self presentSetStreamExtraInfoAlertController];
+
+    } else if ([identifier isEqualToString:@"RoomExtraInfo"]) {
+        [self presentSetRoomExtraInfoAlertController];
+
     }
 }
 

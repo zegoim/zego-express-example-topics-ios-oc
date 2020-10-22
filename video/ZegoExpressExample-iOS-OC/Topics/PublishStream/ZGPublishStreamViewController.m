@@ -8,6 +8,7 @@
 
 #ifdef _Module_PublishStream
 
+#import "AppDelegate.h"
 #import "ZGPublishStreamViewController.h"
 #import "ZGPublishStreamSettingTableViewController.h"
 #import "ZGAppGlobalConfigManager.h"
@@ -61,12 +62,16 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
     self.enableHardwareEncoder = NO;
     self.captureVolume = 100;
 
+    // Support landscape
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] setRestrictRotation:UIInterfaceOrientationMaskAllButUpsideDown];
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:UIDeviceOrientationDidChangeNotification object:[UIDevice currentDevice]];
 }
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
+    // Reset to portrait
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] setRestrictRotation:UIInterfaceOrientationMaskPortrait];
 
     ZGLogInfo(@"🔌 Stop preview");
     [[ZegoExpressEngine sharedEngine] stopPreview];

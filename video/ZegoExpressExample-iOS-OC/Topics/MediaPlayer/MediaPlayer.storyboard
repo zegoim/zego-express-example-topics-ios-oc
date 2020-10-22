@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="XxT-Wb-UXX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="XxT-Wb-UXX">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -14,7 +15,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="NeT-MK-RQB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MediaPlayerItemCell" textLabel="h65-mN-cng" detailTextLabel="xrV-eg-3Ih" style="IBUITableViewCellStyleSubtitle" id="Arn-RU-Jep">
                                 <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
@@ -24,7 +25,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="h65-mN-cng">
-                                            <rect key="frame" x="20" y="10" width="33.5" height="20.5"/>
+                                            <rect key="frame" x="20" y="10" width="33" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -56,9 +57,9 @@
             <objects>
                 <tableViewController storyboardIdentifier="ZGMediaPlayerViewController" id="yse-2a-DWu" customClass="ZGMediaPlayerViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Obm-J5-gUa">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="1500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <sections>
                             <tableViewSection headerTitle="Publisher" id="S7W-7K-Yab">
                                 <cells>
@@ -85,7 +86,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstItem="Q3h-7O-1rK" firstAttribute="leading" secondItem="9yN-bV-Yai" secondAttribute="leading" constant="5" id="Ka5-OG-Z98"/>
                                                         <constraint firstItem="Q3h-7O-1rK" firstAttribute="top" secondItem="9yN-bV-Yai" secondAttribute="top" constant="5" id="Lzk-VF-2Ol"/>
@@ -109,7 +110,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LP0-fT-ApT">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LP0-fT-ApT">
                                                     <rect key="frame" x="142" y="7" width="130" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="130" id="b8g-Tw-xBm"/>
@@ -140,7 +141,7 @@
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yoe-Df-jXy">
                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 </view>
                                             </subviews>
                                             <constraints>
@@ -162,7 +163,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AfB-Aj-g7v">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AfB-Aj-g7v">
                                                     <rect key="frame" x="36" y="12" width="65" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="65" id="BFU-rP-uHz"/>
@@ -173,7 +174,7 @@
                                                         <action selector="playButtonClick:" destination="yse-2a-DWu" eventType="touchUpInside" id="SoB-ok-hu3"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="31I-9e-hVs">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="31I-9e-hVs">
                                                     <rect key="frame" x="121" y="12" width="75" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="75" id="b3f-Sg-xiI"/>
@@ -193,7 +194,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cA7-Ze-Sq5">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cA7-Ze-Sq5">
                                                     <rect key="frame" x="218" y="12" width="75" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="75" id="i8P-ip-KID"/>
@@ -204,7 +205,7 @@
                                                         <action selector="resumeButtonClick:" destination="yse-2a-DWu" eventType="touchUpInside" id="mod-ay-OPL"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="721-wp-ODm">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="721-wp-ODm">
                                                     <rect key="frame" x="313" y="12" width="65" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="65" id="zu7-se-mwU"/>
@@ -394,6 +395,71 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="60" id="7x8-1f-WeX">
+                                        <rect key="frame" x="0.0" y="1006" width="414" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7x8-1f-WeX" id="ObH-eg-oTH">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audio Track Index" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78h-al-iNS">
+                                                    <rect key="frame" x="20" y="19.5" width="136" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gxE-Z5-Kh1">
+                                                    <rect key="frame" x="206" y="14.5" width="188" height="32"/>
+                                                    <segments>
+                                                        <segment title="First"/>
+                                                        <segment title="Second"/>
+                                                    </segments>
+                                                    <connections>
+                                                        <action selector="audioTrackSegValueChanged:" destination="yse-2a-DWu" eventType="valueChanged" id="glx-24-Vox"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="gxE-Z5-Kh1" secondAttribute="trailing" constant="20" id="FW8-tx-nZl"/>
+                                                <constraint firstItem="gxE-Z5-Kh1" firstAttribute="leading" secondItem="78h-al-iNS" secondAttribute="trailing" constant="50" id="JAz-2T-eSc"/>
+                                                <constraint firstItem="gxE-Z5-Kh1" firstAttribute="centerY" secondItem="ObH-eg-oTH" secondAttribute="centerY" id="YQT-YY-twd"/>
+                                                <constraint firstItem="78h-al-iNS" firstAttribute="centerY" secondItem="ObH-eg-oTH" secondAttribute="centerY" id="aIw-rQ-2HL"/>
+                                                <constraint firstItem="78h-al-iNS" firstAttribute="leading" secondItem="ObH-eg-oTH" secondAttribute="leading" constant="20" id="pFg-JJ-7iR"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="60" id="3ku-Jx-efh">
+                                        <rect key="frame" x="0.0" y="1066" width="414" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3ku-Jx-efh" id="TiK-fd-p65">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pitch: 0.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bHf-lC-FlO">
+                                                    <rect key="frame" x="20" y="22" width="80" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="80" id="hlS-70-k23"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-8" maxValue="8" translatesAutoresizingMaskIntoConstraints="NO" id="hOl-qw-lsZ">
+                                                    <rect key="frame" x="118" y="15" width="278" height="31"/>
+                                                    <connections>
+                                                        <action selector="pitchSliderValueChanged:" destination="yse-2a-DWu" eventType="valueChanged" id="zI3-1J-OTH"/>
+                                                    </connections>
+                                                </slider>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="bHf-lC-FlO" firstAttribute="centerY" secondItem="TiK-fd-p65" secondAttribute="centerY" id="95G-Su-Dzb"/>
+                                                <constraint firstItem="bHf-lC-FlO" firstAttribute="leading" secondItem="TiK-fd-p65" secondAttribute="leading" constant="20" id="9yl-7g-0NM"/>
+                                                <constraint firstAttribute="trailing" secondItem="hOl-qw-lsZ" secondAttribute="trailing" constant="20" id="Fia-b0-cjv"/>
+                                                <constraint firstItem="hOl-qw-lsZ" firstAttribute="leading" secondItem="bHf-lC-FlO" secondAttribute="trailing" constant="20" id="bcV-mF-phS"/>
+                                                <constraint firstItem="hOl-qw-lsZ" firstAttribute="centerY" secondItem="TiK-fd-p65" secondAttribute="centerY" id="gap-uE-P41"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -402,11 +468,15 @@
                             <outlet property="delegate" destination="yse-2a-DWu" id="ahZ-ns-v9j"/>
                         </connections>
                     </tableView>
+                    <size key="freeformSize" width="414" height="1500"/>
                     <connections>
+                        <outlet property="audioTrackSeg" destination="gxE-Z5-Kh1" id="jMF-OP-s3T"/>
                         <outlet property="currentProcessLabel" destination="onw-LG-cfS" id="7MK-rA-JkP"/>
                         <outlet property="enableAuxSwitch" destination="pGu-0b-fJN" id="hUM-Tg-9rm"/>
                         <outlet property="enableRepeatSwitch" destination="0Qm-Rj-3ZP" id="CA4-xh-14D"/>
                         <outlet property="muteLocalSwitch" destination="KYK-GX-DzK" id="nil-Tj-oG5"/>
+                        <outlet property="pitchSlider" destination="hOl-qw-lsZ" id="tUz-c6-8EF"/>
+                        <outlet property="pitchValueLabel" destination="bHf-lC-FlO" id="aIb-Tp-dp6"/>
                         <outlet property="playerView" destination="Yoe-Df-jXy" id="G26-cu-HJx"/>
                         <outlet property="processSlider" destination="BKM-H3-7hh" id="9r8-R4-0dZ"/>
                         <outlet property="publishButton" destination="LP0-fT-ApT" id="fOW-Q1-w1G"/>
@@ -422,4 +492,9 @@
             <point key="canvasLocation" x="732" y="157"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

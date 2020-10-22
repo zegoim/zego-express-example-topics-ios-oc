@@ -9,6 +9,7 @@
 #ifdef _Module_PlayStream
 
 #import <UIKit/UIKit.h>
+#import <ZegoExpressEngine/ZegoExpressEngine.h>
 #import "ZGPlayStreamViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -19,8 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) ZGPlayStreamViewController *presenter;
 @property (nonatomic, copy) NSString *streamID;
+@property (nonatomic, strong) ZegoCanvas *canvas;
 @property (nonatomic, assign) BOOL enableHardwareDecoder;
 @property (nonatomic, assign) int playVolume;
+@property (nonatomic, assign) ZegoPlayerVideoLayer videoLayer;
 @property (nonatomic, copy) NSString *streamExtraInfo;
 @property (nonatomic, copy) NSString *roomExtraInfo;
 

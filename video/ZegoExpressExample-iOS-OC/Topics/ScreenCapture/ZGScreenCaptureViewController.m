@@ -12,6 +12,7 @@
 #define SCREEN_CAPTURE_VIDEO_SIZE_FACTOR 2
 #define SCREEN_CAPTURE_VIDEO_BITRATE_KBPS 1500
 
+#import "AppDelegate.h"
 #import "ZGScreenCaptureViewController.h"
 #import "ZGAppGlobalConfigManager.h"
 #import "ZGUserIDHelper.h"
@@ -22,6 +23,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *roomIDTextField;
 @property (weak, nonatomic) IBOutlet UITextField *streamIDTextField;
+@property (weak, nonatomic) IBOutlet UISwitch *onlyCaptureVideoSwitch;
 
 @property (nonatomic, strong) NSUserDefaults *userDefaults;
 
@@ -31,7 +33,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Support landscape
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] setRestrictRotation:UIInterfaceOrientationMaskAllButUpsideDown];
+
     [self setupUI];
+}
+
+- (void)dealloc {
+    // Reset to portrait
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] setRestrictRotation:UIInterfaceOrientationMaskPortrait];
 }
 
 - (void)setupUI {
@@ -111,6 +121,7 @@
     // Sync parameters for [loginRoom]
     NSString *subUserID = [NSString stringWithFormat:@"%@-S", ZGUserIDHelper.userID];
     NSString *subUserName = [NSString stringWithFormat:@"%@-S", ZGUserIDHelper.userName];
+        // Add a suffix to the userID to avoid conflicts with the user of the main App process, that is, the ReplayKit sub-process is an independent user, and the developer needs to handle the relationship of userID between the main app process and the ReplayKit sub-process by themselves (for example, bind two userIDs through the suffix)
     [self.userDefaults setObject:subUserID forKey:@"ZG_SCREEN_CAPTURE_USER_ID"];
     [self.userDefaults setObject:subUserName forKey:@"ZG_SCREEN_CAPTURE_USER_NAME"];
     [self.userDefaults setObject:self.roomIDTextField.text forKey:@"ZG_SCREEN_CAPTURE_ROOM_ID"];
@@ -119,11 +130,17 @@
     // Sync parameters for [setVideoConfig]
     [self.userDefaults setObject:@(SCREEN_CAPTURE_VIDEO_BITRATE_KBPS) forKey:@"ZG_SCREEN_CAPTURE_SCREEN_CAPTURE_VIDEO_BITRATE_KBPS"];
     [self.userDefaults setObject:@(SCREEN_CAPTURE_VIDEO_FPS) forKey:@"ZG_SCREEN_CAPTURE_SCREEN_CAPTURE_VIDEO_FPS"];
-    [self.userDefaults setObject:@(UIScreen.mainScreen.bounds.size.width * SCREEN_CAPTURE_VIDEO_SIZE_FACTOR) forKey:@"ZG_SCREEN_CAPTURE_VIDEO_SIZE_WIDTH"];
-    [self.userDefaults setObject:@(UIScreen.mainScreen.bounds.size.height * SCREEN_CAPTURE_VIDEO_SIZE_FACTOR) forKey:@"ZG_SCREEN_CAPTURE_VIDEO_SIZE_HEIGHT"];
+
+    CGFloat screenWidth = UIScreen.mainScreen.bounds.size.width;
+    CGFloat screenHeight = UIScreen.mainScreen.bounds.size.height;
+    [self.userDefaults setObject:@(MIN(screenWidth, screenHeight) * SCREEN_CAPTURE_VIDEO_SIZE_FACTOR) forKey:@"ZG_SCREEN_CAPTURE_VIDEO_SIZE_WIDTH"];
+    [self.userDefaults setObject:@(MAX(screenWidth, screenHeight) * SCREEN_CAPTURE_VIDEO_SIZE_FACTOR) forKey:@"ZG_SCREEN_CAPTURE_VIDEO_SIZE_HEIGHT"];
 
     // Sync parameters for [startPublishingStream]
     [self.userDefaults setObject:self.streamIDTextField.text forKey:@"ZG_SCREEN_CAPTURE_STREAM_ID"];
+
+    // Sync parameters for this demo's config
+    [self.userDefaults setObject:@(self.onlyCaptureVideoSwitch.on) forKey:@"ZG_SCREEN_CAPTURE_ONLY_CAPTURE_VIDEO"];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
