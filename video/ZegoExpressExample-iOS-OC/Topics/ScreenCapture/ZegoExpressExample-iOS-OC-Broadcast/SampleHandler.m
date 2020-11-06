@@ -33,7 +33,7 @@
     //
     // 本 Demo 已将调用 ZegoExpressEngine SDK 的逻辑都封装在了 [ZGScreenCaptureManager] 类中
     // 请参考该类以在您自己的项目中实现 [SampleHandler]
-    [[ZGScreenCaptureManager sharedManager] startBroadcastWithAppGroup:APP_GROUP];
+    [[ZGScreenCaptureManager sharedManager] startBroadcastWithAppGroup:APP_GROUP sampleHandler:self];
 }
 
 - (void)broadcastPaused {
@@ -46,7 +46,7 @@
 
 - (void)broadcastFinished {
     // User has requested to finish the broadcast.
-    [[ZGScreenCaptureManager sharedManager] stopBroadcast];
+    [[ZGScreenCaptureManager sharedManager] stopBroadcast:nil];
 }
 
 - (void)processSampleBuffer:(CMSampleBufferRef)sampleBuffer withType:(RPSampleBufferType)sampleBufferType {

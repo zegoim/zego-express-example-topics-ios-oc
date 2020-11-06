@@ -64,15 +64,11 @@ The SDK `ZegoExpressEngine.framework` required to run the Demo project is missin
 
     <img src="https://storage.zego.im/sdk-doc/Pics/iOS/ZegoExpressEngine/Common/xcode-login-apple-id.png" width=70% height=70%>
 
-4. Modify Bundle Identifier and Apple Developer Certificate.
+4. Modify Apple Developer Certificate.
 
     Open Xcode, click the `ZegoExpressExample-iOS-OC` project in left side.
 
     <img src="https://storage.zego.im/sdk-doc/Pics/iOS/ZegoExpressEngine/Common/xcode-select-project.png" width=50% height=50%>
-
-    Change `Bundle Identifier` in the `General` tab. (Can be modified to `com.your-name.ZegoExpressExample-iOS-OC`)
-
-    <img src="https://storage.zego.im/sdk-doc/Pics/iOS/ZegoExpressEngine/Common/bundle-identifier.png" width=90% height=90%>
 
     Click on the `Signing & Capabilities` tab and select your developer certificate in `Team`.
 

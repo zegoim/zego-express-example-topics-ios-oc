@@ -6,6 +6,8 @@
 //  Copyright © 2020 Zego. All rights reserved.
 //
 
+#ifdef _Module_SoundLevel
+
 #import "ZGSoundLevelSettingTabelViewController.h"
 #import <ZegoExpressEngine/ZegoExpressEngine.h>
 
@@ -104,3 +106,5 @@
 }
 
 @end
+
+#endif

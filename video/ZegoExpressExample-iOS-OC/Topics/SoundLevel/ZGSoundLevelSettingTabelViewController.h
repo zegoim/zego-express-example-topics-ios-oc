@@ -6,6 +6,8 @@
 //  Copyright © 2020 Zego. All rights reserved.
 //
 
+#ifdef _Module_SoundLevel
+
 #import <UIKit/UIKit.h>
 #import "ZGSoundLevelViewController.h"
 
@@ -25,3 +27,5 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif

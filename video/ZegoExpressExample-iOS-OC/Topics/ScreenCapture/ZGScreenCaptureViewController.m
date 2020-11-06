@@ -8,11 +8,6 @@
 
 #ifdef _Module_ScreenCapture
 
-#define SCREEN_CAPTURE_VIDEO_FPS 10
-#define SCREEN_CAPTURE_VIDEO_SIZE_FACTOR 2
-#define SCREEN_CAPTURE_VIDEO_BITRATE_KBPS 1500
-
-#import "AppDelegate.h"
 #import "ZGScreenCaptureViewController.h"
 #import "ZGAppGlobalConfigManager.h"
 #import "ZGUserIDHelper.h"
@@ -23,7 +18,20 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *roomIDTextField;
 @property (weak, nonatomic) IBOutlet UITextField *streamIDTextField;
+
 @property (weak, nonatomic) IBOutlet UISwitch *onlyCaptureVideoSwitch;
+
+@property (weak, nonatomic) IBOutlet UILabel *videoFpsLabel;
+@property (weak, nonatomic) IBOutlet UIStepper *videoFpsStepper;
+@property (nonatomic, assign) unsigned int videoFps;
+
+@property (weak, nonatomic) IBOutlet UILabel *videoBitrateLabel;
+@property (weak, nonatomic) IBOutlet UIStepper *videoBitrateStepper;
+@property (nonatomic, assign) unsigned int videoBitrateKBPS;
+
+@property (weak, nonatomic) IBOutlet UILabel *resolutionFactorLabel;
+@property (weak, nonatomic) IBOutlet UIStepper *resolutionFactorStepper;
+@property (nonatomic, assign) float resolutionFactor;
 
 @property (nonatomic, strong) NSUserDefaults *userDefaults;
 
@@ -33,20 +41,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Support landscape
-    [(AppDelegate *)[[UIApplication sharedApplication] delegate] setRestrictRotation:UIInterfaceOrientationMaskAllButUpsideDown];
-
     [self setupUI];
-}
-
-- (void)dealloc {
-    // Reset to portrait
-    [(AppDelegate *)[[UIApplication sharedApplication] delegate] setRestrictRotation:UIInterfaceOrientationMaskPortrait];
 }
 
 - (void)setupUI {
     self.roomIDTextField.text = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_ROOM_ID"];
     self.streamIDTextField.text = [self.userDefaults valueForKey:@"ZG_SCREEN_CAPTURE_STREAM_ID"];
+
+    self.videoFpsStepper.minimumValue = 5;
+    self.videoFpsStepper.maximumValue = 30;
+    self.videoFpsStepper.value = 15;
+    self.videoFpsStepper.stepValue = 5;
+    self.videoFps = (unsigned int)self.videoFpsStepper.value;
+
+    self.videoBitrateStepper.minimumValue = 500;
+    self.videoBitrateStepper.maximumValue = 3000;
+    self.videoBitrateStepper.value = 1500;
+    self.videoBitrateStepper.stepValue = 500;
+    self.videoBitrateKBPS = (unsigned int)self.videoBitrateStepper.value;
+
+    self.resolutionFactorStepper.minimumValue = 0.5;
+    self.resolutionFactorStepper.maximumValue = 3;
+    self.resolutionFactorStepper.value = 2.0;
+    self.resolutionFactorStepper.stepValue = 0.5;
+    self.resolutionFactor = (float)self.resolutionFactorStepper.value;
 }
 
 - (NSUserDefaults *)userDefaults {
@@ -106,6 +124,26 @@
     }
 }
 
+- (IBAction)stopScreenCaptureClick:(UIButton *)sender {
+    // Send notification to broadcast upload extension process
+    CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(),
+                                         (CFStringRef)@"ZG_BROADCAST_FINISH_NOTIFICATION", NULL, nil, YES);
+}
+
+- (IBAction)videoFpsStepperValueChanged:(UIStepper *)sender {
+    self.videoFps = (unsigned int)sender.value;
+    self.videoFpsLabel.text = [NSString stringWithFormat:@"Video FPS: %d", self.videoFps];
+}
+
+- (IBAction)videoBitrateStepperValueChanged:(UIStepper *)sender {
+    self.videoBitrateKBPS = (unsigned int)sender.value;
+    self.videoBitrateLabel.text = [NSString stringWithFormat:@"Video Bitrate: %d (KBPS)", self.videoBitrateKBPS];
+}
+
+- (IBAction)resolutionFactorStepperValueChanged:(UIStepper *)sender {
+    self.resolutionFactor = sender.value;
+    self.resolutionFactorLabel.text = [NSString stringWithFormat:@"Resolution Factor: %.1f", self.resolutionFactor];
+}
 
 - (void)syncParametersWithBroadcastProcess {
     // Use app group to sync parameters with broadcast extension process
@@ -128,13 +166,13 @@
 
 
     // Sync parameters for [setVideoConfig]
-    [self.userDefaults setObject:@(SCREEN_CAPTURE_VIDEO_BITRATE_KBPS) forKey:@"ZG_SCREEN_CAPTURE_SCREEN_CAPTURE_VIDEO_BITRATE_KBPS"];
-    [self.userDefaults setObject:@(SCREEN_CAPTURE_VIDEO_FPS) forKey:@"ZG_SCREEN_CAPTURE_SCREEN_CAPTURE_VIDEO_FPS"];
+    [self.userDefaults setObject:@(self.videoBitrateKBPS) forKey:@"ZG_SCREEN_CAPTURE_SCREEN_CAPTURE_VIDEO_BITRATE_KBPS"];
+    [self.userDefaults setObject:@(self.videoFps) forKey:@"ZG_SCREEN_CAPTURE_SCREEN_CAPTURE_VIDEO_FPS"];
 
     CGFloat screenWidth = UIScreen.mainScreen.bounds.size.width;
     CGFloat screenHeight = UIScreen.mainScreen.bounds.size.height;
-    [self.userDefaults setObject:@(MIN(screenWidth, screenHeight) * SCREEN_CAPTURE_VIDEO_SIZE_FACTOR) forKey:@"ZG_SCREEN_CAPTURE_VIDEO_SIZE_WIDTH"];
-    [self.userDefaults setObject:@(MAX(screenWidth, screenHeight) * SCREEN_CAPTURE_VIDEO_SIZE_FACTOR) forKey:@"ZG_SCREEN_CAPTURE_VIDEO_SIZE_HEIGHT"];
+    [self.userDefaults setObject:@(MIN(screenWidth, screenHeight) * self.resolutionFactor) forKey:@"ZG_SCREEN_CAPTURE_VIDEO_SIZE_WIDTH"];
+    [self.userDefaults setObject:@(MAX(screenWidth, screenHeight) * self.resolutionFactor) forKey:@"ZG_SCREEN_CAPTURE_VIDEO_SIZE_HEIGHT"];
 
     // Sync parameters for [startPublishingStream]
     [self.userDefaults setObject:self.streamIDTextField.text forKey:@"ZG_SCREEN_CAPTURE_STREAM_ID"];

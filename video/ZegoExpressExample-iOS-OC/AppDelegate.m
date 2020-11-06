@@ -23,7 +23,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [Bugly startWithAppId:@"87434a25df"];
     [self configZegoLog];
-    self.restrictRotation = UIInterfaceOrientationPortrait;
+    self.restrictRotation = UIInterfaceOrientationMaskPortrait;
     return YES;
 }
 

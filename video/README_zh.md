@@ -64,15 +64,11 @@ Zego Express Video iOS (Objective-C) 示例专题 Demo
 
     <img src="https://storage.zego.im/sdk-doc/Pics/iOS/ZegoExpressEngine/Common/xcode-login-apple-id.png" width=70% height=70%>
 
-4. 修改开发者证书和 Bundle Identifier。
+4. 修改开发者证书。
 
     打开 Xcode，点击左侧的项目 `ZegoExpressExample-iOS-OC`
 
     <img src="https://storage.zego.im/sdk-doc/Pics/iOS/ZegoExpressEngine/Common/xcode-select-project.png" width=50% height=50%>
-
-    在 `General` 选项卡中，更改 `Bundle Identifier`（可修改为 `com.your-name.ZegoExpressExample-iOS-OC`）
-
-    <img src="https://storage.zego.im/sdk-doc/Pics/iOS/ZegoExpressEngine/Common/bundle-identifier.png" width=90% height=90%>
 
     点击 `Signing & Capabilities` 选项卡，在 `Team` 中选择自己的开发者证书
 
