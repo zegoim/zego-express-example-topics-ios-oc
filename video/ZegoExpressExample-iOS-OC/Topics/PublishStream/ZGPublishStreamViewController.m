@@ -278,6 +278,7 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
     vc.streamExtraInfo = _streamExtraInfo;
     vc.roomExtraInfoKey = _roomExtraInfoKey;
     vc.roomExtraInfoValue = _roomExtraInfoValue;
+    vc.encryptionKey = _encryptionKey;
 
     [self presentViewController:vc animated:YES completion:nil];
 }
@@ -306,6 +307,9 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
     UIDevice *device = notification.object;
 
     ZegoVideoConfig *videoConfig = [[ZegoExpressEngine sharedEngine] getVideoConfig];
+    CGFloat currentWidth = videoConfig.encodeResolution.width;
+    CGFloat currentHeight = videoConfig.encodeResolution.height;
+
     UIInterfaceOrientation orientation = UIInterfaceOrientationUnknown;
 
     switch (device.orientation) {
@@ -313,19 +317,19 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
         // This is because rotating the device to the left requires rotating the content to the right.
         case UIDeviceOrientationLandscapeLeft:
             orientation = UIInterfaceOrientationLandscapeRight;
-            videoConfig.encodeResolution = CGSizeMake(640, 360);
+            videoConfig.encodeResolution = CGSizeMake(currentHeight, currentWidth);
             break;
         case UIDeviceOrientationLandscapeRight:
             orientation = UIInterfaceOrientationLandscapeLeft;
-            videoConfig.encodeResolution = CGSizeMake(640, 360);
+            videoConfig.encodeResolution = CGSizeMake(currentHeight, currentWidth);
             break;
         case UIDeviceOrientationPortrait:
             orientation = UIInterfaceOrientationPortrait;
-            videoConfig.encodeResolution = CGSizeMake(360, 640);
+            videoConfig.encodeResolution = CGSizeMake(currentWidth, currentHeight);
             break;
         case UIDeviceOrientationPortraitUpsideDown:
             orientation = UIInterfaceOrientationPortraitUpsideDown;
-            videoConfig.encodeResolution = CGSizeMake(360, 640);
+            videoConfig.encodeResolution = CGSizeMake(currentWidth, currentHeight);
             break;
         default:
             // Unknown / FaceUp / FaceDown

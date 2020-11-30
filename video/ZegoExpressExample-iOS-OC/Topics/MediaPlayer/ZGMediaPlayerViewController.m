@@ -33,11 +33,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *currentProcessLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalDurationLabel;
 @property (weak, nonatomic) IBOutlet UISlider *processSlider;
-@property (weak, nonatomic) IBOutlet UISlider *volumeSlider;
 @property (weak, nonatomic) IBOutlet UISwitch *enableRepeatSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *enableAuxSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *muteLocalSwitch;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *audioTrackSeg;
+
+@property (weak, nonatomic) IBOutlet UISlider *playVolumeSlider;
+@property (weak, nonatomic) IBOutlet UISlider *publishVolumeSlider;
 @property (weak, nonatomic) IBOutlet UILabel *pitchValueLabel;
 @property (weak, nonatomic) IBOutlet UISlider *pitchSlider;
 
@@ -114,10 +116,15 @@
     [self.processSlider addTarget:self action:@selector(processSliderTouchDown) forControlEvents:UIControlEventTouchDown];
     [self.processSlider addTarget:self action:@selector(processSliderTouchUp) forControlEvents:UIControlEventTouchUpInside|UIControlEventTouchUpOutside];
     
-    self.volumeSlider.maximumValue = 100.0;
-    self.volumeSlider.minimumValue = 0.0;
-    self.volumeSlider.value = self.player.volume;
-    self.volumeSlider.continuous = NO;
+    self.playVolumeSlider.maximumValue = 200.0;
+    self.playVolumeSlider.minimumValue = 0.0;
+    self.playVolumeSlider.value = self.player.playVolume;
+    self.playVolumeSlider.continuous = NO;
+
+    self.publishVolumeSlider.maximumValue = 200.0;
+    self.publishVolumeSlider.minimumValue = 0.0;
+    self.publishVolumeSlider.value = self.player.publishVolume;
+    self.publishVolumeSlider.continuous = NO;
     
     self.enableRepeatSwitch.on = YES;
     self.enableAuxSwitch.on = YES;
@@ -234,9 +241,14 @@
 
 #pragma mark Media Player Slider Actions
 
-- (IBAction)volumeSliderValueChanged:(UISlider *)sender {
-    [self.player setVolume:(int)sender.value];
-    ZGLogInfo(@"🔊 Media Player set volume: %d", (int)sender.value);
+- (IBAction)playVolumeSliderValueChanged:(UISlider *)sender {
+    [self.player setPlayVolume:(int)sender.value];
+    ZGLogInfo(@"🔊 Media Player set play volume: %d", (int)sender.value);
+}
+
+- (IBAction)publishVolumeSliderValueChanged:(UISlider *)sender {
+    [self.player setPublishVolume:(int)sender.value];
+    ZGLogInfo(@"🔊 Media Player set publish volume: %d", (int)sender.value);
 }
 
 - (IBAction)processSliderValueChanged:(UISlider *)sender {

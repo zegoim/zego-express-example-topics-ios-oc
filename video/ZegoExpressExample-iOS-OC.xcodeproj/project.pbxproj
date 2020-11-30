@@ -1364,7 +1364,7 @@
 				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/ZegoExpressExample-iOS-OC/ZegoExpressExample-iOS-OC.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 201105;
+				CURRENT_PROJECT_VERSION = 201119;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1379,7 +1379,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.17.5;
+				MARKETING_VERSION = 1.18.0;
 				OBJROOT = DerivedData/Build/Intermediates.noindex;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-Objective-C.${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "ZegoExpressExample-iOS-OC";
@@ -1397,7 +1397,7 @@
 				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/ZegoExpressExample-iOS-OC/ZegoExpressExample-iOS-OC.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 201105;
+				CURRENT_PROJECT_VERSION = 201119;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1412,7 +1412,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.17.5;
+				MARKETING_VERSION = 1.18.0;
 				OBJROOT = DerivedData/Build/Intermediates.noindex;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-Objective-C.${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "ZegoExpressExample-iOS-OC";
@@ -1429,7 +1429,7 @@
 				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/ZegoExpressExample-iOS-OC/Topics/ScreenCapture/ZegoExpressExample-iOS-OC-Broadcast/ZegoExpressExample-iOS-OC-Broadcast.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 201105;
+				CURRENT_PROJECT_VERSION = 201119;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1442,7 +1442,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.17.5;
+				MARKETING_VERSION = 1.18.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-Objective-C.${SAMPLE_CODE_DISAMBIGUATOR}.Broadcast";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1457,7 +1457,7 @@
 				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/ZegoExpressExample-iOS-OC/Topics/ScreenCapture/ZegoExpressExample-iOS-OC-Broadcast/ZegoExpressExample-iOS-OC-Broadcast.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 201105;
+				CURRENT_PROJECT_VERSION = 201119;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1470,7 +1470,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.17.5;
+				MARKETING_VERSION = 1.18.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-Objective-C.${SAMPLE_CODE_DISAMBIGUATOR}.Broadcast";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

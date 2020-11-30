@@ -64,6 +64,8 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
     [self createEngine];
 
     self.enableHardwareDecoder = NO;
+    self.mutePlayStreamVideo = NO;
+    self.mutePlayStreamAudio = NO;
     self.playVolume = 100;
 }
 
@@ -253,11 +255,14 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
     vc.presenter = self;
     vc.streamID = _streamID;
     vc.enableHardwareDecoder = _enableHardwareDecoder;
+    vc.mutePlayStreamVideo = _mutePlayStreamVideo;
+    vc.mutePlayStreamAudio = _mutePlayStreamAudio;
     vc.playVolume = _playVolume;
     vc.streamExtraInfo = _streamExtraInfo;
     vc.roomExtraInfo = _roomExtraInfo;
     vc.canvas = _canvas;
     vc.videoLayer = _videoLayer;
+    vc.decryptionKey = _decryptionKey;
 
     [self presentViewController:vc animated:YES completion:nil];
 }
@@ -318,7 +323,7 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
     [self invalidateLiveStateUILayout];
 }
 
-- (void)onRoomStreamUpdate:(ZegoUpdateType)updateType streamList:(NSArray<ZegoStream *> *)streamList roomID:(NSString *)roomID {
+- (void)onRoomStreamUpdate:(ZegoUpdateType)updateType streamList:(NSArray<ZegoStream *> *)streamList extendedData:(NSDictionary *)extendedData roomID:(NSString *)roomID {
     [self appendLog:[NSString stringWithFormat:@"🚩 🌊 Room stream update, updateType:%lu, streamsCount: %lu, roomID: %@", (unsigned long)updateType, (unsigned long)streamList.count, roomID]];
     [self updateStreamExtraInfo:streamList];
 }

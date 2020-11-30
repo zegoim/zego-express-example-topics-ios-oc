@@ -14,10 +14,13 @@
 
 @property (weak, nonatomic) IBOutlet UISwitch *speakerSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *hardwareDecoderSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *mutePlayStreamVideoSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *mutePlayStreamAudioSwitch;
 @property (weak, nonatomic) IBOutlet UISlider *playVolumeSlider;
 @property (weak, nonatomic) IBOutlet UILabel *playerVideoLayerValueLabel;
 @property (weak, nonatomic) IBOutlet UITextView *streamExtraInfoTextView;
 @property (weak, nonatomic) IBOutlet UITextView *roomExtraInfoTextView;
+@property (weak, nonatomic) IBOutlet UILabel *decryptionKeyLabel;
 
 @property (nonatomic, copy) NSDictionary<NSNumber *, NSString *> *videoLayerMap;
 
@@ -45,6 +48,8 @@
 - (void)setupUI {
     self.speakerSwitch.on = ![[ZegoExpressEngine sharedEngine] isSpeakerMuted];
     self.hardwareDecoderSwitch.on = _enableHardwareDecoder;
+    self.mutePlayStreamVideoSwitch.on = _mutePlayStreamVideo;
+    self.mutePlayStreamAudioSwitch.on = _mutePlayStreamAudio;
     self.playVolumeSlider.continuous = NO;
     self.playVolumeSlider.value = _playVolume;
     self.playerVideoLayerValueLabel.text = self.videoLayerMap[@(self.videoLayer)];
@@ -54,8 +59,11 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     self.presenter.enableHardwareDecoder = _enableHardwareDecoder;
+    self.presenter.mutePlayStreamVideo = _mutePlayStreamVideo;
+    self.presenter.mutePlayStreamAudio = _mutePlayStreamAudio;
     self.presenter.playVolume = _playVolume;
     self.presenter.videoLayer = _videoLayer;
+    self.presenter.decryptionKey = _decryptionKey;
 }
 
 - (IBAction)speakerSwitchValueChanged:(UISwitch *)sender {
@@ -69,6 +77,20 @@
     [[ZegoExpressEngine sharedEngine] enableHardwareDecoder:_enableHardwareDecoder];
 
     [self.presenter appendLog:[NSString stringWithFormat:@"🎛 HardwareDecoder %@", sender.on ? @"on 🟢" : @"off 🔴"]];
+}
+
+- (IBAction)mutePlayStreamVideoSwitchValueChanged:(UISwitch *)sender {
+    _mutePlayStreamVideo = sender.on;
+    [[ZegoExpressEngine sharedEngine] mutePlayStreamVideo:_mutePlayStreamVideo streamID:self.streamID];
+
+    [self.presenter appendLog:[NSString stringWithFormat:@"🙈 Mute play stream video, %@", sender.on ? @"mute 🔴" : @"unmute 🟢"]];
+}
+
+- (IBAction)mutePlayStreamAudioSwitchValueChanged:(UISwitch *)sender {
+    _mutePlayStreamAudio = sender.on;
+    [[ZegoExpressEngine sharedEngine] mutePlayStreamAudio:_mutePlayStreamAudio streamID:self.streamID];
+
+    [self.presenter appendLog:[NSString stringWithFormat:@"🙉 Mute play stream audio, %@", sender.on ? @"mute 🔴" : @"unmute 🟢"]];
 }
 
 - (IBAction)playVolumeSliderValueChanged:(UISlider *)sender {
@@ -102,6 +124,8 @@
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if ([cell.reuseIdentifier isEqualToString:@"PlayerVideoLayer"]) {
         [self presentSetPlayerVideoLayerAlertController];
+    } else if ([cell.reuseIdentifier isEqualToString:@"DecryptionKey"]) {
+        [self presentSetDecryptionKeyAlertController];
     }
 }
 
@@ -128,6 +152,37 @@
 
         }]];
     }
+
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)presentSetDecryptionKeyAlertController {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Set Decryption Key" message:@"Enter decryption key" preferredStyle:UIAlertControllerStyleAlert];
+
+    __weak typeof(self) weakSelf = self;
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        __strong typeof(self) strongSelf = weakSelf;
+        textField.placeholder = @"Decryption Key";
+        textField.text = strongSelf.decryptionKey;
+    }];
+
+    UIAlertAction *setAction = [UIAlertAction actionWithTitle:@"Set" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        __strong typeof(self) strongSelf = weakSelf;
+        UITextField *keyTextField = [alertController.textFields firstObject];
+
+        if (!keyTextField) return;
+
+        strongSelf.decryptionKey = keyTextField.text;
+
+        [strongSelf.presenter appendLog:[NSString stringWithFormat:@"🔐 Set decryption key: %@", strongSelf.decryptionKey]];
+        strongSelf.decryptionKeyLabel.text = [NSString stringWithFormat:@"%@", strongSelf.decryptionKey];
+
+        [[ZegoExpressEngine sharedEngine] setPlayStreamDecryptionKey:strongSelf.decryptionKey streamID:strongSelf.streamID];
+    }];
+
+    [alertController addAction:setAction];
 
     [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
 

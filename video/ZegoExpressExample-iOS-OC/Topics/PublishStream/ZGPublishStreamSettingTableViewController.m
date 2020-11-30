@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *mirrorValueLabel;
 @property (weak, nonatomic) IBOutlet UILabel *streamExtraInfoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *roomExtraInfoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *encryptionKeyLabel;
 
 @property (nonatomic, strong) ZegoVideoConfig *videoConfig;
 
@@ -71,6 +72,7 @@
     self.presenter.streamExtraInfo = _streamExtraInfo;
     self.presenter.roomExtraInfoKey = _roomExtraInfoKey;
     self.presenter.roomExtraInfoValue = _roomExtraInfoValue;
+    self.presenter.encryptionKey = _encryptionKey;
 }
 
 - (IBAction)cameraSwitchValueChanged:(UISwitch *)sender {
@@ -149,6 +151,9 @@
 
     } else if ([identifier isEqualToString:@"RoomExtraInfo"]) {
         [self presentSetRoomExtraInfoAlertController];
+
+    } else if ([identifier isEqualToString:@"EncryptionKey"]) {
+        [self presentSetEncryptionKeyAlertController];
 
     }
 }
@@ -405,6 +410,37 @@
                 strongSelf.roomExtraInfoLabel.text = [NSString stringWithFormat:@"k:%@,v:%@", strongSelf.roomExtraInfoKey, strongSelf.roomExtraInfoValue];
             }
         }];
+    }];
+
+    [alertController addAction:setAction];
+
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)presentSetEncryptionKeyAlertController {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Set Encryption Key" message:@"Enter encryption key" preferredStyle:UIAlertControllerStyleAlert];
+
+    __weak typeof(self) weakSelf = self;
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        __strong typeof(self) strongSelf = weakSelf;
+        textField.placeholder = @"Encryption Key";
+        textField.text = strongSelf.encryptionKey;
+    }];
+
+    UIAlertAction *setAction = [UIAlertAction actionWithTitle:@"Set" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        __strong typeof(self) strongSelf = weakSelf;
+        UITextField *keyTextField = [alertController.textFields firstObject];
+
+        if (!keyTextField) return;
+
+        strongSelf.encryptionKey = keyTextField.text;
+
+        [strongSelf.presenter appendLog:[NSString stringWithFormat:@"🔒 Set encryption key: %@", strongSelf.encryptionKey]];
+        strongSelf.encryptionKeyLabel.text = [NSString stringWithFormat:@"%@", strongSelf.encryptionKey];
+
+        [[ZegoExpressEngine sharedEngine] setPublishStreamEncryptionKey:strongSelf.encryptionKey];
     }];
 
     [alertController addAction:setAction];

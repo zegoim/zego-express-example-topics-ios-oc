@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ES0-h3-e7r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ES0-h3-e7r">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -594,6 +594,37 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="EncryptionKey" rowHeight="44" id="Xfc-6v-WIb">
+                                        <rect key="frame" x="0.0" y="600" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xfc-6v-WIb" id="rjh-cs-VJN">
+                                            <rect key="frame" x="0.0" y="0.0" width="344" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EncryptionKey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y4i-oR-lqH">
+                                                    <rect key="frame" x="20" y="14" width="88" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="72" id="Jz9-oV-hgS"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jXy-T2-ZE5">
+                                                    <rect key="frame" x="302.5" y="14" width="33.5" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="y4i-oR-lqH" firstAttribute="leading" secondItem="rjh-cs-VJN" secondAttribute="leading" constant="20" id="5Se-Ex-oqL"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="jXy-T2-ZE5" secondAttribute="trailing" id="8Bi-Ww-eAS"/>
+                                                <constraint firstItem="jXy-T2-ZE5" firstAttribute="centerY" secondItem="rjh-cs-VJN" secondAttribute="centerY" id="d76-o0-IUz"/>
+                                                <constraint firstItem="y4i-oR-lqH" firstAttribute="centerY" secondItem="rjh-cs-VJN" secondAttribute="centerY" id="qjm-GD-HOf"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -605,6 +636,7 @@
                         <outlet property="captureResolutionLabel" destination="CM7-WJ-2DZ" id="e3s-jg-BhG"/>
                         <outlet property="captureVolumeSlider" destination="XTS-Vk-LG2" id="jEv-H8-buF"/>
                         <outlet property="encodeResolutionLabel" destination="Az0-3B-6OS" id="oU4-MM-DTe"/>
+                        <outlet property="encryptionKeyLabel" destination="jXy-T2-ZE5" id="cQt-4k-hpp"/>
                         <outlet property="fpsValueLabel" destination="Acn-iV-SVa" id="0Qf-lb-u0f"/>
                         <outlet property="hardwareEncoderSwitch" destination="GmO-gO-D7m" id="Dh3-mg-lYM"/>
                         <outlet property="microphoneSwitch" destination="kZr-b7-nXT" id="3eM-L9-0w5"/>

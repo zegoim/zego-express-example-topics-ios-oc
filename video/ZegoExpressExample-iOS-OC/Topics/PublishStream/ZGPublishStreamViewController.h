@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *streamExtraInfo;
 @property (nonatomic, copy) NSString *roomExtraInfoKey;
 @property (nonatomic, copy) NSString *roomExtraInfoValue;
+@property (nonatomic, copy) NSString *encryptionKey;
 
 - (void)appendLog:(NSString *)tipText;
 
