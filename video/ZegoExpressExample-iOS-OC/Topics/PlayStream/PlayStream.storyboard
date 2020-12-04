@@ -35,10 +35,10 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cae-E5-7Uv">
-                                <rect key="frame" x="0.0" y="144" width="200" height="120"/>
+                                <rect key="frame" x="0.0" y="144" width="200" height="135"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b5Z-Ag-FpY">
-                                        <rect key="frame" x="0.0" y="0.0" width="5" height="120"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="5" height="135"/>
                                         <color key="backgroundColor" white="0.80000000000000004" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="5" id="40Y-GF-Y0c"/>
@@ -48,7 +48,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="djV-QU-u1W">
-                                        <rect key="frame" x="5" y="0.0" width="195" height="120"/>
+                                        <rect key="frame" x="5" y="0.0" width="195" height="135"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🔴 RoomState: Disconnected" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qmz-pz-nqY">
                                                 <rect key="frame" x="0.0" y="0.0" width="195" height="15"/>
@@ -106,16 +106,23 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AV TimestampDiff: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bda-bp-eRk">
+                                                <rect key="frame" x="0.0" y="120" width="195" height="15"/>
+                                                <color key="backgroundColor" white="0.80000000000000004" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="120" id="J1y-29-heG"/>
+                                    <constraint firstAttribute="height" constant="135" id="J1y-29-heG"/>
                                     <constraint firstAttribute="width" constant="200" id="Yy0-x9-vmW"/>
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eDY-Rv-JEt">
-                                <rect key="frame" x="0.0" y="264" width="414" height="250"/>
+                                <rect key="frame" x="0.0" y="279" width="414" height="250"/>
                                 <subviews>
                                     <textField opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Please enter room ID" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="OHv-ja-nI2">
                                         <rect key="frame" x="20" y="62.5" width="374" height="34"/>
@@ -210,6 +217,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="avTimestampDiffLabel" destination="bda-bp-eRk" id="mDP-rB-3wj"/>
                         <outlet property="bitrateLabel" destination="EgF-td-4cX" id="Fi5-vL-Idg"/>
                         <outlet property="fpsLabel" destination="zvq-Ov-a4E" id="Nlp-ZO-4Tj"/>
                         <outlet property="hardwareDecoderLabel" destination="hwu-wI-Og9" id="Zsa-Jv-aPX"/>

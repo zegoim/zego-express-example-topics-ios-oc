@@ -14,6 +14,12 @@
 NSString* const ZGRecordCaptureRoomID = @"ZGRecordCaptureRoomID";
 NSString* const ZGRecordCaptureStreamID = @"ZGRecordCaptureStreamID";
 
+typedef NS_ENUM(NSUInteger, ZGDemoRecordType) {
+    ZGDemoRecordTypeAAC,
+    ZGDemoRecordTypeFLV,
+    ZGDemoRecordTypeMP4,
+};
+
 @interface ZGRecordCaptureViewController ()<ZegoEventHandler, ZegoDataRecordEventHandler, UITextFieldDelegate, UIPopoverPresentationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *previewView;
 @property (weak, nonatomic) IBOutlet UITextView *logTextView;
@@ -37,6 +43,10 @@ NSString* const ZGRecordCaptureStreamID = @"ZGRecordCaptureStreamID";
 
 @property (nonatomic, assign) BOOL isRecording;
 
+@property (nonatomic, strong) UIBarButtonItem *recordTypeSwitchButton;
+@property (nonatomic, strong) NSDictionary<NSNumber *, NSString *> *recordTypeMap;
+@property (nonatomic, assign) ZGDemoRecordType selectedRecordType;
+
 @property (nonatomic) ZegoRoomState roomState;
 @property (nonatomic) ZegoPublisherState publisherState;
 @end
@@ -50,6 +60,14 @@ NSString* const ZGRecordCaptureStreamID = @"ZGRecordCaptureStreamID";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.recordTypeMap = @{
+        @(ZGDemoRecordTypeAAC): @"aac",
+        @(ZGDemoRecordTypeFLV): @"flv",
+        @(ZGDemoRecordTypeMP4): @"mp4",
+    };
+    // Record MP4 by default
+    self.selectedRecordType = ZGDemoRecordTypeMP4;
 
     [self setupUI];
     [self createEngine];
@@ -79,6 +97,9 @@ NSString* const ZGRecordCaptureStreamID = @"ZGRecordCaptureStreamID";
 
 - (void)setupUI {
     self.navigationItem.title = @"Record Capture";
+
+    self.recordTypeSwitchButton = [[UIBarButtonItem alloc] initWithTitle:@"RecordType" style:UIBarButtonItemStylePlain target:self action:@selector(selectRecordType:)];
+    self.navigationItem.rightBarButtonItem = self.recordTypeSwitchButton;
 
     self.logTextView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
     self.logTextView.textColor = [UIColor whiteColor];
@@ -156,11 +177,11 @@ NSString* const ZGRecordCaptureStreamID = @"ZGRecordCaptureStreamID";
     
     // Build record config
     ZegoDataRecordConfig *config = [[ZegoDataRecordConfig alloc] init];
-    config.filePath = [self recordCaptureFilePath];
+    config.filePath = [self recordCaptureFilePath:self.selectedRecordType];
     config.recordType = ZegoDataRecordTypeAudioAndVideo;
     
     // Start record
-    [self appendLog:@"🎥 Start record capture"];
+    [self appendLog:[NSString stringWithFormat:@"🎥 Start record capture, type: %@", self.recordTypeMap[@(self.selectedRecordType)]]];
     [[ZegoExpressEngine sharedEngine] startRecordingCapturedData:config channel:ZegoPublishChannelMain];
 }
 
@@ -169,10 +190,13 @@ NSString* const ZGRecordCaptureStreamID = @"ZGRecordCaptureStreamID";
     [[ZegoExpressEngine sharedEngine] stopRecordingCapturedData:ZegoPublishChannelMain];
 }
 
-- (NSString *)recordCaptureFilePath {
+- (NSString *)recordCaptureFilePath:(ZGDemoRecordType)recordType {
     NSArray *docPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *documentsPath = [docPath objectAtIndex:0];
-    return [documentsPath stringByAppendingPathComponent:@"ZGRecordCapture.mp4"];
+
+    NSString *fileName = [NSString stringWithFormat:@"ZGRecordCapture.%@", self.recordTypeMap[@(recordType)]];
+
+    return [documentsPath stringByAppendingPathComponent:fileName];
 }
 
 - (void)startLive {
@@ -214,6 +238,22 @@ NSString* const ZGRecordCaptureStreamID = @"ZGRecordCaptureStreamID";
 }
 
 #pragma mark - Helper
+
+// Triggered by `recordTypeSwitchButton`
+- (void)selectRecordType:(id)sender {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Set Record Type" message:@"Support Audio(aac) or Video(mp4/flv)" preferredStyle:UIAlertControllerStyleActionSheet];
+
+    __weak typeof(self) weakSelf = self;
+    for (NSNumber *index in self.recordTypeMap) {
+        [alertController addAction:[UIAlertAction actionWithTitle:self.recordTypeMap[index].uppercaseString style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            __strong typeof(self) strongSelf = weakSelf;
+            strongSelf.selectedRecordType = (ZGDemoRecordType)index.unsignedIntValue;
+            [strongSelf appendLog:[NSString stringWithFormat:@"⚙️ Select record type: %@", self.recordTypeMap[@(self.selectedRecordType)]]];
+        }]];
+    }
+
+    [self presentViewController:alertController animated:YES completion:nil];
+}
 
 - (void)invalidateLiveStateUILayout {
     if (self.roomState == ZegoRoomStateConnected &&

@@ -529,6 +529,14 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
     [self.manager stopAudioSpectrumMonitor];
 }
 
+- (IBAction)startPerformanceMonitor:(UIButton *)sender {
+    [self.manager startPerformanceMonitor];
+}
+
+- (IBAction)stopPerformanceMonitor:(UIButton *)sender {
+    [self.manager stopPerformanceMonitor];
+}
+
 #pragma mark Mixer
 
 - (IBAction)startMixerTaskClick:(UIButton *)sender {

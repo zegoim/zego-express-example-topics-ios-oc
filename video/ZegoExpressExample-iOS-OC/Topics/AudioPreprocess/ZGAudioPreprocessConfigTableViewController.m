@@ -20,10 +20,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *voiceChangerPitchLabel;
 @property (weak, nonatomic) IBOutlet UISlider *voiceChangerPitchSlider;
 
+// Virtual Stereo
+@property (weak, nonatomic) IBOutlet UISwitch *virtualStereoEnableSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *virtualStereoAngleLabel;
+@property (weak, nonatomic) IBOutlet UISlider *virtualStereoAngleSlider;
+
 
 // Reverb
 @property (nonatomic, copy) NSArray<NSString *> *reverbPresetList;
-@property (nonatomic, strong) ZegoReverbParam *reverbParam;
+@property (nonatomic, strong) ZegoReverbAdvancedParam *reverbParam;
 @property (weak, nonatomic) IBOutlet UIPickerView *reverbPresetPicker;
 @property (weak, nonatomic) IBOutlet UISwitch *reverbEnableCustomSwitch;
 
@@ -35,17 +40,26 @@
 @property (weak, nonatomic) IBOutlet UISlider *reverbDampingSlider;
 @property (weak, nonatomic) IBOutlet UILabel *reverbDryWetRatioLabel;
 @property (weak, nonatomic) IBOutlet UISlider *reverbDryWetRatioSlider;
+@property (weak, nonatomic) IBOutlet UILabel *reverbWetOnlyLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *reverbWetOnlySwitch;
+@property (weak, nonatomic) IBOutlet UILabel *reverbWetGainLabel;
+@property (weak, nonatomic) IBOutlet UISlider *reverbWetGainSlider;
+@property (weak, nonatomic) IBOutlet UILabel *reverbDryGainLabel;
+@property (weak, nonatomic) IBOutlet UISlider *reverbDryGainSlider;
+@property (weak, nonatomic) IBOutlet UILabel *reverbToneLowLabel;
+@property (weak, nonatomic) IBOutlet UISlider *reverbToneLowSlider;
+@property (weak, nonatomic) IBOutlet UILabel *reverbToneHighLabel;
+@property (weak, nonatomic) IBOutlet UISlider *reverbToneHighSlider;
+@property (weak, nonatomic) IBOutlet UILabel *reverbStereoWidthLabel;
+@property (weak, nonatomic) IBOutlet UISlider *reverbStereoWidthSlider;
+@property (weak, nonatomic) IBOutlet UILabel *reverbPreDelayLabel;
+@property (weak, nonatomic) IBOutlet UISlider *reverbPreDelaySlider;
+
 
 
 // Reverb Echo
 @property (nonatomic, copy) NSDictionary<NSString *, ZegoReverbEchoParam *> *reverbEchoCustomParams;
 @property (weak, nonatomic) IBOutlet UIPickerView *reverbEchoCustomParamsPicker;
-
-
-// Virtual Stereo
-@property (weak, nonatomic) IBOutlet UISwitch *virtualStereoEnableSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *virtualStereoAngleLabel;
-@property (weak, nonatomic) IBOutlet UISlider *virtualStereoAngleSlider;
 
 
 @end
@@ -55,14 +69,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.voiceChangerPresetList = @[@"None", @"MenToChild", @"MenToWomen", @"WomenToChild", @"WomenToMen", @"Foreigner", @"OptimusPrime", @"Android", @"Ethereal"];
+    self.voiceChangerPresetList = @[@"None", @"MenToChild", @"MenToWomen", @"WomenToChild", @"WomenToMen", @"Foreigner", @"OptimusPrime", @"Android", @"Ethereal", @"MaleMagnetic", @"FemaleFresh"];
     self.voiceChangerPresetPicker.dataSource = self;
     self.voiceChangerPresetPicker.delegate = self;
 
-    self.reverbPresetList = @[@"None", @"SoftRoom", @"LargeRoom", @"ConcerHall", @"Valley"];
+    self.reverbPresetList = @[@"None", @"SoftRoom", @"LargeRoom", @"ConcerHall", @"Valley", @"RecordingStudio", @"Basement", @"KTV", @"Popular", @"Rock", @"VocalConcert"];
     self.reverbPresetPicker.dataSource = self;
     self.reverbPresetPicker.delegate = self;
-    self.reverbParam = [[ZegoReverbParam alloc] init];
+    self.reverbParam = [[ZegoReverbAdvancedParam alloc] init];
 
     self.reverbEchoCustomParamsPicker.dataSource = self;
     self.reverbEchoCustomParamsPicker.delegate = self;
@@ -82,11 +96,26 @@
     self.reverbReverberanceSlider.enabled = NO;
     self.reverbDampingSlider.enabled = NO;
     self.reverbDryWetRatioSlider.enabled = NO;
+    self.reverbWetOnlySwitch.enabled = NO;
+    self.reverbWetGainSlider.enabled = NO;
+    self.reverbDryGainSlider.enabled = NO;
+    self.reverbToneLowSlider.enabled = NO;
+    self.reverbToneHighSlider.enabled = NO;
+    self.reverbPreDelaySlider.enabled = NO;
+    self.reverbStereoWidthSlider.enabled = NO;
+    
     self.reverbRoomSizeLabel.text = @"RoomSize";
     self.reverbReverberanceLabel.text = @"Reverberance";
     self.reverbDampingLabel.text = @"Damping";
     self.reverbDryWetRatioLabel.text = @"DryWetRatio";
-
+    self.reverbWetOnlyLabel.text = @"WetOnly";
+    self.reverbWetGainLabel.text = @"WetGain";
+    self.reverbDryGainLabel.text = @"DryGain";
+    self.reverbToneLowLabel.text = @"ToneLow";
+    self.reverbToneHighLabel.text = @"ToneHigh";
+    self.reverbPreDelayLabel.text = @"PreDelay";
+    self.reverbStereoWidthLabel.text = @"StereoWidth";
+    
     self.virtualStereoAngleSlider.enabled = NO;
     self.virtualStereoAngleLabel.text = @"Angle";
 }
@@ -137,6 +166,32 @@
     [[ZegoExpressEngine sharedEngine] setVoiceChangerParam:param];
 }
 
+#pragma mark - Virtual Stereo
+
+- (IBAction)virtualStereoSwitchValueChanged:(UISwitch *)sender {
+    self.virtualStereoAngleSlider.enabled = sender.on;
+    self.virtualStereoAngleSlider.value = 90.0;
+
+    self.virtualStereoAngleLabel.text = sender.on ? @"Angle: 90°" : @"Angle";
+
+    [self virtualStereoParamsDidChanged];
+}
+
+- (IBAction)virtualStereoSliderValueChanged:(UISlider *)sender {
+    self.virtualStereoAngleLabel.text = [NSString stringWithFormat:@"Angle: %d°", (int)sender.value];
+}
+
+- (IBAction)virtualStereoSliderTouchUp:(UISlider *)sender {
+    [self virtualStereoParamsDidChanged];
+}
+
+- (void)virtualStereoParamsDidChanged {
+    BOOL enable = self.virtualStereoEnableSwitch.on;
+    int angle = (int)self.virtualStereoAngleSlider.value;
+    ZGLogInfo(@"🎶 Set virtual stereo, enable: %@, angle: %d", enable ? @"YES" : @"NO", angle);
+    [[ZegoExpressEngine sharedEngine] enableVirtualStereo:enable angle:angle];
+}
+
 #pragma mark - Reverb
 
 // Triggered by reverb picker view
@@ -153,11 +208,24 @@
     self.reverbReverberanceSlider.enabled = sender.on;
     self.reverbDampingSlider.enabled = sender.on;
     self.reverbDryWetRatioSlider.enabled = sender.on;
+    self.reverbWetOnlySwitch.enabled = sender.on;
+    self.reverbWetGainSlider.enabled = sender.on;
+    self.reverbDryGainSlider.enabled = sender.on;
+    self.reverbToneLowSlider.enabled = sender.on;
+    self.reverbToneHighSlider.enabled = sender.on;
+    self.reverbPreDelaySlider.enabled = sender.on;
+    self.reverbStereoWidthSlider.enabled = sender.on;
 
     self.reverbRoomSizeSlider.value = 0.0;
     self.reverbReverberanceSlider.value = 0.0;
     self.reverbDampingSlider.value = 0.0;
     self.reverbDryWetRatioSlider.value = 0.0;
+    self.reverbWetGainSlider.value = 0.0;
+    self.reverbDryGainSlider.value = 0.0;
+    self.reverbToneLowSlider.value = 100.0;
+    self.reverbToneHighSlider.value = 100.0;
+    self.reverbPreDelaySlider.value = 0.0;
+    self.reverbStereoWidthSlider.value = 0.0;
 
     [self clearReverbParam];
 
@@ -168,6 +236,12 @@
     self.reverbReverberanceLabel.text = sender.on ? @"Reverberance: 0.00" : @"Reverberance";
     self.reverbDampingLabel.text = sender.on ? @"Damping: 0.00" : @"Damping";
     self.reverbDryWetRatioLabel.text = sender.on ? @"DryWetRatio: 0.00" : @"DryWetRatio";
+    self.reverbWetGainLabel.text = sender.on ? @"WetGain: 0.00" : @"WetGain";
+    self.reverbDryGainLabel.text = sender.on ? @"DryGain: 0.00" : @"DryGain";
+    self.reverbToneLowLabel.text = sender.on ? @"ToneLow: 0.00" : @"ToneLow";
+    self.reverbToneHighLabel.text = sender.on ? @"ToneHigh: 0.00" : @"ToneHigh";
+    self.reverbStereoWidthLabel.text = sender.on ? @"StereoWidth: 0.00" : @"StereoWidth";
+    self.reverbPreDelayLabel.text = sender.on ? @"PreDelay: 0.00" : @"PreDelay";
 }
 
 - (IBAction)reverbParamsSliderValueChanged:(UISlider *)sender {
@@ -182,6 +256,18 @@
 
     } else if (sender == self.reverbDryWetRatioSlider) {
         self.reverbDryWetRatioLabel.text = [NSString stringWithFormat:@"DryWetRatio: %.2f", sender.value];
+    } else if (sender == self.reverbWetGainSlider) {
+        self.reverbWetGainLabel.text = [NSString stringWithFormat:@"WetGain: %.2f", sender.value];
+    } else if (sender == self.reverbDryGainSlider) {
+        self.reverbDryGainLabel.text = [NSString stringWithFormat:@"DryGain: %.2f", sender.value];
+    } else if (sender == self.reverbToneLowSlider) {
+        self.reverbToneLowLabel.text = [NSString stringWithFormat:@"ToneLow: %.2f", sender.value];
+    } else if (sender == self.reverbToneHighSlider) {
+        self.reverbToneHighLabel.text = [NSString stringWithFormat:@"ToneHigh: %.2f", sender.value];
+    } else if (sender == self.reverbPreDelaySlider) {
+        self.reverbPreDelayLabel.text = [NSString stringWithFormat:@"PreDelay: %.2f", sender.value];
+    } else if (sender == self.reverbStereoWidthSlider) {
+        self.reverbStereoWidthLabel.text = [NSString stringWithFormat:@"StereoWidth: %.2f", sender.value];
     }
 }
 
@@ -198,24 +284,59 @@
         ZGLogInfo(@"🎼 Update reverb param damping: %.2f", sender.value);
         self.reverbParam.damping = sender.value;
 
-    } else if (sender == self.reverbDryWetRatioSlider) {
+    } /*else if (sender == self.reverbDryWetRatioSlider) {
         ZGLogInfo(@"🎼 Update reverb param dry wet ratio: %.2f", sender.value);
         self.reverbParam.dryWetRatio = sender.value;
+    }*/
+    else if(sender == self.reverbWetGainSlider) {
+        ZGLogInfo(@"🎼 Update reverb param wet gain: %.2f", sender.value);
+        self.reverbParam.wetGain = sender.value;
+    } else if(sender == self.reverbDryGainSlider) {
+        ZGLogInfo(@"🎼 Update reverb param dry gain: %.2f", sender.value);
+        self.reverbParam.dryGain = sender.value;
+    } else if(sender == self.reverbToneLowSlider) {
+        ZGLogInfo(@"🎼 Update reverb param tone low: %.2f", sender.value);
+        self.reverbParam.toneLow = sender.value;
+    } else if(sender == self.reverbToneHighSlider) {
+        ZGLogInfo(@"🎼 Update reverb param tone high: %.2f", sender.value);
+        self.reverbParam.toneHigh = sender.value;
+    } else if(sender == self.reverbPreDelaySlider) {
+        ZGLogInfo(@"🎼 Update reverb param pre delay: %.2f", sender.value);
+        self.reverbParam.preDelay = sender.value;
+    } else if(sender == self.reverbStereoWidthSlider) {
+        ZGLogInfo(@"🎼 Update reverb param stereo: %.2f", sender.value);
+        self.reverbParam.stereoWidth = sender.value;
     }
+    
 
     [self updateReverbParam];
 }
 
+- (IBAction)reverbWetOnlySwitchChanged:(UISwitch *)sender {
+    ZGLogInfo(@"🎼 Update reverb param wet only: %@", sender.on ? @"YES" : @"NO");
+    self.reverbParam.wetOnly = sender.on;
+    
+    [self updateReverbParam];
+}
+
+
 - (void)updateReverbParam {
     ZGLogInfo(@"🎼 Set reverb param");
-    [[ZegoExpressEngine sharedEngine] setReverbParam:self.reverbParam];
+    [[ZegoExpressEngine sharedEngine] setReverbAdvancedParam:self.reverbParam];
 }
 
 - (void)clearReverbParam {
     self.reverbParam.roomSize = 0.0;
     self.reverbParam.reverberance = 0.0;
     self.reverbParam.damping = 0.0;
-    self.reverbParam.dryWetRatio = 0.0;
+    self.reverbParam.wetOnly = NO;
+    self.reverbParam.wetGain = 0.0;
+    self.reverbParam.dryGain = 0.0;
+    self.reverbParam.toneLow = 100.0;
+    self.reverbParam.toneHigh = 100.0;
+    self.reverbParam.stereoWidth = 0.0;
+    self.reverbParam.preDelay = 0.0;
+    //self.reverbParam.dryWetRatio = 0.0;
 }
 
 
@@ -272,32 +393,6 @@
         };
     }
     return _reverbEchoCustomParams;
-}
-
-#pragma mark - Virtual Stereo
-
-- (IBAction)virtualStereoSwitchValueChanged:(UISwitch *)sender {
-    self.virtualStereoAngleSlider.enabled = sender.on;
-    self.virtualStereoAngleSlider.value = 90.0;
-
-    self.virtualStereoAngleLabel.text = sender.on ? @"Angle: 90°" : @"Angle";
-
-    [self virtualStereoParamsDidChanged];
-}
-
-- (IBAction)virtualStereoSliderValueChanged:(UISlider *)sender {
-    self.virtualStereoAngleLabel.text = [NSString stringWithFormat:@"Angle: %d°", (int)sender.value];
-}
-
-- (IBAction)virtualStereoSliderTouchUp:(UISlider *)sender {
-    [self virtualStereoParamsDidChanged];
-}
-
-- (void)virtualStereoParamsDidChanged {
-    BOOL enable = self.virtualStereoEnableSwitch.on;
-    int angle = (int)self.virtualStereoAngleSlider.value;
-    ZGLogInfo(@"🎶 Set virtual stereo, enable: %@, angle: %d", enable ? @"YES" : @"NO", angle);
-    [[ZegoExpressEngine sharedEngine] enableVirtualStereo:enable angle:angle];
 }
 
 #pragma mark - UIPickerView delegate/datasource

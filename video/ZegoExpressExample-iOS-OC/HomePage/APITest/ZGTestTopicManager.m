@@ -402,6 +402,18 @@
     [self.dataSource onActionLog:@"🎼 Stop audio spectrum monitor"];
 }
 
+- (void)startPerformanceMonitor {
+    [self.engine startPerformanceMonitor:2000];
+    ZGLogInfo(@"🖥 Start performance monitor");
+    [self.dataSource onActionLog:@"🖥 Start performance monitor"];
+}
+
+- (void)stopPerformanceMonitor {
+    [self.engine stopPerformanceMonitor];
+    ZGLogInfo(@"🖥 Stop performance monitor");
+    [self.dataSource onActionLog:@"🖥 Stop performance monitor"];
+}
+
 #pragma mark Mixer
 
 - (void)startMixerTask:(ZegoMixerTask *)task {
@@ -584,6 +596,13 @@
     ZGLogInfo(@"🚩 📩 IM Recv Custom Command Callback: command: %@, fromUserID: %@, roomID: %@", command, fromUser.userID, roomID);
     [self.dataSource onActionLog:[NSString stringWithFormat:@"📩 Received Custom Command"]];
     [self.dataSource onActionLog:[NSString stringWithFormat:@"📩 [%@] --- from %@", command, fromUser.userID]];
+}
+
+#pragma mark Device Callback
+
+- (void)onPerformanceStatusUpdate:(ZegoPerformanceStatus *)status {
+    ZGLogInfo(@"🚩 🖥 Performance Status Update: CPU-App:%.4f, CPU-Sys:%.4f, MemApp:%.4f, MemSys:%.4f, MemUsedApp:%.1fMB", status.cpuUsageApp, status.cpuUsageSystem, status.memoryUsageApp, status.memoryUsageSystem, status.memoryUsedApp);
+    [self.dataSource onActionLog:[NSString stringWithFormat:@"🚩 🖥 Performance Status Update: CPU-App:%.4f, CPU-Sys:%.4f, MemApp:%.4f, MemSys:%.1f, MemUsedApp:%.1fMB", status.cpuUsageApp, status.cpuUsageSystem, status.memoryUsageApp, status.memoryUsageSystem, status.memoryUsedApp]];
 }
 
 @end

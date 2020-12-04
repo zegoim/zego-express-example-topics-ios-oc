@@ -204,6 +204,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)stopAudioSpectrumMonitor;
 
 
+- (void)startPerformanceMonitor;
+
+
+- (void)stopPerformanceMonitor;
+
+
 #pragma mark - Mixer
 
 

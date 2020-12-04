@@ -38,6 +38,7 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
 @property (weak, nonatomic) IBOutlet UILabel *fpsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *hardwareDecoderLabel;
 @property (weak, nonatomic) IBOutlet UILabel *networkQualityLabel;
+@property (weak, nonatomic) IBOutlet UILabel *avTimestampDiffLabel;
 
 // For setting view controller
 @property (nonatomic, strong) ZegoCanvas *canvas;
@@ -116,6 +117,7 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
     self.fpsLabel.text = @"FPS:";
     self.hardwareDecoderLabel.text = @"HardwareDecode:";
     self.networkQualityLabel.text = @"NetworkQuality:";
+    self.avTimestampDiffLabel.text = @"AV TimestampDiff:";
 }
 
 #pragma mark - Actions
@@ -399,6 +401,7 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
     self.fpsLabel.text = [NSString stringWithFormat:@"FPS: %d fps \n", (int)quality.videoRecvFPS];
     self.hardwareDecoderLabel.text = [NSString stringWithFormat:@"HardwareDecode: %@ \n", quality.isHardwareDecode ? @"✅" : @"❎"];
     self.networkQualityLabel.text = [NSString stringWithFormat:@"NetworkQuality: %@", networkQuality];
+    self.avTimestampDiffLabel.text = [NSString stringWithFormat:@"AV TimestampDiff: %d ms", quality.avTimestampDiff];
 }
 
 @end
