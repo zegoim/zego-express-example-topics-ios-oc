@@ -40,9 +40,6 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
 @property (weak, nonatomic) IBOutlet UILabel *networkQualityLabel;
 @property (weak, nonatomic) IBOutlet UILabel *avTimestampDiffLabel;
 
-// For setting view controller
-@property (nonatomic, strong) ZegoCanvas *canvas;
-
 @property (nonatomic, copy) NSString *roomID;
 @property (nonatomic, copy) NSString *streamID;
 
@@ -164,7 +161,6 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
 
     // Start playing
     ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:self.playView];
-    self.canvas = playCanvas;
 
     [[ZegoExpressEngine sharedEngine] startPlayingStream:self.streamID canvas:playCanvas];
 
@@ -181,8 +177,6 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
     [self appendLog:@"🚪 Logout room"];
 
     [self resetQualityLabelText];
-
-    self.canvas = nil;
 }
 
 
@@ -262,7 +256,6 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
     vc.playVolume = _playVolume;
     vc.streamExtraInfo = _streamExtraInfo;
     vc.roomExtraInfo = _roomExtraInfo;
-    vc.canvas = _canvas;
     vc.videoLayer = _videoLayer;
     vc.decryptionKey = _decryptionKey;
 

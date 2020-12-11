@@ -137,19 +137,12 @@
     for (NSNumber *key in self.videoLayerMap) {
         [alertController addAction:[UIAlertAction actionWithTitle:self.videoLayerMap[key] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             __strong typeof(self) strongSelf = weakSelf;
+
             strongSelf.playerVideoLayerValueLabel.text = strongSelf.videoLayerMap[key];
-
             strongSelf.videoLayer = (ZegoPlayerVideoLayer)key.intValue;
-            ZegoPlayerConfig *playerConfig = [[ZegoPlayerConfig alloc] init];
-            playerConfig.videoLayer = strongSelf.videoLayer;
 
-            if (strongSelf.canvas) {
-                [[ZegoExpressEngine sharedEngine] startPlayingStream:strongSelf.streamID canvas:strongSelf.canvas config:playerConfig];
-                [strongSelf.presenter appendLog:[NSString stringWithFormat:@"🏞 Set player video layer: %d", (int)strongSelf.videoLayer]];
-            } else {
-                [strongSelf.presenter appendLog:@"🏞 Set player video layer failed, not playing"];
-            }
-
+            [[ZegoExpressEngine sharedEngine] setPlayStreamVideoLayer:strongSelf.videoLayer streamID:strongSelf.streamID];
+            [strongSelf.presenter appendLog:[NSString stringWithFormat:@"🏞 Set player video layer: %d", (int)strongSelf.videoLayer]];
         }]];
     }
 

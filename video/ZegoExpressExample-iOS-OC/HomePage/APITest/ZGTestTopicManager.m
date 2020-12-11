@@ -196,7 +196,11 @@
 
 
 - (void)addPublishCdnUrl:(NSString *)targetURL streamID:(NSString *)streamID callback:(nullable ZegoPublisherUpdateCdnUrlCallback)callback {
+    __weak typeof(self) weakSelf = self;
     [self.engine addPublishCdnUrl:targetURL streamID:streamID callback:^(int errorCode) {
+        __strong typeof(self) strongSelf = weakSelf;
+        ZGLogInfo(@"🚩 🔗 Add publish cdn url result: %d", errorCode);
+        [strongSelf.dataSource onActionLog:[NSString stringWithFormat:@"🚩 🔗 Add publish cdn url result: %d", errorCode]];
         if (callback) {
             callback(errorCode);
         }
@@ -207,7 +211,11 @@
 
 
 - (void)removePublishCdnUrl:(NSString *)targetURL streamID:(NSString *)streamID callback:(nullable ZegoPublisherUpdateCdnUrlCallback)callback {
+    __weak typeof(self) weakSelf = self;
     [self.engine removePublishCdnUrl:targetURL streamID:streamID callback:^(int errorCode) {
+        __strong typeof(self) strongSelf = weakSelf;
+        ZGLogInfo(@"🚩 🔗 Remove publish cdn url result: %d", errorCode);
+        [strongSelf.dataSource onActionLog:[NSString stringWithFormat:@"🚩 🔗 Remove publish cdn url result: %d", errorCode]];
         if (callback) {
             callback(errorCode);
         }
@@ -418,15 +426,23 @@
 
 - (void)startMixerTask:(ZegoMixerTask *)task {
     ZGLogInfo(@"🧬 Start mixer task");
+    [self.dataSource onActionLog:@"🧬 Start mixer task"];
+    __weak typeof(self) weakSelf = self;
     [self.engine startMixerTask:task callback:^(int errorCode, NSDictionary * _Nullable extendedData) {
+        __strong typeof(self) strongSelf = weakSelf;
         ZGLogInfo(@"🚩 🧬 Start mixer task result errorCode: %d", errorCode);
+        [strongSelf.dataSource onActionLog:[NSString stringWithFormat:@"🚩 🧬 Start mixer task result errorCode: %d", errorCode]];
     }];
 }
 
 - (void)stopMixerTask:(ZegoMixerTask *)task {
     ZGLogInfo(@"🧬 Stop mixer task");
+    [self.dataSource onActionLog:@"🧬 Stop mixer task"];
+    __weak typeof(self) weakSelf = self;
     [self.engine stopMixerTask:task callback:^(int errorCode) {
+        __strong typeof(self) strongSelf = weakSelf;
         ZGLogInfo(@"🚩 🧬 Stop mixer task result errorCode: %d", errorCode);
+        [strongSelf.dataSource onActionLog:[NSString stringWithFormat:@"🚩 🧬 Stop mixer task result errorCode: %d", errorCode]];
     }];
 }
 
@@ -502,6 +518,9 @@
 
 - (void)onPublisherRelayCDNStateUpdate:(NSArray<ZegoStreamRelayCDNInfo *> *)streamInfoList streamID:(NSString *)streamID {
     ZGLogInfo(@"🚩 📡 Publisher Relay CDN State Update Callback: Relaying CDN Count: %lu, streamID: %@", (unsigned long)streamInfoList.count, streamID);
+    for (ZegoStreamRelayCDNInfo *info in streamInfoList) {
+        ZGLogInfo(@"🚩 📡 --- state: %d, reason: %d, url: %@", (int)info.state, (int)info.updateReason, info.url);
+    }
 }
 
 #pragma mark Player Callback

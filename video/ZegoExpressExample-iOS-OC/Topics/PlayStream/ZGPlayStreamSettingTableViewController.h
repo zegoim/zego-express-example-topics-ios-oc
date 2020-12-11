@@ -20,7 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) ZGPlayStreamViewController *presenter;
 @property (nonatomic, copy) NSString *streamID;
-@property (nonatomic, strong) ZegoCanvas *canvas;
 
 @property (nonatomic, assign) BOOL enableHardwareDecoder;
 @property (nonatomic, assign) BOOL mutePlayStreamVideo;
