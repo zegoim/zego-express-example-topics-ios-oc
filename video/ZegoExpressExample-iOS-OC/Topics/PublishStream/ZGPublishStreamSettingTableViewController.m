@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UISwitch *speakerSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *hardwareEncoderSwitch;
 @property (weak, nonatomic) IBOutlet UISlider *captureVolumeSlider;
+@property (weak, nonatomic) IBOutlet UISlider *zoomFactorSlider;
+@property (weak, nonatomic) IBOutlet UILabel *zoomFactorLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *captureResolutionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *encodeResolutionLabel;
@@ -53,8 +55,14 @@
     self.microphoneSwitch.on = ![[ZegoExpressEngine sharedEngine] isMicrophoneMuted];
     self.speakerSwitch.on = ![[ZegoExpressEngine sharedEngine] isSpeakerMuted];
     self.hardwareEncoderSwitch.on = _enableHardwareEncoder;
+
     self.captureVolumeSlider.continuous = NO;
     self.captureVolumeSlider.value = _captureVolume;
+
+    self.zoomFactorSlider.continuous = YES;
+    self.zoomFactorSlider.maximumValue = _maxZoomFactor;
+    self.zoomFactorSlider.minimumValue = 1.0;
+    self.zoomFactorSlider.value = _currentZoomFactor;
 
     self.captureResolutionLabel.text = [NSString stringWithFormat:@"%d x %d", (int)_videoConfig.captureResolution.width, (int)_videoConfig.captureResolution.height];
     self.encodeResolutionLabel.text = [NSString stringWithFormat:@"%d x %d", (int)_videoConfig.encodeResolution.width, (int)_videoConfig.encodeResolution.height];
@@ -69,6 +77,7 @@
     self.presenter.enableCamera = _enableCamera;
     self.presenter.enableHardwareEncoder = _enableHardwareEncoder;
     self.presenter.captureVolume = _captureVolume;
+    self.presenter.currentZoomFactor = _currentZoomFactor;
     self.presenter.streamExtraInfo = _streamExtraInfo;
     self.presenter.roomExtraInfoKey = _roomExtraInfoKey;
     self.presenter.roomExtraInfoValue = _roomExtraInfoValue;
@@ -106,6 +115,17 @@
     [[ZegoExpressEngine sharedEngine] setCaptureVolume:_captureVolume];
 
     [self.presenter appendLog:[NSString stringWithFormat:@"🔊 Set capture volume: %d", _captureVolume]];
+}
+
+- (IBAction)zoomFactorSliderValueChanged:(UISlider *)sender {
+    self.zoomFactorLabel.text = [NSString stringWithFormat:@"Zoom:%.1f", sender.value];
+}
+
+- (IBAction)zoomFactorSliderTouchUp:(UISlider *)sender {
+    _currentZoomFactor = sender.value;
+    [[ZegoExpressEngine sharedEngine] setCameraZoomFactor:_currentZoomFactor];
+
+    [self.presenter appendLog:[NSString stringWithFormat:@"📷 Set camera zoom factor: %.1f", _currentZoomFactor]];
 }
 
 - (IBAction)takePublishStreamSnapshotButtonClick:(UIButton *)sender {

@@ -629,6 +629,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SYMROOT = DerivedData/Build/Products;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_WORKSPACE = YES;
 			};
 			name = Debug;
 		};
@@ -657,6 +658,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SYMROOT = DerivedData/Build/Products;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_WORKSPACE = YES;
 			};
 			name = Release;
 		};

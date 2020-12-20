@@ -61,6 +61,7 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
     self.enableCamera = YES;
     self.enableHardwareEncoder = NO;
     self.captureVolume = 100;
+    self.currentZoomFactor = 1.0;
 
     // Support landscape
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] setRestrictRotation:UIInterfaceOrientationMaskAllButUpsideDown];
@@ -274,6 +275,8 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
     vc.enableCamera = _enableCamera;
     vc.enableHardwareEncoder = _enableHardwareEncoder;
     vc.captureVolume = _captureVolume;
+    vc.maxZoomFactor = _maxZoomFactor;
+    vc.currentZoomFactor = _currentZoomFactor;
     vc.roomID = _roomID;
     vc.streamExtraInfo = _streamExtraInfo;
     vc.roomExtraInfoKey = _roomExtraInfoKey;
@@ -435,6 +438,8 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
 
 - (void)onPublisherCapturedVideoFirstFrame:(ZegoPublishChannel)channel {
     [self appendLog:@"🚩 📷 onPublisherCapturedVideoFirstFrame"];
+    self.maxZoomFactor = [[ZegoExpressEngine sharedEngine] getCameraMaxZoomFactor];
+    [self appendLog:[NSString stringWithFormat:@"📷 cameraMaxZoomFactor: %.1f", self.maxZoomFactor]];
 }
 
 - (void)onPublisherVideoSizeChanged:(CGSize)size channel:(ZegoPublishChannel)channel {
