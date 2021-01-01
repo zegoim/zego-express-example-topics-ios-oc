@@ -29,16 +29,12 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
 @property (weak, nonatomic) IBOutlet UIButton *stopLiveButton;
 @property (nonatomic, strong) UIBarButtonItem *settingButton;
 
+
 @property (weak, nonatomic) IBOutlet UILabel *roomStateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *playerStateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *roomIDAndStreamIDLabel;
-
-@property (weak, nonatomic) IBOutlet UILabel *resolutionLabel;
-@property (weak, nonatomic) IBOutlet UILabel *bitrateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *fpsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *hardwareDecoderLabel;
-@property (weak, nonatomic) IBOutlet UILabel *networkQualityLabel;
-@property (weak, nonatomic) IBOutlet UILabel *avTimestampDiffLabel;
+@property (weak, nonatomic) IBOutlet UILabel *playResolutionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *playQualityLabel;
 
 @property (nonatomic, copy) NSString *roomID;
 @property (nonatomic, copy) NSString *streamID;
@@ -65,6 +61,8 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
     self.mutePlayStreamVideo = NO;
     self.mutePlayStreamAudio = NO;
     self.playVolume = 100;
+    self.videoLayer = ZegoPlayerVideoLayerAuto;
+    self.resourceMode = ZegoStreamResourceModeDefault;
 }
 
 - (void)dealloc {
@@ -93,6 +91,25 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
 
     self.navigationItem.rightBarButtonItem = self.settingButton;
 
+    self.logTextView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
+    self.logTextView.textColor = [UIColor whiteColor];
+
+    self.roomStateLabel.text = @"🔴 RoomState: Disconnected";
+    self.roomStateLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
+    self.roomStateLabel.textColor = [UIColor whiteColor];
+
+    self.playerStateLabel.text = @"🔴 PlayerState: NoPlay";
+    self.playerStateLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
+    self.playerStateLabel.textColor = [UIColor whiteColor];
+
+    self.playResolutionLabel.text = @"";
+    self.playResolutionLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
+    self.playResolutionLabel.textColor = [UIColor whiteColor];
+
+    self.playQualityLabel.text = @"";
+    self.playQualityLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
+    self.playQualityLabel.textColor = [UIColor whiteColor];
+
     self.stopLiveButton.alpha = 0;
     self.startPlayConfigView.alpha = 1;
 
@@ -104,17 +121,9 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
     self.streamIDTextField.text = self.streamID;
     self.streamIDTextField.delegate = self;
 
-    [self resetQualityLabelText];
-}
-
-- (void)resetQualityLabelText {
     self.roomIDAndStreamIDLabel.text = [NSString stringWithFormat:@"RoomID: | StreamID: "];
-    self.resolutionLabel.text = @"Resolution:";
-    self.bitrateLabel.text = @"Bitrate:";
-    self.fpsLabel.text = @"FPS:";
-    self.hardwareDecoderLabel.text = @"HardwareDecode:";
-    self.networkQualityLabel.text = @"NetworkQuality:";
-    self.avTimestampDiffLabel.text = @"AV TimestampDiff:";
+    self.roomIDAndStreamIDLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.2];
+    self.roomIDAndStreamIDLabel.textColor = [UIColor whiteColor];
 }
 
 #pragma mark - Actions
@@ -125,9 +134,6 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
     [self appendLog:@"🚀 Create ZegoExpressEngine"];
 
     [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
-
-    // Set debug verbose on
-    //    [[ZegoExpressEngine sharedEngine] setDebugVerbose:YES language:ZegoLanguageEnglish];
 }
 
 - (IBAction)startLiveButtonClick:(id)sender {
@@ -157,12 +163,14 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
     // Login room
     [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:[ZegoUser userWithUserID:userID userName:userName] config:config];
 
-    [self appendLog:@"📥 Start playing stream"];
+    [self appendLog:[NSString stringWithFormat:@"📥 Start playing stream, resourceMode: %d", (int)self.resourceMode]];
+
+    ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:self.playView];
+    ZegoPlayerConfig *playerConfig = [[ZegoPlayerConfig alloc] init];
+    playerConfig.resourceMode = self.resourceMode;
 
     // Start playing
-    ZegoCanvas *playCanvas = [ZegoCanvas canvasWithView:self.playView];
-
-    [[ZegoExpressEngine sharedEngine] startPlayingStream:self.streamID canvas:playCanvas];
+    [[ZegoExpressEngine sharedEngine] startPlayingStream:self.streamID canvas:playCanvas config:playerConfig];
 
     self.roomIDAndStreamIDLabel.text = [NSString stringWithFormat:@"RoomID: %@ | StreamID: %@", self.roomID, self.streamID];
 }
@@ -176,7 +184,7 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
     [[ZegoExpressEngine sharedEngine] logoutRoom:self.roomID];
     [self appendLog:@"🚪 Logout room"];
 
-    [self resetQualityLabelText];
+    self.playQualityLabel.text = @"";
 }
 
 
@@ -257,6 +265,7 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
     vc.streamExtraInfo = _streamExtraInfo;
     vc.roomExtraInfo = _roomExtraInfo;
     vc.videoLayer = _videoLayer;
+    vc.resourceMode = _resourceMode;
     vc.decryptionKey = _decryptionKey;
 
     [self presentViewController:vc animated:YES completion:nil];
@@ -365,7 +374,7 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
 }
 
 - (void)onPlayerVideoSizeChanged:(CGSize)size streamID:(NSString *)streamID {
-    self.resolutionLabel.text = [NSString stringWithFormat:@"Resolution: %.fx%.f  ", size.width, size.height];
+    self.playResolutionLabel.text = [NSString stringWithFormat:@"Resolution: %.fx%.f  ", size.width, size.height];
 }
 
 - (void)onPlayerQualityUpdate:(ZegoPlayStreamQuality *)quality streamID:(NSString *)streamID {
@@ -390,11 +399,21 @@ NSString* const ZGPlayStreamTopicStreamID = @"ZGPlayStreamTopicStreamID";
             break;
     }
 
-    self.bitrateLabel.text = [NSString stringWithFormat:@"Bitrate: %.2f kb/s \n", quality.videoKBPS];
-    self.fpsLabel.text = [NSString stringWithFormat:@"FPS: %d fps \n", (int)quality.videoRecvFPS];
-    self.hardwareDecoderLabel.text = [NSString stringWithFormat:@"HardwareDecode: %@ \n", quality.isHardwareDecode ? @"✅" : @"❎"];
-    self.networkQualityLabel.text = [NSString stringWithFormat:@"NetworkQuality: %@", networkQuality];
-    self.avTimestampDiffLabel.text = [NSString stringWithFormat:@"AV TimestampDiff: %d ms", quality.avTimestampDiff];
+    NSMutableString *text = [NSMutableString string];
+    [text appendFormat:@"VideoRecvFPS: %.1f fps \n", quality.videoRecvFPS];
+    [text appendFormat:@"AudioRecvFPS: %.1f fps \n", quality.audioRecvFPS];
+    [text appendFormat:@"VideoBitrate: %.2f kb/s \n", quality.videoKBPS];
+    [text appendFormat:@"AudioBitrate: %.2f kb/s \n", quality.audioKBPS];
+    [text appendFormat:@"RTT: %d ms \n", quality.rtt];
+    [text appendFormat:@"Delay: %d ms \n", quality.delay];
+    [text appendFormat:@"P2P Delay: %d ms \n", quality.peerToPeerDelay];
+    [text appendFormat:@"VideoCodecID: %d \n", (int)quality.videoCodecID];
+    [text appendFormat:@"AV TimestampDiff: %d ms \n", quality.avTimestampDiff];
+    [text appendFormat:@"TotalRecv: %.3f MB \n", quality.totalRecvBytes / 1024 / 1024];
+    [text appendFormat:@"PackageLostRate: %.1f%% \n", quality.packetLostRate * 100.0];
+    [text appendFormat:@"HardwareEncode: %@ \n", quality.isHardwareDecode ? @"✅" : @"❎"];
+    [text appendFormat:@"NetworkQuality: %@", networkQuality];
+    self.playQualityLabel.text = text;
 }
 
 @end

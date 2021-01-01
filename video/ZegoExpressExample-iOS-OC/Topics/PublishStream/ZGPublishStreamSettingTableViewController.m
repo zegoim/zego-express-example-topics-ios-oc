@@ -26,9 +26,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *fpsValueLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bitrateValueLabel;
 @property (weak, nonatomic) IBOutlet UILabel *mirrorValueLabel;
+@property (weak, nonatomic) IBOutlet UILabel *videoCodecIdValueLabel;
 @property (weak, nonatomic) IBOutlet UILabel *streamExtraInfoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *roomExtraInfoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *encryptionKeyLabel;
+
+@property (nonatomic, copy) NSDictionary<NSNumber *, NSString *> *codecIdMap;
 
 @property (nonatomic, strong) ZegoVideoConfig *videoConfig;
 
@@ -46,6 +49,13 @@
     [super viewDidLoad];
 
     self.videoConfig = [[ZegoExpressEngine sharedEngine] getVideoConfig];
+
+    self.codecIdMap = @{
+        @(ZegoVideoCodecIDDefault): @"H.264 (Default)",
+        @(ZegoVideoCodecIDSVC): @"H.264 (SVC)",
+        @(ZegoVideoCodecIDVP8): @"VP8",
+        @(ZegoVideoCodecIDH265): @"H.265",
+    };
 
     [self setupUI];
 }
@@ -69,6 +79,7 @@
     self.fpsValueLabel.text = [NSString stringWithFormat:@"%d fps", _videoConfig.fps];
     self.bitrateValueLabel.text = [NSString stringWithFormat:@"%d kbps", _videoConfig.bitrate];
     self.mirrorValueLabel.text = @"";
+    self.videoCodecIdValueLabel.text = self.codecIdMap[@(_videoConfig.codecID)];
     self.streamExtraInfoLabel.text = self.streamExtraInfo ?: @"";
     self.roomExtraInfoLabel.text = [NSString stringWithFormat:@"k:%@,v:%@", _roomExtraInfoKey ?: @"", _roomExtraInfoValue ?: @""];
 }
@@ -166,6 +177,9 @@
     } else if ([identifier isEqualToString:@"Mirror"]) {
         [self presentSetMirrorAlertController];
 
+    } else if ([identifier isEqualToString:@"VideoCodecID"]) {
+        [self presentSetVideoCodecIdAlertController];
+
     } else if ([identifier isEqualToString:@"StreamExtraInfo"]) {
         [self presentSetStreamExtraInfoAlertController];
 
@@ -215,7 +229,7 @@
         strongSelf.videoConfig.captureResolution = captureResolution;
         [[ZegoExpressEngine sharedEngine] setVideoConfig:strongSelf.videoConfig];
 
-        [self.presenter appendLog:[NSString stringWithFormat:@"📱 Set capture resolution: %d x %d",  (int)captureResolution.width, (int)captureResolution.height]];
+        [strongSelf.presenter appendLog:[NSString stringWithFormat:@"📱 Set capture resolution: %d x %d",  (int)captureResolution.width, (int)captureResolution.height]];
     }];
 
     [alertController addAction:setAction];
@@ -260,7 +274,7 @@
         strongSelf.videoConfig.encodeResolution = encodeResolution;
         [[ZegoExpressEngine sharedEngine] setVideoConfig:strongSelf.videoConfig];
 
-        [self.presenter appendLog:[NSString stringWithFormat:@"📱 Set encode resolution: %d x %d", (int)encodeResolution.width, (int)encodeResolution.height]];
+        [strongSelf.presenter appendLog:[NSString stringWithFormat:@"📱 Set encode resolution: %d x %d", (int)encodeResolution.width, (int)encodeResolution.height]];
     }];
 
     [alertController addAction:setAction];
@@ -294,7 +308,7 @@
         strongSelf.videoConfig.fps = fps;
         [[ZegoExpressEngine sharedEngine] setVideoConfig:strongSelf.videoConfig];
 
-        [self.presenter appendLog:[NSString stringWithFormat:@"📱 Set video FPS: %d", fps]];
+        [strongSelf.presenter appendLog:[NSString stringWithFormat:@"📱 Set video FPS: %d", fps]];
     }];
 
     [alertController addAction:setAction];
@@ -328,7 +342,7 @@
         strongSelf.videoConfig.bitrate = bitrate;
         [[ZegoExpressEngine sharedEngine] setVideoConfig:strongSelf.videoConfig];
 
-        [self.presenter appendLog:[NSString stringWithFormat:@"📱 Set video bitrate: %d kbps", bitrate]];
+        [strongSelf.presenter appendLog:[NSString stringWithFormat:@"📱 Set video bitrate: %d kbps", bitrate]];
     }];
 
     [alertController addAction:setAction];
@@ -356,6 +370,29 @@
             strongSelf.mirrorValueLabel.text = key;
             ZegoVideoMirrorMode mirrorMode = (ZegoVideoMirrorMode)mirrorModeMap[key].intValue;
             [[ZegoExpressEngine sharedEngine] setVideoMirrorMode:mirrorMode];
+
+            [strongSelf.presenter appendLog:[NSString stringWithFormat:@"📱 Set mirror mode: %@", key]];
+        }]];
+    }
+
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)presentSetVideoCodecIdAlertController {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Set Video Codec ID" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+
+    __weak typeof(self) weakSelf = self;
+
+    for (NSNumber *key in self.codecIdMap) {
+        [alertController addAction:[UIAlertAction actionWithTitle:self.codecIdMap[key] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            __strong typeof(self) strongSelf = weakSelf;
+            strongSelf.videoCodecIdValueLabel.text = strongSelf.codecIdMap[key];
+            strongSelf.videoConfig.codecID = (ZegoVideoCodecID)key.unsignedIntValue;
+            [[ZegoExpressEngine sharedEngine] setVideoConfig:strongSelf.videoConfig];
+
+            [strongSelf.presenter appendLog:[NSString stringWithFormat:@"📱 Set video codec id: %@, will be valid in next time startPublishingStream", strongSelf.codecIdMap[key]]];
         }]];
     }
 

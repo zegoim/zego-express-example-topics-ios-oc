@@ -37,6 +37,8 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
 @property (weak, nonatomic) IBOutlet UILabel *publishResolutionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *publishQualityLabel;
 
+@property (nonatomic, assign) UIInterfaceOrientation currentOrientation;
+
 @property (nonatomic, copy) NSString *roomID;
 @property (nonatomic, copy) NSString *streamID;
 
@@ -67,6 +69,7 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
     [(AppDelegate *)[[UIApplication sharedApplication] delegate] setRestrictRotation:UIInterfaceOrientationMaskAllButUpsideDown];
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:UIDeviceOrientationDidChangeNotification object:[UIDevice currentDevice]];
+    self.currentOrientation = [UIApplication sharedApplication].statusBarOrientation;
 }
 
 - (void)dealloc {
@@ -145,9 +148,6 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
     [self appendLog:@"🚀 Create ZegoExpressEngine"];
 
     [ZegoExpressEngine createEngineWithAppID:(unsigned int)appConfig.appID appSign:appConfig.appSign isTestEnv:appConfig.isTestEnv scenario:appConfig.scenario eventHandler:self];
-
-    // Set debug verbose on
-    //    [[ZegoExpressEngine sharedEngine] setDebugVerbose:YES language:ZegoLanguageEnglish];
 
     // Start preview
     ZegoCanvas *previewCanvas = [ZegoCanvas canvasWithView:self.previewView];
@@ -307,40 +307,23 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
 }
 
 - (void)orientationChanged:(NSNotification *)notification {
-    UIDevice *device = notification.object;
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
 
-    ZegoVideoConfig *videoConfig = [[ZegoExpressEngine sharedEngine] getVideoConfig];
-    CGFloat currentWidth = videoConfig.encodeResolution.width;
-    CGFloat currentHeight = videoConfig.encodeResolution.height;
+    if (_currentOrientation != orientation) {
+        _currentOrientation = orientation;
+        [[ZegoExpressEngine sharedEngine] setAppOrientation:orientation];
 
-    UIInterfaceOrientation orientation = UIInterfaceOrientationUnknown;
+        ZegoVideoConfig *videoConfig = [[ZegoExpressEngine sharedEngine] getVideoConfig];
+        CGFloat longSideValue = MAX(videoConfig.encodeResolution.width, videoConfig.encodeResolution.height);
+        CGFloat shortSideValue = MIN(videoConfig.encodeResolution.width, videoConfig.encodeResolution.height);
 
-    switch (device.orientation) {
-        // Note that UIInterfaceOrientationLandscapeLeft is equal to UIDeviceOrientationLandscapeRight (and vice versa).
-        // This is because rotating the device to the left requires rotating the content to the right.
-        case UIDeviceOrientationLandscapeLeft:
-            orientation = UIInterfaceOrientationLandscapeRight;
-            videoConfig.encodeResolution = CGSizeMake(currentHeight, currentWidth);
-            break;
-        case UIDeviceOrientationLandscapeRight:
-            orientation = UIInterfaceOrientationLandscapeLeft;
-            videoConfig.encodeResolution = CGSizeMake(currentHeight, currentWidth);
-            break;
-        case UIDeviceOrientationPortrait:
-            orientation = UIInterfaceOrientationPortrait;
-            videoConfig.encodeResolution = CGSizeMake(currentWidth, currentHeight);
-            break;
-        case UIDeviceOrientationPortraitUpsideDown:
-            orientation = UIInterfaceOrientationPortraitUpsideDown;
-            videoConfig.encodeResolution = CGSizeMake(currentWidth, currentHeight);
-            break;
-        default:
-            // Unknown / FaceUp / FaceDown
-            break;
+        if (UIInterfaceOrientationIsPortrait(orientation)) {
+            videoConfig.encodeResolution = CGSizeMake(shortSideValue, longSideValue);
+        } else if (UIInterfaceOrientationIsLandscape(orientation)) {
+            videoConfig.encodeResolution = CGSizeMake(longSideValue, shortSideValue);
+        }
+        [[ZegoExpressEngine sharedEngine] setVideoConfig:videoConfig];
     }
-
-    [[ZegoExpressEngine sharedEngine] setVideoConfig:videoConfig];
-    [[ZegoExpressEngine sharedEngine] setAppOrientation:orientation];
 }
 
 
@@ -425,8 +408,14 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
             break;
     }
     NSMutableString *text = [NSMutableString string];
-    [text appendFormat:@"FPS: %d fps \n", (int)quality.videoSendFPS];
-    [text appendFormat:@"Bitrate: %.2f kb/s \n", quality.videoKBPS];
+    [text appendFormat:@"VideoSendFPS: %.1f fps \n", quality.videoSendFPS];
+    [text appendFormat:@"AudioSendFPS: %.1f fps \n", quality.audioSendFPS];
+    [text appendFormat:@"VideoBitrate: %.2f kb/s \n", quality.videoKBPS];
+    [text appendFormat:@"AudioBitrate: %.2f kb/s \n", quality.audioKBPS];
+    [text appendFormat:@"RTT: %d ms \n", quality.rtt];
+    [text appendFormat:@"VideoCodecID: %d \n", (int)quality.videoCodecID];
+    [text appendFormat:@"TotalSend: %.3f MB \n", quality.totalSendBytes / 1024 / 1024];
+    [text appendFormat:@"PackageLostRate: %.1f%% \n", quality.packetLostRate * 100.0];
     [text appendFormat:@"HardwareEncode: %@ \n", quality.isHardwareEncode ? @"✅" : @"❎"];
     [text appendFormat:@"NetworkQuality: %@", networkQuality];
     self.publishQualityLabel.text = [text copy];

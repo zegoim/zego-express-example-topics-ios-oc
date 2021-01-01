@@ -18,11 +18,13 @@
 @property (weak, nonatomic) IBOutlet UISwitch *mutePlayStreamAudioSwitch;
 @property (weak, nonatomic) IBOutlet UISlider *playVolumeSlider;
 @property (weak, nonatomic) IBOutlet UILabel *playerVideoLayerValueLabel;
+@property (weak, nonatomic) IBOutlet UILabel *resourceModeValueLabel;
 @property (weak, nonatomic) IBOutlet UITextView *streamExtraInfoTextView;
 @property (weak, nonatomic) IBOutlet UITextView *roomExtraInfoTextView;
 @property (weak, nonatomic) IBOutlet UILabel *decryptionKeyLabel;
 
 @property (nonatomic, copy) NSDictionary<NSNumber *, NSString *> *videoLayerMap;
+@property (nonatomic, copy) NSDictionary<NSNumber *, NSString *> *resourceModeMap;
 
 @end
 
@@ -42,6 +44,13 @@
         @(ZegoPlayerVideoLayerBaseExtend): @"Extend"
     };
 
+    self.resourceModeMap = @{
+        @(ZegoStreamResourceModeDefault): @"Default",
+        @(ZegoStreamResourceModeOnlyCDN): @"OnlyCDN",
+        @(ZegoStreamResourceModeOnlyL3): @"OnlyL3",
+        @(ZegoStreamResourceModeOnlyRTC): @"OnlyRTC"
+    };
+
     [self setupUI];
 }
 
@@ -53,6 +62,7 @@
     self.playVolumeSlider.continuous = NO;
     self.playVolumeSlider.value = _playVolume;
     self.playerVideoLayerValueLabel.text = self.videoLayerMap[@(self.videoLayer)];
+    self.resourceModeValueLabel.text = self.resourceModeMap[@(self.resourceMode)];
     self.streamExtraInfoTextView.text = [NSString stringWithFormat:@"StreamExtraInfo\n%@", _streamExtraInfo];
     self.roomExtraInfoTextView.text = [NSString stringWithFormat:@"RoomExtraInfo\n%@", _roomExtraInfo];
 }
@@ -63,6 +73,7 @@
     self.presenter.mutePlayStreamAudio = _mutePlayStreamAudio;
     self.presenter.playVolume = _playVolume;
     self.presenter.videoLayer = _videoLayer;
+    self.presenter.resourceMode = _resourceMode;
     self.presenter.decryptionKey = _decryptionKey;
 }
 
@@ -126,6 +137,8 @@
         [self presentSetPlayerVideoLayerAlertController];
     } else if ([cell.reuseIdentifier isEqualToString:@"DecryptionKey"]) {
         [self presentSetDecryptionKeyAlertController];
+    } else if ([cell.reuseIdentifier isEqualToString:@"ResourceMode"]) {
+        [self presentSetStreamResourceModeAlertController];
     }
 }
 
@@ -143,6 +156,27 @@
 
             [[ZegoExpressEngine sharedEngine] setPlayStreamVideoLayer:strongSelf.videoLayer streamID:strongSelf.streamID];
             [strongSelf.presenter appendLog:[NSString stringWithFormat:@"🏞 Set player video layer: %d", (int)strongSelf.videoLayer]];
+        }]];
+    }
+
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)presentSetStreamResourceModeAlertController {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Set Stream Resource Mode" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+
+    __weak typeof(self) weakSelf = self;
+
+    for (NSNumber *key in self.resourceModeMap) {
+        [alertController addAction:[UIAlertAction actionWithTitle:self.resourceModeMap[key] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            __strong typeof(self) strongSelf = weakSelf;
+
+            strongSelf.resourceModeValueLabel.text = strongSelf.resourceModeMap[key];
+            strongSelf.resourceMode = (ZegoStreamResourceMode)key.intValue;
+
+            [strongSelf.presenter appendLog:[NSString stringWithFormat:@"🏞 Pre-set stream resource mode: %@, will be valid in next time startPlayingStream", strongSelf.resourceModeMap[key]]];
         }]];
     }
 

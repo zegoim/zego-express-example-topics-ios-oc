@@ -65,6 +65,7 @@
     self.resolutionFactorStepper.value = 2.0;
     self.resolutionFactorStepper.stepValue = 0.5;
     self.resolutionFactor = (float)self.resolutionFactorStepper.value;
+    self.resolutionFactorLabel.text = [NSString stringWithFormat:@"Resolution Factor: %.1f", self.resolutionFactor];
 }
 
 - (NSUserDefaults *)userDefaults {

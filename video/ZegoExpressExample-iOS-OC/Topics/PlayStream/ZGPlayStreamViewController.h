@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL mutePlayStreamAudio;
 @property (nonatomic, assign) int playVolume;
 @property (nonatomic, assign) ZegoPlayerVideoLayer videoLayer;
+@property (nonatomic, assign) ZegoStreamResourceMode resourceMode;
 @property (nonatomic, copy) NSString *streamExtraInfo;
 @property (nonatomic, copy) NSString *roomExtraInfo;
 @property (nonatomic, copy) NSString *decryptionKey;
