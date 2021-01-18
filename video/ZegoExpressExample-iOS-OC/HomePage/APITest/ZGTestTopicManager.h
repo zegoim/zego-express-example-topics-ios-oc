@@ -228,6 +228,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)sendCustomCommand:(NSString *)command toUserList:(nullable NSArray<ZegoUser *> *)toUserList roomID:(NSString *)roomID;
 
 
+#pragma mark - Utils
+
+
+- (void)startNetworkSpeedTest;
+
+
+- (void)stopNetworkSpeedTest;
+
+
 @end
 
 

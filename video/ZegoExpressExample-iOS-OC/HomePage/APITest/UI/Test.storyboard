@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VSk-AM-Q9Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VSk-AM-Q9Q">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -2682,6 +2682,52 @@ NetworkQuality:</string>
                                                 <constraint firstItem="Jy6-HS-4e8" firstAttribute="leading" secondItem="qlX-gY-CI2" secondAttribute="leading" constant="10" id="C4P-aL-22m"/>
                                                 <constraint firstItem="Jy6-HS-4e8" firstAttribute="centerY" secondItem="qlX-gY-CI2" secondAttribute="centerY" id="ES1-K0-j4c"/>
                                                 <constraint firstAttribute="trailing" secondItem="1fP-ID-XPC" secondAttribute="trailing" constant="10" id="mDL-dr-xOC"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Utils" id="4nn-yj-ZOH">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="50" id="IJc-6g-8zd">
+                                        <rect key="frame" x="0.0" y="4332" width="375" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IJc-6g-8zd" id="uWG-8b-UjF">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ocz-As-9uH">
+                                                    <rect key="frame" x="10" y="8.5" width="150" height="33"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="150" id="35F-zj-tZO"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <state key="normal" title="startSpeedTest">
+                                                        <color key="titleColor" systemColor="linkColor"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="startNetworkSpeedTestClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="LFD-Hb-Gkp"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NIH-mj-dfM">
+                                                    <rect key="frame" x="235" y="8.5" width="130" height="33"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="130" id="LJ2-Il-3sd"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <state key="normal" title="stopSpeedTest">
+                                                        <color key="titleColor" systemColor="linkColor"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="stopNetworkSpeedTestClick:" destination="Jgi-4M-b0k" eventType="touchUpInside" id="M2a-eQ-dvk"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="NIH-mj-dfM" secondAttribute="trailing" constant="10" id="M6r-sA-QHI"/>
+                                                <constraint firstItem="Ocz-As-9uH" firstAttribute="centerY" secondItem="uWG-8b-UjF" secondAttribute="centerY" id="hgd-eA-N1r"/>
+                                                <constraint firstItem="Ocz-As-9uH" firstAttribute="leading" secondItem="uWG-8b-UjF" secondAttribute="leading" constant="10" id="mRk-ec-Lgj"/>
+                                                <constraint firstItem="NIH-mj-dfM" firstAttribute="centerY" secondItem="uWG-8b-UjF" secondAttribute="centerY" id="pMF-ko-QVz"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>

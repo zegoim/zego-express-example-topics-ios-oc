@@ -661,6 +661,15 @@ NSString* const ZGTestTopicKey_MixerOutputTargets = @"kMixerOutputTargets";
     [self.manager sendCustomCommand:self.customCommandTextField.text toUserList:nil roomID:self.roomIDTextField.text];
 }
 
+#pragma mark Utils
+
+- (IBAction)startNetworkSpeedTestClick:(UIButton *)sender {
+    [self.manager startNetworkSpeedTest];
+}
+
+- (IBAction)stopNetworkSpeedTestClick:(UIButton *)sender {
+    [self.manager stopNetworkSpeedTest];
+}
 
 #pragma mark - UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate
 

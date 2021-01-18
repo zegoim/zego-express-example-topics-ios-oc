@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -105,10 +105,12 @@
 		86BF980E239F6E0200319709 /* ZGBeautifyConfigTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86BF980D239F6E0200319709 /* ZGBeautifyConfigTableViewController.m */; };
 		86CAEDB424A1E34100EF53D2 /* ZGVideoFrameEncoder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 86CAEDB324A1E34100EF53D2 /* ZGVideoFrameEncoder.mm */; };
 		86CAEDB624A1E35700EF53D2 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86CAEDB524A1E35700EF53D2 /* VideoToolbox.framework */; };
+		86CCA2D625A74C9B003DD3C0 /* ZegoExpressEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86CCA2D425A74C9B003DD3C0 /* ZegoExpressEngine.xcframework */; };
+		86CCA2D825A74CA3003DD3C0 /* ZegoExpressEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86CCA2D425A74C9B003DD3C0 /* ZegoExpressEngine.xcframework */; };
+		86CCA2D925A74CA3003DD3C0 /* ZegoExpressEngine.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 86CCA2D425A74C9B003DD3C0 /* ZegoExpressEngine.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		86CE0F55251221DB0039462F /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86CE0F54251221DB0039462F /* ReplayKit.framework */; };
 		86CE0F59251221DB0039462F /* SampleHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 86CE0F58251221DB0039462F /* SampleHandler.m */; };
 		86CE0F5D251221DB0039462F /* ZegoExpressExample-iOS-OC-Broadcast.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 86CE0F53251221DB0039462F /* ZegoExpressExample-iOS-OC-Broadcast.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		86CE0F62251223240039462F /* ZegoExpressEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86F6056024A8A47F0034C137 /* ZegoExpressEngine.framework */; };
 		86CE0F6D251309F60039462F /* ScreenCapture.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86CE0F6C251309F60039462F /* ScreenCapture.storyboard */; };
 		86CE0F7325130DEA0039462F /* ZGScreenCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86CE0F7225130DEA0039462F /* ZGScreenCaptureViewController.m */; };
 		86E90C9624AB128400507352 /* ZGPlayStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86E90C9524AB128400507352 /* ZGPlayStreamViewController.m */; };
@@ -123,8 +125,6 @@
 		86EDFE7723CABF9C00A1A3AC /* ZGCustomVideoCapturePublishStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFE7623CABF9C00A1A3AC /* ZGCustomVideoCapturePublishStreamViewController.m */; };
 		86EDFE7B23CACEF500A1A3AC /* ZGCaptureDeviceCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFE7A23CACEF500A1A3AC /* ZGCaptureDeviceCamera.m */; };
 		86EDFE7E23CB0D2100A1A3AC /* ZGCaptureDeviceImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 86EDFE7D23CB0D2100A1A3AC /* ZGCaptureDeviceImage.m */; };
-		86F6056224A8A4820034C137 /* ZegoExpressEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86F6056024A8A47F0034C137 /* ZegoExpressEngine.framework */; };
-		86F6056324A8A4820034C137 /* ZegoExpressEngine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 86F6056024A8A47F0034C137 /* ZegoExpressEngine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		86F6058924AB1D960034C137 /* RecordCapture.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86F6058824AB1D960034C137 /* RecordCapture.storyboard */; };
 		86F6058C24AB1DAF0034C137 /* ZGRecordCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86F6058B24AB1DAF0034C137 /* ZGRecordCaptureViewController.m */; };
 		86FE88C12500CB8E003B2244 /* ZGSoundLevelSettingTabelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86FE88C02500CB8E003B2244 /* ZGSoundLevelSettingTabelViewController.m */; };
@@ -147,7 +147,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				86F6056324A8A4820034C137 /* ZegoExpressEngine.framework in Embed Frameworks */,
+				86CCA2D925A74CA3003DD3C0 /* ZegoExpressEngine.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -339,6 +339,7 @@
 		86CAEDB224A1E34100EF53D2 /* ZGVideoFrameEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGVideoFrameEncoder.h; sourceTree = "<group>"; };
 		86CAEDB324A1E34100EF53D2 /* ZGVideoFrameEncoder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ZGVideoFrameEncoder.mm; sourceTree = "<group>"; };
 		86CAEDB524A1E35700EF53D2 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		86CCA2D425A74C9B003DD3C0 /* ZegoExpressEngine.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = ZegoExpressEngine.xcframework; sourceTree = "<group>"; };
 		86CE0F3625121BF60039462F /* ZegoExpressExample-iOS-OC.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ZegoExpressExample-iOS-OC.entitlements"; sourceTree = "<group>"; };
 		86CE0F53251221DB0039462F /* ZegoExpressExample-iOS-OC-Broadcast.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "ZegoExpressExample-iOS-OC-Broadcast.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		86CE0F54251221DB0039462F /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
@@ -372,7 +373,6 @@
 		86EDFE7A23CACEF500A1A3AC /* ZGCaptureDeviceCamera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGCaptureDeviceCamera.m; sourceTree = "<group>"; };
 		86EDFE7C23CB0D2100A1A3AC /* ZGCaptureDeviceImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGCaptureDeviceImage.h; sourceTree = "<group>"; };
 		86EDFE7D23CB0D2100A1A3AC /* ZGCaptureDeviceImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGCaptureDeviceImage.m; sourceTree = "<group>"; };
-		86F6056024A8A47F0034C137 /* ZegoExpressEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZegoExpressEngine.framework; sourceTree = "<group>"; };
 		86F6058824AB1D960034C137 /* RecordCapture.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RecordCapture.storyboard; sourceTree = "<group>"; };
 		86F6058A24AB1DAF0034C137 /* ZGRecordCaptureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGRecordCaptureViewController.h; sourceTree = "<group>"; };
 		86F6058B24AB1DAF0034C137 /* ZGRecordCaptureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGRecordCaptureViewController.m; sourceTree = "<group>"; };
@@ -387,8 +387,8 @@
 			files = (
 				867BBD102376E03D008F7D4F /* libc++.tbd in Frameworks */,
 				86CAEDB624A1E35700EF53D2 /* VideoToolbox.framework in Frameworks */,
+				86CCA2D825A74CA3003DD3C0 /* ZegoExpressEngine.xcframework in Frameworks */,
 				86AA7AB0237BDB7000B2D31E /* Bugly.framework in Frameworks */,
-				86F6056224A8A4820034C137 /* ZegoExpressEngine.framework in Frameworks */,
 				86AA7AB1237BDB7300B2D31E /* SSZipArchive.framework in Frameworks */,
 				867BBD0C2376E018008F7D4F /* SystemConfiguration.framework in Frameworks */,
 				867BBD0E2376E02B008F7D4F /* libz.tbd in Frameworks */,
@@ -399,8 +399,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86CE0F62251223240039462F /* ZegoExpressEngine.framework in Frameworks */,
 				86CE0F55251221DB0039462F /* ReplayKit.framework in Frameworks */,
+				86CCA2D625A74C9B003DD3C0 /* ZegoExpressEngine.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -641,7 +641,7 @@
 		8608C45E236327B800CE367B /* Libs */ = {
 			isa = PBXGroup;
 			children = (
-				86F6056024A8A47F0034C137 /* ZegoExpressEngine.framework */,
+				86CCA2D425A74C9B003DD3C0 /* ZegoExpressEngine.xcframework */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -924,7 +924,6 @@
 			buildConfigurationList = 8608C3C223631EDC00CE367B /* Build configuration list for PBXNativeTarget "ZegoExpressExample-iOS-OC" */;
 			buildPhases = (
 				864008A3244EF00900903B5B /* [Script] Download SDK If Need */,
-				864836E12450467700AC850F /* [Script] Remove Simulator Architecture When Release */,
 				8608C3A523631EDB00CE367B /* Sources */,
 				8608C3A623631EDB00CE367B /* Frameworks */,
 				8608C3A723631EDB00CE367B /* Resources */,
@@ -1051,6 +1050,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		864008A3244EF00900903B5B /* [Script] Download SDK If Need */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -1065,28 +1065,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Download ZegoExpressEngine\nif [ ! -e \"Libs/ZegoExpressEngine.framework\" ]; then\n\n    cd $SRCROOT\n    echo \"[*] cd into: \"`pwd`\n\n    URL=\"https://storage.zego.im/express/video/ios/zego-express-video-ios.zip\"\n\n    if [ ! -d \"Libs/__sdk_download_tmp__\" ]; then\n        mkdir Libs/__sdk_download_tmp__\n    fi\n\n    echo \"[*] Downloading SDK from: $URL\"\n    curl \"$URL\" --output Libs/__sdk_download_tmp__/zego-express-video-ios.zip\n\n    cd Libs/__sdk_download_tmp__\n    echo \"[*] cd into: \"`pwd`\n\n    echo \"[*] Unzip zego-express-video-ios.zip\"\n    unzip -o zego-express-video-ios.zip\n\n    for element in `ls`; do\n        dir=$element\n        if [ -d $dir ]; then\n            cd $dir\n            echo \"[*] cd into: \"`pwd`\n            break\n        fi\n    done\n\n    if [ -d \"armv7-arm64-x86_64\" ]; then\n        cd armv7-arm64-x86_64\n        echo \"[*] cd into: \"`pwd`\n        echo \"[*] Move ZegoExpressEngine.framework from: \"`pwd`\" to: $SRCROOT/Libs\"\n        mv ZegoExpressEngine.framework $SRCROOT/Libs\n    fi\n\n    echo \"[*] Remove folder: $SRCROOT/Libs/__sdk_download_tmp__\"\n    rm -rf $SRCROOT/Libs/__sdk_download_tmp__\nfi\n\n# Download third party lib: SSZipArchive, Bugly\nif [ ! -e \"ZegoExpressExample-iOS-OC/Deps/SSZipArchive.framework\" ] || [ ! -e \"ZegoExpressExample-iOS-OC/Deps/Bugly.framework\" ]; then\n\n    cd $SRCROOT\n    echo \"[*] cd into: \"`pwd`\n\n    URL_SSZip=\"https://storage.zego.im/express/example/ios/third-party/SSZipArchive.zip\"\n    URL_Bugly=\"https://storage.zego.im/express/example/ios/third-party/Bugly-iOS-2.5.71.zip\"\n\n    if [ ! -d \"Libs/__sdk_download_tmp__\" ]; then\n        mkdir Libs/__sdk_download_tmp__\n    fi\n\n    echo \"[*] Downloading third party lib SSZipArchive.framework from: $URL_SSZip\"\n    curl \"$URL_SSZip\" --output Libs/__sdk_download_tmp__/SSZipArchive.zip\n\n    echo \"[*] Downloading third party lib SSZipArchive.framework from: $URL_Bugly\"\n    curl \"$URL_Bugly\" --output Libs/__sdk_download_tmp__/Bugly.zip\n\n    cd Libs/__sdk_download_tmp__\n    echo \"[*] cd into: \"`pwd`\n\n    echo \"[*] Unzip SSZipArchive.zip\"\n    unzip -o SSZipArchive.zip\n\n    echo \"[*] Unzip Bugly.zip\"\n    unzip -o Bugly.zip\n\n    if [ -d \"SSZipArchive.framework\" ]; then\n        echo \"[*] Move SSZipArchive.framework from: \"`pwd`\" to: $SRCROOT/ZegoExpressExample-iOS-OC/Deps\"\n        mv SSZipArchive.framework $SRCROOT/ZegoExpressExample-iOS-OC/Deps\n    fi\n\n    if [ -d \"Bugly.framework\" ]; then\n        echo \"[*] Move Bugly.framework from: \"`pwd`\" to: $SRCROOT/ZegoExpressExample-iOS-OC/Deps\"\n        mv Bugly.framework $SRCROOT/ZegoExpressExample-iOS-OC/Deps\n    fi\n\n    echo \"[*] Remove folder: $SRCROOT/Libs/__sdk_download_tmp__\"\n    rm -rf $SRCROOT/Libs/__sdk_download_tmp__\nfi\n";
-		};
-		864836E12450467700AC850F /* [Script] Remove Simulator Architecture When Release */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[Script] Remove Simulator Architecture When Release";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ $CONFIGURATION == \"Release\" ]; then\n\n    echo \"[*] Build release, remove simulator architecture\"\n\n    cd Libs/ZegoExpressEngine.framework\n    echo \"[*] cd into: \"`pwd`\n\n    if [ -e \"ZegoExpressEngine\" ]; then\n\n        lipo -info ZegoExpressEngine\n\n        echo \"[*] remove i386 architecture\"\n        lipo ZegoExpressEngine -remove i386 -output ZegoExpressEngine\n\n        echo \"[*] remove x86_64 architecture\"\n        lipo ZegoExpressEngine -remove x86_64 -output ZegoExpressEngine\n\n        lipo -info ZegoExpressEngine\n\n    fi\n\nfi\n";
+			shellScript = "# Download ZegoExpressEngine\nif [ ! -e \"$SRCROOT/Libs/ZegoExpressEngine.xcframework/ios-arm64_armv7\" ]; then\n\n    cd $SRCROOT\n    echo \"[*] cd into: \"`pwd`\n\n    URL=\"https://storage.zego.im/express/video/apple/zego-express-video-apple.zip\"\n\n    if [ ! -d \"Libs/__sdk_download_tmp__\" ]; then\n        mkdir Libs/__sdk_download_tmp__\n    fi\n\n    echo \"[*] Downloading SDK from: $URL\"\n    curl \"$URL\" --output Libs/__sdk_download_tmp__/zego-express-video-apple.zip\n\n    cd Libs/__sdk_download_tmp__\n    echo \"[*] cd into: \"`pwd`\n\n    echo \"[*] Unzip zego-express-video-apple.zip\"\n    unzip -o zego-express-video-apple.zip\n\n    for element in `ls`; do\n        dir=$element\n        if [ -d $dir ]; then\n            cd $dir\n            echo \"[*] cd into: \"`pwd`\n            break\n        fi\n    done\n\n    echo \"[*] Remove folder: $SRCROOT/Libs/ZegoExpressEngine.xcframework\"\n    rm -rf $SRCROOT/Libs/ZegoExpressEngine.xcframework\n\n    echo \"[*] Move ZegoExpressEngine.xcframework from: \"`pwd`\" to: $SRCROOT/Libs\"\n    mv ZegoExpressEngine.xcframework $SRCROOT/Libs\n\n    echo \"[*] Remove folder: $SRCROOT/Libs/__sdk_download_tmp__\"\n    rm -rf $SRCROOT/Libs/__sdk_download_tmp__\nfi\n\n# Download third party lib: SSZipArchive, Bugly\nif [ ! -e \"$SRCROOT/ZegoExpressExample-iOS-OC/Deps/SSZipArchive.framework\" ] || [ ! -e \"$SRCROOT/ZegoExpressExample-iOS-OC/Deps/Bugly.framework\" ]; then\n\n    cd $SRCROOT\n    echo \"[*] cd into: \"`pwd`\n\n    URL_SSZip=\"https://storage.zego.im/express/example/ios/third-party/SSZipArchive.zip\"\n    URL_Bugly=\"https://storage.zego.im/express/example/ios/third-party/Bugly-iOS-2.5.71.zip\"\n\n    if [ ! -d \"Libs/__sdk_download_tmp__\" ]; then\n        mkdir Libs/__sdk_download_tmp__\n    fi\n\n    echo \"[*] Downloading third party lib SSZipArchive.framework from: $URL_SSZip\"\n    curl \"$URL_SSZip\" --output Libs/__sdk_download_tmp__/SSZipArchive.zip\n\n    echo \"[*] Downloading third party lib SSZipArchive.framework from: $URL_Bugly\"\n    curl \"$URL_Bugly\" --output Libs/__sdk_download_tmp__/Bugly.zip\n\n    cd Libs/__sdk_download_tmp__\n    echo \"[*] cd into: \"`pwd`\n\n    echo \"[*] Unzip SSZipArchive.zip\"\n    unzip -o SSZipArchive.zip\n\n    echo \"[*] Unzip Bugly.zip\"\n    unzip -o Bugly.zip\n\n    if [ -d \"SSZipArchive.framework\" ]; then\n        echo \"[*] Move SSZipArchive.framework from: \"`pwd`\" to: $SRCROOT/ZegoExpressExample-iOS-OC/Deps\"\n        mv SSZipArchive.framework $SRCROOT/ZegoExpressExample-iOS-OC/Deps\n    fi\n\n    if [ -d \"Bugly.framework\" ]; then\n        echo \"[*] Move Bugly.framework from: \"`pwd`\" to: $SRCROOT/ZegoExpressExample-iOS-OC/Deps\"\n        mv Bugly.framework $SRCROOT/ZegoExpressExample-iOS-OC/Deps\n    fi\n\n    echo \"[*] Remove folder: $SRCROOT/Libs/__sdk_download_tmp__\"\n    rm -rf $SRCROOT/Libs/__sdk_download_tmp__\nfi\n";
 		};
 		86FC6AF62534091D00DB16DE /* [Script] Download SDK If Need */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -1101,7 +1084,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Download ZegoExpressEngine\nif [ ! -e \"Libs/ZegoExpressEngine.framework\" ]; then\n\n    cd $SRCROOT\n    echo \"[*] cd into: \"`pwd`\n\n    URL=\"https://storage.zego.im/express/video/ios/zego-express-video-ios.zip\"\n\n    if [ ! -d \"Libs/__sdk_download_tmp__\" ]; then\n        mkdir Libs/__sdk_download_tmp__\n    fi\n\n    echo \"[*] Downloading SDK from: $URL\"\n    curl \"$URL\" --output Libs/__sdk_download_tmp__/zego-express-video-ios.zip\n\n    cd Libs/__sdk_download_tmp__\n    echo \"[*] cd into: \"`pwd`\n\n    echo \"[*] Unzip zego-express-video-ios.zip\"\n    unzip -o zego-express-video-ios.zip\n\n    for element in `ls`; do\n        dir=$element\n        if [ -d $dir ]; then\n            cd $dir\n            echo \"[*] cd into: \"`pwd`\n            break\n        fi\n    done\n\n    if [ -d \"armv7-arm64-x86_64\" ]; then\n        cd armv7-arm64-x86_64\n        echo \"[*] cd into: \"`pwd`\n        echo \"[*] Move ZegoExpressEngine.framework from: \"`pwd`\" to: $SRCROOT/Libs\"\n        mv ZegoExpressEngine.framework $SRCROOT/Libs\n    fi\n\n    echo \"[*] Remove folder: $SRCROOT/Libs/__sdk_download_tmp__\"\n    rm -rf $SRCROOT/Libs/__sdk_download_tmp__\nfi\n\n# Download third party lib: SSZipArchive, Bugly\nif [ ! -e \"ZegoExpressExample-iOS-OC/Deps/SSZipArchive.framework\" ] || [ ! -e \"ZegoExpressExample-iOS-OC/Deps/Bugly.framework\" ]; then\n\n    cd $SRCROOT\n    echo \"[*] cd into: \"`pwd`\n\n    URL_SSZip=\"https://storage.zego.im/express/example/ios/third-party/SSZipArchive.zip\"\n    URL_Bugly=\"https://storage.zego.im/express/example/ios/third-party/Bugly-iOS-2.5.71.zip\"\n\n    if [ ! -d \"Libs/__sdk_download_tmp__\" ]; then\n        mkdir Libs/__sdk_download_tmp__\n    fi\n\n    echo \"[*] Downloading third party lib SSZipArchive.framework from: $URL_SSZip\"\n    curl \"$URL_SSZip\" --output Libs/__sdk_download_tmp__/SSZipArchive.zip\n\n    echo \"[*] Downloading third party lib SSZipArchive.framework from: $URL_Bugly\"\n    curl \"$URL_Bugly\" --output Libs/__sdk_download_tmp__/Bugly.zip\n\n    cd Libs/__sdk_download_tmp__\n    echo \"[*] cd into: \"`pwd`\n\n    echo \"[*] Unzip SSZipArchive.zip\"\n    unzip -o SSZipArchive.zip\n\n    echo \"[*] Unzip Bugly.zip\"\n    unzip -o Bugly.zip\n\n    if [ -d \"SSZipArchive.framework\" ]; then\n        echo \"[*] Move SSZipArchive.framework from: \"`pwd`\" to: $SRCROOT/ZegoExpressExample-iOS-OC/Deps\"\n        mv SSZipArchive.framework $SRCROOT/ZegoExpressExample-iOS-OC/Deps\n    fi\n\n    if [ -d \"Bugly.framework\" ]; then\n        echo \"[*] Move Bugly.framework from: \"`pwd`\" to: $SRCROOT/ZegoExpressExample-iOS-OC/Deps\"\n        mv Bugly.framework $SRCROOT/ZegoExpressExample-iOS-OC/Deps\n    fi\n\n    echo \"[*] Remove folder: $SRCROOT/Libs/__sdk_download_tmp__\"\n    rm -rf $SRCROOT/Libs/__sdk_download_tmp__\nfi\n";
+			shellScript = "# Download ZegoExpressEngine\nif [ ! -e \"$SRCROOT/Libs/ZegoExpressEngine.xcframework/ios-arm64_armv7\" ]; then\n\n    cd $SRCROOT\n    echo \"[*] cd into: \"`pwd`\n\n    URL=\"https://storage.zego.im/express/video/apple/zego-express-video-apple.zip\"\n\n    if [ ! -d \"Libs/__sdk_download_tmp__\" ]; then\n        mkdir Libs/__sdk_download_tmp__\n    fi\n\n    echo \"[*] Downloading SDK from: $URL\"\n    curl \"$URL\" --output Libs/__sdk_download_tmp__/zego-express-video-apple.zip\n\n    cd Libs/__sdk_download_tmp__\n    echo \"[*] cd into: \"`pwd`\n\n    echo \"[*] Unzip zego-express-video-apple.zip\"\n    unzip -o zego-express-video-apple.zip\n\n    for element in `ls`; do\n        dir=$element\n        if [ -d $dir ]; then\n            cd $dir\n            echo \"[*] cd into: \"`pwd`\n            break\n        fi\n    done\n\n    echo \"[*] Remove folder: $SRCROOT/Libs/ZegoExpressEngine.xcframework\"\n    rm -rf $SRCROOT/Libs/ZegoExpressEngine.xcframework\n\n    echo \"[*] Move ZegoExpressEngine.xcframework from: \"`pwd`\" to: $SRCROOT/Libs\"\n    mv ZegoExpressEngine.xcframework $SRCROOT/Libs\n\n    echo \"[*] Remove folder: $SRCROOT/Libs/__sdk_download_tmp__\"\n    rm -rf $SRCROOT/Libs/__sdk_download_tmp__\nfi\n\n# Download third party lib: SSZipArchive, Bugly\nif [ ! -e \"$SRCROOT/ZegoExpressExample-iOS-OC/Deps/SSZipArchive.framework\" ] || [ ! -e \"$SRCROOT/ZegoExpressExample-iOS-OC/Deps/Bugly.framework\" ]; then\n\n    cd $SRCROOT\n    echo \"[*] cd into: \"`pwd`\n\n    URL_SSZip=\"https://storage.zego.im/express/example/ios/third-party/SSZipArchive.zip\"\n    URL_Bugly=\"https://storage.zego.im/express/example/ios/third-party/Bugly-iOS-2.5.71.zip\"\n\n    if [ ! -d \"Libs/__sdk_download_tmp__\" ]; then\n        mkdir Libs/__sdk_download_tmp__\n    fi\n\n    echo \"[*] Downloading third party lib SSZipArchive.framework from: $URL_SSZip\"\n    curl \"$URL_SSZip\" --output Libs/__sdk_download_tmp__/SSZipArchive.zip\n\n    echo \"[*] Downloading third party lib SSZipArchive.framework from: $URL_Bugly\"\n    curl \"$URL_Bugly\" --output Libs/__sdk_download_tmp__/Bugly.zip\n\n    cd Libs/__sdk_download_tmp__\n    echo \"[*] cd into: \"`pwd`\n\n    echo \"[*] Unzip SSZipArchive.zip\"\n    unzip -o SSZipArchive.zip\n\n    echo \"[*] Unzip Bugly.zip\"\n    unzip -o Bugly.zip\n\n    if [ -d \"SSZipArchive.framework\" ]; then\n        echo \"[*] Move SSZipArchive.framework from: \"`pwd`\" to: $SRCROOT/ZegoExpressExample-iOS-OC/Deps\"\n        mv SSZipArchive.framework $SRCROOT/ZegoExpressExample-iOS-OC/Deps\n    fi\n\n    if [ -d \"Bugly.framework\" ]; then\n        echo \"[*] Move Bugly.framework from: \"`pwd`\" to: $SRCROOT/ZegoExpressExample-iOS-OC/Deps\"\n        mv Bugly.framework $SRCROOT/ZegoExpressExample-iOS-OC/Deps\n    fi\n\n    echo \"[*] Remove folder: $SRCROOT/Libs/__sdk_download_tmp__\"\n    rm -rf $SRCROOT/Libs/__sdk_download_tmp__\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1364,7 +1347,7 @@
 				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/ZegoExpressExample-iOS-OC/ZegoExpressExample-iOS-OC.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 201231;
+				CURRENT_PROJECT_VERSION = 210114;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1379,14 +1362,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.1.0;
 				OBJROOT = DerivedData/Build/Intermediates.noindex;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-Objective-C.${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "ZegoExpressExample-iOS-OC";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SYMROOT = DerivedData/Build/Products;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_WORKSPACE = YES;
 			};
 			name = Debug;
 		};
@@ -1398,7 +1380,7 @@
 				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/ZegoExpressExample-iOS-OC/ZegoExpressExample-iOS-OC.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 201231;
+				CURRENT_PROJECT_VERSION = 210114;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1413,14 +1395,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.1.0;
 				OBJROOT = DerivedData/Build/Intermediates.noindex;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-Objective-C.${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "ZegoExpressExample-iOS-OC";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SYMROOT = DerivedData/Build/Products;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_WORKSPACE = YES;
 			};
 			name = Release;
 		};
@@ -1431,7 +1412,7 @@
 				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/ZegoExpressExample-iOS-OC/Topics/ScreenCapture/ZegoExpressExample-iOS-OC-Broadcast/ZegoExpressExample-iOS-OC-Broadcast.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 201231;
+				CURRENT_PROJECT_VERSION = 210114;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1444,7 +1425,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-Objective-C.${SAMPLE_CODE_DISAMBIGUATOR}.Broadcast";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1459,7 +1440,7 @@
 				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/ZegoExpressExample-iOS-OC/Topics/ScreenCapture/ZegoExpressExample-iOS-OC-Broadcast/ZegoExpressExample-iOS-OC-Broadcast.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 201231;
+				CURRENT_PROJECT_VERSION = 210114;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1472,7 +1453,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-Objective-C.${SAMPLE_CODE_DISAMBIGUATOR}.Broadcast";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

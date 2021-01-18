@@ -460,6 +460,25 @@
     }];
 }
 
+#pragma mark Utils
+
+- (void)startNetworkSpeedTest {
+    ZGLogInfo(@"🌐 Start network speed test");
+    [self.dataSource onActionLog:@"🌐 Start network speed test"];
+    ZegoNetworkSpeedTestConfig *config = [[ZegoNetworkSpeedTestConfig alloc] init];
+    config.testUplink = YES;
+    config.testDownlink = YES;
+    config.expectedUplinkBitrate = config.expectedDownlinkBitrate = [self.engine getVideoConfig].bitrate;
+    [self.engine startNetworkSpeedTest:config];
+
+}
+
+- (void)stopNetworkSpeedTest {
+    ZGLogInfo(@"🌐 Stop network speed test");
+    [self.dataSource onActionLog:@"🌐 Stop network speed test"];
+    [self.engine stopNetworkSpeedTest];
+}
+
 
 #pragma mark - Callback
 
@@ -622,6 +641,23 @@
 - (void)onPerformanceStatusUpdate:(ZegoPerformanceStatus *)status {
     ZGLogInfo(@"🚩 🖥 Performance Status Update: CPU-App:%.4f, CPU-Sys:%.4f, MemApp:%.4f, MemSys:%.4f, MemUsedApp:%.1fMB", status.cpuUsageApp, status.cpuUsageSystem, status.memoryUsageApp, status.memoryUsageSystem, status.memoryUsedApp);
     [self.dataSource onActionLog:[NSString stringWithFormat:@"🚩 🖥 Performance Status Update: CPU-App:%.4f, CPU-Sys:%.4f, MemApp:%.4f, MemSys:%.1f, MemUsedApp:%.1fMB", status.cpuUsageApp, status.cpuUsageSystem, status.memoryUsageApp, status.memoryUsageSystem, status.memoryUsedApp]];
+}
+
+#pragma mark Utils Callback
+
+- (void)onNetworkModeChanged:(ZegoNetworkMode)mode {
+    ZGLogInfo(@"🚩 🌐 Network Mode Changed Callback: mode: %d", (int)mode);
+    [self.dataSource onActionLog:[NSString stringWithFormat:@"🚩 🌐 Network Mode Changed Callback: mode: %d", (int)mode]];
+}
+
+- (void)onNetworkSpeedTestError:(int)errorCode type:(ZegoNetworkSpeedTestType)type {
+    ZGLogInfo(@"🚩 🌐 Network Speed Test Error Callback: errorCode: %d, type: %d", errorCode, (int)type);
+    [self.dataSource onActionLog:[NSString stringWithFormat:@"🚩 🌐 Network Speed Test Error Callback: errorCode: %d, type: %d", errorCode, (int)type]];
+}
+
+- (void)onNetworkSpeedTestQualityUpdate:(ZegoNetworkSpeedTestQuality *)quality type:(ZegoNetworkSpeedTestType)type {
+    ZGLogInfo(@"🚩 🌐 Network Speed Test Quality Update Callback: cost: %d, rtt: %d, plr: %.1f, type: %d", quality.connectCost, quality.rtt, quality.packetLostRate, (int)type);
+    [self.dataSource onActionLog:[NSString stringWithFormat:@"🚩 🌐 Network Speed Test Quality Update Callback: cost: %d, rtt: %d, plr: %.1f, type: %d", quality.connectCost, quality.rtt, quality.packetLostRate, (int)type]];
 }
 
 @end

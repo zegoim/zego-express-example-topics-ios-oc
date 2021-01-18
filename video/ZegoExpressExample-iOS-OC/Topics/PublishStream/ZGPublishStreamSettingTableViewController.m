@@ -14,6 +14,7 @@
 @interface ZGPublishStreamSettingTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UISwitch *cameraSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *useFrontCameraSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *microphoneSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *speakerSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *hardwareEncoderSwitch;
@@ -62,6 +63,7 @@
 
 - (void)setupUI {
     self.cameraSwitch.on = _enableCamera;
+    self.useFrontCameraSwitch.on = _useFrontCamera;
     self.microphoneSwitch.on = ![[ZegoExpressEngine sharedEngine] isMicrophoneMuted];
     self.speakerSwitch.on = ![[ZegoExpressEngine sharedEngine] isSpeakerMuted];
     self.hardwareEncoderSwitch.on = _enableHardwareEncoder;
@@ -100,6 +102,13 @@
     [[ZegoExpressEngine sharedEngine] enableCamera:_enableCamera];
 
     [self.presenter appendLog:[NSString stringWithFormat:@"📷 Camera %@", _enableCamera ? @"on 🟢" : @"off 🔴"]];
+}
+
+- (IBAction)useFrontCameraSwitchValueChanged:(UISwitch *)sender {
+    _useFrontCamera = sender.on;
+    [[ZegoExpressEngine sharedEngine] useFrontCamera:_useFrontCamera];
+
+    [self.presenter appendLog:[NSString stringWithFormat:@"📸 Use Front Camera %@", _useFrontCamera ? @"on 🟢" : @"off 🔴"]];
 }
 
 - (IBAction)microphoneSwitchValueChanged:(UISwitch *)sender {

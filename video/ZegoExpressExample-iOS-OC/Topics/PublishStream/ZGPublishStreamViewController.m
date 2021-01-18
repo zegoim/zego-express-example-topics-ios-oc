@@ -61,6 +61,7 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
     [self createEngine];
 
     self.enableCamera = YES;
+    self.useFrontCamera = YES;
     self.enableHardwareEncoder = NO;
     self.captureVolume = 100;
     self.currentZoomFactor = 1.0;
@@ -273,6 +274,7 @@ NSString* const ZGPublishStreamTopicStreamID = @"ZGPublishStreamTopicStreamID";
 
     vc.presenter = self;
     vc.enableCamera = _enableCamera;
+    vc.useFrontCamera = _useFrontCamera;
     vc.enableHardwareEncoder = _enableHardwareEncoder;
     vc.captureVolume = _captureVolume;
     vc.maxZoomFactor = _maxZoomFactor;
