@@ -16,9 +16,6 @@
 		86385174247BA79100CF95C9 /* QuickStart.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86385173247BA79100CF95C9 /* QuickStart.storyboard */; };
 		86385178247BB09700CF95C9 /* ZGNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86385177247BB09700CF95C9 /* ZGNavigationController.m */; };
 		8638517B247BB0EB00CF95C9 /* ZGTopicsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8638517A247BB0EB00CF95C9 /* ZGTopicsTableViewController.m */; };
-		8682BF5724E3BF6900EFC88F /* AudioEffect.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8682BF5624E3BF6900EFC88F /* AudioEffect.storyboard */; };
-		8682BF5A24E3BF8600EFC88F /* ZGAudioPreprocessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8682BF5924E3BF8600EFC88F /* ZGAudioPreprocessViewController.m */; };
-		8682BF5D24E3BF9C00EFC88F /* ZGAudioPreprocessConfigTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8682BF5C24E3BF9C00EFC88F /* ZGAudioPreprocessConfigTableViewController.m */; };
 		86872837247CE9F8005E4326 /* ZGUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 86872836247CE9F8005E4326 /* ZGUserDefaults.m */; };
 		86872841247D0DBC005E4326 /* ZGSoundLevelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8687283E247D0DBB005E4326 /* ZGSoundLevelTableViewCell.m */; };
 		86872842247D0DBC005E4326 /* ZGSoundLevelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86872840247D0DBC005E4326 /* ZGSoundLevelTableViewCell.xib */; };
@@ -77,11 +74,6 @@
 		86385177247BB09700CF95C9 /* ZGNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGNavigationController.m; sourceTree = "<group>"; };
 		86385179247BB0EB00CF95C9 /* ZGTopicsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGTopicsTableViewController.h; sourceTree = "<group>"; };
 		8638517A247BB0EB00CF95C9 /* ZGTopicsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGTopicsTableViewController.m; sourceTree = "<group>"; };
-		8682BF5624E3BF6900EFC88F /* AudioEffect.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AudioEffect.storyboard; sourceTree = "<group>"; };
-		8682BF5824E3BF8600EFC88F /* ZGAudioPreprocessViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGAudioPreprocessViewController.h; sourceTree = "<group>"; };
-		8682BF5924E3BF8600EFC88F /* ZGAudioPreprocessViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGAudioPreprocessViewController.m; sourceTree = "<group>"; };
-		8682BF5B24E3BF9C00EFC88F /* ZGAudioPreprocessConfigTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGAudioPreprocessConfigTableViewController.h; sourceTree = "<group>"; };
-		8682BF5C24E3BF9C00EFC88F /* ZGAudioPreprocessConfigTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGAudioPreprocessConfigTableViewController.m; sourceTree = "<group>"; };
 		86872835247CE9F8005E4326 /* ZGUserDefaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGUserDefaults.h; sourceTree = "<group>"; };
 		86872836247CE9F8005E4326 /* ZGUserDefaults.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGUserDefaults.m; sourceTree = "<group>"; };
 		8687283E247D0DBB005E4326 /* ZGSoundLevelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGSoundLevelTableViewCell.m; sourceTree = "<group>"; };
@@ -185,7 +177,6 @@
 			children = (
 				86385169247BA42C00CF95C9 /* QuickStart */,
 				8687283D247D0D8D005E4326 /* SoundLevel */,
-				8682BF5324E3BEF200EFC88F /* AudioEffect */,
 			);
 			path = Topics;
 			sourceTree = "<group>";
@@ -210,18 +201,6 @@
 				8638517A247BB0EB00CF95C9 /* ZGTopicsTableViewController.m */,
 			);
 			path = HomePage;
-			sourceTree = "<group>";
-		};
-		8682BF5324E3BEF200EFC88F /* AudioEffect */ = {
-			isa = PBXGroup;
-			children = (
-				8682BF5624E3BF6900EFC88F /* AudioEffect.storyboard */,
-				8682BF5824E3BF8600EFC88F /* ZGAudioPreprocessViewController.h */,
-				8682BF5924E3BF8600EFC88F /* ZGAudioPreprocessViewController.m */,
-				8682BF5B24E3BF9C00EFC88F /* ZGAudioPreprocessConfigTableViewController.h */,
-				8682BF5C24E3BF9C00EFC88F /* ZGAudioPreprocessConfigTableViewController.m */,
-			);
-			path = AudioEffect;
 			sourceTree = "<group>";
 		};
 		8687283D247D0D8D005E4326 /* SoundLevel */ = {
@@ -327,7 +306,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8638515F247B9C1A00CF95C9 /* Build configuration list for PBXNativeTarget "ZegoExpressAudioExample-iOS-OC" */;
 			buildPhases = (
-				8670675424866208004ED63F /* [Script] Download SDK If Need */,
+				8670675424866208004ED63F /* [Script] Download Deps If Need */,
 				86385142247B9C1900CF95C9 /* Sources */,
 				86385143247B9C1900CF95C9 /* Frameworks */,
 				86385144247B9C1900CF95C9 /* Resources */,
@@ -382,7 +361,6 @@
 				86385159247B9C1A00CF95C9 /* LaunchScreen.storyboard in Resources */,
 				86385156247B9C1A00CF95C9 /* Assets.xcassets in Resources */,
 				86872842247D0DBC005E4326 /* ZGSoundLevelTableViewCell.xib in Resources */,
-				8682BF5724E3BF6900EFC88F /* AudioEffect.storyboard in Resources */,
 				86872847247D0E3F005E4326 /* SoundLevel.storyboard in Resources */,
 				86385154247B9C1900CF95C9 /* Main.storyboard in Resources */,
 				86385174247BA79100CF95C9 /* QuickStart.storyboard in Resources */,
@@ -392,7 +370,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8670675424866208004ED63F /* [Script] Download SDK If Need */ = {
+		8670675424866208004ED63F /* [Script] Download Deps If Need */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -401,14 +379,14 @@
 			);
 			inputPaths = (
 			);
-			name = "[Script] Download SDK If Need";
+			name = "[Script] Download Deps If Need";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Download ZegoExpressEngine\nif [ ! -e \"$SRCROOT/Libs/ZegoExpressEngine.xcframework/ios-arm64_armv7\" ]; then\n\n    cd $SRCROOT\n    echo \"[*] cd into: \"`pwd`\n\n    URL=\"https://storage.zego.im/express/audio/apple/zego-express-audio-apple.zip\"\n\n    if [ ! -d \"Libs/__sdk_download_tmp__\" ]; then\n        mkdir Libs/__sdk_download_tmp__\n    fi\n\n    echo \"[*] Downloading SDK from: $URL\"\n    curl \"$URL\" --output Libs/__sdk_download_tmp__/zego-express-audio-apple.zip\n\n    cd Libs/__sdk_download_tmp__\n    echo \"[*] cd into: \"`pwd`\n\n    echo \"[*] Unzip zego-express-audio-apple.zip\"\n    unzip -o zego-express-audio-apple.zip\n\n    for element in `ls`; do\n        dir=$element\n        if [ -d $dir ]; then\n            cd $dir\n            echo \"[*] cd into: \"`pwd`\n            break\n        fi\n    done\n\n    echo \"[*] Remove folder: $SRCROOT/Libs/ZegoExpressEngine.xcframework\"\n    rm -rf $SRCROOT/Libs/ZegoExpressEngine.xcframework\n\n    echo \"[*] Move ZegoExpressEngine.xcframework from: \"`pwd`\" to: $SRCROOT/Libs\"\n    mv ZegoExpressEngine.xcframework $SRCROOT/Libs\n\n    echo \"[*] Remove folder: $SRCROOT/Libs/__sdk_download_tmp__\"\n    rm -rf $SRCROOT/Libs/__sdk_download_tmp__\nfi\n\n# Download third party lib: SSZipArchive\nif [ ! -e \"$SRCROOT/ZegoExpressAudioExample-iOS-OC/Deps/SSZipArchive.framework\" ]; then\n\n    cd $SRCROOT\n    echo \"[*] cd into: \"`pwd`\n\n    URL=\"https://storage.zego.im/express/example/ios/third-party/SSZipArchive.zip\"\n\n    if [ ! -d \"Libs/__sdk_download_tmp__\" ]; then\n        mkdir Libs/__sdk_download_tmp__\n    fi\n\n    echo \"[*] Downloading third party lib SSZipArchive.framework from: $URL\"\n    curl \"$URL\" --output Libs/__sdk_download_tmp__/SSZipArchive.zip\n\n    cd Libs/__sdk_download_tmp__\n    echo \"[*] cd into: \"`pwd`\n\n    echo \"[*] Unzip SSZipArchive.zip\"\n    unzip -o SSZipArchive.zip\n\n    if [ -d \"SSZipArchive.framework\" ]; then\n        echo \"[*] Move SSZipArchive.framework from: \"`pwd`\" to: $SRCROOT/ZegoExpressAudioExample-iOS-OC/Deps\"\n        mv SSZipArchive.framework $SRCROOT/ZegoExpressAudioExample-iOS-OC/Deps\n    fi\n\n    echo \"[*] Remove folder: $SRCROOT/Libs/__sdk_download_tmp__\"\n    rm -rf $SRCROOT/Libs/__sdk_download_tmp__\nfi\n";
+			shellScript = "# Download third party lib: SSZipArchive\nif [ ! -e \"$SRCROOT/ZegoExpressAudioExample-iOS-OC/Deps/SSZipArchive.framework\" ]; then\n\n    cd $SRCROOT\n    echo \"[*] cd into: \"`pwd`\n\n    URL=\"https://storage.zego.im/express/example/ios/third-party/SSZipArchive.zip\"\n\n    if [ ! -d \"Libs/__sdk_download_tmp__\" ]; then\n        mkdir Libs/__sdk_download_tmp__\n    fi\n\n    echo \"[*] Downloading third party lib SSZipArchive.framework from: $URL\"\n    curl \"$URL\" --output Libs/__sdk_download_tmp__/SSZipArchive.zip\n\n    cd Libs/__sdk_download_tmp__\n    echo \"[*] cd into: \"`pwd`\n\n    echo \"[*] Unzip SSZipArchive.zip\"\n    unzip -o SSZipArchive.zip\n\n    if [ -d \"SSZipArchive.framework\" ]; then\n        echo \"[*] Move SSZipArchive.framework from: \"`pwd`\" to: $SRCROOT/ZegoExpressAudioExample-iOS-OC/Deps\"\n        mv SSZipArchive.framework $SRCROOT/ZegoExpressAudioExample-iOS-OC/Deps\n    fi\n\n    echo \"[*] Remove folder: $SRCROOT/Libs/__sdk_download_tmp__\"\n    rm -rf $SRCROOT/Libs/__sdk_download_tmp__\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -432,14 +410,12 @@
 				86872862247D1EBD005E4326 /* ZegoDiskLogFormatter.m in Sources */,
 				8687288C247D3DB6005E4326 /* ZGHashTableHelper.m in Sources */,
 				8687286B247D1F7B005E4326 /* UIViewController+TopPresent.m in Sources */,
-				8682BF5A24E3BF8600EFC88F /* ZGAudioPreprocessViewController.m in Sources */,
 				86E5A234247CBB4E00E22F38 /* ZGKeyCenter.m in Sources */,
 				86872861247D1EBD005E4326 /* ZegoLog.m in Sources */,
 				86872863247D1EBD005E4326 /* ZegoTTYLogger.m in Sources */,
 				86872868247D1EBD005E4326 /* ZegoTTYLogFormatter.m in Sources */,
 				8638517B247BB0EB00CF95C9 /* ZGTopicsTableViewController.m in Sources */,
 				86872867247D1EBD005E4326 /* ZegoDiskLogger.m in Sources */,
-				8682BF5D24E3BF9C00EFC88F /* ZGAudioPreprocessConfigTableViewController.m in Sources */,
 				8687288F247D403F005E4326 /* NSObject+Persistence.m in Sources */,
 				86385172247BA5BC00CF95C9 /* ZGQuickStartViewController.m in Sources */,
 				8638515C247B9C1A00CF95C9 /* main.m in Sources */,
@@ -591,7 +567,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 210114;
+				CURRENT_PROJECT_VERSION = 210120;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -619,7 +595,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 210114;
+				CURRENT_PROJECT_VERSION = 210120;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

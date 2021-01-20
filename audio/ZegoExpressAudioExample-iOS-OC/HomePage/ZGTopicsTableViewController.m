@@ -33,6 +33,8 @@
     [advanceTopicList addObject:@"SoundLevel"];
     
     _topicList = topicList;
+
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tips" style:UIBarButtonItemStylePlain target:self action:@selector(showTips)];
 }
 
 - (void)jumpToWeb:(NSString *)url {
@@ -52,6 +54,15 @@
 
 - (IBAction)onOpenFAQ:(UIButton *)sender {
     [self jumpToWeb:@"https://doc-zh.zego.im/zh/1996.html"];
+}
+
+- (void)showTips {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Tips" message:@"Since the Express Audio SDK is based on the Video SDK (just cuts the video function), all APIs of the two SDKs are basically the same. \n\nFor more SDK functional demonstrations, please refer to Video demo." preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Jump" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self jumpToWeb:@"https://github.com/zegoim/zego-express-example-topics-ios-oc/tree/master/video"];
+    }]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - Table view data source

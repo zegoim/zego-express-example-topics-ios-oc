@@ -1,6 +1,6 @@
 xcuserdata
 DerivedData
-**/ZegoExpressEngine.framework
+Libs/ZegoExpressEngine.xcframework
 
 ZegoExpressExample-iOS-OC/Deps/SSZipArchive.framework
 ZegoExpressExample-iOS-OC/Deps/Bugly.framework
