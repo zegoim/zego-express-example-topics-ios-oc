@@ -281,6 +281,7 @@
 
 
 - (void)mutePlayStreamAudio:(BOOL)mute streamID:(NSString *)streamID {
+    [self.engine mutePlayStreamAudio:mute streamID:streamID];
     ZGLogInfo(@"🙊 Mute play stream audio: %@", mute ? @"YES" : @"NO");
     [self.dataSource onActionLog:[NSString stringWithFormat:@"🙊 Mute play stream audio: %@", mute ? @"YES" : @"NO"]];
 }
