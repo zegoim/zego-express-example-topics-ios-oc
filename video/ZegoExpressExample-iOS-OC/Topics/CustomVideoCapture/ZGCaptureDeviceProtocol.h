@@ -15,7 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, ZGCustomVideoCaptureSourceType) {
     ZGCustomVideoCaptureSourceTypeCamera,
-    ZGCustomVideoCaptureSourceTypeImage
+    ZGCustomVideoCaptureSourceTypeImage,
+    ZGCustomVideoCaptureSourceTypeMediaPlayer
 };
 
 typedef NS_ENUM(NSUInteger, ZGCustomVideoCaptureDataFormat) {

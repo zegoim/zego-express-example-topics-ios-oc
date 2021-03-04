@@ -82,6 +82,7 @@
 		867BBD0E2376E02B008F7D4F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 867BBD0D2376E023008F7D4F /* libz.tbd */; };
 		867BBD102376E03D008F7D4F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 867BBD0F2376E036008F7D4F /* libc++.tbd */; };
 		867DB307239E712000072B3F /* ZGVideoTalkViewObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 867DB306239E712000072B3F /* ZGVideoTalkViewObject.m */; };
+		8682D4F025E4D6EE000D1EC4 /* ZGCaptureDeviceMediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8682D4EF25E4D6EE000D1EC4 /* ZGCaptureDeviceMediaPlayer.m */; };
 		8684965A23BC97F100AE7A58 /* CustomVideoRender.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8684965923BC97F100AE7A58 /* CustomVideoRender.storyboard */; };
 		8684965D23BC9FE600AE7A58 /* ZGCustomVideoRenderLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8684965C23BC9FE600AE7A58 /* ZGCustomVideoRenderLoginViewController.m */; };
 		8684966623BCA08500AE7A58 /* ZGCustomVideoRenderPublishStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8684966523BCA08500AE7A58 /* ZGCustomVideoRenderPublishStreamViewController.m */; };
@@ -303,6 +304,8 @@
 		867BBD0F2376E036008F7D4F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		867DB305239E712000072B3F /* ZGVideoTalkViewObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGVideoTalkViewObject.h; sourceTree = "<group>"; };
 		867DB306239E712000072B3F /* ZGVideoTalkViewObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGVideoTalkViewObject.m; sourceTree = "<group>"; };
+		8682D4EE25E4D6EE000D1EC4 /* ZGCaptureDeviceMediaPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGCaptureDeviceMediaPlayer.h; sourceTree = "<group>"; };
+		8682D4EF25E4D6EE000D1EC4 /* ZGCaptureDeviceMediaPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGCaptureDeviceMediaPlayer.m; sourceTree = "<group>"; };
 		8684965923BC97F100AE7A58 /* CustomVideoRender.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomVideoRender.storyboard; sourceTree = "<group>"; };
 		8684965B23BC9FE600AE7A58 /* ZGCustomVideoRenderLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZGCustomVideoRenderLoginViewController.h; sourceTree = "<group>"; };
 		8684965C23BC9FE600AE7A58 /* ZGCustomVideoRenderLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZGCustomVideoRenderLoginViewController.m; sourceTree = "<group>"; };
@@ -896,6 +899,8 @@
 				86EDFE7A23CACEF500A1A3AC /* ZGCaptureDeviceCamera.m */,
 				86EDFE7C23CB0D2100A1A3AC /* ZGCaptureDeviceImage.h */,
 				86EDFE7D23CB0D2100A1A3AC /* ZGCaptureDeviceImage.m */,
+				8682D4EE25E4D6EE000D1EC4 /* ZGCaptureDeviceMediaPlayer.h */,
+				8682D4EF25E4D6EE000D1EC4 /* ZGCaptureDeviceMediaPlayer.m */,
 				86CAEDB224A1E34100EF53D2 /* ZGVideoFrameEncoder.h */,
 				86CAEDB324A1E34100EF53D2 /* ZGVideoFrameEncoder.mm */,
 				86EDFE7223CABD7200A1A3AC /* ZGCustomVideoCaptureLoginViewController.h */,
@@ -1144,6 +1149,7 @@
 				8608C3E92363244A00CE367B /* ZegoHudManager.m in Sources */,
 				8608C44E2363246600CE367B /* ZGKeyCenter.m in Sources */,
 				8608C45B2363246600CE367B /* ZGHashTableHelper.m in Sources */,
+				8682D4F025E4D6EE000D1EC4 /* ZGCaptureDeviceMediaPlayer.m in Sources */,
 				8608C4502363246600CE367B /* ZegoLog.m in Sources */,
 				86E90CA224AB496000507352 /* ZGCustomAudioIOLoginViewController.m in Sources */,
 				8608C4552363246600CE367B /* ZegoLogMessage.m in Sources */,
@@ -1347,7 +1353,7 @@
 				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/ZegoExpressExample-iOS-OC/ZegoExpressExample-iOS-OC.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 210129;
+				CURRENT_PROJECT_VERSION = 210304;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1362,7 +1368,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.0;
 				OBJROOT = DerivedData/Build/Intermediates.noindex;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-Objective-C.${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "ZegoExpressExample-iOS-OC";
@@ -1380,7 +1386,7 @@
 				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/ZegoExpressExample-iOS-OC/ZegoExpressExample-iOS-OC.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 210129;
+				CURRENT_PROJECT_VERSION = 210304;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1395,7 +1401,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.0;
 				OBJROOT = DerivedData/Build/Intermediates.noindex;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-Objective-C.${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "ZegoExpressExample-iOS-OC";
@@ -1412,7 +1418,7 @@
 				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/ZegoExpressExample-iOS-OC/Topics/ScreenCapture/ZegoExpressExample-iOS-OC-Broadcast/ZegoExpressExample-iOS-OC-Broadcast.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 210129;
+				CURRENT_PROJECT_VERSION = 210304;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1425,7 +1431,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-Objective-C.${SAMPLE_CODE_DISAMBIGUATOR}.Broadcast";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1440,7 +1446,7 @@
 				CODE_SIGN_ENTITLEMENTS = "$(PROJECT_DIR)/ZegoExpressExample-iOS-OC/Topics/ScreenCapture/ZegoExpressExample-iOS-OC-Broadcast/ZegoExpressExample-iOS-OC-Broadcast.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 210129;
+				CURRENT_PROJECT_VERSION = 210304;
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1453,7 +1459,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "im.zego.ZegoExpressExample-iOS-Objective-C.${SAMPLE_CODE_DISAMBIGUATOR}.Broadcast";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

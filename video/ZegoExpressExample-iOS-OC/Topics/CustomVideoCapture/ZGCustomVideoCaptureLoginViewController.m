@@ -67,11 +67,11 @@ NSString* const ZGCustomVideoCaptureLoginVCKey_streamID = @"kStreamID";
 }
 
 - (IBAction)captureSourceSegValueChanged:(UISegmentedControl *)sender {
-    if (self.captureSourceTypeSeg.selectedSegmentIndex == 1) {
-        [self.captureDataFormatSeg setEnabled:NO forSegmentAtIndex:1];
+    if (self.captureSourceTypeSeg.selectedSegmentIndex == 0) {
+        [self.captureDataFormatSeg setEnabled:YES forSegmentAtIndex:1];
         [self.captureDataFormatSeg setSelectedSegmentIndex:0];
     } else {
-        [self.captureDataFormatSeg setEnabled:YES forSegmentAtIndex:1];
+        [self.captureDataFormatSeg setEnabled:NO forSegmentAtIndex:1];
         [self.captureDataFormatSeg setSelectedSegmentIndex:0];
     }
 }

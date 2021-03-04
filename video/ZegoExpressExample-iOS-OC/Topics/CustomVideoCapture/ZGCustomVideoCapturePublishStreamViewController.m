@@ -14,6 +14,7 @@
 
 #import "ZGCaptureDeviceCamera.h"
 #import "ZGCaptureDeviceImage.h"
+#import "ZGCaptureDeviceMediaPlayer.h"
 
 #import "ZGVideoFrameEncoder.h"
 
@@ -45,12 +46,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupUI];
+    [self preSetupUI];
     [self createEngineAndLoginRoom];
     [self startLive];
 }
 
-- (void)setupUI {
+- (void)viewDidAppear:(BOOL)animated {
+    [self postSetupUI];
+}
+
+- (void)preSetupUI {
     self.roomIDLabel.text = [NSString stringWithFormat:@"RoomID: %@", self.roomID];
     self.streamIDLabel.text = [NSString stringWithFormat:@"StreamID: %@", self.streamID];
 
@@ -58,10 +63,12 @@
     self.stopLiveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPause target:self action:@selector(stopLive)];
     self.navigationItem.rightBarButtonItem = self.startLiveButton;
 
-    if (self.captureSourceType == ZGCustomVideoCaptureSourceTypeImage) {
+    if (self.captureSourceType != ZGCustomVideoCaptureSourceTypeCamera) {
         self.switchCameraButton.hidden = YES;
     }
+}
 
+- (void)postSetupUI {
     if (self.captureBufferType == ZGCustomVideoCaptureBufferTypeEncodedFrame) {
         // The ZegoExpressEngine cannot render and preview the encoded video frame
         [self.previewView addSubview:({
@@ -110,7 +117,12 @@
     [[ZegoExpressEngine sharedEngine] loginRoom:self.roomID user:user config:[ZegoRoomConfig defaultConfig]];
 
     // Set video config
-    [[ZegoExpressEngine sharedEngine] setVideoConfig:[ZegoVideoConfig configWithPreset:ZegoVideoConfigPreset720P]];
+    ZegoVideoConfig *videoConfig = [ZegoVideoConfig configWithPreset:ZegoVideoConfigPreset720P];
+    if (self.captureSourceType == ZGCustomVideoCaptureSourceTypeMediaPlayer) {
+        // The media player's video resource resolution is landscape.
+        videoConfig.encodeResolution = CGSizeMake(1280, 720);
+    }
+    [[ZegoExpressEngine sharedEngine] setVideoConfig:videoConfig];
 }
 
 - (void)startLive {
@@ -132,6 +144,9 @@
 }
 
 - (void)dealloc {
+    // After destroying the engine, you will not receive the `-onStop:` callback, you need to stop the custom video caputre manually.
+    [_captureDevice stopCapture];
+
     ZGLogInfo(@"🏳️ Destroy ZegoExpressEngine");
     [ZegoExpressEngine destroyEngine:^{
         // This callback is only used to notify the completion of the release of internal resources of the engine.
@@ -140,9 +155,6 @@
         // In general, developers do not need to listen to this callback.
         ZGLogInfo(@"🚩 🏳️ Destroy ZegoExpressEngine complete");
     }];
-
-    // After destroying the engine, you will not receive the `-onStop:` callback, you need to stop the custom video caputre manually.
-    [_captureDevice stopCapture];
 }
 
 #pragma mark - Getter
@@ -153,8 +165,13 @@
             // BGRA32 or NV12
             OSType pixelFormat = self.captureDataFormat == ZGCustomVideoCaptureDataFormatBGRA32 ? kCVPixelFormatType_32BGRA : kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange;
             _captureDevice = [[ZGCaptureDeviceCamera alloc] initWithPixelFormatType:pixelFormat];
+
         } else if (self.captureSourceType == ZGCustomVideoCaptureSourceTypeImage) {
             _captureDevice = [[ZGCaptureDeviceImage alloc] initWithMotionImage:[UIImage imageNamed:@"ZegoLogo"].CGImage contentSize:CGSizeMake(720, 1280)];
+
+        } else if (self.captureSourceType == ZGCustomVideoCaptureSourceTypeMediaPlayer) {
+            NSString *mp4ResPath = [[NSBundle mainBundle] pathForResource:@"ad" ofType:@"mp4"];
+            _captureDevice = [[ZGCaptureDeviceMediaPlayer alloc] initWithMediaResource:mp4ResPath];
         }
 
         _captureDevice.delegate = self;
@@ -164,7 +181,9 @@
 
 - (ZGVideoFrameEncoder *)encoder {
     if (!_encoder) {
-        _encoder = [[ZGVideoFrameEncoder alloc] initWithResolution:CGSizeMake(720, 1280) maxBitrate:(int)(3000 * 1000 * 1.5) averageBitrate:(int)(3000 * 1000) fps:15];
+        // The media player's video resource resolution is landscape.
+        CGSize resolution = self.captureSourceType == ZGCustomVideoCaptureSourceTypeMediaPlayer ? CGSizeMake(1280, 720) : CGSizeMake(720, 1280);
+        _encoder = [[ZGVideoFrameEncoder alloc] initWithResolution:resolution maxBitrate:(int)(3000 * 1000 * 1.5) averageBitrate:(int)(3000 * 1000) fps:15];
         _encoder.delegate = self;
     }
     return _encoder;
@@ -189,7 +208,9 @@
     ZGLogInfo(@"🚩 🚦 onEncodedDataTrafficControl, should adjust to w: %d, h: %d, bitrate: %d, fps: %d", (int)trafficControlInfo.resolution.width, (int)trafficControlInfo.resolution.height, trafficControlInfo.bitrate, trafficControlInfo.fps);
 
     [self.encoder setMaxBitrate:trafficControlInfo.bitrate*1.5 averageBitrate:trafficControlInfo.bitrate fps:trafficControlInfo.fps];
-    [self.captureDevice setFramerate:trafficControlInfo.fps];
+    if ([self.captureDevice respondsToSelector:@selector(setFramerate:)]) {
+        [self.captureDevice setFramerate:trafficControlInfo.fps];
+    }
 }
 
 
